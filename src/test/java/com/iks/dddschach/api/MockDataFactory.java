@@ -16,6 +16,7 @@ import static com.iks.dddschach.domain.SpielfigurValueObject.FigureEnum.*;
 public class MockDataFactory {
 
     public static SchachbrettValueObject createInitialesSchachbrett() {
+
         return new SchachbrettValueObject() {{
             setSchachfigurAnPosition(A, _1, TURM, WEISS);
             setSchachfigurAnPosition(B, _1, PFERD, WEISS);
@@ -38,14 +39,6 @@ public class MockDataFactory {
             setSchachfigurAnPosition(G, _8, PFERD, SCHWARZ);
             setSchachfigurAnPosition(H, _8, TURM, SCHWARZ);
         }};
-    }
-
-
-    public static void main(String[] args) {
-        final SchachbrettValueObject initialesSchachbrett1 = createInitialesSchachbrett();
-        final SchachbrettValueObject initialesSchachbrett2 = createInitialesSchachbrett();
-
-        System.out.println(initialesSchachbrett1.equals(initialesSchachbrett2));
     }
 
 }
