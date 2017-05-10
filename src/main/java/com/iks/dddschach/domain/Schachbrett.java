@@ -3,19 +3,19 @@ package com.iks.dddschach.domain;
 
 import java.util.Arrays;
 
-import static com.iks.dddschach.domain.PositionValueObject.VertCoord._1;
-import static com.iks.dddschach.domain.PositionValueObject.VertCoord;
-import static com.iks.dddschach.domain.PositionValueObject.HorCoord;
+import static com.iks.dddschach.domain.Position.VertCoord._1;
+import static com.iks.dddschach.domain.Position.VertCoord;
+import static com.iks.dddschach.domain.Position.HorCoord;
 
 
 /**
  * Created by vollmer on 05.05.17.
  */
-public class SchachbrettValueObject extends ValueObject {
+public class Schachbrett extends ValueObject {
 
-    protected final SpielfigurValueObject[][] board;
+    protected final Spielfigur[][] board;
 
-    protected SchachbrettValueObject(SpielfigurValueObject[][] board) {
+    protected Schachbrett(Spielfigur[][] board) {
         this.board = board;
     }
 
@@ -23,21 +23,21 @@ public class SchachbrettValueObject extends ValueObject {
     /**
      * Default-Konstruktor
      */
-    public SchachbrettValueObject() {
-        this(new SpielfigurValueObject[HorCoord.values().length][VertCoord.values().length]);
+    public Schachbrett() {
+        this(new Spielfigur[HorCoord.values().length][VertCoord.values().length]);
     }
 
     /**
      * Kopier-Konstruktor
      * @param toCopy
      */
-    public SchachbrettValueObject(SchachbrettValueObject toCopy) {
+    public Schachbrett(Schachbrett toCopy) {
         this(toCopy.getBoard());
     }
 
-    public SpielfigurValueObject[][] getBoard() {
-        final SpielfigurValueObject[][] copy =
-                new SpielfigurValueObject[HorCoord.values().length][VertCoord.values().length];
+    public Spielfigur[][] getBoard() {
+        final Spielfigur[][] copy =
+                new Spielfigur[HorCoord.values().length][VertCoord.values().length];
         for (int i = 0; i < HorCoord.values().length; i++) {
             for (int j = 0; j < VertCoord.values().length; j++) {
                 copy[i][j] = board[i][j];
@@ -46,17 +46,17 @@ public class SchachbrettValueObject extends ValueObject {
         return copy;
     }
 
-    protected void setSchachfigurAnPosition(PositionValueObject position, SpielfigurValueObject figur) {
+    protected void setSchachfigurAnPosition(Position position, Spielfigur figur) {
         board[position.horCoord.ordinal()][position.vertCoord.ordinal()] = figur;
     }
 
-    protected SpielfigurValueObject getSchachfigurAnPosition(PositionValueObject position) {
+    protected Spielfigur getSchachfigurAnPosition(Position position) {
         return board[position.horCoord.ordinal()][position.vertCoord.ordinal()];
     }
 
     protected void setSchachfigurAnPosition(HorCoord h, VertCoord v,
-            SpielfigurValueObject.FigureEnum figur, FarbeEnum color) {
-        setSchachfigurAnPosition(new PositionValueObject(h,v), new SpielfigurValueObject(figur, color));
+                                            Spielfigur.FigureEnum figur, FarbeEnum color) {
+        setSchachfigurAnPosition(new Position(h,v), new Spielfigur(figur, color));
     }
 
 
@@ -66,7 +66,7 @@ public class SchachbrettValueObject extends ValueObject {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
 
-        SchachbrettValueObject that = (SchachbrettValueObject) o;
+        Schachbrett that = (Schachbrett) o;
 
         return Arrays.deepEquals(board, that.board);
     }
@@ -83,10 +83,10 @@ public class SchachbrettValueObject extends ValueObject {
     public String toString() {
         final String horLine = "-------------------------";
         String boardAsStr = horLine + System.lineSeparator();
-        for(PositionValueObject.VertCoord vertCoord : PositionValueObject.VertCoord.valuesInverted()) {
+        for(Position.VertCoord vertCoord : Position.VertCoord.valuesInverted()) {
             boardAsStr += "|";
-            for(PositionValueObject.HorCoord horCoord : PositionValueObject.HorCoord.values()) {
-                final SpielfigurValueObject figure = board[horCoord.ordinal()][vertCoord.ordinal()];
+            for(Position.HorCoord horCoord : Position.HorCoord.values()) {
+                final Spielfigur figure = board[horCoord.ordinal()][vertCoord.ordinal()];
                 boardAsStr += figure == null? "  " : figure.abbreviation();
                 boardAsStr += "|";
             }

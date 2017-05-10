@@ -18,7 +18,7 @@ public class SchachspielApiTest {
 
     @Test
     public void neuesSpiel() throws Exception {
-        final SpielIdValueObject spielId = api.neuesSpiel();
+        final SpielId spielId = api.neuesSpiel();
         Assert.assertNotNull(spielId);
         Assert.assertNotNull(spielId.id);
     }
@@ -26,28 +26,28 @@ public class SchachspielApiTest {
 
     @Test
     public void schachBrett() throws Exception {
-        final SpielIdValueObject spielId = api.neuesSpiel();
-        final SchachbrettValueObject actual = api.schachBrett(spielId);
-        final SchachbrettValueObject expected = MockDataFactory.createInitialesSchachbrett();
+        final SpielId spielId = api.neuesSpiel();
+        final Schachbrett actual = api.schachBrett(spielId);
+        final Schachbrett expected = MockDataFactory.createInitialesSchachbrett();
         Assert.assertEquals(expected, actual);
     }
 
 
     @Test
     public void fuehreZugAus() throws Exception {
-        PositionValueObject posFrom1 = new PositionValueObject("e2");
-        PositionValueObject posTo1 = new PositionValueObject("e4");
+        Position posFrom1 = new Position("e2");
+        Position posTo1 = new Position("e4");
 
-        final SchachbrettValueObject expected =
-                new SchachbrettValueObject(MockDataFactory.createInitialesSchachbrett()) {{
-                    final SpielfigurValueObject figure1 = getSchachfigurAnPosition(posFrom1);
+        final Schachbrett expected =
+                new Schachbrett(MockDataFactory.createInitialesSchachbrett()) {{
+                    final Spielfigur figure1 = getSchachfigurAnPosition(posFrom1);
                     setSchachfigurAnPosition(posFrom1, null);
                     setSchachfigurAnPosition(posTo1, figure1);
                 }};
 
-        final SpielIdValueObject spielId = api.neuesSpiel();
-        api.fuehreHalbzugAus(spielId, new HalbzugValueObject(posFrom1, posTo1));
-        final SchachbrettValueObject actual = api.schachBrett(spielId);
+        final SpielId spielId = api.neuesSpiel();
+        api.fuehreHalbzugAus(spielId, new Halbzug(posFrom1, posTo1));
+        final Schachbrett actual = api.schachBrett(spielId);
 
         Assert.assertEquals(expected, actual);
     }
@@ -55,24 +55,24 @@ public class SchachspielApiTest {
 
     @Test
     public void fuehreZweiGueltigeZuegeAus() throws Exception {
-        final SpielIdValueObject spielId = api.neuesSpiel();
-        api.fuehreHalbzugAus(spielId, new HalbzugValueObject("e2-e4"));
-        api.fuehreHalbzugAus(spielId, new HalbzugValueObject("d7-d5"));
+        final SpielId spielId = api.neuesSpiel();
+        api.fuehreHalbzugAus(spielId, new Halbzug("e2-e4"));
+        api.fuehreHalbzugAus(spielId, new Halbzug("d7-d5"));
     }
 
 
     @Test(expected = Exception.class)
     public void ungueltigeZuegeZweimalGleicherSpieler() throws Exception {
-        final SpielIdValueObject spielId = api.neuesSpiel();
-        api.fuehreHalbzugAus(spielId, new HalbzugValueObject("e2-e4"));
-        api.fuehreHalbzugAus(spielId, new HalbzugValueObject("e4-e5"));
+        final SpielId spielId = api.neuesSpiel();
+        api.fuehreHalbzugAus(spielId, new Halbzug("e2-e4"));
+        api.fuehreHalbzugAus(spielId, new Halbzug("e4-e5"));
     }
 
 
     @Test(expected = Exception.class)
     public void ungueltigerZugKeineSpielfigur() throws Exception {
-        final SpielIdValueObject spielId = api.neuesSpiel();
-        api.fuehreHalbzugAus(spielId, new HalbzugValueObject("e3-e4"));
+        final SpielId spielId = api.neuesSpiel();
+        api.fuehreHalbzugAus(spielId, new Halbzug("e3-e4"));
     }
 
 }

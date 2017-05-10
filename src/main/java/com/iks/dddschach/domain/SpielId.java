@@ -6,16 +6,16 @@ import java.util.UUID;
 /**
  * Created by vollmer on 05.05.17.
  */
-public class SpielIdValueObject extends ValueObject {
+public class SpielId extends ValueObject {
 
     public final String id;
 
 
-    public SpielIdValueObject(String id) {
+    public SpielId(String id) {
         this.id = id;
     }
 
-    public SpielIdValueObject() {
+    public SpielId() {
         this(UUID.randomUUID().toString());
     }
 

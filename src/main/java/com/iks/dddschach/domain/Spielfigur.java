@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 @XmlType
-public class SpielfigurValueObject extends ValueObject {
+public class Spielfigur extends ValueObject {
 
     @XmlEnum
     public enum FigureEnum {
@@ -29,12 +29,12 @@ public class SpielfigurValueObject extends ValueObject {
     public final FarbeEnum color;
 
 
-    public SpielfigurValueObject() {
+    public Spielfigur() {
         this(null, null);
     }
 
 
-    public SpielfigurValueObject(FigureEnum figure, FarbeEnum color) {
+    public Spielfigur(FigureEnum figure, FarbeEnum color) {
         this.figure = figure;
         this.color = color;
     }

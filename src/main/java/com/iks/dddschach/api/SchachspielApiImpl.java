@@ -1,8 +1,8 @@
 package com.iks.dddschach.api;
 
-import com.iks.dddschach.domain.SchachbrettValueObject;
-import com.iks.dddschach.domain.SpielIdValueObject;
-import com.iks.dddschach.domain.HalbzugValueObject;
+import com.iks.dddschach.domain.Schachbrett;
+import com.iks.dddschach.domain.SpielId;
+import com.iks.dddschach.domain.Halbzug;
 
 
 /**
@@ -11,23 +11,23 @@ import com.iks.dddschach.domain.HalbzugValueObject;
 public class SchachspielApiImpl implements SchachspielApi {
 
     @Override
-    public SpielIdValueObject neuesSpiel() {
+    public SpielId neuesSpiel() {
         // TODO: Zu implementieren
-        return new SpielIdValueObject("spielIdDummy");
+        return new SpielId("spielIdDummy");
     }
 
 
     @Override
-    public int fuehreHalbzugAus(SpielIdValueObject spielId, HalbzugValueObject zug) {
+    public int fuehreHalbzugAus(SpielId spielId, Halbzug zug) {
         // TODO: Zu implementieren
         return -1;
     }
 
 
     @Override
-    public SchachbrettValueObject schachBrett(SpielIdValueObject gameId) {
+    public Schachbrett schachBrett(SpielId gameId) {
         // TODO: Zu implementieren
-        return new SchachbrettValueObject();
+        return new Schachbrett();
     }
 
 }

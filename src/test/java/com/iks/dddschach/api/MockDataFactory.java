@@ -1,13 +1,13 @@
 package com.iks.dddschach.api;
 
-import com.iks.dddschach.domain.PositionValueObject.HorCoord;
-import com.iks.dddschach.domain.SchachbrettValueObject;
+import com.iks.dddschach.domain.Position.HorCoord;
+import com.iks.dddschach.domain.Schachbrett;
 
 import static com.iks.dddschach.domain.FarbeEnum.SCHWARZ;
 import static com.iks.dddschach.domain.FarbeEnum.WEISS;
-import static com.iks.dddschach.domain.PositionValueObject.HorCoord.*;
-import static com.iks.dddschach.domain.PositionValueObject.VertCoord.*;
-import static com.iks.dddschach.domain.SpielfigurValueObject.FigureEnum.*;
+import static com.iks.dddschach.domain.Position.HorCoord.*;
+import static com.iks.dddschach.domain.Position.VertCoord.*;
+import static com.iks.dddschach.domain.Spielfigur.FigureEnum.*;
 
 
 /**
@@ -15,9 +15,9 @@ import static com.iks.dddschach.domain.SpielfigurValueObject.FigureEnum.*;
  */
 public class MockDataFactory {
 
-    public static SchachbrettValueObject createInitialesSchachbrett() {
+    public static Schachbrett createInitialesSchachbrett() {
 
-        return new SchachbrettValueObject() {{
+        return new Schachbrett() {{
             setSchachfigurAnPosition(A, _1, TURM, WEISS);
             setSchachfigurAnPosition(B, _1, PFERD, WEISS);
             setSchachfigurAnPosition(C, _1, LAEUFER, WEISS);

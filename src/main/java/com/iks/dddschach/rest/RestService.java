@@ -3,9 +3,9 @@ package com.iks.dddschach.rest;
 import org.apache.log4j.Logger;
 import com.iks.dddschach.api.SchachspielApi;
 import com.iks.dddschach.domain.FarbeEnum;
-import com.iks.dddschach.domain.SchachbrettValueObject;
-import com.iks.dddschach.domain.SpielIdValueObject;
-import com.iks.dddschach.domain.HalbzugValueObject;
+import com.iks.dddschach.domain.Schachbrett;
+import com.iks.dddschach.domain.SpielId;
+import com.iks.dddschach.domain.Halbzug;
 import com.webcohesion.enunciate.metadata.rs.ResponseCode;
 import com.webcohesion.enunciate.metadata.rs.StatusCodes;
 import org.glassfish.jersey.server.ManagedAsync;
@@ -53,7 +53,7 @@ public class RestService {
     @POST
     @Path("games")
     @Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
-    public SpielIdValueObject neuesSpiel(@FormParam("color") FarbeEnum color) {
+    public SpielId neuesSpiel(@FormParam("color") FarbeEnum color) {
         log.info("Neues Spiel, Spielerfarbe " + color);
 
         try {
@@ -78,11 +78,11 @@ public class RestService {
             @ResponseCode( code = 404, condition = "The field at the given coordinates is empty"),
             @ResponseCode( code = 500, condition = "An exception occured")
     })
-    public SchachbrettValueObject schachBrett(final @NotNull @PathParam("gameId") String spielId) {
+    public Schachbrett schachBrett(final @NotNull @PathParam("gameId") String spielId) {
         log.info("Spiel " + spielId +": Spielfeld mit Id " + spielId);
 
         try {
-            return schachspielApi.schachBrett(new SpielIdValueObject(spielId));
+            return schachspielApi.schachBrett(new SpielId(spielId));
         }
         catch (Exception e) {
             // TODO: Detailiertere Fehlerbehandlung
@@ -110,7 +110,7 @@ public class RestService {
         if (zug == null) {
             throw new BadRequestException("Missing form parameter 'move'");
         }
-        return fuehreZugAus(spielId, new HalbzugValueObject(zug));
+        return fuehreZugAus(spielId, new Halbzug(zug));
     }
 
 
@@ -125,13 +125,13 @@ public class RestService {
     @ManagedAsync
     public Response fuehreZugAus(
             final @NotNull @PathParam("gameId") String spielId,
-            final @NotNull HalbzugValueObject zug) {
+            final @NotNull Halbzug zug) {
 
         log.info("Spiel " + spielId + ": Ausfuehren des Zuges " + zug);
 
         final int zugIndex;
         try {
-            zugIndex = schachspielApi.fuehreHalbzugAus(new SpielIdValueObject(spielId), zug);
+            zugIndex = schachspielApi.fuehreHalbzugAus(new SpielId(spielId), zug);
         }
         catch (Exception e) {
             // TODO: Detailiertere Fehlerbehandlung

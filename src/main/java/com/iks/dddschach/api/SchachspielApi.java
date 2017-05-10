@@ -1,8 +1,8 @@
 package com.iks.dddschach.api;
 
-import com.iks.dddschach.domain.SchachbrettValueObject;
-import com.iks.dddschach.domain.SpielIdValueObject;
-import com.iks.dddschach.domain.HalbzugValueObject;
+import com.iks.dddschach.domain.Schachbrett;
+import com.iks.dddschach.domain.SpielId;
+import com.iks.dddschach.domain.Halbzug;
 
 
 /**
@@ -16,7 +16,7 @@ public interface SchachspielApi {
      * @return eine einedeutige ID
      * @throws Exception falls keine neues Spiel erzeugt werden konnte (technische Probleme)
      */
-    SpielIdValueObject neuesSpiel() throws Exception;
+    SpielId neuesSpiel() throws Exception;
 
     /**
      * Fuehrt einen Halbzug in der Schachpartie mit der Id <code>spielId</code> aus
@@ -27,7 +27,7 @@ public interface SchachspielApi {
      * @throws Exception falls der Zug ungueltig ist oder das Spiel mit der Id <code>spielId</code>
      * nicht existiert
      */
-    int fuehreHalbzugAus(SpielIdValueObject spielId, HalbzugValueObject zug) throws Exception;
+    int fuehreHalbzugAus(SpielId spielId, Halbzug zug) throws Exception;
 
     /**
      * Liefert das aktuelle Schachbrett zum Spiel mit der Id <code>spielId</code>
@@ -36,6 +36,6 @@ public interface SchachspielApi {
      * @return das aktuelle Schachbrett
      * @throws Exception falls as Spiel mit der Id <code>spielId</code> nicht existiert
      */
-    SchachbrettValueObject schachBrett(SpielIdValueObject spielId) throws Exception;
+    Schachbrett schachBrett(SpielId spielId) throws Exception;
 
 }

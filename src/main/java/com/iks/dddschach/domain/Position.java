@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 @XmlType
-public class PositionValueObject extends ValueObject {
+public class Position extends ValueObject {
 
     @XmlEnum
     public enum HorCoord {
@@ -37,18 +37,18 @@ public class PositionValueObject extends ValueObject {
     public final HorCoord horCoord;
     public final VertCoord vertCoord;
 
-    public PositionValueObject(HorCoord horCoord, VertCoord vertCoord) {
+    public Position(HorCoord horCoord, VertCoord vertCoord) {
         this.horCoord = horCoord;
         this.vertCoord = vertCoord;
     }
 
 
-    public PositionValueObject() {
+    public Position() {
         this(null, null);
     }
 
 
-    public PositionValueObject(String coordEncoded) {
+    public Position(String coordEncoded) {
         horCoord = HorCoord.valueOf(coordEncoded.substring(0,1).toUpperCase());
         vertCoord = VertCoord.valueOf("_" + coordEncoded.substring(1,2));
     }
