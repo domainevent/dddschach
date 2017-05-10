@@ -4,27 +4,27 @@ import javax.xml.bind.annotation.XmlType;
 
 
 @XmlType
-public class ZugValueObject extends ValueObject {
+public class HalbzugValueObject extends ValueObject {
 
     public final PositionValueObject from;
     public final PositionValueObject to;
 
 
-    public ZugValueObject() {
+    public HalbzugValueObject() {
         this((PositionValueObject)null, (PositionValueObject)null);
     }
 
 
-    public ZugValueObject(PositionValueObject from, PositionValueObject to) {
+    public HalbzugValueObject(PositionValueObject from, PositionValueObject to) {
         this.from = from;
         this.to = to;
     }
 
-    public ZugValueObject(String from, String to) {
+    public HalbzugValueObject(String from, String to) {
         this(new PositionValueObject(from), new PositionValueObject(to));
     }
 
-    public ZugValueObject(String fromTo) {
+    public HalbzugValueObject(String fromTo) {
         this(fromTo.split("-")[0], fromTo.split("-")[1]);
     }
 

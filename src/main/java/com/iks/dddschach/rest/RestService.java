@@ -5,7 +5,7 @@ import com.iks.dddschach.api.SchachspielApi;
 import com.iks.dddschach.domain.FarbeEnum;
 import com.iks.dddschach.domain.SchachbrettValueObject;
 import com.iks.dddschach.domain.SpielIdValueObject;
-import com.iks.dddschach.domain.ZugValueObject;
+import com.iks.dddschach.domain.HalbzugValueObject;
 import com.webcohesion.enunciate.metadata.rs.ResponseCode;
 import com.webcohesion.enunciate.metadata.rs.StatusCodes;
 import org.glassfish.jersey.server.ManagedAsync;
@@ -110,7 +110,7 @@ public class RestService {
         if (zug == null) {
             throw new BadRequestException("Missing form parameter 'move'");
         }
-        return fuehreZugAus(spielId, new ZugValueObject(zug));
+        return fuehreZugAus(spielId, new HalbzugValueObject(zug));
     }
 
 
@@ -125,13 +125,13 @@ public class RestService {
     @ManagedAsync
     public Response fuehreZugAus(
             final @NotNull @PathParam("gameId") String spielId,
-            final @NotNull ZugValueObject zug) {
+            final @NotNull HalbzugValueObject zug) {
 
         log.info("Spiel " + spielId + ": Ausfuehren des Zuges " + zug);
 
         final int zugIndex;
         try {
-            zugIndex = schachspielApi.fuehreZugAus(new SpielIdValueObject(spielId), zug);
+            zugIndex = schachspielApi.fuehreHalbzugAus(new SpielIdValueObject(spielId), zug);
         }
         catch (Exception e) {
             // TODO: Detailiertere Fehlerbehandlung
@@ -147,6 +147,6 @@ public class RestService {
         UriBuilder ub = uriInfo.getAbsolutePathBuilder();
         URI location = ub.path("" + zugIndex).build();
         return Response.created(location).entity(json).build();
-    }// fuehreZugAus
+    }// fuehreHalbzugAus
 
 }

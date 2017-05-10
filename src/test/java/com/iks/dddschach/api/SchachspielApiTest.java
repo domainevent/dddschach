@@ -5,8 +5,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 
 /**
  * Created by vollmer on 09.05.17.
@@ -48,7 +46,7 @@ public class SchachspielApiTest {
                 }};
 
         final SpielIdValueObject spielId = api.neuesSpiel();
-        api.fuehreZugAus(spielId, new ZugValueObject(posFrom1, posTo1));
+        api.fuehreHalbzugAus(spielId, new HalbzugValueObject(posFrom1, posTo1));
         final SchachbrettValueObject actual = api.schachBrett(spielId);
 
         Assert.assertEquals(expected, actual);
@@ -58,23 +56,23 @@ public class SchachspielApiTest {
     @Test
     public void fuehreZweiGueltigeZuegeAus() throws Exception {
         final SpielIdValueObject spielId = api.neuesSpiel();
-        api.fuehreZugAus(spielId, new ZugValueObject("e2-e4"));
-        api.fuehreZugAus(spielId, new ZugValueObject("d7-d5"));
+        api.fuehreHalbzugAus(spielId, new HalbzugValueObject("e2-e4"));
+        api.fuehreHalbzugAus(spielId, new HalbzugValueObject("d7-d5"));
     }
 
 
     @Test(expected = Exception.class)
     public void ungueltigeZuegeZweimalGleicherSpieler() throws Exception {
         final SpielIdValueObject spielId = api.neuesSpiel();
-        api.fuehreZugAus(spielId, new ZugValueObject("e2-e4"));
-        api.fuehreZugAus(spielId, new ZugValueObject("e4-e5"));
+        api.fuehreHalbzugAus(spielId, new HalbzugValueObject("e2-e4"));
+        api.fuehreHalbzugAus(spielId, new HalbzugValueObject("e4-e5"));
     }
 
 
     @Test(expected = Exception.class)
     public void ungueltigerZugKeineSpielfigur() throws Exception {
         final SpielIdValueObject spielId = api.neuesSpiel();
-        api.fuehreZugAus(spielId, new ZugValueObject("e3-e4"));
+        api.fuehreHalbzugAus(spielId, new HalbzugValueObject("e3-e4"));
     }
 
 }
