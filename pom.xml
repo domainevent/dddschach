@@ -64,7 +64,6 @@
                 </configuration>
             </plugin>
 
-
             <plugin>
                 <groupId>com.ruleoftech</groupId>
                 <artifactId>markdown-page-generator-plugin</artifactId>
@@ -84,10 +83,6 @@
                     <outputEncoding>ISO-8859-15</outputEncoding>
                 </configuration>
             </plugin>
-
-
-
-
 
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
