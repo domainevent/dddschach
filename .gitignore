@@ -6,6 +6,8 @@
 
 # Maven #
 target/
+src/main/webapp/doc/
+src/main/webapp/README.html
 
 # Apple #
 .DS_Store
