@@ -9,7 +9,7 @@ import static com.iks.dddschach.domain.Position.HorCoord;
 
 
 /**
- * Created by vollmer on 05.05.17.
+ * Beinhaltet die Stellung von Figuren auf dem Schachbrett
  */
 public class Schachbrett extends ValueObject {
 

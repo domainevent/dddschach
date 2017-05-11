@@ -4,6 +4,9 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
 
 
+/**
+ * Eine Schachfigur repräsentiert durch den Typ (Bauer, Turm, etc.) und deren Farbe (schwarz, weiß)
+ */
 @XmlType
 public class Spielfigur extends ValueObject {
 

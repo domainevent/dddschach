@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 
 /**
- * Created by vollmer on 07.05.17.
+ * Basisklasse von Value-Objekten
  */
 public class ValueObject {
 

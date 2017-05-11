@@ -3,6 +3,9 @@ package com.iks.dddschach.domain;
 import javax.xml.bind.annotation.XmlType;
 
 
+/**
+ * Halbzug
+ */
 @XmlType
 public class Halbzug extends ValueObject {
 

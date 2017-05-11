@@ -5,9 +5,15 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
 
 
+/**
+ * Repräsentiert eine Schachbrett-Koordinate
+ */
 @XmlType
 public class Position extends ValueObject {
 
+    /**
+     * Die horizontale Koordinate des Schachbretts (A-H)
+     */
     @XmlEnum
     public enum HorCoord {
         A, B, C, D, E, F, G, H;
@@ -18,7 +24,9 @@ public class Position extends ValueObject {
         }
     }
 
-
+    /**
+     * Die vertikale Koordinate des Schachbretts (1-8)
+     */
     @XmlEnum
     public enum VertCoord {
         _1, _2, _3, _4, _5, _6, _7, _8;

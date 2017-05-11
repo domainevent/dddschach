@@ -35,7 +35,7 @@ public class RestService {
 
     /**
      * Ueberprueft, ob die Anwendung aktiv ist
-     * @return eine Bestaetigungsmeldung mit aktuellem Datum und Uhrzeit
+     * @return eine Bestätigungsmeldung mit aktuellem Datum und Uhrzeit
      */
     @GET
     @Path("isalive")
@@ -95,7 +95,7 @@ public class RestService {
     /**
      * Fuehrt einen Schach-Zug in der Schachpartie mit der Id <code>spielId</code> aus. Der Zug
      * hat die Syntax [A-Ha-h]-[1-8], Beispiel: "b1-c3"
-     * @param zug ein Schach-Zug repraesentiert als String
+     * @param zug ein Schach-Zug repräsentiert als String
      */
     @POST
     @Path("games/{gameId}/moves")
