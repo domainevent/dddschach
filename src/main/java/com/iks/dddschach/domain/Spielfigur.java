@@ -10,6 +10,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType
 public class Spielfigur extends ValueObject {
 
+    /**
+     * Typ einer Schachfigur (Läufer, Pferd, etc.)
+     */
     @XmlEnum
     public enum FigureEnum {
         KOENIG, DAME, TURM, LAEUFER, PFERD, BAUER;

@@ -4,7 +4,7 @@ import java.util.UUID;
 
 
 /**
- * Eine universelle eindeutige Id eines Schachspiels
+ * Eine universelle (weltweit) eindeutige Id eines Schachspiels.
  */
 public class SpielId extends ValueObject {
 
