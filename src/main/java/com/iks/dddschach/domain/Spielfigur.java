@@ -1,7 +1,5 @@
 package com.iks.dddschach.domain;
 
-import com.webcohesion.enunciate.metadata.DocumentationExample;
-
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
 
@@ -23,10 +21,10 @@ public class Spielfigur extends ValueObject {
         DAME,
         /** Turm */
         TURM,
-        /** Läufer oder  */
+        /** Läufer  */
         LAEUFER,
-        /** Springer, Pferd */
-        PFERD,
+        /** Springer bzw. Pferd */
+        SPRINGER,
         /** Bauer */
         BAUER;
 
@@ -36,7 +34,7 @@ public class Spielfigur extends ValueObject {
                 case DAME:    return 'D';
                 case TURM:    return 'T';
                 case LAEUFER: return 'L';
-                case PFERD:   return 'P';
+                case SPRINGER: return 'S';
                 case BAUER:   return 'B';
             }
             throw new IllegalArgumentException("Unexpected enum " + this);
