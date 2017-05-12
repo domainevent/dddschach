@@ -10,7 +10,14 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType
 public class Halbzug extends ValueObject {
 
+    /**
+     * Startposition des Halbzuges
+     */
     public final Position from;
+
+    /**
+     * Zielposition des Halbzuges
+     */
     public final Position to;
 
 

@@ -8,7 +8,10 @@ import javax.xml.bind.annotation.XmlEnum;
  */
 @XmlEnum
 public enum FarbeEnum {
-    WEISS, SCHWARZ;
+    /** weiß  */
+    WEISS,
+    /** schwarz */
+    SCHWARZ;
 
     public Character abbreviation() {
         switch (this) {
@@ -19,6 +22,10 @@ public enum FarbeEnum {
         }
     }
 
+
+    /**
+     * Liefert die jeweils andere Farbe
+     */
     public FarbeEnum swap() {
         switch (this) {
             case WEISS: return SCHWARZ;

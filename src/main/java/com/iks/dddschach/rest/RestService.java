@@ -36,7 +36,7 @@ public class RestService {
 
     /**
      * Ueberprueft, ob die Anwendung aktiv ist
-     * @return eine Bestätigungsmeldung mit aktuellem Datum und Uhrzeit
+     * @return Eine Bestätigungsmeldung mit aktuellem Datum und Uhrzeit
      */
     @GET
     @Path("isalive")

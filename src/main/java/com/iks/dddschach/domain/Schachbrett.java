@@ -12,7 +12,7 @@ import static com.iks.dddschach.domain.Position.HorCoord;
 
 
 /**
- * Beinhaltet die Stellung von Figuren auf dem Schachbrett
+ * Beinhaltet die Stellung der Figuren auf dem Schachbrett
  */
 @XmlType
 public class Schachbrett extends ValueObject {

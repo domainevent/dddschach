@@ -13,26 +13,44 @@ import javax.xml.bind.annotation.XmlType;
 public class Spielfigur extends ValueObject {
 
     /**
-     * Typ einer Schachfigur (Läufer, PferdDame, etc.)
+     * Typ einer Schachfigur (Läufer, Springer, Dame, etc.)
      */
     @XmlEnum
     public enum FigureEnum {
-        KOENIG, DAME, TURM, LAEUFER, PFERD, BAUER;
+        /** König */
+        KOENIG,
+        /** Dame */
+        DAME,
+        /** Turm */
+        TURM,
+        /** Läufer oder  */
+        LAEUFER,
+        /** Springer, Pferd */
+        PFERD,
+        /** Bauer */
+        BAUER;
 
         public Character abbreviation() {
             switch (this) {
-                case KOENIG: return 'K';
-                case DAME: return 'D';
-                case TURM: return 'T';
+                case KOENIG:  return 'K';
+                case DAME:    return 'D';
+                case TURM:    return 'T';
                 case LAEUFER: return 'L';
-                case PFERD: return 'P';
-                case BAUER: return 'B';
+                case PFERD:   return 'P';
+                case BAUER:   return 'B';
             }
             throw new IllegalArgumentException("Unexpected enum " + this);
         }
     };
 
+    /**
+     * Typ der Spielfigur (Dame, König, etc.)
+     */
     public final FigureEnum figure;
+
+    /**
+     * Farbe der Spielfigur (schwarz, weiß)
+     */
     public final FarbeEnum color;
 
 

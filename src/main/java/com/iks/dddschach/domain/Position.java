@@ -6,13 +6,13 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * Repräsentiert eine Schachbrett-Koordinate (
+ * Repräsentiert eine Schachbrett-Koordinate (z.B. b4)
  */
 @XmlType
 public class Position extends ValueObject {
 
     /**
-     * Die horizontale Koordinate des Schachbretts (A-H)
+     * Die horizontale Koordinate des Schachbretts (a-h)
      */
     @XmlEnum
     public enum HorCoord {

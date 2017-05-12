@@ -23,7 +23,14 @@ public interface SchachspielApi {
 
 
     /**
-     * Fuehrt einen Halbzug in der Schachpartie mit der Id <code>spielId</code> aus
+     * Fuehrt einen Halbzug in der Schachpartie mit der Id <code>spielId</code> aus. Der Halbzug
+     * ist nur dann gültig, falls sich auf der Startpositon des Halbzuges eine Figur befindet
+     * und falls diese Figur die korrekte Farbe hat. Schwarz und Weiß müssen sich abwechseln;
+     * beginnend mit Weiß.
+     * Befindet sich auf der Zielposition bereits eine Spielfigur, wird diese geschlagen.
+     *
+     * Hinweis: Eine komplette Validation nach den Schachregeln soll im Rahmen des DDD-Workshops
+     * nicht implementiert werden.
      *
      * @param spielId (eindeutige) ID, die anfangs durch <code>neuesSpiel</code> erzeugt worden ist.
      * @param halbzug
