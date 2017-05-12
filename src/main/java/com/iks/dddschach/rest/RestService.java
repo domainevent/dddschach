@@ -2,7 +2,6 @@ package com.iks.dddschach.rest;
 
 import org.apache.log4j.Logger;
 import com.iks.dddschach.api.SchachspielApi;
-import com.iks.dddschach.domain.FarbeEnum;
 import com.iks.dddschach.domain.Schachbrett;
 import com.iks.dddschach.domain.SpielId;
 import com.iks.dddschach.domain.Halbzug;
@@ -16,10 +15,12 @@ import javax.ws.rs.core.*;
 import java.net.URI;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Optional;
 
 
 /**
- * Dieser Service dient dazu eine Schach-Partie "remote", d.h. uber das
+ * Dieser Service stellt die Möglichkeit bereit, eine Schach-Partie "remote" über das Netzwerk
+ * zu spielen.
  */
 @Path("/")
 public class RestService {
@@ -47,17 +48,17 @@ public class RestService {
 
 
     /**
-     * Erzeugt ein neues Spiel
-     * @param color FIXME: Irgendwie quatsch
+     * Erzeugt eine neue Schachpartie
+     * @param vermerk Vermerk zu diesem Spiel
      */
     @POST
     @Path("games")
     @Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
-    public SpielId neuesSpiel(@FormParam("color") FarbeEnum color) {
-        log.info("Neues Spiel, Spielerfarbe " + color);
-
+    public SpielId neuesSpiel(@FormParam("note") String vermerk) {
         try {
-            return schachspielApi.neuesSpiel();
+            final SpielId spielId = schachspielApi.neuesSpiel(Optional.ofNullable(vermerk));
+            log.info("Spiel " + spielId + ": (neu erzeugt) Vermerk '" + vermerk + "'");
+            return spielId;
         }
         catch (Exception e) {
             // TODO: Detailiertere Fehlerbehandlung
@@ -79,7 +80,7 @@ public class RestService {
             @ResponseCode( code = 500, condition = "An exception occured")
     })
     public Schachbrett schachBrett(final @NotNull @PathParam("gameId") String spielId) {
-        log.info("Spiel " + spielId +": Spielfeld mit Id " + spielId);
+        log.info("Spiel " + spielId + ": Abfrage des Spielfeldes");
 
         try {
             return schachspielApi.schachBrett(new SpielId(spielId));
@@ -91,54 +92,64 @@ public class RestService {
     }// schachBrett
 
 
-
     /**
-     * Fuehrt einen Schach-Zug in der Schachpartie mit der Id <code>spielId</code> aus. Der Zug
-     * hat die Syntax [A-Ha-h]-[1-8], Beispiel: "b1-c3"
-     * @param zug ein Schach-Zug repräsentiert als String
+     * Fuehrt einen Schach-Halbzug innerhalb der Schachpartie mit der Id <code>spielId</code> aus.
+     * Der Halbzug hat die Syntax [A-Ha-h]-[1-8], Beispiel: "b1-c3"
+     * @param halbzug ein Schach-Halbzug repräsentiert als String
+     * @return {@link Response} enthält den Index des Halbzuges in der Form z.B.
+     * <pre>
+     *     {
+     *         "index":3
+     *     }
+     * </pre>
      */
     @POST
     @Path("games/{gameId}/moves")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
     @ManagedAsync
-    public Response fuehreZugAus(
+    public Response fuehreHalbzugAus(
             final @NotNull @PathParam("gameId") String spielId,
-            final @NotNull @FormParam("move") String zug) {
+            final @NotNull @FormParam("move") String halbzug) {
 
-        log.info("Spiel " + spielId + ": Ausfuehren des Zuges " + zug);
-        if (zug == null) {
+        log.info("Spiel " + spielId + ": Ausfuehren des Halbzuges " + halbzug);
+        if (halbzug == null) {
             throw new BadRequestException("Missing form parameter 'move'");
         }
-        return fuehreZugAus(spielId, new Halbzug(zug));
+        return fuehreHalbzugAus(spielId, new Halbzug(halbzug));
     }
 
 
     /**
-     * Fuehrt einen Schach-Zug in der Schachpartie mit der Id <code>spielId</code> aus.
-     * @param zug der auszufuehrende Zug
+     * Fuehrt einen Schach-Halbzug innerhalb der Schachpartie mit der Id <code>spielId</code> aus.
+     * @param halbzug der auszufuehrende Halbzug
+     * @return {@link Response} enthält den Index des Halbzuges in der Form z.B.
+     * <pre>
+     *     {
+     *         "index":3
+     *     }
+     * </pre>
      */
     @POST
     @Path("games/{gameId}/moves")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @ManagedAsync
-    public Response fuehreZugAus(
+    public Response fuehreHalbzugAus(
             final @NotNull @PathParam("gameId") String spielId,
-            final @NotNull Halbzug zug) {
+            final @NotNull Halbzug halbzug) {
 
-        log.info("Spiel " + spielId + ": Ausfuehren des Zuges " + zug);
+        log.info("Spiel " + spielId + ": Ausfuehren des Zuges " + halbzug);
 
         final int zugIndex;
         try {
-            zugIndex = schachspielApi.fuehreHalbzugAus(new SpielId(spielId), zug);
+            zugIndex = schachspielApi.fuehreHalbzugAus(new SpielId(spielId), halbzug);
         }
         catch (Exception e) {
             // TODO: Detailiertere Fehlerbehandlung
             throw new ServerErrorException(Response.Status.INTERNAL_SERVER_ERROR, e);
         }
 
-        log.info("Der " + zugIndex + ". Zug wurde erfolgreich ausgefuehrt.");
+        log.debug("Spiel " + spielId + ": Der " + zugIndex + ". Halbzug wurde erfolgreich ausgefuehrt.");
 
         // Erzeugen der JSON-Antwort und des Location-Headers:
         HashMap<String, Object> json = new HashMap<String, Object>() {{

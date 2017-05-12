@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * Repräsentiert eine Schachbrett-Koordinate
+ * Repräsentiert eine Schachbrett-Koordinate (z.B. e2)
  */
 @XmlType
 public class Position extends ValueObject {

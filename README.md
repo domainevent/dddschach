@@ -1,6 +1,6 @@
 # DDD-Schach
 ### Implementierungsumgebung für Erstellung eines Schach-Servers
-Im Rahmen einer DDD-Schulung besteht die Aufgabe hier darin, einen Schachserver zu
+Im Rahmen unserer DDD-Schulung besteht die Aufgabe hier darin, einen Schachserver zu
 implementieren. Der Server soll beliebig viele Schach-Partien parallel verarbeiten 
 können. 
 
