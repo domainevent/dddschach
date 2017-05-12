@@ -1,5 +1,7 @@
 package com.iks.dddschach.domain;
 
+import com.webcohesion.enunciate.metadata.DocumentationExample;
+
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
 
@@ -11,7 +13,7 @@ import javax.xml.bind.annotation.XmlType;
 public class Spielfigur extends ValueObject {
 
     /**
-     * Typ einer Schachfigur (Läufer, Pferd, etc.)
+     * Typ einer Schachfigur (Läufer, PferdDame, etc.)
      */
     @XmlEnum
     public enum FigureEnum {
@@ -29,7 +31,6 @@ public class Spielfigur extends ValueObject {
             throw new IllegalArgumentException("Unexpected enum " + this);
         }
     };
-
 
     public final FigureEnum figure;
     public final FarbeEnum color;

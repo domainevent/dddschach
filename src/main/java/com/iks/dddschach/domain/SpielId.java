@@ -1,11 +1,13 @@
 package com.iks.dddschach.domain;
 
+import javax.xml.bind.annotation.XmlType;
 import java.util.UUID;
 
 
 /**
  * Eine universelle (weltweit) eindeutige Id eines Schachspiels.
  */
+@XmlType
 public class SpielId extends ValueObject {
 
     public final String id;

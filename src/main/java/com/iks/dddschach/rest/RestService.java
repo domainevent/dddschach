@@ -50,6 +50,7 @@ public class RestService {
     /**
      * Erzeugt eine neue Schachpartie
      * @param vermerk Vermerk zu diesem Spiel
+     * @return Eine (weltweit) eindeutige Id dieses Spiels
      */
     @POST
     @Path("games")
@@ -68,8 +69,8 @@ public class RestService {
 
 
     /**
-     * Returns the figure at the position (<code>horCoord</code>, <code>vertCord</code>)
-     * @return the chess figure at the given coordinates
+     * Liefert das Schachbrett, besser: die Informationen, welche Spielfiguren wo stehen.
+     * @return das Schachbrett einschließlich seiner Figuren
      */
     @GET
     @Path("games/{gameId}/board")
