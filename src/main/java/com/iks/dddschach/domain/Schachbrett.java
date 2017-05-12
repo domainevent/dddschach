@@ -1,6 +1,9 @@
 package com.iks.dddschach.domain;
 
 
+import com.webcohesion.enunciate.metadata.DocumentationExample;
+
+import javax.xml.bind.annotation.XmlType;
 import java.util.Arrays;
 
 import static com.iks.dddschach.domain.Position.VertCoord._1;
@@ -11,13 +14,10 @@ import static com.iks.dddschach.domain.Position.HorCoord;
 /**
  * Beinhaltet die Stellung von Figuren auf dem Schachbrett
  */
+@XmlType
 public class Schachbrett extends ValueObject {
 
     protected final Spielfigur[][] board;
-
-    protected Schachbrett(Spielfigur[][] board) {
-        this.board = board;
-    }
 
 
     /**
@@ -29,12 +29,25 @@ public class Schachbrett extends ValueObject {
 
     /**
      * Kopier-Konstruktor
-     * @param toCopy
+     * @param toCopy das zu kopierenden {@link Schachbrett}
      */
     public Schachbrett(Schachbrett toCopy) {
         this(toCopy.getBoard());
     }
 
+    /**
+     * Assign-Konstruktor
+     * @param board das zu übernehmenden zweidimensionale Array von Spielfiguren
+     */
+    protected Schachbrett(Spielfigur[][] board) {
+        this.board = board;
+    }
+
+    /**
+     * Ein zweidimensionales Array (real 8x8) von Spielfiguren
+     * @see {@link Spielfigur}
+     */
+    @DocumentationExample(exclude = true)
     public Spielfigur[][] getBoard() {
         final Spielfigur[][] copy =
                 new Spielfigur[HorCoord.values().length][VertCoord.values().length];
