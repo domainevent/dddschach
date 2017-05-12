@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlEnum;
 
 
 /**
- * Farbe einer Schachfigur oder die eines Spielers
+ * Farbe (schwarz, weiß) einer Schachfigur oder die eines Spielers
  */
 @XmlEnum
 public enum FarbeEnum {
