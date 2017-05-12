@@ -1,4 +1,4 @@
-package com.iks.dddschach.api;
+package com.iks.dddschach.util;
 
 import com.iks.dddschach.domain.Position.HorCoord;
 import com.iks.dddschach.domain.Schachbrett;
@@ -9,12 +9,11 @@ import static com.iks.dddschach.domain.Position.HorCoord.*;
 import static com.iks.dddschach.domain.Position.VertCoord.*;
 import static com.iks.dddschach.domain.Spielfigur.FigureEnum.*;
 
+public class SampleDataFactory {
 
-/**
- * Created by vollmer on 09.05.17.
- */
-public class MockDataFactory {
-
+    /**
+     * Erzeugt ein initiales Schachbrett
+     */
     public static Schachbrett createInitialesSchachbrett() {
 
         return new Schachbrett() {{

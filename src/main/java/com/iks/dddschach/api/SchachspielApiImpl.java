@@ -4,6 +4,8 @@ import com.iks.dddschach.domain.Schachbrett;
 import com.iks.dddschach.domain.SpielId;
 import com.iks.dddschach.domain.Halbzug;
 
+import java.util.Optional;
+
 
 /**
  * Created by javacook on 21.04.17.
@@ -11,14 +13,14 @@ import com.iks.dddschach.domain.Halbzug;
 public class SchachspielApiImpl implements SchachspielApi {
 
     @Override
-    public SpielId neuesSpiel() {
+    public SpielId neuesSpiel(Optional<String> vermerk) {
         // TODO: Zu implementieren
-        return new SpielId("spielIdDummy");
+        return new SpielId();
     }
 
 
     @Override
-    public int fuehreHalbzugAus(SpielId spielId, Halbzug zug) {
+    public int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug) {
         // TODO: Zu implementieren
         return -1;
     }

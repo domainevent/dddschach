@@ -4,6 +4,8 @@ import com.iks.dddschach.domain.Schachbrett;
 import com.iks.dddschach.domain.SpielId;
 import com.iks.dddschach.domain.Halbzug;
 
+import java.util.Optional;
+
 
 /**
  * TODO: Gewuenscht ist, die Exceptions noch genauer zu klassifizieren
@@ -13,21 +15,24 @@ public interface SchachspielApi {
     /**
      * Erzeugt ein neues Spiel
      *
-     * @return eine einedeutige ID
+     * @param vermerk eine beliebiger Vermerk zu dieser Partie, z.B. Spieler, Ort, etc.
+     * @return eine weltweit eindeutige Id
      * @throws Exception falls keine neues Spiel erzeugt werden konnte (technische Probleme)
      */
-    SpielId neuesSpiel() throws Exception;
+    SpielId neuesSpiel(Optional<String> vermerk) throws Exception;
+
 
     /**
      * Fuehrt einen Halbzug in der Schachpartie mit der Id <code>spielId</code> aus
      *
      * @param spielId (eindeutige) ID, die anfangs durch <code>neuesSpiel</code> erzeugt worden ist.
-     * @param zug
+     * @param halbzug
      * @return der Index des Zuges (beginnend mit 1)
      * @throws Exception falls der Zug ungueltig ist oder das Spiel mit der Id <code>spielId</code>
      * nicht existiert
      */
-    int fuehreHalbzugAus(SpielId spielId, Halbzug zug) throws Exception;
+    int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug) throws Exception;
+
 
     /**
      * Liefert das aktuelle Schachbrett zum Spiel mit der Id <code>spielId</code>
