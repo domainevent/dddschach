@@ -46,5 +46,8 @@ Der REST-Service läast sich mit <tt>mvn tomcat7:run</tt> starten.
 ##### Dokumentation der REST-Schnittstelle
 <a href="http://localhost:8080/dddschach/doc">http://localhost:8080/dddschach/doc</a>
 
+### Spielen mit der ChessGUI
+Unter 
+
 
 Viel Spaß...

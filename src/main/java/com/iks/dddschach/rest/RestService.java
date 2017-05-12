@@ -58,7 +58,7 @@ public class RestService {
     public SpielId neuesSpiel(@FormParam("note") String vermerk) {
         try {
             final SpielId spielId = schachspielApi.neuesSpiel(Optional.ofNullable(vermerk));
-            log.info("Spiel " + spielId + ": (neu erzeugt) Vermerk '" + vermerk + "'");
+            log.info("SpielId=" + spielId + ": (neu erzeugt) Vermerk '" + vermerk + "'");
             return spielId;
         }
         catch (Exception e) {
@@ -81,7 +81,7 @@ public class RestService {
             @ResponseCode( code = 500, condition = "An exception occured")
     })
     public Schachbrett schachBrett(final @NotNull @PathParam("gameId") String spielId) {
-        log.info("Spiel " + spielId + ": Abfrage des Spielfeldes");
+        log.info("SpielId=" + spielId + ": Abfrage des Spielfeldes");
 
         try {
             return schachspielApi.schachBrett(new SpielId(spielId));
@@ -113,7 +113,6 @@ public class RestService {
             final @NotNull @PathParam("gameId") String spielId,
             final @NotNull @FormParam("move") String halbzug) {
 
-        log.info("Spiel " + spielId + ": Ausfuehren des Halbzuges " + halbzug);
         if (halbzug == null) {
             throw new BadRequestException("Missing form parameter 'move'");
         }
@@ -139,7 +138,7 @@ public class RestService {
             final @NotNull @PathParam("gameId") String spielId,
             final @NotNull Halbzug halbzug) {
 
-        log.info("Spiel " + spielId + ": Ausfuehren des Zuges " + halbzug);
+        log.info("SpielId=" + spielId + ": Ausfuehren des Halbzuges " + halbzug);
 
         final int zugIndex;
         try {
@@ -150,7 +149,7 @@ public class RestService {
             throw new ServerErrorException(Response.Status.INTERNAL_SERVER_ERROR, e);
         }
 
-        log.debug("Spiel " + spielId + ": Der " + zugIndex + ". Halbzug wurde erfolgreich ausgefuehrt.");
+        log.debug("SpielId=" + spielId + ": Der " + zugIndex + ". Halbzug wurde erfolgreich ausgefuehrt.");
 
         // Erzeugen der JSON-Antwort und des Location-Headers:
         HashMap<String, Object> json = new HashMap<String, Object>() {{

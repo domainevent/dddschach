@@ -42,7 +42,14 @@ public class Position extends ValueObject {
     }
 
 
+    /**
+     * Die horizontale Koordinate des Schachbretts (a-h)
+     */
     public final HorCoord horCoord;
+
+    /**
+     * Die vertikale Koordinate des Schachbretts (1-8)
+     */
     public final VertCoord vertCoord;
 
     public Position(HorCoord horCoord, VertCoord vertCoord) {
