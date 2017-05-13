@@ -47,7 +47,11 @@ Der REST-Service läast sich mit <tt>mvn tomcat7:run</tt> starten.
 <a href="http://localhost:8080/dddschach/doc">http://localhost:8080/dddschach/doc</a>
 
 ### Spielen mit der ChessGUI
-Unter 
-
+Auf Github gibt es das Projekt
+<a href="https://github.com/domainevent/chessgui">ChessGUI</a> zum Download.
+Es lässt sich starten mit <tt>mvn exec:java</tt> und verbindet sich automatisch mit dem 
+dddschach-Server unter <tt>http://localhost:8080/dddschach/api</tt>. 
+Startet man den ChessGUI zweimal, lässt sich eine Schachpartie gegeneinander spielen 
+- natürlich erst nachdem dddschach richtig implementiert worden ist :-)
 
 Viel Spaß...
