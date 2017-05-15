@@ -51,7 +51,7 @@ findet Ihr eine übersichtliche Dokumentation der REST-Schnittstelle (erstellt m
 ### Spielen mit ChessGUI
 Auf Github gibt es das Projekt
 <a href="https://github.com/domainevent/chessgui">ChessGUI</a> zum Download.
-Es lässt sich starten mit <tt>mvn exec:java</tt>. Startet man ChessGUI zweimal, 
+Es lässt sich starten mit <tt>mvn install exec:java</tt>. Startet man ChessGUI zweimal, 
 lässt sich eine Schachpartie gegeneinander spielen
 - natürlich erst nachdem dddschach richtig implementiert worden ist :-)
 
