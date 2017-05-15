@@ -51,7 +51,7 @@ findet Ihr eine übersichtliche Dokumentation der REST-Schnittstelle (erstellt m
 ### Spielen mit ChessGUI
 Auf Github gibt es das Projekt
 <a href="https://github.com/domainevent/chessgui">ChessGUI</a> zum Download.
-Es lässt sich starten mit <tt>mvn install exec:java</tt>. Startet man ChessGUI zweimal, 
+Es lässt sich starten mit <tt>mvn exec:java</tt>. Startet man ChessGUI zweimal, 
 lässt sich eine Schachpartie gegeneinander spielen
 - natürlich erst nachdem dddschach richtig implementiert worden ist :-)
 
@@ -67,5 +67,9 @@ beiden ChessGUIs in regelmäßigen Abständen ihre Stellungen.
 **Hinweis:** ChessGUI verbindet sich per Default mit dem 
 dddschach-Server unter <tt>http://localhost:8080/dddschach/api</tt>. 
 Dies lässt sich ggf. anpassen mit <tt>mvn exec:java -Dserver=...</tt> 
+
+**Fehler:** Es kam einmal vor, dass beim Start eine  <tt>ClassNotFoundException: 
+com.javacook.chessgui.ChessGUI</tt> auftrat. Dann half ein 
+<tt>mvn clean install</tt> vor <tt>mvn exec:java</tt>.
 
 Viel Spaß...
