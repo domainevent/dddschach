@@ -3,6 +3,7 @@ package com.iks.dddschach.api;
 import com.iks.dddschach.domain.Schachbrett;
 import com.iks.dddschach.domain.SpielId;
 import com.iks.dddschach.domain.Halbzug;
+import com.iks.dddschach.util.SampleDataFactory;
 
 import java.util.Optional;
 
@@ -29,7 +30,7 @@ public class SchachspielApiImpl implements SchachspielApi {
     @Override
     public Schachbrett schachBrett(SpielId gameId) {
         // TODO: Zu implementieren
-        return new Schachbrett();
+        return SampleDataFactory.createInitialesSchachbrett();
     }
 
 }
