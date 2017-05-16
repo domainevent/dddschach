@@ -17,7 +17,7 @@ import static com.iks.dddschach.domain.Position.HorCoord;
 @XmlType
 public class Schachbrett extends ValueObject {
 
-    protected final Spielfigur[][] brett;
+    protected final Spielfigur[][] board;
 
 
     /**
@@ -32,15 +32,15 @@ public class Schachbrett extends ValueObject {
      * @param toCopy das zu kopierenden {@link Schachbrett}
      */
     public Schachbrett(Schachbrett toCopy) {
-        this(toCopy.getBrett());
+        this(toCopy.getBoard());
     }
 
     /**
      * Assign-Konstruktor
-     * @param brett das zu übernehmenden zweidimensionale Array von Spielfiguren
+     * @param board das zu übernehmenden zweidimensionale Array von Spielfiguren
      */
-    protected Schachbrett(Spielfigur[][] brett) {
-        this.brett = brett;
+    protected Schachbrett(Spielfigur[][] board) {
+        this.board = board;
     }
 
     /**
@@ -48,23 +48,23 @@ public class Schachbrett extends ValueObject {
      * @see {@link Spielfigur}
      */
     @DocumentationExample(exclude = true)
-    public Spielfigur[][] getBrett() {
+    public Spielfigur[][] getBoard() {
         final Spielfigur[][] copy =
                 new Spielfigur[HorCoord.values().length][VertCoord.values().length];
         for (int i = 0; i < HorCoord.values().length; i++) {
             for (int j = 0; j < VertCoord.values().length; j++) {
-                copy[i][j] = brett[i][j];
+                copy[i][j] = board[i][j];
             }
         }
         return copy;
     }
 
     protected void setSchachfigurAnPosition(Position position, Spielfigur figur) {
-        brett[position.horCoord.ordinal()][position.vertCoord.ordinal()] = figur;
+        board[position.horCoord.ordinal()][position.vertCoord.ordinal()] = figur;
     }
 
     protected Spielfigur getSchachfigurAnPosition(Position position) {
-        return brett[position.horCoord.ordinal()][position.vertCoord.ordinal()];
+        return board[position.horCoord.ordinal()][position.vertCoord.ordinal()];
     }
 
     protected void setSchachfigurAnPosition(HorCoord h, VertCoord v,
@@ -81,13 +81,13 @@ public class Schachbrett extends ValueObject {
 
         Schachbrett that = (Schachbrett) o;
 
-        return Arrays.deepEquals(brett, that.brett);
+        return Arrays.deepEquals(board, that.board);
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + Arrays.deepHashCode(brett);
+        result = 31 * result + Arrays.deepHashCode(board);
         return result;
     }
 
@@ -99,7 +99,7 @@ public class Schachbrett extends ValueObject {
         for(Position.VertCoord vertCoord : Position.VertCoord.valuesInverted()) {
             boardAsStr += "|";
             for(Position.HorCoord horCoord : Position.HorCoord.values()) {
-                final Spielfigur figure = brett[horCoord.ordinal()][vertCoord.ordinal()];
+                final Spielfigur figure = board[horCoord.ordinal()][vertCoord.ordinal()];
                 boardAsStr += figure == null? "  " : figure.abbreviation();
                 boardAsStr += "|";
             }
