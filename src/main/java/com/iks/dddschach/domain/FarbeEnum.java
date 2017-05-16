@@ -1,5 +1,8 @@
 package com.iks.dddschach.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import javax.xml.bind.annotation.XmlEnum;
 
 
@@ -13,25 +16,23 @@ public enum FarbeEnum {
     /** schwarz */
     SCHWARZ;
 
+    @JsonValue
     public Character abbreviation() {
         switch (this) {
             case WEISS: return 'w';
-            case SCHWARZ: return 's';
+            case SCHWARZ: return 'b';
             default:
                 throw new IllegalArgumentException("Unexpected enum " + this);
         }
     }
 
-
-    /**
-     * Liefert die jeweils andere Farbe
-     */
-    public FarbeEnum swap() {
-        switch (this) {
-            case WEISS: return SCHWARZ;
-            case SCHWARZ: return WEISS;
-            default:
-                throw new IllegalArgumentException("Unexpected enum " + this);
+    @JsonCreator
+    public FarbeEnum fromAbbrev(Character c) {
+        switch (c) {
+            case 'w': return WEISS;
+            case 'b': return SCHWARZ;
         }
+        throw new IllegalArgumentException("Unexpected abbreviation character " + this);
     }
+
 };
