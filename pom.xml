@@ -13,7 +13,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <commons-lang.version>3.5</commons-lang.version>
-        <akka.version>2.4.17</akka.version>
         <enunciate.version>2.9.1</enunciate.version>
         <jaxws-ri-rt.version>2.2.10</jaxws-ri-rt.version>
         <jackson.version>2.8.8</jackson.version>
