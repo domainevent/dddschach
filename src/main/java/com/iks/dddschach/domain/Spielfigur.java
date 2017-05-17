@@ -1,23 +1,15 @@
 package com.iks.dddschach.domain;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlType;
-
-
 /**
  * Eine Schachfigur repräsentiert durch den Typ (Bauer, Turm, etc.) und deren Farbe (schwarz, weiß)
  */
-@XmlType
 public class Spielfigur extends ValueObject {
 
     /**
      * Typ einer Schachfigur (Läufer, Springer, Dame, etc.)
      */
-    @XmlEnum
-    public enum FigureEnum {
+    public enum FigurenTyp implements EnumObject<FigurenTyp, Character> {
+
         /** König */
         KOENIG,
         /** Dame */
@@ -31,7 +23,6 @@ public class Spielfigur extends ValueObject {
         /** Bauer */
         BAUER;
 
-        @JsonValue
         public Character abbreviation() {
             switch (this) {
                 case KOENIG:  return 'K';
@@ -44,8 +35,7 @@ public class Spielfigur extends ValueObject {
             throw new IllegalArgumentException("Unexpected enum " + this);
         }
 
-        @JsonCreator
-        public FigureEnum fromAbbrev(Character c) {
+        public FigurenTyp fromAbbrev(Character c) {
             switch (c) {
                 case 'K': return KOENIG;
                 case 'Q': return DAME;
@@ -62,12 +52,12 @@ public class Spielfigur extends ValueObject {
     /**
      * Typ der Spielfigur (Dame, König, etc.)
      */
-    public final FigureEnum figure;
+    public final FigurenTyp figure;
 
     /**
      * Farbe der Spielfigur (schwarz, weiß)
      */
-    public final FarbeEnum color;
+    public final Farbe color;
 
 
     public Spielfigur() {
@@ -75,7 +65,7 @@ public class Spielfigur extends ValueObject {
     }
 
 
-    public Spielfigur(FigureEnum figure, FarbeEnum color) {
+    public Spielfigur(FigurenTyp figure, Farbe color) {
         this.figure = figure;
         this.color = color;
     }

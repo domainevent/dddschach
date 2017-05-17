@@ -1,6 +1,6 @@
 package com.iks.dddschach.api;
 
-import com.iks.dddschach.domain.Schachbrett;
+import com.iks.dddschach.domain.Spielbrett;
 import com.iks.dddschach.domain.SpielId;
 import com.iks.dddschach.domain.Halbzug;
 import com.iks.dddschach.util.SampleDataFactory;
@@ -28,7 +28,7 @@ public class SchachspielApiImpl implements SchachspielApi {
 
 
     @Override
-    public Schachbrett schachBrett(SpielId gameId) {
+    public Spielbrett schachBrett(SpielId gameId) {
         // TODO: Zu implementieren
         return SampleDataFactory.createInitialesSchachbrett();
     }

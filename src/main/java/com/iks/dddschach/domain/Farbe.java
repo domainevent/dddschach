@@ -1,22 +1,15 @@
 package com.iks.dddschach.domain;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-
-import javax.xml.bind.annotation.XmlEnum;
-
-
 /**
  * Farbe (schwarz, weiß) einer Schachfigur oder die eines Spielers
  */
-@XmlEnum
-public enum FarbeEnum {
+public enum Farbe implements EnumObject<Farbe, Character> {
+
     /** weiß  */
     WEISS,
     /** schwarz */
     SCHWARZ;
 
-    @JsonValue
     public Character abbreviation() {
         switch (this) {
             case WEISS: return 'w';
@@ -26,8 +19,7 @@ public enum FarbeEnum {
         }
     }
 
-    @JsonCreator
-    public FarbeEnum fromAbbrev(Character c) {
+    public Farbe fromAbbrev(Character c) {
         switch (c) {
             case 'w': return WEISS;
             case 'b': return SCHWARZ;

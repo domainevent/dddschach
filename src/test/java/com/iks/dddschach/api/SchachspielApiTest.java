@@ -32,8 +32,8 @@ public class SchachspielApiTest {
     @Test
     public void schachBrett() throws Exception {
         final SpielId spielId = api.neuesSpiel(VERMERK);
-        final Schachbrett actual = api.schachBrett(spielId);
-        final Schachbrett expected = SampleDataFactory.createInitialesSchachbrett();
+        final Spielbrett actual = api.schachBrett(spielId);
+        final Spielbrett expected = SampleDataFactory.createInitialesSchachbrett();
         Assert.assertEquals(expected, actual);
     }
 
@@ -43,8 +43,8 @@ public class SchachspielApiTest {
         Position posFrom1 = new Position("e2");
         Position posTo1 = new Position("e4");
 
-        final Schachbrett expected =
-                new Schachbrett(SampleDataFactory.createInitialesSchachbrett()) {{
+        final Spielbrett expected =
+                new Spielbrett(SampleDataFactory.createInitialesSchachbrett()) {{
                     final Spielfigur figure1 = getSchachfigurAnPosition(posFrom1);
                     setSchachfigurAnPosition(posFrom1, null);
                     setSchachfigurAnPosition(posTo1, figure1);
@@ -52,7 +52,7 @@ public class SchachspielApiTest {
 
         final SpielId spielId = api.neuesSpiel(VERMERK);
         api.fuehreHalbzugAus(spielId, new Halbzug(posFrom1, posTo1));
-        final Schachbrett actual = api.schachBrett(spielId);
+        final Spielbrett actual = api.schachBrett(spielId);
 
         Assert.assertEquals(expected, actual);
     }

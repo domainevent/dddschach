@@ -2,13 +2,11 @@ package com.iks.dddschach.domain;
 
 
 import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlType;
 
 
 /**
  * Repräsentiert eine Schachbrett-Koordinate (z.B. b4)
  */
-@XmlType
 public class Position extends ValueObject {
 
     /**

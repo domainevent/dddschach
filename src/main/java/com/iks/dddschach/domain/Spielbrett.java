@@ -14,8 +14,7 @@ import static com.iks.dddschach.domain.Position.HorCoord;
 /**
  * Beinhaltet die Stellung der Figuren auf dem Schachbrett
  */
-@XmlType
-public class Schachbrett extends ValueObject {
+public class Spielbrett extends ValueObject {
 
     protected final Spielfigur[][] board;
 
@@ -23,15 +22,15 @@ public class Schachbrett extends ValueObject {
     /**
      * Default-Konstruktor
      */
-    public Schachbrett() {
+    public Spielbrett() {
         this(new Spielfigur[HorCoord.values().length][VertCoord.values().length]);
     }
 
     /**
      * Kopier-Konstruktor
-     * @param toCopy das zu kopierenden {@link Schachbrett}
+     * @param toCopy das zu kopierenden {@link Spielbrett}
      */
-    public Schachbrett(Schachbrett toCopy) {
+    public Spielbrett(Spielbrett toCopy) {
         this(toCopy.getBoard());
     }
 
@@ -39,7 +38,7 @@ public class Schachbrett extends ValueObject {
      * Assign-Konstruktor
      * @param board das zu übernehmenden zweidimensionale Array von Spielfiguren
      */
-    protected Schachbrett(Spielfigur[][] board) {
+    protected Spielbrett(Spielfigur[][] board) {
         this.board = board;
     }
 
@@ -68,7 +67,7 @@ public class Schachbrett extends ValueObject {
     }
 
     protected void setSchachfigurAnPosition(HorCoord h, VertCoord v,
-                                            Spielfigur.FigureEnum figur, FarbeEnum color) {
+                                            Spielfigur.FigurenTyp figur, Farbe color) {
         setSchachfigurAnPosition(new Position(h,v), new Spielfigur(figur, color));
     }
 
@@ -79,7 +78,7 @@ public class Schachbrett extends ValueObject {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
 
-        Schachbrett that = (Schachbrett) o;
+        Spielbrett that = (Spielbrett) o;
 
         return Arrays.deepEquals(board, that.board);
     }

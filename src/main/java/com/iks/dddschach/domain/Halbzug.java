@@ -1,13 +1,9 @@
 package com.iks.dddschach.domain;
 
-import javax.xml.bind.annotation.XmlType;
-
-
 /**
  * Ein Halbzug im Schach ist der Zug einer Figur, beispielsweise des Bauern von e2 nach e4.
  * Erst die Kombination mit einem Gegenzug wird im Schach als <i>Zug</i> bezeichnet.
  */
-@XmlType
 public class Halbzug extends ValueObject {
 
     /**

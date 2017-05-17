@@ -1,22 +1,22 @@
 package com.iks.dddschach.util;
 
 import com.iks.dddschach.domain.Position.HorCoord;
-import com.iks.dddschach.domain.Schachbrett;
+import com.iks.dddschach.domain.Spielbrett;
 
-import static com.iks.dddschach.domain.FarbeEnum.SCHWARZ;
-import static com.iks.dddschach.domain.FarbeEnum.WEISS;
+import static com.iks.dddschach.domain.Farbe.SCHWARZ;
+import static com.iks.dddschach.domain.Farbe.WEISS;
 import static com.iks.dddschach.domain.Position.HorCoord.*;
 import static com.iks.dddschach.domain.Position.VertCoord.*;
-import static com.iks.dddschach.domain.Spielfigur.FigureEnum.*;
+import static com.iks.dddschach.domain.Spielfigur.FigurenTyp.*;
 
 public class SampleDataFactory {
 
     /**
      * Erzeugt ein initiales Schachbrett
      */
-    public static Schachbrett createInitialesSchachbrett() {
+    public static Spielbrett createInitialesSchachbrett() {
 
-        return new Schachbrett() {{
+        return new Spielbrett() {{
             setSchachfigurAnPosition(A, _1, TURM, WEISS);
             setSchachfigurAnPosition(B, _1, SPRINGER, WEISS);
             setSchachfigurAnPosition(C, _1, LAEUFER, WEISS);

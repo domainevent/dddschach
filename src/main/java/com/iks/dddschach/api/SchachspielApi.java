@@ -1,6 +1,6 @@
 package com.iks.dddschach.api;
 
-import com.iks.dddschach.domain.Schachbrett;
+import com.iks.dddschach.domain.Spielbrett;
 import com.iks.dddschach.domain.SpielId;
 import com.iks.dddschach.domain.Halbzug;
 
@@ -48,6 +48,6 @@ public interface SchachspielApi {
      * @return das aktuelle Schachbrett
      * @throws Exception falls as Spiel mit der Id <code>spielId</code> nicht existiert
      */
-    Schachbrett schachBrett(SpielId spielId) throws Exception;
+    Spielbrett schachBrett(SpielId spielId) throws Exception;
 
 }

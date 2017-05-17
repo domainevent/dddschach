@@ -2,7 +2,7 @@ package com.iks.dddschach.rest;
 
 import org.apache.log4j.Logger;
 import com.iks.dddschach.api.SchachspielApi;
-import com.iks.dddschach.domain.Schachbrett;
+import com.iks.dddschach.domain.Spielbrett;
 import com.iks.dddschach.domain.SpielId;
 import com.iks.dddschach.domain.Halbzug;
 import com.webcohesion.enunciate.metadata.rs.ResponseCode;
@@ -80,7 +80,7 @@ public class RestService {
             @ResponseCode( code = 404, condition = "The field at the given coordinates is empty"),
             @ResponseCode( code = 500, condition = "An exception occured")
     })
-    public Schachbrett schachBrett(final @NotNull @PathParam("gameId") String spielId) {
+    public Spielbrett schachBrett(final @NotNull @PathParam("gameId") String spielId) {
         log.info("SpielId=" + spielId + ": Abfrage des Spielfeldes");
 
         try {
