@@ -1,4 +1,4 @@
-package com.iks.dddschach.domain;
+package com.iks.dddschach.domain.base;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;

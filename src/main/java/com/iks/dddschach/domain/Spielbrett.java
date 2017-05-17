@@ -1,14 +1,14 @@
 package com.iks.dddschach.domain;
 
 
+import com.iks.dddschach.domain.base.ValueObject;
 import com.webcohesion.enunciate.metadata.DocumentationExample;
 
-import javax.xml.bind.annotation.XmlType;
 import java.util.Arrays;
 
-import static com.iks.dddschach.domain.Position.VertCoord._1;
-import static com.iks.dddschach.domain.Position.VertCoord;
-import static com.iks.dddschach.domain.Position.HorCoord;
+import static com.iks.dddschach.domain.Position.Spalte._1;
+import static com.iks.dddschach.domain.Position.Spalte;
+import static com.iks.dddschach.domain.Position.Zeile;
 
 
 /**
@@ -23,7 +23,7 @@ public class Spielbrett extends ValueObject {
      * Default-Konstruktor
      */
     public Spielbrett() {
-        this(new Spielfigur[HorCoord.values().length][VertCoord.values().length]);
+        this(new Spielfigur[Position.Zeile.values().length][Spalte.values().length]);
     }
 
     /**
@@ -49,9 +49,9 @@ public class Spielbrett extends ValueObject {
     @DocumentationExample(exclude = true)
     public Spielfigur[][] getBoard() {
         final Spielfigur[][] copy =
-                new Spielfigur[HorCoord.values().length][VertCoord.values().length];
-        for (int i = 0; i < HorCoord.values().length; i++) {
-            for (int j = 0; j < VertCoord.values().length; j++) {
+                new Spielfigur[Position.Zeile.values().length][Spalte.values().length];
+        for (int i = 0; i < Position.Zeile.values().length; i++) {
+            for (int j = 0; j < Spalte.values().length; j++) {
                 copy[i][j] = board[i][j];
             }
         }
@@ -66,7 +66,7 @@ public class Spielbrett extends ValueObject {
         return board[position.horCoord.ordinal()][position.vertCoord.ordinal()];
     }
 
-    protected void setSchachfigurAnPosition(HorCoord h, VertCoord v,
+    protected void setSchachfigurAnPosition(Zeile h, Position.Spalte v,
                                             Spielfigur.FigurenTyp figur, Farbe color) {
         setSchachfigurAnPosition(new Position(h,v), new Spielfigur(figur, color));
     }
@@ -95,15 +95,15 @@ public class Spielbrett extends ValueObject {
     public String toString() {
         final String horLine = "-------------------------";
         String boardAsStr = horLine + System.lineSeparator();
-        for(Position.VertCoord vertCoord : Position.VertCoord.valuesInverted()) {
+        for(Position.Spalte spalte : Position.Spalte.valuesInverted()) {
             boardAsStr += "|";
-            for(Position.HorCoord horCoord : Position.HorCoord.values()) {
-                final Spielfigur figure = board[horCoord.ordinal()][vertCoord.ordinal()];
+            for(Position.Zeile zeile : Position.Zeile.values()) {
+                final Spielfigur figure = board[zeile.ordinal()][spalte.ordinal()];
                 boardAsStr += figure == null? "  " : figure.abbreviation();
                 boardAsStr += "|";
             }
             boardAsStr += System.lineSeparator() + horLine;
-            if (vertCoord != _1) {
+            if (spalte != _1) {
                 boardAsStr += System.lineSeparator();
             }
         }

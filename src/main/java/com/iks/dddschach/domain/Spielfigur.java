@@ -1,5 +1,9 @@
 package com.iks.dddschach.domain;
 
+import com.iks.dddschach.domain.base.EnumObject;
+import com.iks.dddschach.domain.base.ValueObject;
+
+
 /**
  * Eine Schachfigur repräsentiert durch den Typ (Bauer, Turm, etc.) und deren Farbe (schwarz, weiß)
  */
@@ -23,7 +27,7 @@ public class Spielfigur extends ValueObject {
         /** Bauer */
         BAUER;
 
-        public Character abbreviation() {
+        public Character marshal() {
             switch (this) {
                 case KOENIG:  return 'K';
                 case DAME:    return 'Q';
@@ -35,8 +39,8 @@ public class Spielfigur extends ValueObject {
             throw new IllegalArgumentException("Unexpected enum " + this);
         }
 
-        public FigurenTyp fromAbbrev(Character c) {
-            switch (c) {
+        public FigurenTyp unmarshal(Character encoded) {
+            switch (encoded) {
                 case 'K': return KOENIG;
                 case 'Q': return DAME;
                 case 'R': return TURM;
@@ -44,7 +48,7 @@ public class Spielfigur extends ValueObject {
                 case 'N': return SPRINGER;
                 case 'P': return BAUER;
             }
-            throw new IllegalArgumentException("Unexpected abbreviation character " + this);
+            throw new IllegalArgumentException("Unexpected marshal character " + this);
         }
 
     };
@@ -72,7 +76,7 @@ public class Spielfigur extends ValueObject {
 
 
     public String abbreviation() {
-        return "" + figure.abbreviation() + color.abbreviation();
+        return "" + figure.marshal() + color.marshal();
     }
 
 }

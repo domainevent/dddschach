@@ -1,5 +1,8 @@
 package com.iks.dddschach.domain;
 
+import com.iks.dddschach.domain.base.EnumObject;
+
+
 /**
  * Farbe (schwarz, weiß) einer Schachfigur oder die eines Spielers
  */
@@ -10,7 +13,7 @@ public enum Farbe implements EnumObject<Farbe, Character> {
     /** schwarz */
     SCHWARZ;
 
-    public Character abbreviation() {
+    public Character marshal() {
         switch (this) {
             case WEISS: return 'w';
             case SCHWARZ: return 'b';
@@ -19,12 +22,12 @@ public enum Farbe implements EnumObject<Farbe, Character> {
         }
     }
 
-    public Farbe fromAbbrev(Character c) {
-        switch (c) {
+    public Farbe unmarshal(Character encoded) {
+        switch (encoded) {
             case 'w': return WEISS;
             case 'b': return SCHWARZ;
         }
-        throw new IllegalArgumentException("Unexpected abbreviation character " + this);
+        throw new IllegalArgumentException("Unexpected marshal character " + this);
     }
 
 };

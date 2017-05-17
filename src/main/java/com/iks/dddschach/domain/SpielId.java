@@ -1,6 +1,7 @@
 package com.iks.dddschach.domain;
 
-import javax.xml.bind.annotation.XmlType;
+import com.iks.dddschach.domain.base.ValueObject;
+
 import java.util.UUID;
 
 
