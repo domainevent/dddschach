@@ -20,7 +20,7 @@ public abstract class EntityObject<I> {
         this.id = id;
     }
 
-    I getId() {
+    public I getId() {
         return id;
     }
 
