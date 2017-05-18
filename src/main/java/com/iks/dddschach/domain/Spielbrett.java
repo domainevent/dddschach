@@ -93,7 +93,6 @@ public class Spielbrett extends ValueObject {
 
     /**
      * Gibt das Schachbrett in einer graphischen Art und Weise aus.
-     * @return
      */
     @Override
     public String toString() {
