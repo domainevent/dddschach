@@ -24,8 +24,7 @@ public class Position extends ValueObject {
             return name().toLowerCase().charAt(0);
         }
 
-        @Override
-        public Zeile unmarshal(Character encoded) {
+        public static Zeile unmarshal(Character encoded) {
             return valueOf(encoded.toString().toUpperCase());
         }
 
@@ -48,8 +47,7 @@ public class Position extends ValueObject {
             return name().charAt(1);
         }
 
-        @Override
-        public Spalte unmarshal(Character encoded) {
+        public static Spalte unmarshal(Character encoded) {
             return valueOf("_" + encoded);
         }
 
@@ -65,29 +63,31 @@ public class Position extends ValueObject {
 
 
     /**
-     * Die horizontale Koordinate des Schachbretts (a-h)
+     * Die (horizontale) Zeilen-Koordinate des Schachbretts (a-h)
      */
     public final Zeile horCoord;
 
     /**
-     * Die vertikale Koordinate des Schachbretts (1-8)
+     * Die (vertikale) Spalten-Koordinate des Schachbretts (1-8)
      */
     public final Spalte vertCoord;
+
 
     public Position(Zeile zeile, Spalte spalte) {
         this.horCoord = zeile;
         this.vertCoord = spalte;
     }
 
-
-    public Position() {
-        this(null, null);
-    }
-
-
     public Position(String coordEncoded) {
         horCoord = Zeile.valueOf(coordEncoded.substring(0,1).toUpperCase());
         vertCoord = Spalte.valueOf("_" + coordEncoded.substring(1,2));
+    }
+
+    /**
+     * Wird zum Unmarshallen der XML- bzw. Json-Objekte benoetigt
+     */
+    private Position() {
+        this(null, null);
     }
 
 
