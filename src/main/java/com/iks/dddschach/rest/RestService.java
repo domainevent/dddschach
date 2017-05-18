@@ -80,17 +80,17 @@ public class RestService {
             @ResponseCode( code = 404, condition = "The field at the given coordinates is empty"),
             @ResponseCode( code = 500, condition = "An exception occured")
     })
-    public Spielbrett schachBrett(final @NotNull @PathParam("gameId") String spielId) {
+    public Spielbrett spielbrett(final @NotNull @PathParam("gameId") String spielId) {
         log.info("SpielId=" + spielId + ": Abfrage des Spielfeldes");
 
         try {
-            return schachpartieApi.spielBrett(new SpielId(spielId));
+            return schachpartieApi.spielbrett(new SpielId(spielId));
         }
         catch (Exception e) {
             // TODO: Detailiertere Fehlerbehandlung
             throw new ServerErrorException(Response.Status.INTERNAL_SERVER_ERROR, e);
         }
-    }// spielBrett
+    }// spielbrett
 
 
     /**

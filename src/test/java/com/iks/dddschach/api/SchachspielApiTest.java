@@ -32,7 +32,7 @@ public class SchachspielApiTest {
     @Test
     public void schachBrett() throws Exception {
         final SpielId spielId = api.neuesSpiel(VERMERK);
-        final Spielbrett actual = api.spielBrett(spielId);
+        final Spielbrett actual = api.spielbrett(spielId);
         final Spielbrett expected = SampleDataFactory.createInitialesSchachbrett();
         Assert.assertEquals(expected, actual);
     }
@@ -52,7 +52,7 @@ public class SchachspielApiTest {
 
         final SpielId spielId = api.neuesSpiel(VERMERK);
         api.fuehreHalbzugAus(spielId, new Halbzug(posFrom1, posTo1));
-        final Spielbrett actual = api.spielBrett(spielId);
+        final Spielbrett actual = api.spielbrett(spielId);
 
         Assert.assertEquals(expected, actual);
     }
