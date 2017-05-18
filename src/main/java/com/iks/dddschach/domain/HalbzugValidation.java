@@ -15,7 +15,6 @@ public class HalbzugValidation implements DomainService {
 
     public ValidationResult validiere(
             SpielId spielId,
-            Farbe spielerfarbe,
             Halbzug zuPruefen,
             List<Halbzug> zugHistorie,
             Optional<Spielbrett> aktSpielbrett) {
