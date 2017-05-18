@@ -1,7 +1,6 @@
 package com.iks.dddschach.api;
 
 import com.iks.dddschach.domain.*;
-import com.iks.dddschach.util.SampleDataFactory;
 
 import java.util.Optional;
 
