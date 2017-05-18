@@ -11,12 +11,12 @@ import java.util.Optional;
  */
 public class HalbzugValidation implements DomainService {
 
-    public final class ValidationResult{}
+    public final class ValidationResult {}
 
     public ValidationResult validiere(
             Halbzug zuPruefen,
-            List<Halbzug> zugHistorie,
-            Optional<Spielbrett> aktSpielbrett) {
+            HalbzugHistorie zugHistorie,
+            Spielbrett aktSpielbrett) {
 
         return null;
     }
