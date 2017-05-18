@@ -11,18 +11,15 @@ public interface EnumObject<E, M> {
 
     /**
      * Transformiert von der Domain-Bezeichnung (ubiquitäre Sprache) in die der technischen
-     * Transportschicht (hier JSON)
-     * @return der kodierte Wert
+     * Transportschicht (hier JSON). Jedes Enum sollte (zumindest im Client) folgende
+     * statische Methode zum Unmarshallen enthalten:
+     * <pre>
+     *   @JsonCreator
+     *   static <E> E unmarshal(M encoded);
+     * </pre>
+     * @return der kodierte Enum-Wert
      */
     @JsonValue
     M marshal();
-
-    /**
-     * Inverse Operation zu <code>marshal</code>
-     * @param encoded
-     * @return
-     */
-    @JsonCreator
-    E unmarshal(M encoded);
 
 }
