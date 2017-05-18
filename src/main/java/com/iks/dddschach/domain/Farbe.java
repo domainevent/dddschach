@@ -30,7 +30,7 @@ public enum Farbe implements EnumObject<Farbe, Character> {
             case 'w': return WEISS;
             case 'b': return SCHWARZ;
         }
-        throw new IllegalArgumentException("Unexpected marshal character " + encoded);
+        throw new IllegalArgumentException("Unexpected marshalled character " + encoded);
     }
 
 };

@@ -51,7 +51,7 @@ public class Spielfigur extends ValueObject {
                 case 'N': return SPRINGER;
                 case 'P': return BAUER;
             }
-            throw new IllegalArgumentException("Unexpected marshal character " + encoded);
+            throw new IllegalArgumentException("Unexpected marshalled character " + encoded);
         }
     };
 
