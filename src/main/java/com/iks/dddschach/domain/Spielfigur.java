@@ -1,5 +1,6 @@
 package com.iks.dddschach.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.iks.dddschach.domain.base.EnumObject;
 import com.iks.dddschach.domain.base.ValueObject;
 
@@ -27,6 +28,7 @@ public class Spielfigur extends ValueObject {
         /** Bauer */
         BAUER;
 
+        @Override
         public Character marshal() {
             switch (this) {
                 case KOENIG:  return 'K';
@@ -39,7 +41,8 @@ public class Spielfigur extends ValueObject {
             throw new IllegalArgumentException("Unexpected enum " + this);
         }
 
-        public FigurenTyp unmarshal(Character encoded) {
+        @JsonCreator
+        public static FigurenTyp unmarshal(Character encoded) {
             switch (encoded) {
                 case 'K': return KOENIG;
                 case 'Q': return DAME;
@@ -48,7 +51,7 @@ public class Spielfigur extends ValueObject {
                 case 'N': return SPRINGER;
                 case 'P': return BAUER;
             }
-            throw new IllegalArgumentException("Unexpected marshal character " + this);
+            throw new IllegalArgumentException("Unexpected marshal character " + encoded);
         }
     };
 

@@ -1,5 +1,6 @@
 package com.iks.dddschach.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.iks.dddschach.domain.base.EnumObject;
 
 
@@ -13,6 +14,7 @@ public enum Farbe implements EnumObject<Farbe, Character> {
     /** schwarz */
     SCHWARZ;
 
+    @Override
     public Character marshal() {
         switch (this) {
             case WEISS: return 'w';
@@ -22,12 +24,13 @@ public enum Farbe implements EnumObject<Farbe, Character> {
         }
     }
 
-    public Farbe unmarshal(Character encoded) {
+    @JsonCreator
+    public static Farbe unmarshal(Character encoded) {
         switch (encoded) {
             case 'w': return WEISS;
             case 'b': return SCHWARZ;
         }
-        throw new IllegalArgumentException("Unexpected marshal character " + this);
+        throw new IllegalArgumentException("Unexpected marshal character " + encoded);
     }
 
 };
