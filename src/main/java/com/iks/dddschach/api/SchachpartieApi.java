@@ -10,7 +10,7 @@ import java.util.Optional;
 /**
  * TODO: Gewuenscht ist, die Exceptions noch genauer zu klassifizieren
  */
-public interface SchachspielApi {
+public interface SchachpartieApi {
 
     /**
      * Erzeugt ein neues Spiel

@@ -1,7 +1,7 @@
 package com.iks.dddschach.rest;
 
 import org.apache.log4j.Logger;
-import com.iks.dddschach.api.SchachspielApi;
+import com.iks.dddschach.api.SchachpartieApi;
 import com.iks.dddschach.domain.Spielbrett;
 import com.iks.dddschach.domain.SpielId;
 import com.iks.dddschach.domain.Halbzug;
@@ -26,7 +26,7 @@ import java.util.Optional;
 public class RestService {
 
     @Context
-    SchachspielApi schachspielApi;
+    SchachpartieApi schachpartieApi;
 
     @Context
     UriInfo uriInfo;
@@ -57,7 +57,7 @@ public class RestService {
     @Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
     public SpielId neuesSpiel(@FormParam("note") String vermerk) {
         try {
-            final SpielId spielId = schachspielApi.neuesSpiel(Optional.ofNullable(vermerk));
+            final SpielId spielId = schachpartieApi.neuesSpiel(Optional.ofNullable(vermerk));
             log.info("SpielId=" + spielId + ": (neu erzeugt) Vermerk '" + vermerk + "'");
             return spielId;
         }
@@ -84,7 +84,7 @@ public class RestService {
         log.info("SpielId=" + spielId + ": Abfrage des Spielfeldes");
 
         try {
-            return schachspielApi.schachBrett(new SpielId(spielId));
+            return schachpartieApi.schachBrett(new SpielId(spielId));
         }
         catch (Exception e) {
             // TODO: Detailiertere Fehlerbehandlung
@@ -142,7 +142,7 @@ public class RestService {
 
         final int zugIndex;
         try {
-            zugIndex = schachspielApi.fuehreHalbzugAus(new SpielId(spielId), halbzug);
+            zugIndex = schachpartieApi.fuehreHalbzugAus(new SpielId(spielId), halbzug);
         }
         catch (Exception e) {
             // TODO: Detailiertere Fehlerbehandlung

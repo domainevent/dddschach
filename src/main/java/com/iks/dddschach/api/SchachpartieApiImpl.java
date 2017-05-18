@@ -11,7 +11,7 @@ import java.util.Optional;
 /**
  * Created by javacook on 21.04.17.
  */
-public class SchachspielApiImpl implements SchachspielApi {
+public class SchachpartieApiImpl implements SchachpartieApi {
 
     @Override
     public SpielId neuesSpiel(Optional<String> vermerk) {

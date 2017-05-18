@@ -14,7 +14,7 @@ import java.util.Optional;
  */
 public class SchachspielApiTest {
 
-    private SchachspielApi api = new SchachspielApiImpl();
+    private SchachpartieApi api = new SchachpartieApiImpl();
     private final static Optional VERMERK = Optional.of("Vermerk");
 
     @Before
