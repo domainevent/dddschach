@@ -75,21 +75,21 @@ public class Spielbrett extends ValueObject {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-
-        Spielbrett that = (Spielbrett) o;
-
-        return Arrays.deepEquals(board, that.board);
+        try {
+            Spielbrett that = (Spielbrett) o;
+            return Arrays.deepEquals(board, that.board);
+        }
+        catch (ClassCastException e) {
+            return false;
+        }
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + Arrays.deepHashCode(board);
-        return result;
+        return Arrays.deepHashCode(board);
     }
 
+    public final static String CR = System.lineSeparator();
 
     /**
      * Gibt das Schachbrett in einer graphischen Art und Weise aus.
@@ -97,7 +97,7 @@ public class Spielbrett extends ValueObject {
     @Override
     public String toString() {
         final String horLine = "-------------------------";
-        String boardAsStr = horLine + System.lineSeparator();
+        String boardAsStr = horLine + CR;
         for(Position.Spalte spalte : Position.Spalte.valuesInverted()) {
             boardAsStr += "|";
             for(Position.Zeile zeile : Position.Zeile.values()) {
@@ -105,9 +105,9 @@ public class Spielbrett extends ValueObject {
                 boardAsStr += (figure == null)? "  " : figure;
                 boardAsStr += "|";
             }
-            boardAsStr += System.lineSeparator() + horLine;
+            boardAsStr += CR + horLine;
             if (spalte != _1) {
-                boardAsStr += System.lineSeparator();
+                boardAsStr += CR;
             }
         }
         return boardAsStr;
