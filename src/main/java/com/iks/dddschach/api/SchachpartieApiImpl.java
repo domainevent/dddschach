@@ -31,7 +31,7 @@ public class SchachpartieApiImpl implements SchachpartieApi {
 
 
     @Override
-    public Spielbrett spielBrett(SpielId spielId) {
+    public Spielbrett spielbrett(SpielId spielId) {
         final Schachpartie schachpartie = SCHACHPARTIE_REPOSITORY.findById(spielId);
         return schachpartie.aktuellesSpielbrett();
     }
