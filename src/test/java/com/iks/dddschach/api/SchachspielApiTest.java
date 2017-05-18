@@ -1,7 +1,6 @@
 package com.iks.dddschach.api;
 
 import com.iks.dddschach.domain.*;
-import com.iks.dddschach.util.SampleDataFactory;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +32,7 @@ public class SchachspielApiTest {
     public void schachBrett() throws Exception {
         final SpielId spielId = api.neuesSpiel(VERMERK);
         final Spielbrett actual = api.spielbrett(spielId);
-        final Spielbrett expected = SampleDataFactory.createInitialesSchachbrett();
+        final Spielbrett expected = SpielbrettFactory.createInitialesSpielbrett();
         Assert.assertEquals(expected, actual);
     }
 
@@ -44,7 +43,7 @@ public class SchachspielApiTest {
         Position posTo1 = new Position("e4");
 
         final Spielbrett expected =
-                new Spielbrett(SampleDataFactory.createInitialesSchachbrett()) {{
+                new Spielbrett(SpielbrettFactory.createInitialesSpielbrett()) {{
                     final Spielfigur figure1 = getSchachfigurAnPosition(posFrom1);
                     setSchachfigurAnPosition(posFrom1, null);
                     setSchachfigurAnPosition(posTo1, figure1);

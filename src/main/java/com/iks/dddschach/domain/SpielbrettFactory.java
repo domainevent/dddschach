@@ -1,21 +1,20 @@
-package com.iks.dddschach.util;
+package com.iks.dddschach.domain;
 
-import com.iks.dddschach.domain.Position;
 import com.iks.dddschach.domain.Position.Zeile;
-import com.iks.dddschach.domain.Spielbrett;
 
 import static com.iks.dddschach.domain.Farbe.SCHWARZ;
 import static com.iks.dddschach.domain.Farbe.WEISS;
-import static com.iks.dddschach.domain.Position.Zeile.*;
 import static com.iks.dddschach.domain.Position.Spalte.*;
+import static com.iks.dddschach.domain.Position.Zeile.*;
 import static com.iks.dddschach.domain.Spielfigur.FigurenTyp.*;
 
-public class SampleDataFactory {
+
+public class SpielbrettFactory {
 
     /**
      * Erzeugt ein initiales Schachbrett
      */
-    public static Spielbrett createInitialesSchachbrett() {
+    public static Spielbrett createInitialesSpielbrett() {
 
         return new Spielbrett() {{
             setSchachfigurAnPosition(A, _1, TURM, WEISS);
@@ -26,7 +25,7 @@ public class SampleDataFactory {
             setSchachfigurAnPosition(F, _1, LAEUFER, WEISS);
             setSchachfigurAnPosition(G, _1, SPRINGER, WEISS);
             setSchachfigurAnPosition(H, _1, TURM, WEISS);
-            for (Zeile h : Position.Zeile.values()) {
+            for (Zeile h : Zeile.values()) {
                 setSchachfigurAnPosition(h, _2, BAUER, WEISS);
                 setSchachfigurAnPosition(h, _7, BAUER, SCHWARZ);
             }
