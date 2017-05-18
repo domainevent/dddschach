@@ -16,7 +16,7 @@ public class Schachpartie extends EntityObject<SpielId> {
         super(id);
     }
 
-    int fuehreZugAus(Halbzug halbzug) {
+    public int fuehreHalbzugAus(Halbzug halbzug) {
         new Spielbrett(spielbrett) {{
             final Spielfigur spielfigurFrom = getSchachfigurAnPosition(halbzug.from);
             setSchachfigurAnPosition(halbzug.from, null);
@@ -26,11 +26,11 @@ public class Schachpartie extends EntityObject<SpielId> {
         return halbzugHistorie.size();
     }
 
-    Spielbrett aktuellesSpielbrett() {
+    public Spielbrett aktuellesSpielbrett() {
         return spielbrett;
     }
 
-    HalbzugHistorie spielzuege() {
+    public HalbzugHistorie spielzuege() {
         return halbzugHistorie;
     }
 

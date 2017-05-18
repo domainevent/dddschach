@@ -84,13 +84,13 @@ public class RestService {
         log.info("SpielId=" + spielId + ": Abfrage des Spielfeldes");
 
         try {
-            return schachpartieApi.schachBrett(new SpielId(spielId));
+            return schachpartieApi.spielBrett(new SpielId(spielId));
         }
         catch (Exception e) {
             // TODO: Detailiertere Fehlerbehandlung
             throw new ServerErrorException(Response.Status.INTERNAL_SERVER_ERROR, e);
         }
-    }// schachBrett
+    }// spielBrett
 
 
     /**

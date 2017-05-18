@@ -11,11 +11,11 @@ public class SchachpartieRepository {
 
     Map<SpielId, Schachpartie> repository = new HashMap<>();
 
-    Schachpartie findById(SpielId spielId) {
+    public Schachpartie findById(SpielId spielId) {
         return repository.get(spielId);
     }
 
-    void save(Schachpartie schachpartie) {
+    public void save(Schachpartie schachpartie) {
         repository.put(schachpartie.getId(), schachpartie);
     }
 

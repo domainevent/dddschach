@@ -48,6 +48,6 @@ public interface SchachpartieApi {
      * @return das aktuelle Schachbrett
      * @throws Exception falls as Spiel mit der Id <code>spielId</code> nicht existiert
      */
-    Spielbrett schachBrett(SpielId spielId) throws Exception;
+    Spielbrett spielBrett(SpielId spielId) throws Exception;
 
 }

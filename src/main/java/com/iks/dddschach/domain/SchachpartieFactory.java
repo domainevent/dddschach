@@ -5,7 +5,7 @@ package com.iks.dddschach.domain;
  */
 public class SchachpartieFactory {
 
-    public static Schachpartie createSchachpartie() {
+    public Schachpartie createSchachpartie() {
         return new Schachpartie(new SpielId());
     }
 

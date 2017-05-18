@@ -1,8 +1,6 @@
 package com.iks.dddschach.api;
 
-import com.iks.dddschach.domain.Spielbrett;
-import com.iks.dddschach.domain.SpielId;
-import com.iks.dddschach.domain.Halbzug;
+import com.iks.dddschach.domain.*;
 import com.iks.dddschach.util.SampleDataFactory;
 
 import java.util.Optional;
@@ -13,24 +11,29 @@ import java.util.Optional;
  */
 public class SchachpartieApiImpl implements SchachpartieApi {
 
+    public final static SchachpartieFactory SCHACHPARTIE_FACTORY = new SchachpartieFactory();
+    public final static SchachpartieRepository SCHACHPARTIE_REPOSITORY = new SchachpartieRepository();
+
+
     @Override
     public SpielId neuesSpiel(Optional<String> vermerk) {
-        // TODO: Zu implementieren
-        return new SpielId();
+        final Schachpartie schachpartie = SCHACHPARTIE_FACTORY.createSchachpartie();
+        SCHACHPARTIE_REPOSITORY.save(schachpartie);
+        return schachpartie.getId();
     }
 
 
     @Override
     public int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug) {
-        // TODO: Zu implementieren
-        return -1;
+        final Schachpartie schachpartie = SCHACHPARTIE_REPOSITORY.findById(spielId);
+        return schachpartie.fuehreHalbzugAus(halbzug);
     }
 
 
     @Override
-    public Spielbrett schachBrett(SpielId gameId) {
-        // TODO: Zu implementieren
-        return SampleDataFactory.createInitialesSchachbrett();
+    public Spielbrett spielBrett(SpielId spielId) {
+        final Schachpartie schachpartie = SCHACHPARTIE_REPOSITORY.findById(spielId);
+        return schachpartie.aktuellesSpielbrett();
     }
 
 }
