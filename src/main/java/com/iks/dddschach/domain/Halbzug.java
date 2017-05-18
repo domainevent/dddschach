@@ -19,15 +19,16 @@ public class Halbzug extends ValueObject {
      */
     public final Position to;
 
-
-    public Halbzug() {
-        this((Position)null, (Position)null);
-    }
-
-
     public Halbzug(Position from, Position to) {
         this.from = from;
         this.to = to;
+    }
+
+    /**
+     * Wird zum Unmarshallen der XML- bzw. Json-Objekte benoetigt
+     */
+    private Halbzug() {
+        this((Position)null, (Position)null);
     }
 
     public Halbzug(String from, String to) {
