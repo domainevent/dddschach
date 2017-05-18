@@ -1,7 +1,6 @@
 package com.iks.dddschach.domain;
 
 import com.iks.dddschach.domain.base.EntityObject;
-import com.iks.dddschach.domain.base.EnumObject;
 
 
 /**
@@ -14,10 +13,11 @@ public class Schachpartie extends EntityObject<SpielId> {
 
     public Schachpartie(SpielId id) {
         super(id);
+        spielbrett = SpielbrettFactory.createInitialesSpielbrett();
     }
 
     public int fuehreHalbzugAus(Halbzug halbzug) {
-        new Spielbrett(spielbrett) {{
+        spielbrett = new Spielbrett(spielbrett) {{
             final Spielfigur spielfigurFrom = getSchachfigurAnPosition(halbzug.from);
             setSchachfigurAnPosition(halbzug.from, null);
             setSchachfigurAnPosition(halbzug.to, spielfigurFrom);
