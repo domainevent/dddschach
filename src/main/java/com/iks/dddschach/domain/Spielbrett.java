@@ -91,6 +91,10 @@ public class Spielbrett extends ValueObject {
     }
 
 
+    /**
+     * Gibt das Schachbrett in einer graphischen Art und Weise aus.
+     * @return
+     */
     @Override
     public String toString() {
         final String horLine = "-------------------------";
@@ -99,7 +103,7 @@ public class Spielbrett extends ValueObject {
             boardAsStr += "|";
             for(Position.Zeile zeile : Position.Zeile.values()) {
                 final Spielfigur figure = board[zeile.ordinal()][spalte.ordinal()];
-                boardAsStr += figure == null? "  " : figure.abbreviation();
+                boardAsStr += (figure == null)? "  " : figure;
                 boardAsStr += "|";
             }
             boardAsStr += System.lineSeparator() + horLine;

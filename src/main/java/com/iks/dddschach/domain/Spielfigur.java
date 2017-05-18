@@ -50,8 +50,8 @@ public class Spielfigur extends ValueObject {
             }
             throw new IllegalArgumentException("Unexpected marshal character " + this);
         }
-
     };
+
 
     /**
      * Typ der Spielfigur (Dame, König, etc.)
@@ -64,18 +64,18 @@ public class Spielfigur extends ValueObject {
     public final Farbe color;
 
 
-    public Spielfigur() {
-        this(null, null);
-    }
-
-
-    public Spielfigur(FigurenTyp figure, Farbe color) {
-        this.figure = figure;
+    /**
+     * Konstruktor
+     * @param figureTyp Spielfigur-Typ
+     * @param color Spielfigur-Farbe
+     */
+    public Spielfigur(FigurenTyp figureTyp, Farbe color) {
+        this.figure = figureTyp;
         this.color = color;
     }
 
-
-    public String abbreviation() {
+    @Override
+    public String toString() {
         return "" + figure.marshal() + color.marshal();
     }
 
