@@ -28,7 +28,7 @@ public class SchachpartieApiImpl implements SchachpartieApi {
 
 
     @Override
-    public Spielbrett spielBrett(SpielId gameId) {
+    public Spielbrett spielbrett(SpielId gameId) {
         // TODO: Zu implementieren
         return SampleDataFactory.createInitialesSchachbrett();
     }
