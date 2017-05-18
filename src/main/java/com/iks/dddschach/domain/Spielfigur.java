@@ -69,11 +69,11 @@ public class Spielfigur extends ValueObject {
 
     /**
      * Konstruktor
-     * @param figureTyp Spielfigur-Typ
+     * @param figure Spielfigur-Typ
      * @param color Spielfigur-Farbe
      */
-    public Spielfigur(FigurenTyp figureTyp, Farbe color) {
-        this.figure = figureTyp;
+    public Spielfigur(FigurenTyp figure, Farbe color) {
+        this.figure = figure;
         this.color = color;
     }
 
