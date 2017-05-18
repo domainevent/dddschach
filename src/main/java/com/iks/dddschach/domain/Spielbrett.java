@@ -90,6 +90,7 @@ public class Spielbrett extends ValueObject {
         return result;
     }
 
+    public final static String CR = System.lineSeparator();
 
     /**
      * Gibt das Schachbrett in einer graphischen Art und Weise aus.
@@ -97,7 +98,7 @@ public class Spielbrett extends ValueObject {
     @Override
     public String toString() {
         final String horLine = "-------------------------";
-        String boardAsStr = horLine + System.lineSeparator();
+        String boardAsStr = CR + horLine + CR;
         for(Position.Spalte spalte : Position.Spalte.valuesInverted()) {
             boardAsStr += "|";
             for(Position.Zeile zeile : Position.Zeile.values()) {
@@ -105,9 +106,9 @@ public class Spielbrett extends ValueObject {
                 boardAsStr += (figure == null)? "  " : figure;
                 boardAsStr += "|";
             }
-            boardAsStr += System.lineSeparator() + horLine;
+            boardAsStr += CR + horLine;
             if (spalte != _1) {
-                boardAsStr += System.lineSeparator();
+                boardAsStr += CR;
             }
         }
         return boardAsStr;
