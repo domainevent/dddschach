@@ -7,9 +7,6 @@ import com.iks.dddschach.domain.Halbzug;
 import java.util.Optional;
 
 
-/**
- * TODO: Gewuenscht ist, die Exceptions noch genauer zu klassifizieren
- */
 public interface SchachpartieApi {
 
     /**
@@ -23,7 +20,8 @@ public interface SchachpartieApi {
 
 
     /**
-     * Soll erzeugt werden, falls eine ungueltiger Zug ausgefuehrt worden ist.
+     * Muss erzeugt werden, falls ein ungueltiger Zug ausgefuehrt worden ist.
+     * @see #fuehreHalbzugAus
      */
     class UngueltigerHalbzugException extends Exception {
         public final Halbzug halbzug;
