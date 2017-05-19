@@ -13,22 +13,40 @@ import java.util.List;
  */
 public class HalbzugValidation implements DomainService {
 
-    public final class ValidationResult {}
+    public final class ValidationResult {
+        public final boolean valid;
 
+        public ValidationResult(boolean valid) {
+            this.valid = valid;
+        }
+    }
 
     /**
-     *
-     * @param zuPruefen
-     * @param zugHistorie
-     * @param aktSpielbrett
-     * @return
+     * Führt die Gültigkeitsüberprüfung aus
+     * Bemerkung: Der Parameter <code>aktSpielbrett</code> ist eigentlich redundant, da
+     * sich das aktuelle Spielfeld stets aus <code>zugHistorie</code> berechnen lässt.
+     * @param zuPruefen der zu prüfende Halbzug
+     * @param zugHistorie die Folge der bislang durchgeführten Halbzüge
+     * @param aktSpielbrett das aktuelle Spielbrett mit den Information,
+     *                      welche Figuren sich auf welchen Positionen befinden.
+     * @return Das Validationsergebnis
      */
     public ValidationResult validiere(
             Halbzug zuPruefen,
             List<Halbzug> zugHistorie,
             Spielbrett aktSpielbrett) {
 
-        return null;
+
+        final Spielfigur schachfigurAnFrom = aktSpielbrett.getSchachfigurAnPosition(zuPruefen.from);
+        if (schachfigurAnFrom == null) {
+            return new ValidationResult(false);
+        }
+
+        if (schachfigurAnFrom.color.ordinal() != zugHistorie.size() % 2) {
+            return new ValidationResult(false);
+        }
+
+        return new ValidationResult(true);
     }
 
 }
