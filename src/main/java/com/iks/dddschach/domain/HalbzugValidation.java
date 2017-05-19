@@ -2,9 +2,6 @@ package com.iks.dddschach.domain;
 
 import com.iks.dddschach.domain.base.DomainService;
 
-import java.util.List;
-import java.util.Optional;
-
 
 /**
  * Created by vollmer on 17.05.17.
