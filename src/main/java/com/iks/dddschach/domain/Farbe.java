@@ -7,7 +7,7 @@ import com.iks.dddschach.domain.base.EnumObject;
 /**
  * Farbe (schwarz, weiß) einer Schachfigur oder die eines Spielers
  */
-public enum Farbe implements EnumObject<Farbe, Character> {
+public enum Farbe implements EnumObject<Character> {
 
     /** weiß  */
     WEISS,

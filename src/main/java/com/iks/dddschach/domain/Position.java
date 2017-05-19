@@ -16,7 +16,7 @@ public class Position extends ValueObject {
      * Die horizontale Koordinate des Schachbretts (a-h)
      */
     @XmlEnum
-    public enum Zeile implements EnumObject<Zeile,Character> {
+    public enum Zeile implements EnumObject<Character> {
         A, B, C, D, E, F, G, H;
 
         @Override
@@ -39,7 +39,7 @@ public class Position extends ValueObject {
      * Die vertikale Koordinate des Schachbretts (1-8)
      */
     @XmlEnum
-    public enum Spalte implements EnumObject<Spalte,Character> {
+    public enum Spalte implements EnumObject<Character> {
         _1, _2, _3, _4, _5, _6, _7, _8;
 
         @Override

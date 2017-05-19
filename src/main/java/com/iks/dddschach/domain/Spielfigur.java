@@ -13,7 +13,7 @@ public class Spielfigur extends ValueObject {
     /**
      * Typ einer Schachfigur (Läufer, Springer, Dame, etc.)
      */
-    public enum FigurenTyp implements EnumObject<FigurenTyp, Character> {
+    public enum FigurenTyp implements EnumObject<Character> {
 
         /** König */
         KOENIG,
