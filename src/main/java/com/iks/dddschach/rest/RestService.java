@@ -1,7 +1,6 @@
 package com.iks.dddschach.rest;
 
-import com.iks.dddschach.api.SchachpartieApiImpl;
-import com.iks.dddschach.api.SchachpartieApiImpl.UngueltigerHalbzugException;
+import com.iks.dddschach.api.SchachpartieApi.UngueltigerHalbzugException;
 import org.apache.log4j.Logger;
 import com.iks.dddschach.api.SchachpartieApi;
 import com.iks.dddschach.domain.Spielbrett;
