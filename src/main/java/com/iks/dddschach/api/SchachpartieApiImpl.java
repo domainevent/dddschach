@@ -18,7 +18,7 @@ public class SchachpartieApiImpl implements SchachpartieApi {
 
 
     @Override
-    public int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug) throws UngueltigerHalbzugException {
+    public int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug) throws Exception {
         // TODO: Zu implementieren
         return -1;
     }

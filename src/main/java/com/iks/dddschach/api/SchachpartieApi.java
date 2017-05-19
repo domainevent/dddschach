@@ -47,7 +47,7 @@ public interface SchachpartieApi {
      * @throws UngueltigerHalbzugException falls der Halbzug ungueltig ist
      * @throws Exception falls das Spiel mit der Id <code>spielId</code> nicht existiert
      */
-    int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug) throws UngueltigerHalbzugException;
+    int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug) throws Exception;
 
 
     /**
