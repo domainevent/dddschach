@@ -14,7 +14,7 @@ public interface SchachpartieApi {
      *
      * @param vermerk eine beliebiger Vermerk zu dieser Partie, z.B. Spieler, Ort, etc.
      * @return eine weltweit eindeutige Id
-     * @throws Exception falls keine neues Spiel erzeugt werden konnte (technische Probleme)
+     * @throws Exception falls kein neues Spiel erzeugt werden konnte (z.B. technische Probleme)
      */
     SpielId neuesSpiel(Optional<String> vermerk) throws Exception;
 
@@ -55,7 +55,7 @@ public interface SchachpartieApi {
      *
      * @param spielId (eindeutige) ID, die anfangs durch <code>neuesSpiel</code> erzeugt worden ist.
      * @return das aktuelle Schachbrett
-     * @throws Exception falls as Spiel mit der Id <code>spielId</code> nicht existiert
+     * @throws Exception falls das Spiel mit der Id <code>spielId</code> nicht existiert
      */
     Spielbrett spielbrett(SpielId spielId) throws Exception;
 
