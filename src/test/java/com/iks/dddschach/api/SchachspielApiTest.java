@@ -80,9 +80,8 @@ public class SchachspielApiTest {
     }
 
 
-
     @Test
-    public void fuehreZweiGueltigeZuegeInEinerPartieAus() throws Exception {
+    public void fuehreZuegeVonWeissDanachSchwarzInEinerPartieAus() throws Exception {
         final SpielId spielId = api.neuesSpiel(VERMERK);
         api.fuehreHalbzugAus(spielId, new Halbzug("e2-e4"));
         api.fuehreHalbzugAus(spielId, new Halbzug("d7-d5"));
