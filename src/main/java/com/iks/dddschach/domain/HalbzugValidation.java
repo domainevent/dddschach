@@ -33,7 +33,7 @@ public class HalbzugValidation implements DomainService {
      */
     public ValidationResult validiere(
             Halbzug zuPruefen,
-            List<Halbzug> zugHistorie,
+            HalbzugHistorie zugHistorie,
             Spielbrett aktSpielbrett) {
 
 
