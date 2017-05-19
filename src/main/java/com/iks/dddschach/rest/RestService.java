@@ -44,7 +44,7 @@ public class RestService {
     @Path("isalive")
     @Produces(MediaType.TEXT_PLAIN)
     public String isAlive() {
-        log.info("dddschach is alive");
+        log.info("DDD-Schach lebt");
         return "DDD-Schach is alive: " + new Date();
     }
 
@@ -61,11 +61,11 @@ public class RestService {
     public SpielId neuesSpiel(@FormParam("note") String vermerk) {
         try {
             final SpielId spielId = schachpartieApi.neuesSpiel(Optional.ofNullable(vermerk));
-            log.info("SpielId=" + spielId + ": (neu erzeugt) Vermerk '" + vermerk + "'");
+            log.info("SpielId=" + spielId + ": (neu erzeugt) mit Vermerk '" + vermerk + "'");
             return spielId;
         }
         catch (Exception e) {
-            // TODO: Detailiertere Fehlerbehandlung
+            log.error("Interner Server-Error", e);
             throw new ServerErrorException(Response.Status.INTERNAL_SERVER_ERROR, e);
         }
     }
@@ -91,6 +91,7 @@ public class RestService {
             return schachpartieApi.spielbrett(new SpielId(spielId));
         }
         catch (Exception e) {
+            log.error("Interner Server-Error", e);
             throw new ServerErrorException(Response.Status.INTERNAL_SERVER_ERROR, e);
         }
     }// spielbrett
@@ -118,7 +119,8 @@ public class RestService {
             final @NotNull @FormParam("move") String halbzug) throws UngueltigerHalbzugException {
 
         if (halbzug == null) {
-            throw new BadRequestException("Missing form parameter 'move'");
+            log.warn("SpielId=" + spielId + ": Der Parameter move fehlt.");
+            throw new BadRequestException("Missing form parameter move");
         }
         return fuehreHalbzugAus(spielId, new Halbzug(halbzug));
     }
@@ -150,13 +152,15 @@ public class RestService {
             zugIndex = schachpartieApi.fuehreHalbzugAus(new SpielId(spielId), halbzug);
         }
         catch (UngueltigerHalbzugException e) {
+            log.debug("SpielId=" + spielId + ": Der Halbzug " + halbzug + " ist ungültig.");
             throw e;
         }
         catch (Exception e) {
+            log.error("Interner Server-Error", e);
             throw new ServerErrorException(Response.Status.INTERNAL_SERVER_ERROR, e);
         }
 
-        log.debug("SpielId=" + spielId + ": Der " + zugIndex + ". Halbzug wurde erfolgreich ausgefuehrt.");
+        log.debug("SpielId=" + spielId + ": Der " + zugIndex + ". Halbzug " + halbzug + " war erfolgreich.");
 
         // Erzeugen der JSON-Antwort und des Location-Headers:
         HashMap<String, Object> json = new HashMap<String, Object>() {{
