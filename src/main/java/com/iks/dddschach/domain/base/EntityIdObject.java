@@ -23,8 +23,10 @@ public abstract class EntityIdObject<I> extends EntityObject {
         EntityIdObject<?> that = (EntityIdObject<?>) o;
         return id.equals(that.id);
     }
+
     @Override
     public int hashCode() {
         return id.hashCode();
     }
+
 }

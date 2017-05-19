@@ -14,8 +14,10 @@ public interface EnumObject<M> {
 
     /**
      * Transformiert von der Domain-Bezeichnung (ubiquitäre Sprache) in die der technischen
-     * Transportschicht (hier JSON). Jedes Enum sollte (zumindest im Client) folgende
-     * statische Methode zum Unmarshallen enthalten, wobei E für den Enum-Typ steht:
+     * Transportschicht (hier JSON). So kann die Schnittstelle unberührt bleiben, wenn sich
+     * die Enum-Bezeichnungen ändern.
+     * Jedes Enum muss dann im Client folgende statische Methode zum Unmarshallen
+     * enthalten, wobei E für den Enum-Typ steht:
      * <pre>
      *   @JsonCreator
      *   static <E extends Enum> E unmarshal(M encoded);

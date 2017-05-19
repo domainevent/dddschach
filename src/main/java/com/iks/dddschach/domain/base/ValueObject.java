@@ -9,7 +9,8 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * Basisklasse der Value-Objekte
+ * Basisklasse der Value-Objekte. Die Identität basiert auf den Werten (Attributen)
+ * dieser Klasse.
  */
 @XmlType
 public abstract class ValueObject {
