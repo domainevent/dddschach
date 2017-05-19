@@ -1,5 +1,7 @@
 package com.iks.dddschach.domain;
 
+import com.iks.dddschach.domain.base.EntityObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +9,7 @@ import java.util.List;
 /**
  * Created by vollmer on 18.05.17.
  */
-public class HalbzugHistorie {
+public class HalbzugHistorie extends EntityObject {
 
     List<Halbzug> halbzuege = new ArrayList<>();
 
