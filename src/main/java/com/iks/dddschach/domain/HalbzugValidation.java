@@ -22,9 +22,10 @@ public class HalbzugValidation implements DomainService {
     }
 
     /**
-     * Führt die Gültigkeitsüberprüfung aus
-     * Bemerkung: Der Parameter <code>aktSpielbrett</code> ist eigentlich redundant, da
-     * sich das aktuelle Spielfeld stets aus <code>zugHistorie</code> berechnen lässt.
+     * Führt die Gültigkeitsüberprüfung aus.
+     *
+     * Bemerkung: Der Parameter <code>aktSpielbrett</code> ist eigentlich sogar redundant,
+     * da sich das aktuelle Spielfeld stets aus <code>zugHistorie</code> berechnen lässt.
      * @param zuPruefen der zu prüfende Halbzug
      * @param zugHistorie die Folge der bislang durchgeführten Halbzüge
      * @param aktSpielbrett das aktuelle Spielbrett mit den Information,
@@ -33,6 +34,7 @@ public class HalbzugValidation implements DomainService {
      */
     public ValidationResult validiere(
             Halbzug zuPruefen,
+            // kann ggf. durch eine eigene Klasse wie HalbzugHistorie ersetzt werden
             List<Halbzug> zugHistorie,
             Spielbrett aktSpielbrett) {
 
