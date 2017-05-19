@@ -34,6 +34,7 @@ public class HalbzugValidation implements DomainService {
 
 
         final Spielfigur schachfigurAnFrom = aktSpielbrett.getSchachfigurAnPosition(zuPruefen.from);
+
         if (schachfigurAnFrom == null) {
             return new ValidationResult(false);
         }
