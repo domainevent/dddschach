@@ -22,8 +22,16 @@ public class SchachpartieApiImpl implements SchachpartieApi {
     }
 
 
+    public static class UngueltigerHalbzugException extends Exception {
+        public final Halbzug halbzug;
+
+        public UngueltigerHalbzugException(Halbzug halbzug) {
+            this.halbzug = halbzug;
+        }
+    }
+
     @Override
-    public int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug) {
+    public int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug) throws UngueltigerHalbzugException {
         final Schachpartie schachpartie = SCHACHPARTIE_REPOSITORY.findById(spielId);
         return schachpartie.fuehreHalbzugAus(halbzug);
     }
