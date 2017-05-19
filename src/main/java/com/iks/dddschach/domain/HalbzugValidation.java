@@ -4,7 +4,10 @@ import com.iks.dddschach.domain.base.DomainService;
 
 
 /**
- * Created by vollmer on 17.05.17.
+ * Dieser Service dient dazu, eine Überprüfung eines Halbzuges auf Gültigkeit vorzunehemn.
+ * Der Einfachheit halber, wird in dieser Implementierung lediglich getestet, ob sich überhaupt
+ * eine Figur auf der Startposition des Halbzuges befindet und ob diese die richtig Farbe
+ * hat - Die Spieler "Weiß" und "Schwarz" müssen sich abwechseln.
  */
 public class HalbzugValidation implements DomainService {
 
@@ -16,6 +19,14 @@ public class HalbzugValidation implements DomainService {
         }
     }
 
+
+    /**
+     *
+     * @param zuPruefen
+     * @param zugHistorie
+     * @param aktSpielbrett
+     * @return
+     */
     public ValidationResult validiere(
             Halbzug zuPruefen,
             HalbzugHistorie zugHistorie,
