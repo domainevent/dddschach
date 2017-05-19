@@ -1,20 +1,12 @@
 package com.iks.dddschach.domain.base;
 
-import javax.xml.bind.annotation.XmlType;
-
-
 /**
- * Created by vollmer on 17.05.17.
+ * Repräsentiert ein Entity Object mit Id, d.h. es enthält ein Id-Attribute
+ * vom Typ <code>I</code>. Die Identity basiert ausschließlich auf dieser Id.
  */
-@XmlType
-public abstract class EntityIdObject<I> {
+public abstract class EntityIdObject<I> extends EntityObject {
 
     protected final I id;
-
-    public EntityIdObject() {
-        this(null);
-        throw new IllegalStateException("This constructor must not be called");
-    }
 
     protected EntityIdObject(I id) {
         this.id = id;
