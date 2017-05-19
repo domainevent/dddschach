@@ -1,5 +1,7 @@
 package com.iks.dddschach.rest;
 
+import com.iks.dddschach.api.SchachpartieApiImpl;
+import com.iks.dddschach.api.SchachpartieApiImpl.UngueltigerHalbzugException;
 import org.apache.log4j.Logger;
 import com.iks.dddschach.api.SchachpartieApi;
 import com.iks.dddschach.domain.Spielbrett;
@@ -36,6 +38,7 @@ public class RestService {
 
     /**
      * Ueberprueft, ob die Anwendung aktiv ist
+     *
      * @return Eine Bestätigungsmeldung mit aktuellem Datum und Uhrzeit
      */
     @GET
@@ -49,6 +52,7 @@ public class RestService {
 
     /**
      * Erzeugt eine neue Schachpartie
+     *
      * @param vermerk Vermerk zu diesem Spiel
      * @return Eine (weltweit) eindeutige Id dieses Spiels
      */
@@ -70,15 +74,16 @@ public class RestService {
 
     /**
      * Liefert das Schachbrett, besser: die Informationen, welche Spielfiguren wo stehen.
+     *
      * @return das Schachbrett einschließlich seiner Figuren
      */
     @GET
     @Path("games/{gameId}/board")
     @Produces(MediaType.APPLICATION_JSON)
     @StatusCodes({
-            @ResponseCode( code = 200, condition = "ok"),
-            @ResponseCode( code = 404, condition = "The field at the given coordinates is empty"),
-            @ResponseCode( code = 500, condition = "An exception occured")
+            @ResponseCode(code = 200, condition = "ok"),
+            @ResponseCode(code = 404, condition = "The field at the given coordinates is empty"),
+            @ResponseCode(code = 500, condition = "An exception occured")
     })
     public Spielbrett spielbrett(final @NotNull @PathParam("gameId") String spielId) {
         log.info("SpielId=" + spielId + ": Abfrage des Spielfeldes");
@@ -87,7 +92,6 @@ public class RestService {
             return schachpartieApi.spielbrett(new SpielId(spielId));
         }
         catch (Exception e) {
-            // TODO: Detailiertere Fehlerbehandlung
             throw new ServerErrorException(Response.Status.INTERNAL_SERVER_ERROR, e);
         }
     }// spielbrett
@@ -96,6 +100,7 @@ public class RestService {
     /**
      * Fuehrt einen Schach-Halbzug innerhalb der Schachpartie mit der Id <code>spielId</code> aus.
      * Der Halbzug hat die Syntax [A-Ha-h]-[1-8], Beispiel: "b1-c3"
+     *
      * @param halbzug ein Schach-Halbzug repräsentiert als String
      * @return {@link Response} enthält den Index des Halbzuges in der Form z.B.
      * <pre>
@@ -111,7 +116,7 @@ public class RestService {
     @ManagedAsync
     public Response fuehreHalbzugAus(
             final @NotNull @PathParam("gameId") String spielId,
-            final @NotNull @FormParam("move") String halbzug) {
+            final @NotNull @FormParam("move") String halbzug) throws UngueltigerHalbzugException {
 
         if (halbzug == null) {
             throw new BadRequestException("Missing form parameter 'move'");
@@ -122,6 +127,7 @@ public class RestService {
 
     /**
      * Fuehrt einen Schach-Halbzug innerhalb der Schachpartie mit der Id <code>spielId</code> aus.
+     *
      * @param halbzug der auszufuehrende Halbzug
      * @return {@link Response} enthält den Index des Halbzuges in der Form z.B.
      * <pre>
@@ -136,7 +142,7 @@ public class RestService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response fuehreHalbzugAus(
             final @NotNull @PathParam("gameId") String spielId,
-            final @NotNull Halbzug halbzug) {
+            final @NotNull Halbzug halbzug) throws UngueltigerHalbzugException {
 
         log.info("SpielId=" + spielId + ": Ausfuehren des Halbzuges " + halbzug);
 
@@ -144,8 +150,10 @@ public class RestService {
         try {
             zugIndex = schachpartieApi.fuehreHalbzugAus(new SpielId(spielId), halbzug);
         }
+        catch (UngueltigerHalbzugException e) {
+            throw e;
+        }
         catch (Exception e) {
-            // TODO: Detailiertere Fehlerbehandlung
             throw new ServerErrorException(Response.Status.INTERNAL_SERVER_ERROR, e);
         }
 

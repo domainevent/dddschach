@@ -1,9 +1,6 @@
 package com.iks.dddschach.api;
 
-import com.iks.dddschach.domain.Spielbrett;
-import com.iks.dddschach.domain.SpielId;
-import com.iks.dddschach.domain.Halbzug;
-import com.iks.dddschach.domain.SpielbrettFactory;
+import com.iks.dddschach.domain.*;
 
 import java.util.Optional;
 
@@ -19,6 +16,14 @@ public class SchachpartieApiImpl implements SchachpartieApi {
         return new SpielId();
     }
 
+
+    public static class UngueltigerHalbzugException extends Exception {
+        public final Halbzug halbzug;
+
+        public UngueltigerHalbzugException(Halbzug halbzug) {
+            this.halbzug = halbzug;
+        }
+    }
 
     @Override
     public int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug) {
