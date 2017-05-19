@@ -21,15 +21,23 @@ public class SchachspielApiTest {
     }
 
     @Test
-    public void neuesSpiel() throws Exception {
-        final SpielId spielId = api.neuesSpiel(VERMERK);
-        Assert.assertNotNull(spielId);
-        Assert.assertNotNull(spielId.id);
+    public void funktionertNeueSpieleErzeugen() throws Exception {
+        final SpielId spielId1 = api.neuesSpiel(VERMERK);
+        Assert.assertNotNull(spielId1);
+        Assert.assertNotNull(spielId1.id);
+
+        final SpielId spielId2 = api.neuesSpiel(VERMERK);
+        Assert.assertNotNull(spielId2);
+        Assert.assertNotNull(spielId2.id);
+
+        // sind die IDs von zwei neuen Spielen auch verschieden?
+        Assert.assertNotEquals(spielId1, spielId2);
+        Assert.assertNotEquals(spielId1.id, spielId2.id);
     }
 
 
     @Test
-    public void schachBrett() throws Exception {
+    public void istAmStartInitialesSchachBrettVorhanden() throws Exception {
         final SpielId spielId = api.neuesSpiel(VERMERK);
         final Spielbrett actual = api.spielbrett(spielId);
         final Spielbrett expected = SpielbrettFactory.createInitialesSpielbrett();
@@ -38,27 +46,43 @@ public class SchachspielApiTest {
 
 
     @Test
-    public void fuehreZugAus() throws Exception {
+    public void fuehreZuegeInVerschPartienAusUndKontrolliereStellungen() throws Exception {
         Position posFrom1 = new Position("e2");
         Position posTo1 = new Position("e4");
 
-        final Spielbrett expected =
+        Position posFrom2 = new Position("d2");
+        Position posTo2 = new Position("d4");
+
+        final Spielbrett expected1 =
                 new Spielbrett(SpielbrettFactory.createInitialesSpielbrett()) {{
-                    final Spielfigur figure1 = getSchachfigurAnPosition(posFrom1);
+                    final Spielfigur figure = getSchachfigurAnPosition(posFrom1);
                     setSchachfigurAnPosition(posFrom1, null);
-                    setSchachfigurAnPosition(posTo1, figure1);
+                    setSchachfigurAnPosition(posTo1, figure);
                 }};
 
-        final SpielId spielId = api.neuesSpiel(VERMERK);
-        api.fuehreHalbzugAus(spielId, new Halbzug(posFrom1, posTo1));
-        final Spielbrett actual = api.spielbrett(spielId);
+        final Spielbrett expected2 =
+                new Spielbrett(SpielbrettFactory.createInitialesSpielbrett()) {{
+                    final Spielfigur figure = getSchachfigurAnPosition(posFrom2);
+                    setSchachfigurAnPosition(posFrom2, null);
+                    setSchachfigurAnPosition(posTo2, figure);
+                }};
 
-        Assert.assertEquals(expected, actual);
+        final SpielId spielId1 = api.neuesSpiel(VERMERK);
+        api.fuehreHalbzugAus(spielId1, new Halbzug(posFrom1, posTo1));
+        final Spielbrett actual1 = api.spielbrett(spielId1);
+
+        final SpielId spielId2 = api.neuesSpiel(VERMERK);
+        api.fuehreHalbzugAus(spielId2, new Halbzug(posFrom2, posTo2));
+        final Spielbrett actual2 = api.spielbrett(spielId2);
+
+        Assert.assertEquals(expected1, actual1);
+        Assert.assertEquals(expected2, actual2);
     }
 
 
+
     @Test
-    public void fuehreZweiGueltigeZuegeAus() throws Exception {
+    public void fuehreZweiGueltigeZuegeInEinerPartieAus() throws Exception {
         final SpielId spielId = api.neuesSpiel(VERMERK);
         api.fuehreHalbzugAus(spielId, new Halbzug("e2-e4"));
         api.fuehreHalbzugAus(spielId, new Halbzug("d7-d5"));
@@ -66,7 +90,7 @@ public class SchachspielApiTest {
 
 
     @Test(expected = Exception.class)
-    public void ungueltigeZuegeZweimalGleicherSpieler() throws Exception {
+    public void ungueltigerZugWeilZweimalGleicherSpieler() throws Exception {
         final SpielId spielId = api.neuesSpiel(VERMERK);
         api.fuehreHalbzugAus(spielId, new Halbzug("e2-e4"));
         api.fuehreHalbzugAus(spielId, new Halbzug("e4-e5"));
@@ -74,7 +98,7 @@ public class SchachspielApiTest {
 
 
     @Test(expected = Exception.class)
-    public void ungueltigerZugKeineSpielfigur() throws Exception {
+    public void ungueltigerZugDennKeineSpielfigurAufStartfeld() throws Exception {
         final SpielId spielId = api.neuesSpiel(VERMERK);
         api.fuehreHalbzugAus(spielId, new Halbzug("e3-e4"));
     }
