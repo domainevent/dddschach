@@ -2,6 +2,8 @@ package com.iks.dddschach.domain;
 
 import com.iks.dddschach.domain.base.DomainService;
 
+import java.util.List;
+
 
 /**
  * Dieser Service dient dazu, eine Überprüfung eines Halbzuges auf Gültigkeit vorzunehemn.
@@ -12,29 +14,30 @@ import com.iks.dddschach.domain.base.DomainService;
 public class HalbzugValidation implements DomainService {
 
     public final class ValidationResult {
-        public boolean valid;
+        public final boolean valid;
 
         public ValidationResult(boolean valid) {
             this.valid = valid;
         }
     }
 
-
     /**
-     *
-     * @param zuPruefen
-     * @param zugHistorie
-     * @param aktSpielbrett
-     * @return
+     * Führt die Gültigkeitsüberprüfung aus
+     * Bemerkung: Der Parameter <code>aktSpielbrett</code> ist eigentlich redundant, da
+     * sich das aktuelle Spielfeld stets aus <code>zugHistorie</code> berechnen lässt.
+     * @param zuPruefen der zu prüfende Halbzug
+     * @param zugHistorie die Folge der bislang durchgeführten Halbzüge
+     * @param aktSpielbrett das aktuelle Spielbrett mit den Information,
+     *                      welche Figuren sich auf welchen Positionen befinden.
+     * @return Das Validationsergebnis
      */
     public ValidationResult validiere(
             Halbzug zuPruefen,
-            HalbzugHistorie zugHistorie,
+            List<Halbzug> zugHistorie,
             Spielbrett aktSpielbrett) {
 
 
         final Spielfigur schachfigurAnFrom = aktSpielbrett.getSchachfigurAnPosition(zuPruefen.from);
-
         if (schachfigurAnFrom == null) {
             return new ValidationResult(false);
         }
@@ -44,7 +47,6 @@ public class HalbzugValidation implements DomainService {
         }
 
         return new ValidationResult(true);
-
     }
 
 }
