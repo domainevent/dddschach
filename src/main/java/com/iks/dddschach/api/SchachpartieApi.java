@@ -22,6 +22,14 @@ public interface SchachpartieApi {
     SpielId neuesSpiel(Optional<String> vermerk) throws Exception;
 
 
+    class UngueltigerHalbzugException extends Exception {
+        public final Halbzug halbzug;
+
+        public UngueltigerHalbzugException(Halbzug halbzug) {
+            this.halbzug = halbzug;
+        }
+    }
+
     /**
      * Fuehrt einen Halbzug in der Schachpartie mit der Id <code>spielId</code> aus. Der Halbzug
      * ist nur dann gültig, falls sich auf der Startpositon des Halbzuges eine Figur befindet
@@ -38,7 +46,7 @@ public interface SchachpartieApi {
      * @throws Exception falls der Zug ungueltig ist oder das Spiel mit der Id <code>spielId</code>
      * nicht existiert
      */
-    int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug) throws Exception;
+    int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug) throws UngueltigerHalbzugException;
 
 
     /**
