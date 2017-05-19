@@ -17,13 +17,13 @@ public interface SchachpartieApi {
      *
      * @param vermerk eine beliebiger Vermerk zu dieser Partie, z.B. Spieler, Ort, etc.
      * @return eine weltweit eindeutige Id
-     * @throws Exception falls keine neues Spiel erzeugt werden konnte (technische Probleme)
+     * @throws Exception falls kein neues Spiel erzeugt werden konnte (technische Probleme)
      */
     SpielId neuesSpiel(Optional<String> vermerk) throws Exception;
 
 
     /**
-     * Soll erzeugt werden, falls eine ungueltiger Zug ausgefuehrt worden ist.
+     * Soll erzeugt werden, falls ein ungueltiger Zug ausgefuehrt worden ist.
      */
     class UngueltigerHalbzugException extends Exception {
         public final Halbzug halbzug;
@@ -49,7 +49,7 @@ public interface SchachpartieApi {
      * @throws UngueltigerHalbzugException falls der Halbzug ungueltig ist
      * @throws Exception falls das Spiel mit der Id <code>spielId</code> nicht existiert
      */
-    int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug) throws UngueltigerHalbzugException;
+    int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug) throws Exception;
 
 
     /**
@@ -57,7 +57,7 @@ public interface SchachpartieApi {
      *
      * @param spielId (eindeutige) ID, die anfangs durch <code>neuesSpiel</code> erzeugt worden ist.
      * @return das aktuelle Schachbrett
-     * @throws Exception falls as Spiel mit der Id <code>spielId</code> nicht existiert
+     * @throws Exception falls das Spiel mit der Id <code>spielId</code> nicht existiert
      */
     Spielbrett spielbrett(SpielId spielId) throws Exception;
 

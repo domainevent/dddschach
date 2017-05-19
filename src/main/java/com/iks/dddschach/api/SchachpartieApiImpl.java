@@ -23,16 +23,26 @@ public class SchachpartieApiImpl implements SchachpartieApi {
 
 
     @Override
-    public int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug) throws UngueltigerHalbzugException {
-        final Schachpartie schachpartie = SCHACHPARTIE_REPOSITORY.findById(spielId);
-        return schachpartie.fuehreHalbzugAus(halbzug);
+    public int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug) throws Exception {
+        final Optional<Schachpartie> schachpartie = SCHACHPARTIE_REPOSITORY.findById(spielId);
+        if (schachpartie.isPresent()) {
+            return schachpartie.get().fuehreHalbzugAus(halbzug);
+        }
+        else {
+            throw new Exception("Eine Schachpartie mit der Id " + spielId + " existiert nicht.");
+        }
     }
 
 
     @Override
-    public Spielbrett spielbrett(SpielId spielId) {
-        final Schachpartie schachpartie = SCHACHPARTIE_REPOSITORY.findById(spielId);
-        return schachpartie.aktuellesSpielbrett();
+    public Spielbrett spielbrett(SpielId spielId) throws Exception {
+        final Optional<Schachpartie> schachpartie = SCHACHPARTIE_REPOSITORY.findById(spielId);
+        if (schachpartie.isPresent()) {
+            return schachpartie.get().aktuellesSpielbrett();
+        }
+        else {
+            throw new Exception("Eine Schachpartie mit der Id " + spielId + " existiert nicht.");
+        }
     }
 
 }

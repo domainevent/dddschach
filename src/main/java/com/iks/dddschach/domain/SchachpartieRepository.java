@@ -2,6 +2,7 @@ package com.iks.dddschach.domain;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 
 /**
@@ -9,10 +10,10 @@ import java.util.Map;
  */
 public class SchachpartieRepository {
 
-    Map<SpielId, Schachpartie> repository = new HashMap<>();
+    private Map<SpielId, Schachpartie> repository = new HashMap<>();
 
-    public Schachpartie findById(SpielId spielId) {
-        return repository.get(spielId);
+    public Optional<Schachpartie> findById(SpielId spielId) {
+        return Optional.ofNullable(repository.get(spielId));
     }
 
     public void save(Schachpartie schachpartie) {
