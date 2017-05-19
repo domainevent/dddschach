@@ -22,6 +22,9 @@ public interface SchachpartieApi {
     SpielId neuesSpiel(Optional<String> vermerk) throws Exception;
 
 
+    /**
+     * Soll erzeugt werden, falls eine ungueltiger Zug ausgefuehrt worden ist.
+     */
     class UngueltigerHalbzugException extends Exception {
         public final Halbzug halbzug;
 
@@ -43,8 +46,8 @@ public interface SchachpartieApi {
      * @param spielId (eindeutige) ID, die anfangs durch <code>neuesSpiel</code> erzeugt worden ist.
      * @param halbzug
      * @return der Index des Zuges (beginnend mit 1)
-     * @throws Exception falls der Zug ungueltig ist oder das Spiel mit der Id <code>spielId</code>
-     * nicht existiert
+     * @throws UngueltigerHalbzugException falls der Halbzug ungueltig ist
+     * @throws Exception falls das Spiel mit der Id <code>spielId</code> nicht existiert
      */
     int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug) throws UngueltigerHalbzugException;
 
