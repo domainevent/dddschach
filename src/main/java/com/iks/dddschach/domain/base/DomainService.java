@@ -1,7 +1,7 @@
 package com.iks.dddschach.domain.base;
 
 /**
- * Marker interface for all domain services
+ * Marker für alle Domain Services
  */
 public interface DomainService {
 }
