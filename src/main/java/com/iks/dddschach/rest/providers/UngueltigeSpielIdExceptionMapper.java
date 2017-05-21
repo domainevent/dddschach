@@ -21,8 +21,8 @@ public class UngueltigeSpielIdExceptionMapper implements ExceptionMapper<Unguelt
     @Override
     public Response toResponse(UngueltigeSpielIdException exception) {
         Map<String, Object> json = new HashMap<>();
-        json.put(ErrorCode.ERROR_CODE_KEY, ErrorCode.INVALID_MOVE);
-        json.put(ErrorCode.INVALID_MOVE.name(), exception.spielId.toString());
+        json.put(ErrorCode.ERROR_CODE_KEY, ErrorCode.INVALID_GAMEID);
+        json.put(ErrorCode.INVALID_GAMEID.name(), exception.spielId.toString());
         return Response.status(422).entity(json).build();
     }
 }
