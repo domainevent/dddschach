@@ -6,7 +6,8 @@ package com.iks.dddschach.rest.providers;
 public enum ErrorCode {
 
     TIMEOUT,
-    INVALID_MOVE;
+    INVALID_MOVE,
+    INVALID_GAMEID;
 
     public final static String ERROR_CODE_KEY = "error code";
 }
