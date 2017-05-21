@@ -1,6 +1,7 @@
 package com.iks.dddschach.rest.providers;
 
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
@@ -14,13 +15,16 @@ public class GeneralExceptionMapper extends Exception implements ExceptionMapper
 
     @Override
     public Response toResponse(Exception e) {
-        String hint = e.toString();
+        String messages = e.toString();
         Throwable cause = e.getCause();
 
         while (cause != null) {
-            hint += " -> " + cause;
+            messages += " <= " + cause.getMessage();
             cause = cause.getCause();
         }
-        throw new WebApplicationException(hint);
+        return Response
+                .status(Response.Status.INTERNAL_SERVER_ERROR)
+                .entity(messages)
+                .type(MediaType.TEXT_PLAIN).build();
     }
 }
