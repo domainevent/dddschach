@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface SchachpartieApi {
 
     /**
-     * Erzeugt ein neues Spiel
+     * Erzeugt ein neues Spiel und gibt dessen neu erzeugte Id zurück
      *
      * @param vermerk eine beliebiger Vermerk zu dieser Partie, z.B. Spieler, Ort, etc.
      * @return eine weltweit eindeutige Id
@@ -22,7 +22,7 @@ public interface SchachpartieApi {
 
     /**
      * Analysiert die Eingabe und erzeugt im Erfolgsfall einen Halbzug.
-     * @param eingabe Die textuelle Halbzugeingabe, Beispiel: b1-c3
+     * @param eingabe textuelle Halbzugeingabe, Beispiel: b1-c3
      * @return einen {@link Halbzug}
      * @throws ParseException
      */
@@ -50,6 +50,7 @@ public interface SchachpartieApi {
             this.halbzug = halbzug;
         }
     }
+
 
     /**
      * Fuehrt einen Halbzug in der Schachpartie mit der Id <code>spielId</code> aus. Der Halbzug
