@@ -1,5 +1,6 @@
 package com.iks.dddschach.rest;
 
+import com.iks.dddschach.api.SchachpartieApi.UngueltigeSpielIdException;
 import com.iks.dddschach.api.SchachpartieApi.UngueltigerHalbzugException;
 import org.apache.log4j.Logger;
 import com.iks.dddschach.api.SchachpartieApi;
@@ -85,11 +86,15 @@ public class RestService {
             @ResponseCode(code = 404, condition = "The field at the given coordinates is empty"),
             @ResponseCode(code = 500, condition = "An exception occured")
     })
-    public Spielbrett spielbrett(final @NotNull @PathParam("gameId") String spielId) {
+    public Spielbrett spielbrett(final @NotNull @PathParam("gameId") String spielId) throws UngueltigeSpielIdException {
         log.info("SpielId=" + spielId + ": Abfrage des Spielfeldes");
 
         try {
             return schachpartieApi.spielbrett(new SpielId(spielId));
+        }
+        catch (UngueltigeSpielIdException e) {
+            log.debug("SpielId=" + spielId + ": Der Spiel-ID " + e.spielId + " ist ungültig.");
+            throw e;
         }
         catch (Exception e) {
             log.error("Interner Server-Error", e);
@@ -117,7 +122,8 @@ public class RestService {
     @ManagedAsync
     public Response fuehreHalbzugAus(
             final @NotNull @PathParam("gameId") String spielId,
-            final @NotNull @FormParam("move") String halbzug) throws UngueltigerHalbzugException {
+            final @NotNull @FormParam("move") String halbzug)
+            throws UngueltigerHalbzugException, UngueltigeSpielIdException {
 
         if (halbzug == null) {
             log.warn("SpielId=" + spielId + ": Der Parameter move fehlt.");
@@ -149,13 +155,17 @@ public class RestService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response fuehreHalbzugAus(
             final @NotNull @PathParam("gameId") String spielId,
-            final @NotNull Halbzug halbzug) throws UngueltigerHalbzugException {
+            final @NotNull Halbzug halbzug) throws UngueltigerHalbzugException, UngueltigeSpielIdException {
 
         log.info("SpielId=" + spielId + ": Ausfuehren des Halbzuges " + halbzug);
 
         final int zugIndex;
         try {
             zugIndex = schachpartieApi.fuehreHalbzugAus(new SpielId(spielId), halbzug);
+        }
+        catch (UngueltigeSpielIdException e) {
+            log.debug("SpielId=" + spielId + ": Der Spiel-ID " + e.spielId + " ist ungültig.");
+            throw e;
         }
         catch (UngueltigerHalbzugException e) {
             log.debug("SpielId=" + spielId + ": Der Halbzug " + halbzug + " ist ungültig.");
