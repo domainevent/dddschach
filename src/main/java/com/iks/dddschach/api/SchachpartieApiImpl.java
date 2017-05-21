@@ -2,6 +2,7 @@ package com.iks.dddschach.api;
 
 import com.iks.dddschach.domain.*;
 
+import java.text.ParseException;
 import java.util.Optional;
 
 
@@ -18,14 +19,21 @@ public class SchachpartieApiImpl implements SchachpartieApi {
 
 
     @Override
-    public int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug) throws Exception {
+    public Halbzug parse(String eingabe) throws ParseException {
+        return new Halbzug(eingabe);
+    }
+
+
+    @Override
+    public int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug)
+            throws UngueltigerHalbzugException, UngueltigeSpielIdException {
         // TODO: Zu implementieren
         return -1;
     }
 
 
     @Override
-    public Spielbrett spielbrett(SpielId gameId) throws Exception {
+    public Spielbrett spielbrett(SpielId spielId) throws UngueltigeSpielIdException {
         // TODO: Zu implementieren
         return SpielbrettFactory.createInitialesSpielbrett();
     }
