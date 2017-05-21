@@ -4,6 +4,7 @@ import com.iks.dddschach.domain.Spielbrett;
 import com.iks.dddschach.domain.SpielId;
 import com.iks.dddschach.domain.Halbzug;
 
+import java.text.ParseException;
 import java.util.Optional;
 
 
@@ -21,6 +22,26 @@ public interface SchachpartieApi {
      */
     SpielId neuesSpiel(Optional<String> vermerk) throws Exception;
 
+
+    /**
+     * Analysiert die Eingabe und erzeugt im Erfolgsfall einen Halbzug.
+     * @param eingabe Die textuelle Halbzugeingabe, Beispiel: b1-c3
+     * @return einen {@link Halbzug}
+     * @throws ParseException
+     */
+    Halbzug parse(String eingabe) throws ParseException;
+
+
+    /**
+     * Soll erzeugt werden, falls die SpielId nicht existiert.
+     */
+    class UngueltigeSpielIdException extends Exception {
+        public final SpielId spielId;
+
+        public UngueltigeSpielIdException(SpielId spielId) {
+            this.spielId = spielId;
+        }
+    }
 
     /**
      * Soll erzeugt werden, falls ein ungueltiger Zug ausgefuehrt worden ist.
@@ -47,9 +68,11 @@ public interface SchachpartieApi {
      * @param halbzug
      * @return der Index des Zuges (beginnend mit 1)
      * @throws UngueltigerHalbzugException falls der Halbzug ungueltig ist
-     * @throws Exception falls das Spiel mit der Id <code>spielId</code> nicht existiert
+     * @throws UngueltigeSpielIdException falls es keine Partie zu <code>spielId</code> gibt
+     * @throws Exception bei sonstigen (technischen) Problemen
      */
-    int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug) throws Exception;
+    int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug)
+            throws UngueltigerHalbzugException, UngueltigeSpielIdException;
 
 
     /**
@@ -57,8 +80,9 @@ public interface SchachpartieApi {
      *
      * @param spielId (eindeutige) ID, die anfangs durch <code>neuesSpiel</code> erzeugt worden ist.
      * @return das aktuelle Schachbrett
-     * @throws Exception falls das Spiel mit der Id <code>spielId</code> nicht existiert
+     * @throws UngueltigeSpielIdException falls es keine Partie zu <code>spielId</code> gibt
+     * @throws Exception bei sonstigen (technischen) Problemen
      */
-    Spielbrett spielbrett(SpielId spielId) throws Exception;
+    Spielbrett spielbrett(SpielId spielId) throws UngueltigeSpielIdException;
 
 }

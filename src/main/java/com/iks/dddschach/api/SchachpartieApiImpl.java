@@ -2,6 +2,7 @@ package com.iks.dddschach.api;
 
 import com.iks.dddschach.domain.*;
 
+import java.text.ParseException;
 import java.util.Optional;
 
 
@@ -23,26 +24,30 @@ public class SchachpartieApiImpl implements SchachpartieApi {
 
 
     @Override
-    public int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug) throws Exception {
-        final Optional<Schachpartie> schachpartie = SCHACHPARTIE_REPOSITORY.findById(spielId);
-        if (schachpartie.isPresent()) {
-            return schachpartie.get().fuehreHalbzugAus(halbzug);
-        }
-        else {
-            throw new Exception("Eine Schachpartie mit der Id " + spielId + " existiert nicht.");
-        }
+    public Halbzug parse(String eingabe) throws ParseException {
+        return new Halbzug(eingabe);
     }
 
 
     @Override
-    public Spielbrett spielbrett(SpielId spielId) throws Exception {
+    public int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug)
+            throws UngueltigerHalbzugException, UngueltigeSpielIdException {
+
         final Optional<Schachpartie> schachpartie = SCHACHPARTIE_REPOSITORY.findById(spielId);
-        if (schachpartie.isPresent()) {
-            return schachpartie.get().aktuellesSpielbrett();
+        if (!schachpartie.isPresent()) {
+            throw new UngueltigeSpielIdException(spielId);
         }
-        else {
-            throw new Exception("Eine Schachpartie mit der Id " + spielId + " existiert nicht.");
+        return schachpartie.get().fuehreHalbzugAus(halbzug);
+    }
+
+
+    @Override
+    public Spielbrett spielbrett(SpielId spielId) throws UngueltigeSpielIdException {
+        final Optional<Schachpartie> schachpartie = SCHACHPARTIE_REPOSITORY.findById(spielId);
+        if (!schachpartie.isPresent()) {
+            throw new UngueltigeSpielIdException(spielId);
         }
+        return schachpartie.get().aktuellesSpielbrett();
     }
 
 }
