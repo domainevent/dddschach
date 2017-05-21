@@ -93,7 +93,7 @@ public class RestService {
             return schachpartieApi.spielbrett(new SpielId(spielId));
         }
         catch (UngueltigeSpielIdException e) {
-            log.debug("SpielId=" + spielId + ": Der Spiel-ID " + e.spielId + " ist ungültig.");
+            log.warn("SpielId=" + spielId + ": Der Spiel-ID " + e.spielId + " ist ungültig.");
             throw e;
         }
         catch (Exception e) {
@@ -164,7 +164,7 @@ public class RestService {
             zugIndex = schachpartieApi.fuehreHalbzugAus(new SpielId(spielId), halbzug);
         }
         catch (UngueltigeSpielIdException e) {
-            log.debug("SpielId=" + spielId + ": Der Spiel-ID " + e.spielId + " ist ungültig.");
+            log.warn("SpielId=" + spielId + ": Der Spiel-ID " + e.spielId + " ist ungültig.");
             throw e;
         }
         catch (UngueltigerHalbzugException e) {
