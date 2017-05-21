@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.net.URI;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Optional;
@@ -66,7 +67,7 @@ public class RestService {
         }
         catch (Exception e) {
             log.error("Interner Server-Error", e);
-            throw new ServerErrorException(Response.Status.INTERNAL_SERVER_ERROR, e);
+            throw new InternalServerErrorException(e);
         }
     }
 
@@ -92,7 +93,7 @@ public class RestService {
         }
         catch (Exception e) {
             log.error("Interner Server-Error", e);
-            throw new ServerErrorException(Response.Status.INTERNAL_SERVER_ERROR, e);
+            throw new InternalServerErrorException(e);
         }
     }// spielbrett
 
@@ -122,7 +123,12 @@ public class RestService {
             log.warn("SpielId=" + spielId + ": Der Parameter move fehlt.");
             throw new BadRequestException("Missing form parameter move");
         }
-        return fuehreHalbzugAus(spielId, new Halbzug(halbzug));
+        try {
+            return fuehreHalbzugAus(spielId, schachpartieApi.parse(halbzug));
+        }
+        catch (ParseException e) {
+            throw new BadRequestException("Eingabe-Formatfehler: " + halbzug);
+        }
     }
 
 
@@ -157,7 +163,7 @@ public class RestService {
         }
         catch (Exception e) {
             log.error("Interner Server-Error", e);
-            throw new ServerErrorException(Response.Status.INTERNAL_SERVER_ERROR, e);
+            throw new InternalServerErrorException(e);
         }
 
         log.debug("SpielId=" + spielId + ": Der " + zugIndex + ". Halbzug " + halbzug + " war erfolgreich.");
