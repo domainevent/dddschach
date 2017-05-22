@@ -33,7 +33,7 @@ public class SchachpartieApiImpl implements SchachpartieApi {
 
 
     @Override
-    public Spielbrett spielbrett(SpielId spielId) throws UngueltigeSpielIdException {
+    public Spielbrett aktuellesSpielbrett(SpielId spielId) throws UngueltigeSpielIdException {
         // TODO: Zu implementieren
         return SpielbrettFactory.createInitialesSpielbrett();
     }
