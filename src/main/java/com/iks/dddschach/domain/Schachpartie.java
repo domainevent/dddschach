@@ -22,7 +22,7 @@ public class Schachpartie extends EntityIdObject<SpielId> {
 
 
     public int fuehreHalbzugAus(Halbzug halbzug) throws UngueltigerHalbzugException {
-        if (!VALIDATION.validiere(halbzug, halbzugHistorie, spielbrett).valid) {
+        if (!VALIDATION.validiere(halbzug, halbzugHistorie.halbzuege, spielbrett).valid) {
             throw new UngueltigerHalbzugException(halbzug);
         }
         spielbrett = new Spielbrett(spielbrett) {{
