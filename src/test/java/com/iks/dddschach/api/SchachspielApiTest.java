@@ -39,7 +39,7 @@ public class SchachspielApiTest {
     @Test
     public void istAmStartInitialesSchachBrettVorhanden() throws Exception {
         final SpielId spielId = api.neuesSpiel(VERMERK);
-        final Spielbrett actual = api.spielbrett(spielId);
+        final Spielbrett actual = api.aktuellesSpielbrett(spielId);
         final Spielbrett expected = SpielbrettFactory.createInitialesSpielbrett();
         Assert.assertEquals(expected, actual);
     }
@@ -69,11 +69,11 @@ public class SchachspielApiTest {
 
         final SpielId spielId1 = api.neuesSpiel(VERMERK);
         api.fuehreHalbzugAus(spielId1, new Halbzug(posFrom1, posTo1));
-        final Spielbrett actual1 = api.spielbrett(spielId1);
+        final Spielbrett actual1 = api.aktuellesSpielbrett(spielId1);
 
         final SpielId spielId2 = api.neuesSpiel(VERMERK);
         api.fuehreHalbzugAus(spielId2, new Halbzug(posFrom2, posTo2));
-        final Spielbrett actual2 = api.spielbrett(spielId2);
+        final Spielbrett actual2 = api.aktuellesSpielbrett(spielId2);
 
         Assert.assertEquals(expected1, actual1);
         Assert.assertEquals(expected2, actual2);
