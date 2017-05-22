@@ -42,7 +42,7 @@ public class SchachpartieApiImpl implements SchachpartieApi {
 
 
     @Override
-    public Spielbrett spielbrett(SpielId spielId) throws UngueltigeSpielIdException {
+    public Spielbrett aktuellesSpielbrett(SpielId spielId) throws UngueltigeSpielIdException {
         final Optional<Schachpartie> schachpartie = SCHACHPARTIE_REPOSITORY.findById(spielId);
         if (!schachpartie.isPresent()) {
             throw new UngueltigeSpielIdException(spielId);

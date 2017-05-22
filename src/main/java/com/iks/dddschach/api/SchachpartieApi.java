@@ -83,6 +83,6 @@ public interface SchachpartieApi {
      * @throws UngueltigeSpielIdException falls es keine Partie zu <code>spielId</code> gibt
      * @throws Exception bei sonstigen (technischen) Problemen
      */
-    Spielbrett spielbrett(SpielId spielId) throws UngueltigeSpielIdException;
+    Spielbrett aktuellesSpielbrett(SpielId spielId) throws UngueltigeSpielIdException;
 
 }

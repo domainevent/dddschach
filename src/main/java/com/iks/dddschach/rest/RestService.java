@@ -90,7 +90,7 @@ public class RestService {
         log.info("SpielId=" + spielId + ": Abfrage des Spielfeldes");
 
         try {
-            return schachpartieApi.spielbrett(new SpielId(spielId));
+            return schachpartieApi.aktuellesSpielbrett(new SpielId(spielId));
         }
         catch (UngueltigeSpielIdException e) {
             log.warn("SpielId=" + spielId + ": Der Spiel-ID " + e.spielId + " ist ungültig.");
@@ -100,7 +100,7 @@ public class RestService {
             log.error("Interner Server-Error", e);
             throw new InternalServerErrorException(e);
         }
-    }// spielbrett
+    }// aktuellesSpielbrett
 
 
     /**
