@@ -7,7 +7,7 @@ import java.util.Optional;
 
 
 /**
- * Created by javacook on 21.04.17.
+ * Implementierung des Interface <code>SchachpartieApi</code>
  */
 public class SchachpartieApiImpl implements SchachpartieApi {
 
