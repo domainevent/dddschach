@@ -1,6 +1,7 @@
 package com.iks.dddschach.domain;
 
 
+import com.iks.dddschach.domain.Spielfigur.FigurenTyp;
 import com.iks.dddschach.domain.base.ValueObject;
 import com.webcohesion.enunciate.metadata.DocumentationExample;
 
@@ -78,8 +79,7 @@ public class Spielbrett extends ValueObject {
         return board[position.horCoord.ordinal()][position.vertCoord.ordinal()];
     }
 
-    protected void setSchachfigurAnPosition(Zeile h, Position.Spalte v,
-                                            Spielfigur.FigurenTyp figur, Farbe color) {
+    protected void setSchachfigurAnPosition(Zeile h, Spalte v, FigurenTyp figur, Farbe color) {
         setSchachfigurAnPosition(new Position(h,v), new Spielfigur(figur, color));
     }
 
@@ -112,7 +112,7 @@ public class Spielbrett extends ValueObject {
     public String toString() {
         final String horLine = "-------------------------";
         String boardAsStr = horLine + CR;
-        for(Position.Spalte spalte : Position.Spalte.valuesInverted()) {
+        for(Spalte spalte : Spalte.valuesInverted()) {
             boardAsStr += "|";
             for(Position.Zeile zeile : Position.Zeile.values()) {
                 final Spielfigur figure = board[zeile.ordinal()][spalte.ordinal()];
