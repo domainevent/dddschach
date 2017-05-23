@@ -16,14 +16,16 @@ import static com.iks.dddschach.domain.Position.Zeile;
  */
 public class Spielbrett extends ValueObject {
 
+    /**
+     * Zweidimensionales Array, das das Spielbrett repräsentiert.
+     */
     protected final Spielfigur[][] board;
-
 
     /**
      * Default-Konstruktor
      */
     public Spielbrett() {
-        this(new Spielfigur[Position.Zeile.values().length][Spalte.values().length]);
+        board = new Spielfigur[Position.Zeile.values().length][Spalte.values().length];
     }
 
     /**
@@ -31,25 +33,20 @@ public class Spielbrett extends ValueObject {
      * @param toCopy das zu kopierenden {@link Spielbrett}
      */
     public Spielbrett(Spielbrett toCopy) {
-        this(toCopy.getBoard());
+        board = toCopy.getBoard();
     }
 
-    /**
-     * Assign-Konstruktor
-     * @param board das zu übernehmenden zweidimensionale Array von Spielfiguren
-     */
-    protected Spielbrett(Spielfigur[][] board) {
-        this.board = board;
-    }
 
     /**
      * Ein zweidimensionales Array (real 8x8) von Spielfiguren
+     * @return eine neue Instanz des Spielfiguren-Arrays
      * @see {@link Spielfigur}
      */
     @DocumentationExample(exclude = true)
     public Spielfigur[][] getBoard() {
         final Spielfigur[][] copy =
                 new Spielfigur[Position.Zeile.values().length][Spalte.values().length];
+
         for (int i = 0; i < Position.Zeile.values().length; i++) {
             for (int j = 0; j < Spalte.values().length; j++) {
                 copy[i][j] = board[i][j];
@@ -57,6 +54,21 @@ public class Spielbrett extends ValueObject {
         }
         return copy;
     }
+
+    /**
+     * Wendet auf dem Spielbrett einen Halbzug an und gibt das Ergebnis zurück
+     * @param halbzug der auf dem Brett anzuwendende Halbzug
+     * @return eine neue Instanz des modifizierten Spielbretts
+     * @see {@link Halbzug}
+     */
+    public Spielbrett wendeHalbzugAn(Halbzug halbzug) {
+        return new Spielbrett(this) {{
+            final Spielfigur spielfigurFrom = getSchachfigurAnPosition(halbzug.from);
+            setSchachfigurAnPosition(halbzug.from, null);
+            setSchachfigurAnPosition(halbzug.to, spielfigurFrom);
+        }};
+    }
+
 
     protected void setSchachfigurAnPosition(Position position, Spielfigur figur) {
         board[position.horCoord.ordinal()][position.vertCoord.ordinal()] = figur;
@@ -71,6 +83,8 @@ public class Spielbrett extends ValueObject {
         setSchachfigurAnPosition(new Position(h,v), new Spielfigur(figur, color));
     }
 
+
+    // Überschriebende Standard-Methoden:
 
     @Override
     public boolean equals(Object o) {
