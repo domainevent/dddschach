@@ -9,6 +9,9 @@ import static com.iks.dddschach.domain.Position.Zeile.*;
 import static com.iks.dddschach.domain.Spielfigur.FigurenTyp.*;
 
 
+/**
+ * Eine Fabrik, um Objekte des Typs Spielbrett herzustellen.
+ */
 public class SpielbrettFactory {
 
     /**
