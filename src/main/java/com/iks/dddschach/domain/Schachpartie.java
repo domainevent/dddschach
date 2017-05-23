@@ -25,11 +25,7 @@ public class Schachpartie extends EntityIdObject<SpielId> {
         if (!VALIDATION.validiere(halbzug, halbzugHistorie.halbzuege, spielbrett).valid) {
             throw new UngueltigerHalbzugException(halbzug);
         }
-        spielbrett = new Spielbrett(spielbrett) {{
-            final Spielfigur spielfigurFrom = getSchachfigurAnPosition(halbzug.from);
-            setSchachfigurAnPosition(halbzug.from, null);
-            setSchachfigurAnPosition(halbzug.to, spielfigurFrom);
-        }};
+        spielbrett = spielbrett.wendeHalbzugAn(halbzug);
         halbzugHistorie.addHalbzug(halbzug);
         return halbzugHistorie.size();
     }
@@ -38,7 +34,6 @@ public class Schachpartie extends EntityIdObject<SpielId> {
     public Spielbrett aktuellesSpielbrett() {
         return spielbrett;
     }
-
 
     public HalbzugHistorie spielzuege() {
         return halbzugHistorie;
