@@ -74,20 +74,35 @@ public class Spielbrett extends ValueObject {
     }
 
 
+    /**
+     * Setzt eine Figur <code>figur</code> auf die Spielbrett-Position <code>position</code>
+     * @param position Position auf dem Spielfeld (z.B. b4)
+     * @param figur die zu setzende Figur (z.B. Lw = weißer Läufer)
+     */
     protected void setSchachfigurAnPosition(Position position, Spielfigur figur) {
         board[position.horCoord.ordinal()][position.vertCoord.ordinal()] = figur;
     }
 
+    /**
+     * Ermittelt die Spielfigur auf Position <code>position</code>
+     * @param position Position auf dem Spielfeld (z.B. c3)
+     * @return {@link Spielfigur} falls sich eine Figur auf Position <code>position</code> befindet, null sonst.
+     */
     protected Spielfigur getSchachfigurAnPosition(Position position) {
         return board[position.horCoord.ordinal()][position.vertCoord.ordinal()];
     }
 
-    protected void setSchachfigurAnPosition(Zeile h, Spalte v, FigurenTyp figur, Farbe color) {
-        setSchachfigurAnPosition(new Position(h,v), new Spielfigur(figur, color));
+    /**
+     * Setzt eine Figur, gegeben durch Typ und Farbe auf eine Spielbrett-Position gegeben durch Zeile und Spalte
+     * @param h Zeile der Position auf dem Spielfeld (z.B. b)
+     * @param v Spalte der Position auf dem Spielfeld (z.B. 5)
+     * @param figurenTyp Typ der zu setzenden Figur (z.B. Läufer)
+     * @param color Farbe der zu setzenden Figur (z.B. schwarz)
+     */
+    protected void setSchachfigurAnPosition(Zeile h, Spalte v, FigurenTyp figurenTyp, Farbe color) {
+        setSchachfigurAnPosition(new Position(h,v), new Spielfigur(figurenTyp, color));
     }
 
-
-    // Überschriebende Standard-Methoden:
 
     @Override
     public boolean equals(Object o) {
