@@ -149,7 +149,7 @@ public class RestService {
      *     }
      * </pre>
      */
-    @POST
+	@POST
     @Path("games/{gameId}/moves")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -179,7 +179,8 @@ public class RestService {
         log.debug("SpielId=" + spielId + ": Der " + zugIndex + ". Halbzug " + halbzug + " war erfolgreich.");
 
         // Erzeugen der JSON-Antwort und des Location-Headers:
-        HashMap<String, Object> json = new HashMap<String, Object>() {{
+		@SuppressWarnings("serial")
+		HashMap<String, Object> json = new HashMap<String, Object>() {{
             put("index", zugIndex);
         }};
         UriBuilder ub = uriInfo.getAbsolutePathBuilder();

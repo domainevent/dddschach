@@ -10,6 +10,7 @@ import javax.ws.rs.ext.Provider;
  * Behandelt alle Ausnahme, die nicht durch die anderen ExceptionMapper behandelt werden und erzeugt
  * eine Response mit Status-Code 500 und eine Plain-Text-Nachricht, die den Fehler kodiert enthält
  */
+@SuppressWarnings("serial")
 @Provider
 public class GeneralExceptionMapper extends Exception implements ExceptionMapper<Exception> {
 

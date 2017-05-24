@@ -5,7 +5,6 @@ import com.iks.dddschach.domain.base.EnumObject;
 import com.iks.dddschach.domain.base.ValueObject;
 
 import javax.xml.bind.annotation.XmlEnum;
-import java.text.ParseException;
 
 
 /**
@@ -88,7 +87,8 @@ public class Position extends ValueObject {
     /**
      * Wird lediglich zum Unmarshallen der XML- bzw. Json-Objekte benoetigt
      */
-    private Position() {
+    @SuppressWarnings("unused")
+	private Position() {
         this(null, null);
     }
 
