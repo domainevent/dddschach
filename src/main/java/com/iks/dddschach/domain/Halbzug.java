@@ -32,7 +32,6 @@ public class Halbzug extends ValueObject {
         this.to = to;
     }
 
-
     /**
      * Wird lediglich zum Unmarshallen der XML- bzw. Json-Objekte benoetigt
      */
