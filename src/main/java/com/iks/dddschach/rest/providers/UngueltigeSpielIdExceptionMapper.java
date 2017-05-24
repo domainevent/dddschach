@@ -11,7 +11,7 @@ import java.util.Map;
 
 /**
  * Behandelt die Ausnahme <code>UngueltigeSpielIdException</code> und erzeugt eine Response mit
- * Status-Code 422 und ein JSON-Objekte, das den Fehler kodiert enthält
+ * Status-Code 404 und ein JSON-Objekte, das den Fehler kodiert enthält
  */
 @Provider
 public class UngueltigeSpielIdExceptionMapper implements ExceptionMapper<UngueltigeSpielIdException> {
@@ -21,6 +21,6 @@ public class UngueltigeSpielIdExceptionMapper implements ExceptionMapper<Unguelt
         Map<String, Object> json = new HashMap<>();
         json.put(ErrorCode.ERROR_CODE_KEY, ErrorCode.INVALID_GAMEID);
         json.put(ErrorCode.INVALID_GAMEID.name(), exception.spielId.toString());
-        return Response.status(422).entity(json).build();
+        return Response.status(404).entity(json).build();
     }
 }

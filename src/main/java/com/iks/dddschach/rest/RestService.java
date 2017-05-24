@@ -60,6 +60,10 @@ public class RestService {
     @POST
     @Path("games")
     @Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
+    @StatusCodes({
+            @ResponseCode(code = 200, condition = "ok"),
+            @ResponseCode(code = 500, condition = "An exception occured")
+    })
     public SpielId neuesSpiel(@FormParam("note") String vermerk) {
         try {
             final SpielId spielId = schachpartieApi.neuesSpiel(Optional.ofNullable(vermerk));
@@ -83,7 +87,7 @@ public class RestService {
     @Produces(MediaType.APPLICATION_JSON)
     @StatusCodes({
             @ResponseCode(code = 200, condition = "ok"),
-            @ResponseCode(code = 404, condition = "The field at the given coordinates is empty"),
+            @ResponseCode(code = 404, condition = "The game id is not valid"),
             @ResponseCode(code = 500, condition = "An exception occured")
     })
     public Spielbrett spielbrett(final @NotNull @PathParam("gameId") String spielId) throws UngueltigeSpielIdException {
@@ -119,7 +123,13 @@ public class RestService {
     @Path("games/{gameId}/moves")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    @ManagedAsync
+    @StatusCodes({
+            @ResponseCode(code = 200, condition = "ok"),
+            @ResponseCode(code = 400, condition = "Missing or invalid half-move parameter"),
+            @ResponseCode(code = 404, condition = "The game id is not valid"),
+            @ResponseCode(code = 422, condition = "The half-move is not valid"),
+            @ResponseCode(code = 500, condition = "An exception occured")
+    })
     public Response fuehreHalbzugAus(
             final @NotNull @PathParam("gameId") String spielId,
             final @NotNull @FormParam("move") String halbzug)
@@ -153,6 +163,13 @@ public class RestService {
     @Path("games/{gameId}/moves")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @StatusCodes({
+            @ResponseCode(code = 200, condition = "ok"),
+            @ResponseCode(code = 400, condition = "Missing or invalid half-move parameter"),
+            @ResponseCode(code = 404, condition = "The game id is not valid"),
+            @ResponseCode(code = 422, condition = "The half-move is not valid"),
+            @ResponseCode(code = 500, condition = "An exception occured")
+    })
     public Response fuehreHalbzugAus(
             final @NotNull @PathParam("gameId") String spielId,
             final @NotNull Halbzug halbzug) throws UngueltigerHalbzugException, UngueltigeSpielIdException {
