@@ -74,6 +74,11 @@ public class Position extends ValueObject {
     public final Spalte vertCoord;
 
 
+    /**
+     * Konstruktor
+     * @param zeile (horizontale) Zeilen-Koordinate des Schachbretts (a-h)
+     * @param spalte (vertikale) Spalten-Koordinate des Schachbretts (1-8)
+     */
     public Position(Zeile zeile, Spalte spalte) {
         this.horCoord = zeile;
         this.vertCoord = spalte;
@@ -81,7 +86,7 @@ public class Position extends ValueObject {
 
 
     /**
-     * Wird zum Unmarshallen der XML- bzw. Json-Objekte benoetigt
+     * Wird lediglich zum Unmarshallen der XML- bzw. Json-Objekte benoetigt
      */
     private Position() {
         this(null, null);

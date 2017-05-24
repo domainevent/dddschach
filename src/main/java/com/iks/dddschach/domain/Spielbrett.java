@@ -13,7 +13,10 @@ import static com.iks.dddschach.domain.Position.Zeile;
 
 
 /**
- * Beinhaltet die Stellung der Figuren auf dem Schachbrett
+ * Beinhaltet die Stellung der Figuren auf dem Schachbrett.
+ *
+ * Hinweis: Beachte die Methode <code>wendeHalbzugAn</code>,
+ * mit der auf dem Schachbrett ein Zug ausgeführt werden kann.
  */
 public class Spielbrett extends ValueObject {
 
@@ -26,7 +29,7 @@ public class Spielbrett extends ValueObject {
      * Default-Konstruktor
      */
     public Spielbrett() {
-        board = new Spielfigur[Position.Zeile.values().length][Spalte.values().length];
+        board = new Spielfigur[Zeile.values().length][Spalte.values().length];
     }
 
     /**
@@ -40,21 +43,21 @@ public class Spielbrett extends ValueObject {
 
     /**
      * Ein zweidimensionales Array (real 8x8) von Spielfiguren
-     * @return eine neue Instanz des Spielfiguren-Arrays
+     * @return eine neue Instanz des Spielfiguren-Arrays (immutable)
      * @see {@link Spielfigur}
      */
     @DocumentationExample(exclude = true)
     public Spielfigur[][] getBoard() {
-        final Spielfigur[][] copy =
-                new Spielfigur[Position.Zeile.values().length][Spalte.values().length];
+        final Spielfigur[][] copy = new Spielfigur[Zeile.values().length][Spalte.values().length];
 
-        for (int i = 0; i < Position.Zeile.values().length; i++) {
+        for (int i = 0; i < Zeile.values().length; i++) {
             for (int j = 0; j < Spalte.values().length; j++) {
                 copy[i][j] = board[i][j];
             }
         }
         return copy;
     }
+
 
     /**
      * Wendet auf dem Spielbrett einen Halbzug an und gibt das Ergebnis zurück
@@ -114,7 +117,7 @@ public class Spielbrett extends ValueObject {
         String boardAsStr = horLine + CR;
         for(Spalte spalte : Spalte.valuesInverted()) {
             boardAsStr += "|";
-            for(Position.Zeile zeile : Position.Zeile.values()) {
+            for(Zeile zeile : Zeile.values()) {
                 final Spielfigur figure = board[zeile.ordinal()][spalte.ordinal()];
                 boardAsStr += (figure == null)? "  " : figure;
                 boardAsStr += "|";

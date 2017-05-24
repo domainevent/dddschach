@@ -1,6 +1,5 @@
 package com.iks.dddschach.rest.providers;
 
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -8,7 +7,8 @@ import javax.ws.rs.ext.Provider;
 
 
 /**
- * Created by javacook on 29.04.17.
+ * Behandelt alle Ausnahme, die nicht durch die anderen ExceptionMapper behandelt werden und erzeugt
+ * eine Response mit Status-Code 500 und eine Plain-Text-Nachricht, die den Fehler kodiert enthält
  */
 @Provider
 public class GeneralExceptionMapper extends Exception implements ExceptionMapper<Exception> {
