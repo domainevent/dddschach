@@ -18,7 +18,7 @@ import static com.iks.dddschach.domain.SpielNotationParser.parse;
 public class SchachspielApiTest {
 
     private SchachpartieApi api = new SchachpartieApiImpl();
-    private final static Optional VERMERK = Optional.of("Vermerk");
+    private final static Optional<String> VERMERK = Optional.of("Vermerk");
 
     @Before
     public void setUp() throws Exception {

@@ -32,7 +32,8 @@ public interface SchachpartieApi {
     /**
      * Soll erzeugt werden, falls die Spiel-Id nicht existiert.
      */
-    class UngueltigeSpielIdException extends Exception {
+    @SuppressWarnings("serial")
+	class UngueltigeSpielIdException extends Exception {
         public final SpielId spielId;
 
         public UngueltigeSpielIdException(SpielId spielId) {
@@ -43,7 +44,8 @@ public interface SchachpartieApi {
     /**
      * Soll erzeugt werden, falls ein ungueltiger Zug ausgefuehrt worden ist.
      */
-    class UngueltigerHalbzugException extends Exception {
+    @SuppressWarnings("serial")
+	class UngueltigerHalbzugException extends Exception {
         public final Halbzug halbzug;
 
         public UngueltigerHalbzugException(Halbzug halbzug) {

@@ -13,8 +13,6 @@ import javax.ws.rs.ApplicationPath;
 @ApplicationPath("api")
 public class RestApplication extends ResourceConfig {
 
-    private SchachpartieApi schachpartieApi;
-
     public RestApplication() {
         register(new AbstractBinder() {
             protected void configure() {
