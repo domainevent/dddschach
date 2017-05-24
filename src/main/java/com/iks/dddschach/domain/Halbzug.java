@@ -34,35 +34,11 @@ public class Halbzug extends ValueObject {
 
 
     /**
-     * Konstruktor
-     * @param from Startposition, Beispiel: "e2"
-     * @param to Zielposition, Beispiel: "e4"
-     * @throws ParseException falls <code>from</code> oder <code>to</code> nicht der Notationssyntax entsprechen
-     */
-    public Halbzug(String from, String to) throws ParseException {
-        this(new Position(from), new Position(to));
-    }
-
-
-    public Halbzug(String fromTo) throws ParseException {
-        String[] fromToParts;
-        try {
-            fromToParts = fromTo.split("-");
-            this.from = new Position(fromToParts[0]);
-            this.to = new Position(fromToParts[1]);
-        }
-        catch (Exception e) {
-            throw new ParseException(fromTo, 0);
-        }
-    }
-
-    /**
      * Wird lediglich zum Unmarshallen der XML- bzw. Json-Objekte benoetigt
      */
     private Halbzug() {
         this((Position)null, (Position)null);
     }
-
 
     @Override
     public String toString() {

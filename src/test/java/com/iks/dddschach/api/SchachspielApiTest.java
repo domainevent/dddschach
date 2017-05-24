@@ -7,6 +7,10 @@ import org.junit.Test;
 
 import java.util.Optional;
 
+import static com.iks.dddschach.domain.Position.Spalte.*;
+import static com.iks.dddschach.domain.Position.Zeile.*;
+import static com.iks.dddschach.domain.SpielNotationParser.parse;
+
 
 /**
  * Created by vollmer on 09.05.17.
@@ -47,11 +51,11 @@ public class SchachspielApiTest {
 
     @Test
     public void fuehreZuegeInVerschPartienAusUndKontrolliereStellungen() throws Exception {
-        Position posFrom1 = new Position("e2");
-        Position posTo1 = new Position("e4");
+        Position posFrom1 = new Position(E,_2);
+        Position posTo1 = new Position(E,_4);
 
-        Position posFrom2 = new Position("d2");
-        Position posTo2 = new Position("d4");
+        Position posFrom2 = new Position(D,_2);
+        Position posTo2 = new Position(D,_4);
 
         final Spielbrett expected1 =
                 new Spielbrett(SpielbrettFactory.createInitialesSpielbrett()) {{
@@ -83,23 +87,23 @@ public class SchachspielApiTest {
     @Test
     public void fuehreZuegeVonWeissDanachSchwarzInEinerPartieAus() throws Exception {
         final SpielId spielId = api.neuesSpiel(VERMERK);
-        api.fuehreHalbzugAus(spielId, new Halbzug("e2-e4"));
-        api.fuehreHalbzugAus(spielId, new Halbzug("d7-d5"));
+        api.fuehreHalbzugAus(spielId, parse("e2-e4"));
+        api.fuehreHalbzugAus(spielId, parse("d7-d5"));
     }
 
 
     @Test(expected = Exception.class)
     public void ungueltigerZugWeilZweimalGleicherSpieler() throws Exception {
         final SpielId spielId = api.neuesSpiel(VERMERK);
-        api.fuehreHalbzugAus(spielId, new Halbzug("e2-e4"));
-        api.fuehreHalbzugAus(spielId, new Halbzug("e4-e5"));
+        api.fuehreHalbzugAus(spielId, parse("e2-e4"));
+        api.fuehreHalbzugAus(spielId, parse("e4-e5"));
     }
 
 
     @Test(expected = Exception.class)
     public void ungueltigerZugDennKeineSpielfigurAufStartfeld() throws Exception {
         final SpielId spielId = api.neuesSpiel(VERMERK);
-        api.fuehreHalbzugAus(spielId, new Halbzug("e3-e4"));
+        api.fuehreHalbzugAus(spielId, parse("e3-e4"));
     }
 
 }

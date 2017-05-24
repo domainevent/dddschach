@@ -20,7 +20,7 @@ public class SchachpartieApiImpl implements SchachpartieApi {
 
     @Override
     public Halbzug parse(String eingabe) throws ParseException {
-        return new Halbzug(eingabe);
+        return SpielNotationParser.parse(eingabe);
     }
 
 
