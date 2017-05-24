@@ -7,6 +7,10 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 
+/**
+ * Behandelt die Ausnahme <code>NotFoundException</code> und erzeugt eine Response mit
+ * Status-Code 404 und eine Plain-Text-Nachricht, die den Fehler kodiert enthält
+ */
 @Provider
 public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundException> {
 

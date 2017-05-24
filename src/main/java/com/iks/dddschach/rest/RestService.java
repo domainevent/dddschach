@@ -22,7 +22,7 @@ import java.util.Optional;
 
 
 /**
- * Dieser Service stellt die Möglichkeit bereit, eine Schach-Partie "remote" über das Netzwerk
+ * Dieser REST-Service stellt die Möglichkeit bereit, eine Schach-Partie "remote" über das Netzwerk
  * zu spielen.
  */
 @Path("/")

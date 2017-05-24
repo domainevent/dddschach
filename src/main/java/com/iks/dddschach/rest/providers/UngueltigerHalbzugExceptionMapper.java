@@ -1,7 +1,5 @@
 package com.iks.dddschach.rest.providers;
 
-
-import com.iks.dddschach.api.SchachpartieApi;
 import com.iks.dddschach.api.SchachpartieApi.UngueltigerHalbzugException;
 
 import javax.ws.rs.core.Response;
@@ -12,7 +10,8 @@ import java.util.Map;
 
 
 /**
- * Created by vollmer on 19.05.17.
+ * Behandelt die Ausnahme <code>UngueltigerHalbzugException</code> und erzeugt eine Response mit
+ * Status-Code 422 und ein JSON-Objekte, das den Fehler kodiert enthält
  */
 @Provider
 public class UngueltigerHalbzugExceptionMapper implements ExceptionMapper<UngueltigerHalbzugException> {

@@ -8,6 +8,12 @@ import java.text.ParseException;
  */
 public class SpielNotationParser {
 
+    /**
+     * Analysiert Halbzugeingabe der Form [a-h][1-8]-[a-h][1-8]
+     * @param eingabe Die textuelle Eingabe eines Halbzugs
+     * @return {@link Halbzug}
+     * @throws ParseException falls <code>eingabe</code> nicht der Syntax entsprach
+     */
     public static Halbzug parse(String eingabe) throws ParseException {
         String[] fromToParts;
         try {
@@ -21,7 +27,12 @@ public class SpielNotationParser {
         }
     }
 
-
+    /**
+     * Analysiert Positionseingaben der Form [a-h][1-8]
+     * @param eingabe Die textuelle Eingabe der Position Halbzugs
+     * @return {@link Position}
+     * @throws ParseException falls <code>eingabe</code> nicht der Syntax entsprach
+     */
     public static Position parsePosition(String eingabe) throws ParseException {
         try {
             Position.Zeile zeile = Position.Zeile.valueOf(eingabe.substring(0, 1).toUpperCase());

@@ -33,7 +33,7 @@ public interface SchachpartieApi {
 
 
     /**
-     * Soll erzeugt werden, falls die SpielId nicht existiert.
+     * Soll erzeugt werden, falls die Spiel-Id nicht existiert.
      */
     class UngueltigeSpielIdException extends Exception {
         public final SpielId spielId;
