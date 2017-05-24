@@ -21,32 +21,23 @@ public class Halbzug extends ValueObject {
      */
     public final Position to;
 
+
+    /**
+     * Konstruktor
+     * @param from Startposition
+     * @param to Zielposition
+     */
     public Halbzug(Position from, Position to) {
         this.from = from;
         this.to = to;
     }
 
+
     /**
-     * Wird zum Unmarshallen der XML- bzw. Json-Objekte benoetigt
+     * Wird lediglich zum Unmarshallen der XML- bzw. Json-Objekte benoetigt
      */
     private Halbzug() {
         this((Position)null, (Position)null);
-    }
-
-    public Halbzug(String from, String to) throws ParseException {
-        this(new Position(from), new Position(to));
-    }
-
-    public Halbzug(String fromTo) throws ParseException {
-        String[] fromToParts;
-        try {
-            fromToParts = fromTo.split("-");
-            this.from = new Position(fromToParts[0]);
-            this.to = new Position(fromToParts[1]);
-        }
-        catch (Exception e) {
-            throw new ParseException(fromTo, 0);
-        }
     }
 
     @Override

@@ -79,15 +79,6 @@ public class Position extends ValueObject {
         this.vertCoord = spalte;
     }
 
-    public Position(String coordEncoded) throws ParseException {
-        try {
-            horCoord = Zeile.valueOf(coordEncoded.substring(0, 1).toUpperCase());
-            vertCoord = Spalte.valueOf("_" + coordEncoded.substring(1, 2));
-        }
-        catch (Exception e) {
-            throw new ParseException(coordEncoded, 0);
-        }
-    }
 
     /**
      * Wird zum Unmarshallen der XML- bzw. Json-Objekte benoetigt
