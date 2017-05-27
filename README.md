@@ -1,6 +1,6 @@
 # DDD-Schach
-### Implementierungsumgebung für die Erstellung eines Schach-Servers
-Im Rahmen unserer DDD-Schulung besteht die Aufgabe hier darin, einen Schachserver zu
+
+Im Rahmen unserer DDD-Schulung besteht die Aufgabe hier darin, einen **Schachserver** zu
 implementieren. Der Server soll beliebig viele Schach-Partien parallel verarbeiten 
 können. 
 
@@ -8,11 +8,11 @@ Eine REST-Schnittstelle ist bereits vorhanden (package <tt>com.iks.dddschach.api
 Diese leitet an die Implementierung der API-Schnittstelle <tt>SchachspielApi</tt>
 weiter.
 
-Diese API-Schnittstelle ist der **zentrale Zugang** zur Schach-Domäne! In der 
+Diese **API-Schnittstelle** ist der **zentrale Zugang** zur Schach-Domäne! In der 
 Zwiebelring-Darstellung umschließt sie die von Euch zu erstellende Domäne.
 
 In <tt>SchachspielApiImpl</tt> befinden sie einige TODOs. Hier müssen die empfangenen Parameter an die 
-Domain-Klassen weitergeleitet und die Ergebnisse letzlich an die 
+Domain-Klassen weitergeleitet und die Ergebnisse letztlich an die 
 REST-Schnittstelle zurückgegeben werden. 
  
 Im Package <tt>com.iks.dddschach.domain</tt> befinden sich bereits einige vorgefertigte
@@ -20,13 +20,15 @@ Value-Objects, die vorzugsweise (wieder-) zu verwenden sind.
  
 ### Technische Voraussetzungen
 1. Installationen von Java 8 und Maven
-2. Von Vorteil: Ein Tool wie z.B. Postman zum Ausführen und Verwalten von REST-Calls.
+2. Eine IDE wie z.B. Eclipse
+3. Von Vorteil: Ein Tool wie Postman zum Ausführen von REST-Calls.
  
-### Aufgabe(n)
-Implementierung der Schachdomäne. Dazu zählen Objekte
+## Aufgabe(n)
+### Implementierung der Schachdomäne. 
+Dazu zählen Objekte
 
 1. zum Verwalten von (beliebig vielen) Schachspielen, 
-2. zum Entgegennehem und Überprüfen von Schach(halb)zügen, 
+2. zum Entgegennehmen und Überprüfen von Schach(halb)zügen, 
 3. und zum Liefern des aktuellen Spielfeldes.
 
 Die Aufgaben befinden sich nochmals in den JavaDoc-Kommentaren der Schnittstelle 
@@ -47,6 +49,58 @@ Der REST-Service lässt sich mit <tt>mvn tomcat7:run</tt> starten.
 Unter 
 <a href="http://localhost:8080/dddschach/doc">http://localhost:8080/dddschach/doc</a>
 findet Ihr eine übersichtliche Dokumentation der REST-Schnittstelle (erstellt mit Enunciate). 
+
+### REST-Aufrufe, vorzugweise mit Postman ###
+#### Neues Spiel
+**POST** auf <a href="http://localhost:8080/dddschach/api/games/">http://localhost:8080/dddschach/api/games/</a><br/>
+Body (x-www-form-urlencoded):
+<pre>
+note:Ein kleiner Vermerk zum Spiel
+</pre>
+Erwartetes Ergebnis (exemplarisch): 
+<pre>
+{
+    id": "1234567"
+}
+</pre>
+
+#### Abfrage des Spielbretts
+**GET** auf <a href="http://localhost:8080/dddschach/api/games/0/board">http://localhost:8080/dddschach/api/games/0/board</a><br/>
+Erwartetes Ergebnis (im Fall einer ungültigen Spiel-Id, hier 0): 
+<pre>
+{
+  "error code": "INVALID_GAMEID",
+  "INVALID_GAMEID": "0"
+}
+</pre>
+**GET** auf <a href="http://localhost:8080/dddschach/api/games/1234567/board">http://localhost:8080/dddschach/api/games/1234567/board</a><br/>
+Erwartetes Ergebnis (im Fall einer gültigen Spiel-Id):
+<pre>
+{
+  "board": [
+    [
+      {
+        "figure": "R",
+        "color": "w"
+      },
+      {
+        "figure": "P",
+        "color": "w"
+      ...
+</pre>
+
+#### Ausführen eines Halbzugs
+**POST** auf <a href="http://localhost:8080/dddschach/api/games/1234567/moves">http://localhost:8080/dddschach/api/games/1234567/moves</a><br/>
+Body (x-www-form-urlencoded):
+<pre>
+move:b1-c3
+</pre>
+Erwartetes Ergebnis
+<pre>
+{
+  "index": 1
+}
+</pre>
 
 ### Spielen mit ChessGUI
 Auf Github gibt es das Projekt
