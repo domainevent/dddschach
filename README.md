@@ -40,7 +40,7 @@ Wenn dies alles funktioniert hat, bist Du gerüstet. Nun zum Importieren des Pro
 3. Bei Goals "tomcat7:run" eintragen 
 4. Reiter Source: Add &rarr; Java Project &rarr; dddschach
 5. Apply und Run
-6. Später: Icons Debug &rarr; m2 dddschach &rarr; Coding ohne Server-Restart!
+6. Später: Icons Debug &rarr; m2 dddschach &rarr; Live-Coding!
 
  
 ## Aufgabe(n)
