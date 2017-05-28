@@ -30,16 +30,16 @@ Wenn dies alles funktioniert hat, bist Du gerüstet. Nun zum Importieren des Pro
 
 ### Eclipse
 #### Importieren des Projekts dddschach
-1. Menü File → Import → Maven → Existing Maven Projects
+1. Menü File &rarr; Import &rarr; Maven &rarr; Existing Maven Projects
 2. Über *Browse* ins das oben unter 1. gewählte Verzeichnis navigieren und das Projekt <tt>dddschach</tt> laden
 
 #### Starten bzw. Debuggen von dddschach
-1. Menü Run → Run Configurations → Maven Build → New
-2. Base directory ← Workspace ← dddschach
+1. Menü Run &rarr; Run Configurations &rarr; Maven Build &rarr; New
+2. Base directory &larr; Workspace &larr; dddschach
 3. Bei Goals "tomcat7:run" eintragen 
-4. Reiter Source: Add → Java Project → dddschach
+4. Reiter Source: Add &rarr; Java Project &rarr; dddschach
 5. Apply und Close
-6. Icons Run bzw. Debug → m2 dddschach
+6. Icons Run bzw. Debug &rarr; m2 dddschach
 
  
 ## Aufgabe(n)
