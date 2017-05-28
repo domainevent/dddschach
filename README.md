@@ -1,6 +1,6 @@
 # DDD-Schach
 
-Im Rahmen unserer DDD-Schulung besteht die Aufgabe nun darin, einen **Schachserver** zu implementieren. Der Server soll beliebig viele Schach-Partien parallel verarbeiten können. 
+Im Rahmen unserer DDD-Schulung besteht die Aufgabe nun darin, den **Schach-Server** zu implementieren. Der Server soll beliebig viele Schach-Partien parallel verarbeiten können. 
 
 Eine REST-Schnittstelle ist bereits vorhanden (package <tt>com.iks.dddschach.api</tt>).
 Diese leitet an die Implementierung der API-Schnittstelle <tt>SchachspielApi</tt>
@@ -23,7 +23,8 @@ Im Package <tt>com.iks.dddschach.domain</tt> befinden sich bereits einige vorgef
 3. Führe dort <tt>git clone https://github.com/domainevent/chessgui.git</tt> aus (alternativ das Zip auf <tt>github.com/domainevent/chessgui</tt> laden und entpacken)
 4. Im Verzeichnis <tt>dddschach</tt> einmal <tt>mvn tomcat7:run</tt> ausführen
 5. Anschließend im Browser <tt>localhost:8080/dddschach</tt> aufrufen. Dort sollte diese Dokumentation des Projekts erscheinen. Den Server bitte laufen lassen.
-6. Im Verzeichnis <tt>chessgui</tt> einmal <tt>mvn compile exec:java</tt> aufrufen. Daraufhin wird ein kleine GUI erscheinen.
+6. Im Verzeichnis <tt>chessgui</tt> einmal <tt>mvn compile exec:java</tt> aufrufen. Daraufhin wird ein kleine GUI erscheinen. : Einfach mal auf "Weiß klicken" und eine Spielfigur ziehen. Diese sollte sich nach 1-2 Sekunden wieder auf die Ausgangposition zurückbewegen.
+
 
 Wenn dies alles funktioniert hat, bist Du gerüstet. Nun zum Importieren des Projekts in...
 <div style="page-break-after: always;"></div>
