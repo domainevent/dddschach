@@ -1,15 +1,14 @@
 package com.iks.dddschach.rest;
 
+import com.iks.dddschach.api.SchachpartieApi;
 import com.iks.dddschach.api.SchachpartieApi.UngueltigeSpielIdException;
 import com.iks.dddschach.api.SchachpartieApi.UngueltigerHalbzugException;
-import org.apache.log4j.Logger;
-import com.iks.dddschach.api.SchachpartieApi;
-import com.iks.dddschach.domain.Spielbrett;
-import com.iks.dddschach.domain.SpielId;
 import com.iks.dddschach.domain.Halbzug;
+import com.iks.dddschach.domain.SpielId;
+import com.iks.dddschach.domain.Spielbrett;
 import com.webcohesion.enunciate.metadata.rs.ResponseCode;
 import com.webcohesion.enunciate.metadata.rs.StatusCodes;
-import org.glassfish.jersey.server.ManagedAsync;
+import org.apache.log4j.Logger;
 
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
