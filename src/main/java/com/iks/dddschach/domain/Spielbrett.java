@@ -88,7 +88,7 @@ public class Spielbrett extends ValueObject {
      * @param position Position auf dem Spielfeld (z.B. c3)
      * @return {@link Spielfigur} falls sich eine Figur auf Position <code>position</code> befindet, null sonst.
      */
-    protected Spielfigur getSchachfigurAnPosition(Position position) {
+    public Spielfigur getSchachfigurAnPosition(Position position) {
         return board[position.horCoord.ordinal()][position.vertCoord.ordinal()];
     }
 
