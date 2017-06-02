@@ -19,7 +19,7 @@ public interface HalbzugValidation {
         public final Zugregel verletzteZugregel;
 
         public ValidationResult(boolean gueltig, Zugregel verletzteZugregel) {
-            this.gueltig = false;
+            this.gueltig = gueltig;
             this.verletzteZugregel = verletzteZugregel;
         }
 
