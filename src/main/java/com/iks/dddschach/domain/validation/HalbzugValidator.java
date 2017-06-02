@@ -60,8 +60,8 @@ public class HalbzugValidator implements HalbzugValidation, DomainService {
 
     private boolean istRichtigerSpielerAmZug(List<Halbzug> zugHistorie, Spielfigur schachfigurAnFrom) {
         Objects.requireNonNull(schachfigurAnFrom);
-        // return (schachfigurAnFrom.color.ordinal() != zugHistorie.size() % 2);
-        return true;
+        return (schachfigurAnFrom.color.ordinal() == zugHistorie.size() % 2);
+        // return true;
     }
 
 
