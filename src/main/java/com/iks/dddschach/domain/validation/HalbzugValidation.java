@@ -1,6 +1,7 @@
-package com.iks.dddschach.domain;
+package com.iks.dddschach.domain.validation;
 
-import com.iks.dddschach.domain.base.DomainService;
+import com.iks.dddschach.domain.Halbzug;
+import com.iks.dddschach.domain.Spielbrett;
 
 import java.util.List;
 
@@ -11,13 +12,23 @@ import java.util.List;
  * eine Figur auf der Startposition des Halbzuges befindet und ob diese die richtig Farbe
  * hat: Die Spieler "Weiß" und "Schwarz" müssen sich abwechseln.
  */
-public class HalbzugValidation implements DomainService {
+public interface HalbzugValidation {
 
-    public final class ValidationResult {
-        public final boolean valid;
+    class ValidationResult {
+        public final boolean gueltig;
+        public final Zugregel verletzteZugregel;
 
-        public ValidationResult(boolean valid) {
-            this.valid = valid;
+        public ValidationResult(boolean gueltig, Zugregel verletzteZugregel) {
+            this.gueltig = false;
+            this.verletzteZugregel = verletzteZugregel;
+        }
+
+        public ValidationResult(Zugregel verletzteZugregel) {
+            this(false, verletzteZugregel);
+        }
+
+        public ValidationResult() {
+            this(true, null);
         }
     }
 
@@ -31,22 +42,7 @@ public class HalbzugValidation implements DomainService {
      *                      welche Figuren sich auf welchen Positionen befinden.
      * @return Das Validationsergebnis
      */
-    public ValidationResult validiere(
-            Halbzug zuPruefen,
-            List<Halbzug> zugHistorie,
-            Spielbrett aktSpielbrett) {
+    ValidationResult validiere(Halbzug zuPruefen, List<Halbzug> zugHistorie, Spielbrett aktSpielbrett);
 
-
-        final Spielfigur schachfigurAnFrom = aktSpielbrett.getSchachfigurAnPosition(zuPruefen.from);
-        if (schachfigurAnFrom == null) {
-            return new ValidationResult(false);
-        }
-
-        if (schachfigurAnFrom.color.ordinal() != zugHistorie.size() % 2) {
-            return new ValidationResult(false);
-        }
-
-        return new ValidationResult(true);
-    }
 
 }

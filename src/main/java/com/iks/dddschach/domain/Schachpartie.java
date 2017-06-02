@@ -1,8 +1,9 @@
 package com.iks.dddschach.domain;
 
+import com.iks.dddschach.api.SchachpartieApi.UngueltigerHalbzugException;
 import com.iks.dddschach.domain.base.EntityIdObject;
-
-import static com.iks.dddschach.api.SchachpartieApiImpl.UngueltigerHalbzugException;
+import com.iks.dddschach.domain.validation.HalbzugValidation;
+import com.iks.dddschach.domain.validation.HalbzugValidator;
 
 
 /**
@@ -10,7 +11,7 @@ import static com.iks.dddschach.api.SchachpartieApiImpl.UngueltigerHalbzugExcept
  */
 public class Schachpartie extends EntityIdObject<SpielId> {
 
-    final static HalbzugValidation VALIDATION = new HalbzugValidation();
+    final static HalbzugValidation VALIDATION = new HalbzugValidator();
     final HalbzugHistorie halbzugHistorie = new HalbzugHistorie();
     private Spielbrett spielbrett;
 
@@ -22,7 +23,7 @@ public class Schachpartie extends EntityIdObject<SpielId> {
 
 
     public int fuehreHalbzugAus(Halbzug halbzug) throws UngueltigerHalbzugException {
-        if (!VALIDATION.validiere(halbzug, halbzugHistorie.halbzuege, spielbrett).valid) {
+        if (!VALIDATION.validiere(halbzug, halbzugHistorie.halbzuege, spielbrett).gueltig) {
             throw new UngueltigerHalbzugException(halbzug);
         }
         spielbrett = spielbrett.wendeHalbzugAn(halbzug);
