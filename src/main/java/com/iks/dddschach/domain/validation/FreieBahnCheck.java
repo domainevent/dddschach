@@ -1,20 +1,14 @@
 package com.iks.dddschach.domain.validation;
 
+import static com.iks.dddschach.domain.validation.ValidationUtils.toIntegerTupel;
+import static com.iks.dddschach.domain.validation.ValidationUtils.toPosition;
+
 import java.util.List;
 
 import com.iks.dddschach.domain.Halbzug;
 import com.iks.dddschach.domain.Position;
-import com.iks.dddschach.domain.Position.Spalte;
-import com.iks.dddschach.domain.Position.Zeile;
 import com.iks.dddschach.domain.Spielbrett;
-import com.iks.dddschach.domain.Spielfigur;
-import com.iks.dddschach.domain.Spielfigur.FigurenTyp;
-import com.iks.dddschach.domain.validation.HalbzugValidation.ValidationResult;
 import com.iks.dddschach.util.IntegerTupel;
-import javafx.geometry.Pos;
-
-import static com.iks.dddschach.domain.validation.ValidationUtils.toIntegerTupel;
-import static com.iks.dddschach.domain.validation.ValidationUtils.toPosition;
 
 
 /**
