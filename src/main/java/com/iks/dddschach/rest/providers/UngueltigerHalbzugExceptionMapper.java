@@ -20,7 +20,12 @@ public class UngueltigerHalbzugExceptionMapper implements ExceptionMapper<Unguel
     public Response toResponse(UngueltigerHalbzugException exception) {
         Map<String, Object> json = new HashMap<>();
         json.put(ErrorCode.ERROR_CODE_KEY, ErrorCode.INVALID_MOVE);
-        json.put(ErrorCode.INVALID_MOVE.name(), exception.halbzug.toString());
+        if (exception.halbzug != null) {
+            json.put(ErrorCode.INVALID_MOVE.name(), exception.halbzug.toString());
+            if (exception.verletzteZugregel != null) {
+                json.put(exception.halbzug.toString(), exception.verletzteZugregel.name());
+            }
+        }
         return Response.status(422).entity(json).build();
     }
 }
