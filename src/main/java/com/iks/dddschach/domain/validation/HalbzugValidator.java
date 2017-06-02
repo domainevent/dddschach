@@ -8,8 +8,6 @@ import com.iks.dddschach.domain.base.DomainService;
 import java.util.List;
 import java.util.Objects;
 
-import static com.iks.dddschach.domain.Spielfigur.FigurenTyp.BAUER;
-import static com.iks.dddschach.domain.validation.Zugregel.SPIELFIGUR_MUSS_EXISTIEREN;
 import static com.iks.dddschach.domain.validation.Zugregel.SPIELER_MUSS_AM_ZUG_SEIN;
 import static com.iks.dddschach.domain.validation.Zugregel.SPIELFIGUR_MUSS_EXISTIEREN;
 
@@ -65,6 +63,7 @@ public class HalbzugValidator implements HalbzugValidation, DomainService {
         // return (schachfigurAnFrom.color.ordinal() != zugHistorie.size() % 2);
         return true;
     }
+
 
     private boolean existiertSpielfigurAnStartposition(Spielfigur schachfigurAnFrom) {
         return !(schachfigurAnFrom == null);
