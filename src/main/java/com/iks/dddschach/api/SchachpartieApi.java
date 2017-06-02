@@ -3,6 +3,7 @@ package com.iks.dddschach.api;
 import com.iks.dddschach.domain.Spielbrett;
 import com.iks.dddschach.domain.SpielId;
 import com.iks.dddschach.domain.Halbzug;
+import com.iks.dddschach.domain.validation.Zugregel;
 
 import java.text.ParseException;
 import java.util.Optional;
@@ -50,9 +51,12 @@ public interface SchachpartieApi {
     @SuppressWarnings("serial")
 	class UngueltigerHalbzugException extends Exception {
         public final Halbzug halbzug;
+        public final Zugregel verletzteZugregel;
 
-        public UngueltigerHalbzugException(Halbzug halbzug) {
+
+        public UngueltigerHalbzugException(Halbzug halbzug, Zugregel verletzteZugregel) {
             this.halbzug = halbzug;
+            this.verletzteZugregel = verletzteZugregel;
         }
     }
 
