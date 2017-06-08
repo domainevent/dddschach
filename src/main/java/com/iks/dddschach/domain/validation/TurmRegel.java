@@ -9,15 +9,15 @@ import com.iks.dddschach.util.IntegerTupel;
 import java.util.List;
 
 
-public class LaeuferRegel implements HalbzugValidation {
+public class TurmRegel implements HalbzugValidation {
 
 	private final static FreieBahnCheck FREIE_BAHN_CHECK = new FreieBahnCheck();
 
 	@Override
 	public ValidationResult validiere(Halbzug zuPruefen, List<Halbzug> zugHistorie, Spielbrett aktSpielbrett) {
 		Spielfigur schachfigur = aktSpielbrett.getSchachfigurAnPosition(zuPruefen.from);
-		if (schachfigur.figure != FigurenTyp.LAEUFER) {
-			throw new IllegalArgumentException("Figure must be a bishop");
+		if (schachfigur.figure != FigurenTyp.TURM) {
+			throw new IllegalArgumentException("Figure must be a rook");
 		}
 
         final IntegerTupel from = ValidationUtils.toIntegerTupel(zuPruefen.from);
@@ -25,8 +25,8 @@ public class LaeuferRegel implements HalbzugValidation {
         final IntegerTupel absd = from.minus(to).abs();
 
         // Diagonalpruefung
-        if (absd.x() != absd.y()) {
-            return new ValidationResult(Zugregel.LAUEFER_ZIEHT_DIAGONAL);
+        if (absd.x() != 0 && absd.y() != 0) {
+            return new ValidationResult(Zugregel.TURM_ZIEHT_GERADE);
         }
 
         final ValidationResult freieBahnResult = FREIE_BAHN_CHECK.validiere(zuPruefen, zugHistorie, aktSpielbrett);

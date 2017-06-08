@@ -8,14 +8,17 @@ import com.iks.dddschach.domain.base.DomainService;
 import java.util.List;
 import java.util.Objects;
 
-import static com.iks.dddschach.domain.validation.Zugregel.SPIELER_MUSS_AM_ZUG_SEIN;
-import static com.iks.dddschach.domain.validation.Zugregel.SPIELFIGUR_MUSS_EXISTIEREN;
+import static com.iks.dddschach.domain.validation.Zugregel.DER_RICHTIGE_SPIELER_MUSS_AM_ZUG_SEIN;
 
 
 /**
  * Start der Validation. Von hier aus werden alle weiteren Validationen gestartet und verarbeitet.
  */
 public class HalbzugValidator implements HalbzugValidation, DomainService {
+
+    final static ErreicheZielPruefung ERREICHE_ZIEL_PRUEFUNG = new ErreicheZielPruefung();
+    final static SchlagRegel SCHLAG_REGEL = new SchlagRegel();
+    final static SchachCheck SCHACH_CHECK = new SchachCheck();
 
     public ValidationResult validiere(
             Halbzug zuPruefen,
@@ -25,36 +28,22 @@ public class HalbzugValidator implements HalbzugValidation, DomainService {
 
         final Spielfigur zugFigur = aktSpielbrett.getSchachfigurAnPosition(zuPruefen.from);
 
-        if (!existiertSpielfigurAnStartposition(zugFigur)) {
-            return new ValidationResult(false, SPIELFIGUR_MUSS_EXISTIEREN);
-        }
-
         if (!istRichtigerSpielerAmZug(zugHistorie, zugFigur)) {
-            return new ValidationResult(false, SPIELER_MUSS_AM_ZUG_SEIN);
+            return new ValidationResult(false, DER_RICHTIGE_SPIELER_MUSS_AM_ZUG_SEIN);
         }
 
-        ValidationResult validationResult = new ValidationResult();
+        ValidationResult zielErreichbarResult = ERREICHE_ZIEL_PRUEFUNG.validiere(zuPruefen, zugHistorie, aktSpielbrett);
+        if (!zielErreichbarResult.gueltig) return zielErreichbarResult;
 
-        switch (zugFigur.figure) {
-            case BAUER:
-                validationResult = new BauernRegel().validiere(zuPruefen, zugHistorie, aktSpielbrett);
-                break;
-            case TURM:
-                break;
-            case SPRINGER:
-                break;
-            case LAEUFER:
-                validationResult = new LaeuferRegel().validiere(zuPruefen, zugHistorie, aktSpielbrett);
-                break;
-            case DAME:
-                break;
-            case KOENIG:
-                break;
-            default:
-                throw new IllegalStateException("Unexpected enum: " + zugFigur.figure);
+        ValidationResult schlagRegelResult = SCHLAG_REGEL.validiere(zuPruefen, zugHistorie, aktSpielbrett);
+        if (!schlagRegelResult.gueltig) return schlagRegelResult;
+
+        final Spielbrett simuliereHalbzug = aktSpielbrett.wendeHalbzugAn(zuPruefen);
+        if (SCHACH_CHECK.stehtImSchach(zugFigur.color, zugHistorie, simuliereHalbzug)) {
+            return new ValidationResult(Zugregel.KOENIG_STEHT_IM_SCHACH);
         }
 
-        return validationResult;
+        return new ValidationResult();
     }
 
 
@@ -68,6 +57,7 @@ public class HalbzugValidator implements HalbzugValidation, DomainService {
     private boolean existiertSpielfigurAnStartposition(Spielfigur schachfigurAnFrom) {
         return !(schachfigurAnFrom == null);
     }
+
 
 
 }

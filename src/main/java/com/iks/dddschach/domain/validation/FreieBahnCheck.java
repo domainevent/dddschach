@@ -28,7 +28,6 @@ public class FreieBahnCheck implements HalbzugValidation {
      * Berücksichtigung von Start und End-Position) Spielfiguren befinden.
      */
 	boolean success(Halbzug zuPruefen, Spielbrett aktSpielbrett) {
-		System.out.println(zuPruefen);
         final IntegerTupel from = toIntegerTupel(zuPruefen.from);
         final IntegerTupel to = toIntegerTupel(zuPruefen.to);
 

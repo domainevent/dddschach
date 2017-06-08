@@ -9,32 +9,27 @@ import com.iks.dddschach.util.IntegerTupel;
 import java.util.List;
 
 
-public class LaeuferRegel implements HalbzugValidation {
+public class KoenigRegel implements HalbzugValidation {
 
 	private final static FreieBahnCheck FREIE_BAHN_CHECK = new FreieBahnCheck();
 
 	@Override
 	public ValidationResult validiere(Halbzug zuPruefen, List<Halbzug> zugHistorie, Spielbrett aktSpielbrett) {
 		Spielfigur schachfigur = aktSpielbrett.getSchachfigurAnPosition(zuPruefen.from);
-		if (schachfigur.figure != FigurenTyp.LAEUFER) {
-			throw new IllegalArgumentException("Figure must be a bishop");
+		if (schachfigur.figure != FigurenTyp.KOENIG) {
+			throw new IllegalArgumentException("Figure must be a king");
 		}
 
         final IntegerTupel from = ValidationUtils.toIntegerTupel(zuPruefen.from);
         final IntegerTupel to = ValidationUtils.toIntegerTupel(zuPruefen.to);
         final IntegerTupel absd = from.minus(to).abs();
 
-        // Diagonalpruefung
-        if (absd.x() != absd.y()) {
-            return new ValidationResult(Zugregel.LAUEFER_ZIEHT_DIAGONAL);
+        if (Math.max(absd.x(), absd.y()) == 1) {
+			return new ValidationResult();
+		}
+		else {
+            return new ValidationResult(Zugregel.KOENIG_ZIEHT_NUR_EIN_FELD);
         }
-
-        final ValidationResult freieBahnResult = FREIE_BAHN_CHECK.validiere(zuPruefen, zugHistorie, aktSpielbrett);
-		if (!freieBahnResult.gueltig) {
-		    return freieBahnResult;
-        }
-
-        return new ValidationResult();
 	}
 
 }
