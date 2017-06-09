@@ -7,8 +7,8 @@ import com.iks.dddschach.domain.SpielbrettFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static com.iks.dddschach.domain.Position.Spalte.*;
 import static com.iks.dddschach.domain.Position.Zeile.*;
+import static com.iks.dddschach.domain.Position.Spalte.*;
 
 
 /**

@@ -14,7 +14,7 @@ public class ValidationUtils {
     }
 
     public static Position toPosition(IntegerTupel tupel) {
-        return new Position(Position.Zeile.values()[tupel.x()], Position.Spalte.values()[tupel.y()]);
+        return new Position(Position.Spalte.values()[tupel.x()], Position.Zeile.values()[tupel.y()]);
     }
 
 }

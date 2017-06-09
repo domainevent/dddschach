@@ -5,6 +5,8 @@ import com.iks.dddschach.domain.base.EntityIdObject;
 import com.iks.dddschach.domain.validation.HalbzugValidation;
 import com.iks.dddschach.domain.validation.HalbzugValidation.ValidationResult;
 import com.iks.dddschach.domain.validation.GesamtValidator;
+import com.iks.dddschach.domain.validation.RochadenCheck;
+import com.iks.dddschach.domain.validation.RochadenCheck.RochadenCheckResult;
 
 
 /**
@@ -26,10 +28,17 @@ public class Schachpartie extends EntityIdObject<SpielId> {
     public int fuehreHalbzugAus(Halbzug halbzug) throws UngueltigerHalbzugException {
         final ValidationResult validationResult =
                 VALIDATION.validiere(halbzug, halbzugHistorie.halbzuege, spielbrett);
+
         if (!validationResult.gueltig) {
             throw new UngueltigerHalbzugException(halbzug, validationResult.verletzteZugregel);
         }
         spielbrett = spielbrett.wendeHalbzugAn(halbzug);
+
+        if (validationResult instanceof RochadenCheckResult) {
+            final RochadenCheckResult rochadenCheckResult = (RochadenCheckResult) validationResult;
+            spielbrett = spielbrett.wendeHalbzugAn(rochadenCheckResult.turmHalbZug);
+        }
+
         halbzugHistorie.addHalbzug(halbzug);
         return halbzugHistorie.size();
     }

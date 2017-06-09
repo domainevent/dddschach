@@ -1,11 +1,11 @@
 package com.iks.dddschach.domain;
 
-import com.iks.dddschach.domain.Position.Zeile;
+import com.iks.dddschach.domain.Position.Spalte;
 
 import static com.iks.dddschach.domain.Farbe.SCHWARZ;
 import static com.iks.dddschach.domain.Farbe.WEISS;
-import static com.iks.dddschach.domain.Position.Spalte.*;
 import static com.iks.dddschach.domain.Position.Zeile.*;
+import static com.iks.dddschach.domain.Position.Spalte.*;
 import static com.iks.dddschach.domain.Spielfigur.FigurenTyp.*;
 
 
@@ -28,7 +28,7 @@ public class SpielbrettFactory {
             setSchachfigurAnPosition(F, _1, LAEUFER, WEISS);
             setSchachfigurAnPosition(G, _1, SPRINGER, WEISS);
             setSchachfigurAnPosition(H, _1, TURM, WEISS);
-            for (Zeile h : Zeile.values()) {
+            for (Spalte h : Spalte.values()) {
                 setSchachfigurAnPosition(h, _2, BAUER, WEISS);
                 setSchachfigurAnPosition(h, _7, BAUER, SCHWARZ);
             }

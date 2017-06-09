@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Objects;
 
 
+/**
+ * Prüft, ob der König eine Schritt in seiner Umgebung weiterschreitet.
+ */
 public class KoenigRegel implements HalbzugValidation {
 
 	private final static FreieBahnCheck FREIE_BAHN_CHECK = new FreieBahnCheck();

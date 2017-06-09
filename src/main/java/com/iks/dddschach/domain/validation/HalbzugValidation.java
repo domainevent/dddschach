@@ -7,13 +7,13 @@ import java.util.List;
 
 
 /**
- * Dieser Service dient dazu, eine Überprüfung eines Halbzuges auf Gültigkeit vorzunehemn.
- * Der Einfachheit halber, wird in dieser Implementierung lediglich getestet, ob sich überhaupt
- * eine Figur auf der Startposition des Halbzuges befindet und ob diese die richtig Farbe
- * hat: Die Spieler "Weiß" und "Schwarz" müssen sich abwechseln.
+ *
  */
 public interface HalbzugValidation {
 
+    /**
+     * Ergebnis einer Halbzugvalidation
+     */
     class ValidationResult {
         public final boolean gueltig;
         public final Zugregel verletzteZugregel;

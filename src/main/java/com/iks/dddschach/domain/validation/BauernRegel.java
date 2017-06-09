@@ -9,8 +9,8 @@ import com.iks.dddschach.util.IntegerTupel;
 
 import static com.iks.dddschach.domain.Farbe.SCHWARZ;
 import static com.iks.dddschach.domain.Farbe.WEISS;
-import static com.iks.dddschach.domain.Position.Spalte._2;
-import static com.iks.dddschach.domain.Position.Spalte._7;
+import static com.iks.dddschach.domain.Position.Zeile._2;
+import static com.iks.dddschach.domain.Position.Zeile._7;
 
 
 public class BauernRegel implements HalbzugValidation {

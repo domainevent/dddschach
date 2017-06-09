@@ -7,9 +7,9 @@ import com.webcohesion.enunciate.metadata.DocumentationExample;
 
 import java.util.Arrays;
 
-import static com.iks.dddschach.domain.Position.Spalte._1;
-import static com.iks.dddschach.domain.Position.Spalte;
+import static com.iks.dddschach.domain.Position.Zeile._1;
 import static com.iks.dddschach.domain.Position.Zeile;
+import static com.iks.dddschach.domain.Position.Spalte;
 
 
 /**
@@ -29,7 +29,7 @@ public class Spielbrett extends ValueObject {
      * Default-Konstruktor
      */
     public Spielbrett() {
-        board = new Spielfigur[Zeile.values().length][Spalte.values().length];
+        board = new Spielfigur[Spalte.values().length][Zeile.values().length];
     }
 
     /**
@@ -48,10 +48,10 @@ public class Spielbrett extends ValueObject {
      */
     @DocumentationExample(exclude = true)
     public Spielfigur[][] getBoard() {
-        final Spielfigur[][] copy = new Spielfigur[Zeile.values().length][Spalte.values().length];
+        final Spielfigur[][] copy = new Spielfigur[Spalte.values().length][Zeile.values().length];
 
-        for (int i = 0; i < Zeile.values().length; i++) {
-            for (int j = 0; j < Spalte.values().length; j++) {
+        for (int i = 0; i < Spalte.values().length; i++) {
+            for (int j = 0; j < Zeile.values().length; j++) {
                 copy[i][j] = board[i][j];
             }
         }
@@ -99,7 +99,7 @@ public class Spielbrett extends ValueObject {
      * @param figurenTyp Typ der zu setzenden Figur (z.B. Läufer)
      * @param color Farbe der zu setzenden Figur (z.B. schwarz)
      */
-    protected void setSchachfigurAnPosition(Zeile h, Spalte v, FigurenTyp figurenTyp, Farbe color) {
+    protected void setSchachfigurAnPosition(Spalte h, Zeile v, FigurenTyp figurenTyp, Farbe color) {
         setSchachfigurAnPosition(new Position(h,v), new Spielfigur(figurenTyp, color));
     }
 
@@ -130,15 +130,15 @@ public class Spielbrett extends ValueObject {
     public String toString() {
         final String horLine = "-------------------------";
         String boardAsStr = horLine + CR;
-        for(Spalte spalte : Spalte.valuesInverted()) {
+        for(Zeile zeile : Zeile.valuesInverted()) {
             boardAsStr += "|";
-            for(Zeile zeile : Zeile.values()) {
-                final Spielfigur figure = board[zeile.ordinal()][spalte.ordinal()];
+            for(Spalte spalte : Spalte.values()) {
+                final Spielfigur figure = board[spalte.ordinal()][zeile.ordinal()];
                 boardAsStr += (figure == null)? "  " : figure;
                 boardAsStr += "|";
             }
             boardAsStr += CR + horLine;
-            if (spalte != _1) {
+            if (zeile != _1) {
                 boardAsStr += CR;
             }
         }

@@ -16,6 +16,7 @@ import static com.iks.dddschach.domain.validation.Zugregel.DER_RICHTIGE_SPIELER_
  */
 public class GesamtValidator implements HalbzugValidation, DomainService {
 
+    final static RochadenCheck ROCHADEN_CHECK = new RochadenCheck();
     final static ErreicheZielPruefung ERREICHE_ZIEL_PRUEFUNG = new ErreicheZielPruefung();
     final static SchlagRegel SCHLAG_REGEL = new SchlagRegel();
     final static SchachCheck SCHACH_CHECK = new SchachCheck();
@@ -35,6 +36,11 @@ public class GesamtValidator implements HalbzugValidation, DomainService {
             return new ValidationResult(false, DER_RICHTIGE_SPIELER_MUSS_AM_ZUG_SEIN);
         }
 
+        final ValidationResult rochadenCheckResult = ROCHADEN_CHECK.validiere(halbzug, zugHistorie, spielbrett);
+        if (rochadenCheckResult.gueltig || istRouchadenZugAberUnzulaessig(rochadenCheckResult)) {
+            return rochadenCheckResult;
+        }
+
         ValidationResult zielErreichbarResult = ERREICHE_ZIEL_PRUEFUNG.validiere(halbzug, zugHistorie, spielbrett);
         if (!zielErreichbarResult.gueltig) return zielErreichbarResult;
 
@@ -45,6 +51,12 @@ public class GesamtValidator implements HalbzugValidation, DomainService {
         if (!schachCheckResult.gueltig) return schachCheckResult;
 
         return new ValidationResult();
+    }
+
+
+    private boolean istRouchadenZugAberUnzulaessig(ValidationResult rochadenCheckResult) {
+        return !rochadenCheckResult.gueltig &&
+                rochadenCheckResult.verletzteZugregel != Zugregel.HALBZUG_IST_KEIN_ROCHADE;
     }
 
 

@@ -7,8 +7,8 @@ import org.junit.Test;
 
 import java.util.Optional;
 
-import static com.iks.dddschach.domain.Position.Spalte.*;
 import static com.iks.dddschach.domain.Position.Zeile.*;
+import static com.iks.dddschach.domain.Position.Spalte.*;
 import static com.iks.dddschach.domain.SpielNotationParser.parse;
 
 

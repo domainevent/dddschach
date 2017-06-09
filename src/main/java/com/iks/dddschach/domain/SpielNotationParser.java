@@ -35,9 +35,9 @@ public class SpielNotationParser {
      */
     public static Position parsePosition(String eingabe) throws ParseException {
         try {
-            Position.Zeile zeile = Position.Zeile.valueOf(eingabe.substring(0, 1).toUpperCase());
-            Position.Spalte spalte = Position.Spalte.valueOf("_" + eingabe.substring(1, 2));
-            return new Position(zeile, spalte);
+            Position.Spalte spalte = Position.Spalte.valueOf(eingabe.substring(0, 1).toUpperCase());
+            Position.Zeile zeile = Position.Zeile.valueOf("_" + eingabe.substring(1, 2));
+            return new Position(spalte, zeile);
         }
         catch (Exception e) {
             throw new ParseException(eingabe, 0);
