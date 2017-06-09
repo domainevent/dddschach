@@ -14,19 +14,23 @@ import java.util.Objects;
  */
 public class SchlagRegel implements HalbzugValidation {
 
-
 	@Override
-	public ValidationResult validiere(Halbzug zuPruefen, List<Halbzug> zugHistorie, Spielbrett aktSpielbrett) {
-        Spielfigur schachfigurFrom = Objects.requireNonNull(aktSpielbrett.getSchachfigurAnPosition(zuPruefen.from));
-	    Spielfigur schachfigurTo = aktSpielbrett.getSchachfigurAnPosition(zuPruefen.to);
+	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> zugHistorie, Spielbrett spielbrett) {
+        Objects.requireNonNull(halbzug, "Argument halbzug is null");
+        Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
 
-	    if (schachfigurTo == null) {
+        Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.from);
+        Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.from);
+
+	    Spielfigur figurAmZiel = spielbrett.getSchachfigurAnPosition(halbzug.to);
+
+	    if (figurAmZiel == null) {
             return new ValidationResult();
         }
-		else if (schachfigurFrom.color == schachfigurTo.color) {
+		else if (zugFigur.color == figurAmZiel.color) {
             return new ValidationResult(Zugregel.EIGENE_FIGUREN_LASSEN_SICH_NICHT_SCHLAGEN);
         }
-        else if (schachfigurTo.figure == FigurenTyp.KOENIG) {
+        else if (figurAmZiel.figure == FigurenTyp.KOENIG) {
             return new ValidationResult(Zugregel.KOENIG_KANN_NICHT_GESCHLAGEN_WERDEN);
         }
         else {

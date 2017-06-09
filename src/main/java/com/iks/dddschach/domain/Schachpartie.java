@@ -4,7 +4,7 @@ import com.iks.dddschach.api.SchachpartieApi.UngueltigerHalbzugException;
 import com.iks.dddschach.domain.base.EntityIdObject;
 import com.iks.dddschach.domain.validation.HalbzugValidation;
 import com.iks.dddschach.domain.validation.HalbzugValidation.ValidationResult;
-import com.iks.dddschach.domain.validation.HalbzugValidator;
+import com.iks.dddschach.domain.validation.GesamtValidator;
 
 
 /**
@@ -12,7 +12,7 @@ import com.iks.dddschach.domain.validation.HalbzugValidator;
  */
 public class Schachpartie extends EntityIdObject<SpielId> {
 
-    final static HalbzugValidation VALIDATION = new HalbzugValidator();
+    final static HalbzugValidation VALIDATION = new GesamtValidator();
     final HalbzugHistorie halbzugHistorie = new HalbzugHistorie();
     private Spielbrett spielbrett;
 

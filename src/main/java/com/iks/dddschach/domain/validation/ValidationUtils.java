@@ -5,7 +5,7 @@ import com.iks.dddschach.util.IntegerTupel;
 
 
 /**
- * Created by vollmer on 02.06.17.
+ * @author javacook
  */
 public class ValidationUtils {
 

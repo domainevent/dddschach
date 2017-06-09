@@ -14,50 +14,45 @@ import static com.iks.dddschach.domain.validation.Zugregel.DER_RICHTIGE_SPIELER_
 /**
  * Start der Validation. Von hier aus werden alle weiteren Validationen gestartet und verarbeitet.
  */
-public class HalbzugValidator implements HalbzugValidation, DomainService {
+public class GesamtValidator implements HalbzugValidation, DomainService {
 
     final static ErreicheZielPruefung ERREICHE_ZIEL_PRUEFUNG = new ErreicheZielPruefung();
     final static SchlagRegel SCHLAG_REGEL = new SchlagRegel();
     final static SchachCheck SCHACH_CHECK = new SchachCheck();
 
     public ValidationResult validiere(
-            Halbzug zuPruefen,
+            Halbzug halbzug,
             List<Halbzug> zugHistorie,
-            Spielbrett aktSpielbrett) {
+            Spielbrett spielbrett) {
 
 
-        final Spielfigur zugFigur = aktSpielbrett.getSchachfigurAnPosition(zuPruefen.from);
+        final Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.from);
+        if (zugFigur == null) {
+            return new ValidationResult(Zugregel.STARTFELD_MUSS_SPIELFIGUR_ENTHALTEN);
+        }
 
-        if (!istRichtigerSpielerAmZug(zugHistorie, zugFigur)) {
+        if (!istRichtigerSpielerAmZug(zugFigur, zugHistorie)) {
             return new ValidationResult(false, DER_RICHTIGE_SPIELER_MUSS_AM_ZUG_SEIN);
         }
 
-        ValidationResult zielErreichbarResult = ERREICHE_ZIEL_PRUEFUNG.validiere(zuPruefen, zugHistorie, aktSpielbrett);
+        ValidationResult zielErreichbarResult = ERREICHE_ZIEL_PRUEFUNG.validiere(halbzug, zugHistorie, spielbrett);
         if (!zielErreichbarResult.gueltig) return zielErreichbarResult;
 
-        ValidationResult schlagRegelResult = SCHLAG_REGEL.validiere(zuPruefen, zugHistorie, aktSpielbrett);
+        ValidationResult schlagRegelResult = SCHLAG_REGEL.validiere(halbzug, zugHistorie, spielbrett);
         if (!schlagRegelResult.gueltig) return schlagRegelResult;
 
-        final Spielbrett simuliereHalbzug = aktSpielbrett.wendeHalbzugAn(zuPruefen);
-        if (SCHACH_CHECK.stehtImSchach(zugFigur.color, zugHistorie, simuliereHalbzug)) {
-            return new ValidationResult(Zugregel.KOENIG_STEHT_IM_SCHACH);
-        }
+        ValidationResult schachCheckResult = SCHACH_CHECK.validiere(halbzug, zugHistorie, spielbrett);
+        if (!schachCheckResult.gueltig) return schachCheckResult;
 
         return new ValidationResult();
     }
 
 
-    private boolean istRichtigerSpielerAmZug(List<Halbzug> zugHistorie, Spielfigur schachfigurAnFrom) {
+    private boolean istRichtigerSpielerAmZug(Spielfigur schachfigurAnFrom, List<Halbzug> zugHistorie) {
         Objects.requireNonNull(schachfigurAnFrom);
         return (schachfigurAnFrom.color.ordinal() == zugHistorie.size() % 2);
         // return true;
     }
-
-
-    private boolean existiertSpielfigurAnStartposition(Spielfigur schachfigurAnFrom) {
-        return !(schachfigurAnFrom == null);
-    }
-
 
 
 }

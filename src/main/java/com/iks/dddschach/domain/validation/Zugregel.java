@@ -1,7 +1,7 @@
 package com.iks.dddschach.domain.validation;
 
 /**
- * Created by vollmer on 02.06.17.
+ * @author javacook
  */
 public enum Zugregel {
     DER_RICHTIGE_SPIELER_MUSS_AM_ZUG_SEIN,

@@ -13,52 +13,35 @@ import static com.iks.dddschach.domain.validation.Zugregel.STARTFELD_MUSS_SPIELF
 
 
 /**
- * Start der Validation. Von hier aus werden alle weiteren Validationen gestartet und verarbeitet.
+ * Hier wird ueberprueft, ob die Figur am Start des Halbzuges bzgl. ihrer individuelles Zugmoeglichkeit die
+ * Zielposition erreichen kann. Dabei checken z.B. die eizelne Figuren-Regeln zusaetzlich, ob auf
+ * der Bahn vom Start zum Ziel Figuren im Wege stehen (außer beim Springer).
  */
 public class ErreicheZielPruefung implements HalbzugValidation {
 
-    public ValidationResult validiere(
-            Halbzug zuPruefen,
-            List<Halbzug> zugHistorie,
-            Spielbrett aktSpielbrett) {
+    public ValidationResult validiere(Halbzug halbzug, List<Halbzug> zugHistorie, Spielbrett spielbrett) {
+        Objects.requireNonNull(halbzug, "Argument halbzug is null");
+        Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
 
-
-        final Spielfigur zugFigur = aktSpielbrett.getSchachfigurAnPosition(zuPruefen.from);
-
-        if (!existiertSpielfigurAnStartposition(zugFigur)) {
-            return new ValidationResult(false, STARTFELD_MUSS_SPIELFIGUR_ENTHALTEN);
-        }
-
-        ValidationResult validationResult;
+        Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.from);
+        Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.from);
 
         switch (zugFigur.figure) {
             case BAUER:
-                validationResult = new BauernRegel().validiere(zuPruefen, zugHistorie, aktSpielbrett);
-                break;
+                return new BauernRegel().validiere(halbzug, zugHistorie, spielbrett);
             case TURM:
-                validationResult = new TurmRegel().validiere(zuPruefen, zugHistorie, aktSpielbrett);
-                break;
+                return new TurmRegel().validiere(halbzug, zugHistorie, spielbrett);
             case SPRINGER:
-                validationResult = new SpringerRegel().validiere(zuPruefen, zugHistorie, aktSpielbrett);
-                break;
+                return new SpringerRegel().validiere(halbzug, zugHistorie, spielbrett);
             case LAEUFER:
-                validationResult = new LaeuferRegel().validiere(zuPruefen, zugHistorie, aktSpielbrett);
-                break;
+                return new LaeuferRegel().validiere(halbzug, zugHistorie, spielbrett);
             case DAME:
-                validationResult = new DameRegel().validiere(zuPruefen, zugHistorie, aktSpielbrett);
-                break;
+                return new DameRegel().validiere(halbzug, zugHistorie, spielbrett);
             case KOENIG:
-                validationResult = new KoenigRegel().validiere(zuPruefen, zugHistorie, aktSpielbrett);
-                break;
+                return new KoenigRegel().validiere(halbzug, zugHistorie, spielbrett);
             default:
                 throw new IllegalStateException("Unexpected enum: " + zugFigur.figure);
         }
-
-        return validationResult;
-    }
-
-    private boolean existiertSpielfigurAnStartposition(Spielfigur schachfigurAnFrom) {
-        return !(schachfigurAnFrom == null);
     }
 
 }

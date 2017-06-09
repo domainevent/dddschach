@@ -7,6 +7,7 @@ import com.iks.dddschach.domain.Spielfigur.FigurenTyp;
 import com.iks.dddschach.util.IntegerTupel;
 
 import java.util.List;
+import java.util.Objects;
 
 
 public class DameRegel implements HalbzugValidation {
@@ -14,14 +15,19 @@ public class DameRegel implements HalbzugValidation {
 	private final static FreieBahnCheck FREIE_BAHN_CHECK = new FreieBahnCheck();
 
 	@Override
-	public ValidationResult validiere(Halbzug zuPruefen, List<Halbzug> zugHistorie, Spielbrett aktSpielbrett) {
-		Spielfigur schachfigur = aktSpielbrett.getSchachfigurAnPosition(zuPruefen.from);
-		if (schachfigur.figure != FigurenTyp.DAME) {
+	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> zugHistorie, Spielbrett spielbrett) {
+		Objects.requireNonNull(halbzug, "Argument halbzug is null");
+		Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
+
+		Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.from);
+        Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.from);
+
+		if (zugFigur.figure != FigurenTyp.DAME) {
 			throw new IllegalArgumentException("Figure must be a queen");
 		}
 
-        final IntegerTupel from = ValidationUtils.toIntegerTupel(zuPruefen.from);
-        final IntegerTupel to = ValidationUtils.toIntegerTupel(zuPruefen.to);
+        final IntegerTupel from = ValidationUtils.toIntegerTupel(halbzug.from);
+        final IntegerTupel to = ValidationUtils.toIntegerTupel(halbzug.to);
         final IntegerTupel absd = from.minus(to).abs();
 
         // Diagonal und Gerade-Prüfung
@@ -29,7 +35,7 @@ public class DameRegel implements HalbzugValidation {
             return new ValidationResult(Zugregel.DAME_ZIEHT_GERADE_ODER_DIAGONAL);
         }
 
-        final ValidationResult freieBahnResult = FREIE_BAHN_CHECK.validiere(zuPruefen, zugHistorie, aktSpielbrett);
+        final ValidationResult freieBahnResult = FREIE_BAHN_CHECK.validiere(halbzug, zugHistorie, spielbrett);
 		if (!freieBahnResult.gueltig) {
 		    return freieBahnResult;
         }

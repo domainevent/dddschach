@@ -1,6 +1,7 @@
 package com.iks.dddschach.domain.validation;
 
 import java.util.List;
+import java.util.Objects;
 
 import com.iks.dddschach.domain.*;
 import com.iks.dddschach.domain.Spielfigur.FigurenTyp;
@@ -17,28 +18,33 @@ public class BauernRegel implements HalbzugValidation {
 	private final static FreieBahnCheck FREIE_BAHN_CHECK = new FreieBahnCheck();
 
 	@Override
-	public ValidationResult validiere(Halbzug zuPruefen, List<Halbzug> zugHistorie, Spielbrett aktSpielbrett) {
-		Spielfigur schachfigur = aktSpielbrett.getSchachfigurAnPosition(zuPruefen.from);
-		if (schachfigur.figure != FigurenTyp.BAUER) {
+	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> zugHistorie, Spielbrett spielbrett) {
+        Objects.requireNonNull(halbzug, "Argument halbzug is null");
+        Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
+
+		Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.from);
+        Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.from);
+
+		if (zugFigur.figure != FigurenTyp.BAUER) {
 			throw new IllegalArgumentException("Figure must be a pawn");
 		}
 
-		final IntegerTupel from = ValidationUtils.toIntegerTupel(zuPruefen.from);
-        final IntegerTupel to   = ValidationUtils.toIntegerTupel(zuPruefen.to);
+		final IntegerTupel from = ValidationUtils.toIntegerTupel(halbzug.from);
+        final IntegerTupel to   = ValidationUtils.toIntegerTupel(halbzug.to);
 		final IntegerTupel diff = to.minus(from);
 		final IntegerTupel absd = diff.abs();
-        final Spielfigur figurFrom = aktSpielbrett.getSchachfigurAnPosition(zuPruefen.from);
+        final Spielfigur figurFrom = spielbrett.getSchachfigurAnPosition(halbzug.from);
 
 		if (diff.x() == 0) {
-			if (isZweiFeldBedingungAmStartErfuellt(zuPruefen, figurFrom, diff) ||
+			if (isZweiFeldBedingungAmStartErfuellt(halbzug, figurFrom, diff) ||
                 isEinfeldBedingungErfuellt(figurFrom, diff)) {
 
-                final ValidationResult freieBahnResult = FREIE_BAHN_CHECK.validiere(zuPruefen, zugHistorie, aktSpielbrett);
+                final ValidationResult freieBahnResult = FREIE_BAHN_CHECK.validiere(halbzug, zugHistorie, spielbrett);
                 if (!freieBahnResult.gueltig) {
                     return freieBahnResult;
                 }
 
-                return (isZielpositionFrei(zuPruefen, aktSpielbrett))?
+                return (isZielpositionFrei(halbzug, spielbrett))?
                     new ValidationResult() :
                     new ValidationResult(Zugregel.BAUER_SCHLAEGT_NUR_SCHRAEG);
 			}
@@ -46,7 +52,7 @@ public class BauernRegel implements HalbzugValidation {
 		}
 		else if (absd.x() == 1) {
             if (isEinfeldBedingungErfuellt(figurFrom, diff)) {
-                return (isZielpositionFrei(zuPruefen, aktSpielbrett))?
+                return (isZielpositionFrei(halbzug, spielbrett))?
                         new ValidationResult(Zugregel.BAUER_ZIEHT_NUR_GEREADE_FALLS_ER_NICHT_SCHLAEGT) :
                         new ValidationResult();
             }
@@ -72,8 +78,8 @@ public class BauernRegel implements HalbzugValidation {
     }
 
 
-    private boolean isZielpositionFrei(Halbzug zuPruefen, Spielbrett aktSpielbrett) {
-        return aktSpielbrett.getSchachfigurAnPosition(zuPruefen.to) == null;
+    private boolean isZielpositionFrei(Halbzug halbzug, Spielbrett spielbrett) {
+        return spielbrett.getSchachfigurAnPosition(halbzug.to) == null;
     }
 
 }

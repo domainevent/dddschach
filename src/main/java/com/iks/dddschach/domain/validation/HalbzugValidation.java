@@ -44,5 +44,4 @@ public interface HalbzugValidation {
      */
     ValidationResult validiere(Halbzug zuPruefen, List<Halbzug> zugHistorie, Spielbrett aktSpielbrett);
 
-
 }
