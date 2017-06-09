@@ -12,13 +12,14 @@ import static com.iks.dddschach.domain.validation.ValidationUtils.toIntegerTupel
 import static com.iks.dddschach.domain.validation.ValidationUtils.toPosition;
 
 /**
- * Checkt, ob sich der ziehende Spieler im Schach befindet
+ * Checkt, ob sich der ziehende Spieler nach seinem Halbzug (noch) im Schach befindet
  * @author javacook
  */
 public class SchachCheck implements HalbzugValidation {
 
 	/**
-	 * Checkt, ob sich der Spieler, der der Halbzug <code>zuPruefen</code> versucht, im Schach befindet.
+	 * Checkt, ob sich der Spieler, wenn er den Halbzug <code>halbzug</code> zöge, danach noch im Schach befände.
+     * Dann dürfte er diesen Halbzug nicht ausführen.
 	 */
     @Override
     public ValidationResult validiere(final Halbzug halbzug,
@@ -33,7 +34,7 @@ public class SchachCheck implements HalbzugValidation {
 
         final Position koenigsposition = sucheKoenig(spielerFarbe, brettMitSimulHalbzug);
 
-        // Gehe alle Figuren des Gegners durch und prüfe, ob diese des König schlagen könnte:
+        // Gehe alle Figuren des Gegners durch und prüfe, ob diese meinen König schlagen könnten:
         for (Position.Zeile zeile : Position.Zeile.values()) {
             for (Position.Spalte spalte : Position.Spalte.values()) {
                 final Position position = new Position(zeile, spalte);
