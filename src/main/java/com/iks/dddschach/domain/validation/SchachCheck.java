@@ -1,6 +1,8 @@
 package com.iks.dddschach.domain.validation;
 
 import com.iks.dddschach.domain.*;
+import com.iks.dddschach.domain.Position.Spalte;
+import com.iks.dddschach.domain.Position.Zeile;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,6 +15,8 @@ import static com.iks.dddschach.domain.Spielfigur.FigurenTyp.KOENIG;
  * @author javacook
  */
 public class SchachCheck implements HalbzugValidation {
+
+    private final static ErreicheZielPruefung ERREICHE_ZIEL_PRUEFUNG = new ErreicheZielPruefung();
 
 	/**
 	 * Checkt, ob sich der Spieler, wenn er den Halbzug <code>halbzug</code> zöge, danach noch im Schach befände.
@@ -32,46 +36,63 @@ public class SchachCheck implements HalbzugValidation {
         final Position koenigsposition = sucheKoenig(spielerFarbe, brettMitSimulHalbzug);
 
         // Gehe alle Figuren des Gegners durch und prüfe, ob diese meinen König schlagen könnten:
-        for (Position.Spalte spalte : Position.Spalte.values()) {
-            for (Position.Zeile zeile : Position.Zeile.values()) {
-                final Position position = new Position(spalte, zeile);
-                final Spielfigur spielfigur = brettMitSimulHalbzug.getSchachfigurAnPosition(position);
-                if (isGegnerischeFigur(spielfigur, spielerFarbe)) {
-                    final Halbzug halbzugDerKoenigWomoeglichBedroht = new Halbzug(position, koenigsposition);
-
-                    if (koennteMeinKoenigGeschlagenWerden(halbzugDerKoenigWomoeglichBedroht,
-                            zugHistorie, brettMitSimulHalbzug)) {
-                        return new ValidationResult(Zugregel.KOENIG_STEHT_IM_SCHACH);
-                    }
-                }
-            }
-        }
+        if (istPositionBedroht(koenigsposition, spielerFarbe, zugHistorie, brettMitSimulHalbzug))
+            return new ValidationResult(Zugregel.KOENIG_STEHT_IM_SCHACH);
         return new ValidationResult();
     }
 
 
+    public boolean istPositionBedroht(Position position,
+                                      Farbe spielerFarbe,
+                                      List<Halbzug> zugHistorie,
+                                      Spielbrett spielbrett) {
+        for (Spalte spalte : Spalte.values()) {
+            for (Zeile zeile : Zeile.values()) {
+                final Position lfdPos = new Position(spalte, zeile);
+                final Spielfigur spielfigur = spielbrett.getSchachfigurAnPosition(lfdPos);
+                if (isGegnerischeFigur(spielfigur, spielerFarbe)) {
+                    final Halbzug halbzug = new Halbzug(lfdPos, position);
+
+                    if (istZielDesHalbzugsBedroht(halbzug, zugHistorie, spielbrett)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+
+    private boolean istZielDesHalbzugsBedroht(final Halbzug halbzugDessenZielWomoeglichBedrohtIst,
+                                              final List<Halbzug> zugHistorie,
+                                              final Spielbrett spielbrett) {
+        return ERREICHE_ZIEL_PRUEFUNG.validiere(
+                halbzugDessenZielWomoeglichBedrohtIst, zugHistorie, spielbrett).gueltig;
+    }
+
+
+    /**
+     * Ermittelt, ob <code>spielfigur</code> eine gegnerischen Figur ist in Bezug auf
+     * dem Spieler (mit der Farbe <code>spielerFarbe</code>).
+     */
     private boolean isGegnerischeFigur(Spielfigur spielfigur, Farbe spielerFarbe) {
         return spielfigur != null && spielfigur.color != spielerFarbe;
     }
 
-    private final static ErreicheZielPruefung ERREICHE_ZIEL_PRUEFUNG = new ErreicheZielPruefung();
 
-    private boolean koennteMeinKoenigGeschlagenWerden(final Halbzug halbzugDerKoenigWomoeglichBedroht,
-                                                      final List<Halbzug> zugHistorie,
-                                                      final Spielbrett brettMitSimulHalbzug) {
-        return ERREICHE_ZIEL_PRUEFUNG.validiere(
-                halbzugDerKoenigWomoeglichBedroht, zugHistorie, brettMitSimulHalbzug).gueltig;
-    }
-
+    /**
+     * Ermittelt die Farbe des Spielers, der den Halbzug <code>halbzug</code> ausführen will
+     */
     private Farbe ermittelSpielerFarbe(Halbzug halbzug, Spielbrett spielbrett) {
         final Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.from);
         Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.from);
         return zugFigur.color;
     }
 
+
     private Position sucheKoenig(Farbe farbeDesKoenigs, Spielbrett spielbrett) {
-	    for (Position.Spalte spalte : Position.Spalte.values()) {
-            for (Position.Zeile zeile : Position.Zeile.values()) {
+	    for (Spalte spalte : Spalte.values()) {
+            for (Zeile zeile : Zeile.values()) {
                 final Position position = new Position(spalte, zeile);
                 final Spielfigur spielfigur = spielbrett.getSchachfigurAnPosition(position);
                 if (spielfigur != null && spielfigur.figure == KOENIG && spielfigur.color == farbeDesKoenigs) {
@@ -81,6 +102,5 @@ public class SchachCheck implements HalbzugValidation {
         }
         throw new IllegalArgumentException("There is no " + farbeDesKoenigs + " king on the board");
     }
-
 
 }

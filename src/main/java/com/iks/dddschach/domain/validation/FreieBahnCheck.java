@@ -38,13 +38,14 @@ public class FreieBahnCheck implements HalbzugValidation {
 
 		if (IntegerTupel.maxNorm(from, to) <=1) return true;
 
-		final IntegerTupel middel = IntegerTupel.middel(from, to);
-        final Position posMid = toPosition(middel);
-
+        final Position posMid = ValidationUtils.middle(halbzug.from, halbzug.to);
         if (spielbrett.getSchachfigurAnPosition(posMid) != null) return false;
 
 		return success(new Halbzug(halbzug.from, posMid), spielbrett) &&
 			   success(new Halbzug(posMid, halbzug.to), spielbrett);
 	}
+
+
+
 
 }

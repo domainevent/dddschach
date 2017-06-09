@@ -17,6 +17,7 @@ import static com.iks.dddschach.domain.Position.Zeile._8;
 public class RochadenCheck implements HalbzugValidation {
 
 	final static FreieBahnCheck FREIE_BAHN_CHECK = new FreieBahnCheck();
+	final static SchachCheck SCHACH_CHECK = new SchachCheck();
 
 	final static Position UR_POSITION_KOENIG_WEISS        = new Position(E,_1);
     final static Position UR_POSITION_KOENIG_SCHWARZ      = new Position(E,_8);
@@ -78,19 +79,38 @@ public class RochadenCheck implements HalbzugValidation {
         if (!GUELTIGE_ROCHADEN_HALBZEUGE.contains(halbzug)) {
             return new RochadenCheckResult(Zugregel.HALBZUG_IST_KEIN_ROCHADE);
         }
+
         // Freie Bahn vom König zum Turm checken:
+        //
         final Halbzug halbzugVonKoenigZuTurm = new Halbzug(halbzug.from, zugehoerigerTurmHalbzug.from);
         final ValidationResult freieBahnCheckResult =
                 FREIE_BAHN_CHECK.validiere(halbzugVonKoenigZuTurm, zugHistorie, spielbrett);
+
         if (!freieBahnCheckResult.gueltig) {
             return new RochadenCheckResult(freieBahnCheckResult.verletzteZugregel);
         }
+
+        // Wurden König oder Turm schon einmal bewegt?
+        //
         if (startPositionen.contains(halbzug.from)) {
             return new RochadenCheckResult(Zugregel.ROCHADE_KOENIG_WURDE_BEREITS_BEWEGT);
         }
         if (startPositionen.contains(zugehoerigerTurmHalbzug.from)) {
             return new RochadenCheckResult(Zugregel.ROCHADE_TURM_WURDE_BEREITS_BEWEGT);
         }
+
+        // Ist ein Feld zwischen Start und Zielposition des Königs bedroht?
+        //
+        final Position midPos = ValidationUtils.middle(halbzug.from, halbzug.to);
+        if (SCHACH_CHECK.istPositionBedroht(halbzug.from, zugFigur.color, zugHistorie, spielbrett) ||
+            SCHACH_CHECK.istPositionBedroht(midPos, zugFigur.color, zugHistorie, spielbrett) ||
+            SCHACH_CHECK.istPositionBedroht(halbzug.to, zugFigur.color, zugHistorie, spielbrett)) {
+
+            return new RochadenCheckResult(Zugregel.ROCHADE_FELD_STEHT_IM_SCHACH);
+        }
+
+        // Ansonsten ist die Rochade ok:
+        //
         return new RochadenCheckResult(zugehoerigerTurmHalbzug);
     }
 
