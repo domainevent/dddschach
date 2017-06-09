@@ -16,7 +16,7 @@ import static com.iks.dddschach.domain.Spielfigur.FigurenTyp.KOENIG;
  */
 public class SchachCheck implements HalbzugValidation {
 
-    private final static ErreicheZielPruefung ERREICHE_ZIEL_PRUEFUNG = new ErreicheZielPruefung();
+    private final static ErreicheZielCheck ERREICHE_ZIEL_CHECK = new ErreicheZielCheck();
 
 	/**
 	 * Checkt, ob sich der Spieler, wenn er den Halbzug <code>halbzug</code> zöge, danach noch im Schach befände.
@@ -66,7 +66,7 @@ public class SchachCheck implements HalbzugValidation {
     private boolean istZielDesHalbzugsBedroht(final Halbzug halbzugDessenZielWomoeglichBedrohtIst,
                                               final List<Halbzug> zugHistorie,
                                               final Spielbrett spielbrett) {
-        return ERREICHE_ZIEL_PRUEFUNG.validiere(
+        return ERREICHE_ZIEL_CHECK.validiere(
                 halbzugDessenZielWomoeglichBedrohtIst, zugHistorie, spielbrett).gueltig;
     }
 

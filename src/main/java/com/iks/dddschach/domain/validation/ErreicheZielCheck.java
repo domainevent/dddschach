@@ -17,7 +17,7 @@ import static com.iks.dddschach.domain.validation.Zugregel.STARTFELD_MUSS_SPIELF
  * Zielposition erreichen kann. Dabei checken z.B. die eizelne Figuren-Regeln zusaetzlich, ob auf
  * der Bahn vom Start zum Ziel Figuren im Wege stehen (außer beim Springer).
  */
-public class ErreicheZielPruefung implements HalbzugValidation {
+public class ErreicheZielCheck implements HalbzugValidation {
 
     public ValidationResult validiere(Halbzug halbzug, List<Halbzug> zugHistorie, Spielbrett spielbrett) {
         Objects.requireNonNull(halbzug, "Argument halbzug is null");

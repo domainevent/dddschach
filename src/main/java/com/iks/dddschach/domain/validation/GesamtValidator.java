@@ -17,7 +17,7 @@ import static com.iks.dddschach.domain.validation.Zugregel.DER_RICHTIGE_SPIELER_
 public class GesamtValidator implements HalbzugValidation, DomainService {
 
     final static RochadenCheck ROCHADEN_CHECK = new RochadenCheck();
-    final static ErreicheZielPruefung ERREICHE_ZIEL_PRUEFUNG = new ErreicheZielPruefung();
+    final static ErreicheZielCheck ERREICHE_ZIEL_CHECK = new ErreicheZielCheck();
     final static SchlagRegel SCHLAG_REGEL = new SchlagRegel();
     final static SchachCheck SCHACH_CHECK = new SchachCheck();
 
@@ -41,7 +41,7 @@ public class GesamtValidator implements HalbzugValidation, DomainService {
             return rochadenCheckResult;
         }
 
-        ValidationResult zielErreichbarResult = ERREICHE_ZIEL_PRUEFUNG.validiere(halbzug, zugHistorie, spielbrett);
+        ValidationResult zielErreichbarResult = ERREICHE_ZIEL_CHECK.validiere(halbzug, zugHistorie, spielbrett);
         if (!zielErreichbarResult.gueltig) return zielErreichbarResult;
 
         ValidationResult schlagRegelResult = SCHLAG_REGEL.validiere(halbzug, zugHistorie, spielbrett);
