@@ -62,7 +62,7 @@ public class RochadenCheck implements HalbzugValidation {
 
 
 	@Override
-	public RochadenCheckResult validiere(Halbzug halbzug, List<Halbzug> zugHistorie, Spielbrett spielbrett) {
+	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> zugHistorie, Spielbrett spielbrett) {
         Objects.requireNonNull(halbzug, "Argument halbzug is null");
         Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
         Objects.requireNonNull(zugHistorie, "Argument zugHistorie is null");
