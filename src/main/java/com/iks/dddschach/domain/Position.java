@@ -16,7 +16,7 @@ public class Position extends ValueObject {
      * Die horizontale Koordinate des Schachbretts (a-h)
      */
     @XmlEnum
-    public enum Zeile implements EnumObject<Character> {
+    public enum Spalte implements EnumObject<Character> {
         A, B, C, D, E, F, G, H;
 
         @Override
@@ -24,7 +24,7 @@ public class Position extends ValueObject {
             return name().toLowerCase().charAt(0);
         }
 
-        public static Zeile unmarshal(Character encoded) {
+        public static Spalte unmarshal(Character encoded) {
             return valueOf(encoded.toString().toUpperCase());
         }
 
@@ -39,7 +39,7 @@ public class Position extends ValueObject {
      * Die vertikale Koordinate des Schachbretts (1-8)
      */
     @XmlEnum
-    public enum Spalte implements EnumObject<Character> {
+    public enum Zeile implements EnumObject<Character> {
         _1, _2, _3, _4, _5, _6, _7, _8;
 
         @Override
@@ -47,12 +47,12 @@ public class Position extends ValueObject {
             return name().charAt(1);
         }
 
-        public static Spalte unmarshal(Character encoded) {
+        public static Zeile unmarshal(Character encoded) {
             return valueOf("_" + encoded);
         }
 
-        public static Spalte[] valuesInverted() {
-            return new Spalte[]{_8, _7, _6, _5, _4, _3, _2, _1};
+        public static Zeile[] valuesInverted() {
+            return new Zeile[]{_8, _7, _6, _5, _4, _3, _2, _1};
         }
 
         @Override
@@ -63,24 +63,24 @@ public class Position extends ValueObject {
 
 
     /**
-     * Die (horizontale) Zeilen-Koordinate des Schachbretts (a-h)
+     * Die (horizontale) Spalten-Koordinate des Schachbretts (a-h)
      */
-    public final Zeile horCoord;
+    public final Spalte horCoord;
 
     /**
-     * Die (vertikale) Spalten-Koordinate des Schachbretts (1-8)
+     * Die (vertikale) Zeilen-Koordinate des Schachbretts (1-8)
      */
-    public final Spalte vertCoord;
+    public final Zeile vertCoord;
 
 
     /**
      * Konstruktor
-     * @param zeile (horizontale) Zeilen-Koordinate des Schachbretts (a-h)
-     * @param spalte (vertikale) Spalten-Koordinate des Schachbretts (1-8)
+     * @param spalte (horizontale) Spalten-Koordinate des Schachbretts (a-h)
+     * @param zeile (vertikale) Zeilen-Koordinate des Schachbretts (1-8)
      */
-    public Position(Zeile zeile, Spalte spalte) {
-        this.horCoord = zeile;
-        this.vertCoord = spalte;
+    public Position(Spalte spalte, Zeile zeile) {
+        this.horCoord = spalte;
+        this.vertCoord = zeile;
     }
 
 
