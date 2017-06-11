@@ -74,7 +74,7 @@ public class EnPassantCheck implements HalbzugValidation {
     private boolean stehtNebenMirEinGegnerischerBauer(Halbzug halbzug, Spielbrett spielbrett, Farbe zugFigurFarbe) {
         final Position feldNebenMir = new Position(halbzug.to.horCoord, halbzug.from.vertCoord);
         final Spielfigur generischerBauer = new Spielfigur(FigurenTyp.BAUER, (zugFigurFarbe == WEISS)? SCHWARZ : WEISS);
-        return spielbrett.getSchachfigurAnPosition(feldNebenMir).equals(generischerBauer);
+        return generischerBauer.equals(spielbrett.getSchachfigurAnPosition(feldNebenMir));
     }
 
     private boolean zieheIchVonMitteEinFeldDiagonalNachVorn(Halbzug halbzug, Farbe zugFigurFarbe) {
