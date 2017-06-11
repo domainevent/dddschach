@@ -18,13 +18,14 @@ public class GesamtValidator implements HalbzugValidation, DomainService {
 
     final static RochadenCheck ROCHADEN_CHECK = new RochadenCheck();
     final static BauernumwCheck BAUERNUMW_CHECK = new BauernumwCheck();
+    final static EnPassantCheck ENPASSANT_CHECK = new EnPassantCheck();
     final static ErreicheZielCheck ERREICHE_ZIEL_CHECK = new ErreicheZielCheck();
     final static SchlagRegel SCHLAG_REGEL = new SchlagRegel();
     final static SchachCheck SCHACH_CHECK = new SchachCheck();
 
     public ValidationResult validiere(
             Halbzug halbzug,
-            List<Halbzug> zugHistorie,
+            List<Halbzug> halbzugHistorie,
             Spielbrett spielbrett) {
 
 
@@ -33,32 +34,42 @@ public class GesamtValidator implements HalbzugValidation, DomainService {
             return new ValidationResult(Zugregel.STARTFELD_MUSS_SPIELFIGUR_ENTHALTEN);
         }
 
-        if (!istRichtigerSpielerAmZug(zugFigur, zugHistorie)) {
+        if (!istRichtigerSpielerAmZug(zugFigur, halbzugHistorie)) {
             return new ValidationResult(false, DER_RICHTIGE_SPIELER_MUSS_AM_ZUG_SEIN);
         }
 
-        final ValidationResult rochadenCheckResult = ROCHADEN_CHECK.validiere(halbzug, zugHistorie, spielbrett);
+        final ValidationResult rochadenCheckResult = ROCHADEN_CHECK.validiere(halbzug, halbzugHistorie, spielbrett);
         if (rochadenCheckResult.gueltig || istRouchadenZugAberUnzulaessig(rochadenCheckResult)) {
             return rochadenCheckResult;
         }
 
-        final ValidationResult bauernumwCheckResult = BAUERNUMW_CHECK.validiere(halbzug, zugHistorie, spielbrett);
+        final ValidationResult enPassantCheckResult = ENPASSANT_CHECK.validiere(halbzug, halbzugHistorie, spielbrett);
+        if (enPassantCheckResult.gueltig || istEnPassantZugAberUnzulaessig(rochadenCheckResult)) {
+            return enPassantCheckResult;
+        }
+
+        final ValidationResult bauernumwCheckResult = BAUERNUMW_CHECK.validiere(halbzug, halbzugHistorie, spielbrett);
         if (bauernumwCheckResult.gueltig) {
             return bauernumwCheckResult;
         }
 
-        ValidationResult zielErreichbarResult = ERREICHE_ZIEL_CHECK.validiere(halbzug, zugHistorie, spielbrett);
+        ValidationResult zielErreichbarResult = ERREICHE_ZIEL_CHECK.validiere(halbzug, halbzugHistorie, spielbrett);
         if (!zielErreichbarResult.gueltig) return zielErreichbarResult;
 
-        ValidationResult schlagRegelResult = SCHLAG_REGEL.validiere(halbzug, zugHistorie, spielbrett);
+        ValidationResult schlagRegelResult = SCHLAG_REGEL.validiere(halbzug, halbzugHistorie, spielbrett);
         if (!schlagRegelResult.gueltig) return schlagRegelResult;
 
-        ValidationResult schachCheckResult = SCHACH_CHECK.validiere(halbzug, zugHistorie, spielbrett);
+        ValidationResult schachCheckResult = SCHACH_CHECK.validiere(halbzug, halbzugHistorie, spielbrett);
         if (!schachCheckResult.gueltig) return schachCheckResult;
 
         return new ValidationResult();
     }
 
+
+    private boolean istEnPassantZugAberUnzulaessig(ValidationResult rochadenCheckResult) {
+        return !rochadenCheckResult.gueltig &&
+                rochadenCheckResult.verletzteZugregel != Zugregel.HALBZUG_IST_KEIN_EN_PASSANT;
+    }
 
     private boolean istRouchadenZugAberUnzulaessig(ValidationResult rochadenCheckResult) {
         return !rochadenCheckResult.gueltig &&
