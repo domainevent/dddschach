@@ -42,14 +42,18 @@ public class EnPassantCheck implements HalbzugValidation {
         if (zugFigur.figure != FigurenTyp.BAUER) {
             return new EnPassantCheckResult(Zugregel.HALBZUG_IST_KEIN_EN_PASSANT);
         }
-        if (ziehtVonMitteEinFeldDiagonalNachVorn(halbzug, zugFigur.color) &&
-            spielbrett.getSchachfigurAnPosition(halbzug.to) == null) {
+        if (zieheIchVonMitteEinFeldDiagonalNachVorn(halbzug, zugFigur.color) &&
+            stehtNebenMirEinGegnerischerBauer(halbzug, spielbrett, zugFigur.color) &&
+            istMeinZielfeldFrei(halbzug, spielbrett)) {
 
             Validate.isTrue(halbzugHistorie.size() > 0,"No halbzugHistorie present" );
+
             final Halbzug erwarteterVorgaengerHalbzug = new Halbzug(
                     new Position(halbzug.to.horCoord, zugFigur.color == WEISS ? _7 : _2),
                     new Position(halbzug.to.horCoord, zugFigur.color == WEISS ? _5 : _4));
+
             final Halbzug tatsaelicherVorgaengerHalbzug = halbzugHistorie.get(halbzugHistorie.size()-1);
+
             if (erwarteterVorgaengerHalbzug.equals(tatsaelicherVorgaengerHalbzug)) {
                 return new EnPassantCheckResult(tatsaelicherVorgaengerHalbzug.to);
             }
@@ -63,7 +67,17 @@ public class EnPassantCheck implements HalbzugValidation {
     }
 
 
-    private boolean ziehtVonMitteEinFeldDiagonalNachVorn(Halbzug halbzug, Farbe zugFigurFarbe) {
+    private boolean istMeinZielfeldFrei(Halbzug halbzug, Spielbrett spielbrett) {
+        return spielbrett.getSchachfigurAnPosition(halbzug.to) == null;
+    }
+
+    private boolean stehtNebenMirEinGegnerischerBauer(Halbzug halbzug, Spielbrett spielbrett, Farbe zugFigurFarbe) {
+        final Position feldNebenMir = new Position(halbzug.to.horCoord, halbzug.from.vertCoord);
+        final Spielfigur generischerBauer = new Spielfigur(FigurenTyp.BAUER, (zugFigurFarbe == WEISS)? SCHWARZ : WEISS);
+        return spielbrett.getSchachfigurAnPosition(feldNebenMir).equals(generischerBauer);
+    }
+
+    private boolean zieheIchVonMitteEinFeldDiagonalNachVorn(Halbzug halbzug, Farbe zugFigurFarbe) {
         if ((zugFigurFarbe == WEISS   && halbzug.from.vertCoord == _5) ||
             (zugFigurFarbe == SCHWARZ && halbzug.from.vertCoord == _4)) {
 
