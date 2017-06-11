@@ -2,12 +2,10 @@ package com.iks.dddschach.domain;
 
 import com.iks.dddschach.api.SchachpartieApi.UngueltigerHalbzugException;
 import com.iks.dddschach.domain.base.EntityIdObject;
-import com.iks.dddschach.domain.validation.BauernumwandlungCheck;
-import com.iks.dddschach.domain.validation.BauernumwandlungCheck.BauernumwandlungCheckResult;
+import com.iks.dddschach.domain.validation.BauernumwCheck.BauernumwCheckResult;
 import com.iks.dddschach.domain.validation.HalbzugValidation;
 import com.iks.dddschach.domain.validation.HalbzugValidation.ValidationResult;
 import com.iks.dddschach.domain.validation.GesamtValidator;
-import com.iks.dddschach.domain.validation.RochadenCheck;
 import com.iks.dddschach.domain.validation.RochadenCheck.RochadenCheckResult;
 
 
@@ -36,8 +34,8 @@ public class Schachpartie extends EntityIdObject<SpielId> {
         }
         spielbrett = spielbrett.wendeHalbzugAn(halbzug);
 
-        if (validationResult instanceof BauernumwandlungCheckResult) {
-            final BauernumwandlungCheckResult bauernumwCheckResult = (BauernumwandlungCheckResult) validationResult;
+        if (validationResult instanceof BauernumwCheckResult) {
+            final BauernumwCheckResult bauernumwCheckResult = (BauernumwCheckResult) validationResult;
             spielbrett = new Spielbrett(spielbrett) {{
                 setSchachfigurAnPosition(halbzug.to, bauernumwCheckResult.zielFigur);
             }};

@@ -4,23 +4,21 @@ import com.iks.dddschach.domain.*;
 import com.iks.dddschach.domain.Spielfigur.FigurenTyp;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static com.iks.dddschach.domain.Farbe.SCHWARZ;
 import static com.iks.dddschach.domain.Farbe.WEISS;
-import static com.iks.dddschach.domain.Position.Spalte.*;
 import static com.iks.dddschach.domain.Position.Zeile.*;
 import static com.iks.dddschach.domain.Spielfigur.FigurenTyp.DAME;
 
 
-public class BauernumwandlungCheck implements HalbzugValidation {
+public class BauernumwCheck implements HalbzugValidation {
 
 	final static BauernRegel BAUERNREGEL = new BauernRegel();
 
-    public static class BauernumwandlungCheckResult extends ValidationResult {
+    public static class BauernumwCheckResult extends ValidationResult {
         public final Spielfigur zielFigur;
 
-        public BauernumwandlungCheckResult(boolean gueltig, Spielfigur zielFigur) {
+        public BauernumwCheckResult(boolean gueltig, Spielfigur zielFigur) {
             super(gueltig, null);
             this.zielFigur = zielFigur;
         }
@@ -36,7 +34,7 @@ public class BauernumwandlungCheck implements HalbzugValidation {
         Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.from);
 
         if (zugFigur.figure != FigurenTyp.BAUER) {
-            return new BauernumwandlungCheckResult(false, null);
+            return new BauernumwCheckResult(false, null);
         }
         final ValidationResult bauernregelResult = BAUERNREGEL.validiere(halbzug, zugHistorie, spielbrett);
         if (!bauernregelResult.gueltig) {
@@ -45,9 +43,9 @@ public class BauernumwandlungCheck implements HalbzugValidation {
 
         if ((zugFigur.color == WEISS && halbzug.from.vertCoord == _7) ||
             (zugFigur.color == SCHWARZ && halbzug.from.vertCoord == _2)) {
-            return new BauernumwandlungCheckResult(true, new Spielfigur(DAME, zugFigur.color));
+            return new BauernumwCheckResult(true, new Spielfigur(DAME, zugFigur.color));
         }
-        return new BauernumwandlungCheckResult(false, null);
+        return new BauernumwCheckResult(false, null);
     }
 
 }
