@@ -18,7 +18,7 @@ public class BauernRegel implements HalbzugValidation {
 	private final static FreieBahnCheck FREIE_BAHN_CHECK = new FreieBahnCheck();
 
 	@Override
-	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> zugHistorie, Spielbrett spielbrett) {
+	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> halbzugHistorie, Spielbrett spielbrett) {
         Objects.requireNonNull(halbzug, "Argument halbzug is null");
         Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
 
@@ -39,7 +39,7 @@ public class BauernRegel implements HalbzugValidation {
 			if (isZweiFeldBedingungAmStartErfuellt(halbzug, figurFrom, diff) ||
                 isEinfeldBedingungErfuellt(figurFrom, diff)) {
 
-                final ValidationResult freieBahnResult = FREIE_BAHN_CHECK.validiere(halbzug, zugHistorie, spielbrett);
+                final ValidationResult freieBahnResult = FREIE_BAHN_CHECK.validiere(halbzug, halbzugHistorie, spielbrett);
                 if (!freieBahnResult.gueltig) {
                     return freieBahnResult;
                 }

@@ -3,13 +3,9 @@ package com.iks.dddschach.domain.validation;
 import com.iks.dddschach.domain.Halbzug;
 import com.iks.dddschach.domain.Spielbrett;
 import com.iks.dddschach.domain.Spielfigur;
-import com.iks.dddschach.domain.base.DomainService;
 
 import java.util.List;
 import java.util.Objects;
-
-import static com.iks.dddschach.domain.validation.Zugregel.DER_RICHTIGE_SPIELER_MUSS_AM_ZUG_SEIN;
-import static com.iks.dddschach.domain.validation.Zugregel.STARTFELD_MUSS_SPIELFIGUR_ENTHALTEN;
 
 
 /**
@@ -19,7 +15,7 @@ import static com.iks.dddschach.domain.validation.Zugregel.STARTFELD_MUSS_SPIELF
  */
 public class ErreicheZielCheck implements HalbzugValidation {
 
-    public ValidationResult validiere(Halbzug halbzug, List<Halbzug> zugHistorie, Spielbrett spielbrett) {
+    public ValidationResult validiere(Halbzug halbzug, List<Halbzug> halbzugHistorie, Spielbrett spielbrett) {
         Objects.requireNonNull(halbzug, "Argument halbzug is null");
         Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
 
@@ -28,17 +24,17 @@ public class ErreicheZielCheck implements HalbzugValidation {
 
         switch (zugFigur.figure) {
             case BAUER:
-                return new BauernRegel().validiere(halbzug, zugHistorie, spielbrett);
+                return new BauernRegel().validiere(halbzug, halbzugHistorie, spielbrett);
             case TURM:
-                return new TurmRegel().validiere(halbzug, zugHistorie, spielbrett);
+                return new TurmRegel().validiere(halbzug, halbzugHistorie, spielbrett);
             case SPRINGER:
-                return new SpringerRegel().validiere(halbzug, zugHistorie, spielbrett);
+                return new SpringerRegel().validiere(halbzug, halbzugHistorie, spielbrett);
             case LAEUFER:
-                return new LaeuferRegel().validiere(halbzug, zugHistorie, spielbrett);
+                return new LaeuferRegel().validiere(halbzug, halbzugHistorie, spielbrett);
             case DAME:
-                return new DameRegel().validiere(halbzug, zugHistorie, spielbrett);
+                return new DameRegel().validiere(halbzug, halbzugHistorie, spielbrett);
             case KOENIG:
-                return new KoenigRegel().validiere(halbzug, zugHistorie, spielbrett);
+                return new KoenigRegel().validiere(halbzug, halbzugHistorie, spielbrett);
             default:
                 throw new IllegalStateException("Unexpected enum: " + zugFigur.figure);
         }

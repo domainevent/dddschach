@@ -25,10 +25,10 @@ public class BauernumwCheck implements HalbzugValidation {
     }
 
 	@Override
-	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> zugHistorie, Spielbrett spielbrett) {
+	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> halbzugHistorie, Spielbrett spielbrett) {
         Objects.requireNonNull(halbzug, "Argument halbzug is null");
         Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
-        Objects.requireNonNull(zugHistorie, "Argument zugHistorie is null");
+        Objects.requireNonNull(halbzugHistorie, "Argument zugHistorie is null");
 
         Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.from);
         Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.from);
@@ -36,7 +36,7 @@ public class BauernumwCheck implements HalbzugValidation {
         if (zugFigur.figure != FigurenTyp.BAUER) {
             return new BauernumwCheckResult(false, null);
         }
-        final ValidationResult bauernregelResult = BAUERNREGEL.validiere(halbzug, zugHistorie, spielbrett);
+        final ValidationResult bauernregelResult = BAUERNREGEL.validiere(halbzug, halbzugHistorie, spielbrett);
         if (!bauernregelResult.gueltig) {
             return bauernregelResult;
         }

@@ -1,7 +1,6 @@
 package com.iks.dddschach.domain.validation;
 
 import static com.iks.dddschach.domain.validation.ValidationUtils.toIntegerTupel;
-import static com.iks.dddschach.domain.validation.ValidationUtils.toPosition;
 
 import java.util.List;
 import java.util.Objects;
@@ -9,7 +8,6 @@ import java.util.Objects;
 import com.iks.dddschach.domain.Halbzug;
 import com.iks.dddschach.domain.Position;
 import com.iks.dddschach.domain.Spielbrett;
-import com.iks.dddschach.domain.Spielfigur;
 import com.iks.dddschach.util.IntegerTupel;
 
 
@@ -20,7 +18,7 @@ import com.iks.dddschach.util.IntegerTupel;
 public class FreieBahnCheck implements HalbzugValidation {
 
 	@Override
-	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> zugHistorie, Spielbrett spielbrett) {
+	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> halbzugHistorie, Spielbrett spielbrett) {
 		Objects.requireNonNull(halbzug, "Argument halbzug is null");
 		Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
 

@@ -24,7 +24,7 @@ public class SchachCheck implements HalbzugValidation {
 	 */
     @Override
     public ValidationResult validiere(final Halbzug halbzug,
-                                      final List<Halbzug> zugHistorie,
+                                      final List<Halbzug> halbzugHistorie,
                                       final Spielbrett spielbrett) {
 
         Objects.requireNonNull(halbzug, "Argument halbzug is null");
@@ -36,7 +36,7 @@ public class SchachCheck implements HalbzugValidation {
         final Position koenigsposition = sucheKoenig(spielerFarbe, brettMitSimulHalbzug);
 
         // Gehe alle Figuren des Gegners durch und prüfe, ob diese meinen König schlagen könnten:
-        if (istPositionBedroht(koenigsposition, spielerFarbe, zugHistorie, brettMitSimulHalbzug))
+        if (istPositionBedroht(koenigsposition, spielerFarbe, halbzugHistorie, brettMitSimulHalbzug))
             return new ValidationResult(Zugregel.KOENIG_STEHT_IM_SCHACH);
         return new ValidationResult();
     }

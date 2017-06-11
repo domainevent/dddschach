@@ -18,7 +18,7 @@ public class TurmRegel implements HalbzugValidation {
 	private final static FreieBahnCheck FREIE_BAHN_CHECK = new FreieBahnCheck();
 
 	@Override
-	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> zugHistorie, Spielbrett spielbrett) {
+	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> halbzugHistorie, Spielbrett spielbrett) {
 		Objects.requireNonNull(halbzug, "Argument halbzug is null");
 		Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
 
@@ -38,7 +38,7 @@ public class TurmRegel implements HalbzugValidation {
             return new ValidationResult(Zugregel.TURM_ZIEHT_GERADE);
         }
 
-        final ValidationResult freieBahnResult = FREIE_BAHN_CHECK.validiere(halbzug, zugHistorie, spielbrett);
+        final ValidationResult freieBahnResult = FREIE_BAHN_CHECK.validiere(halbzug, halbzugHistorie, spielbrett);
 		if (!freieBahnResult.gueltig) {
 		    return freieBahnResult;
         }

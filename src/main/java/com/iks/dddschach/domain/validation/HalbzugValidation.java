@@ -37,11 +37,11 @@ public interface HalbzugValidation {
      * Bemerkung: Der Parameter <code>aktSpielbrett</code> ist eigentlich redundant, da
      * sich das aktuelle Spielfeld stets aus <code>zugHistorie</code> berechnen lässt.
      * @param zuPruefen der zu prüfende Halbzug
-     * @param zugHistorie die Folge der bislang durchgeführten Halbzüge
+     * @param halbzugHistorie die Folge der bislang durchgeführten Halbzüge
      * @param aktSpielbrett das aktuelle Spielbrett mit den Information,
      *                      welche Figuren sich auf welchen Positionen befinden.
      * @return Das Validationsergebnis
      */
-    ValidationResult validiere(Halbzug zuPruefen, List<Halbzug> zugHistorie, Spielbrett aktSpielbrett);
+    ValidationResult validiere(Halbzug zuPruefen, List<Halbzug> halbzugHistorie, Spielbrett aktSpielbrett);
 
 }

@@ -15,7 +15,7 @@ import java.util.Objects;
 public class SchlagRegel implements HalbzugValidation {
 
 	@Override
-	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> zugHistorie, Spielbrett spielbrett) {
+	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> halbzugHistorie, Spielbrett spielbrett) {
         Objects.requireNonNull(halbzug, "Argument halbzug is null");
         Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
 

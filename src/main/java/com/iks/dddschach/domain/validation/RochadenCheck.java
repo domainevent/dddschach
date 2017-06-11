@@ -62,15 +62,15 @@ public class RochadenCheck implements HalbzugValidation {
 
 
 	@Override
-	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> zugHistorie, Spielbrett spielbrett) {
+	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> halbzugHistorie, Spielbrett spielbrett) {
         Objects.requireNonNull(halbzug, "Argument halbzug is null");
         Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
-        Objects.requireNonNull(zugHistorie, "Argument zugHistorie is null");
+        Objects.requireNonNull(halbzugHistorie, "Argument zugHistorie is null");
 
         Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.from);
         Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.from);
 
-        final Set<Position> startPositionen = zugHistorie.stream().map(hz -> hz.from).collect(Collectors.toSet());
+        final Set<Position> startPositionen = halbzugHistorie.stream().map(hz -> hz.from).collect(Collectors.toSet());
         final Halbzug zugehoerigerTurmHalbzug = ZUGEHOERIGE_TURM_HALBZEUGE.get(halbzug);
 
         if (zugFigur.figure != FigurenTyp.KOENIG) {
@@ -84,7 +84,7 @@ public class RochadenCheck implements HalbzugValidation {
         //
         final Halbzug halbzugVonKoenigZuTurm = new Halbzug(halbzug.from, zugehoerigerTurmHalbzug.from);
         final ValidationResult freieBahnCheckResult =
-                FREIE_BAHN_CHECK.validiere(halbzugVonKoenigZuTurm, zugHistorie, spielbrett);
+                FREIE_BAHN_CHECK.validiere(halbzugVonKoenigZuTurm, halbzugHistorie, spielbrett);
 
         if (!freieBahnCheckResult.gueltig) {
             return new RochadenCheckResult(freieBahnCheckResult.verletzteZugregel);
@@ -102,9 +102,9 @@ public class RochadenCheck implements HalbzugValidation {
         // Ist ein Feld zwischen Start und Zielposition des Königs bedroht?
         //
         final Position midPos = ValidationUtils.middle(halbzug.from, halbzug.to);
-        if (SCHACH_CHECK.istPositionBedroht(halbzug.from, zugFigur.color, zugHistorie, spielbrett) ||
-            SCHACH_CHECK.istPositionBedroht(midPos, zugFigur.color, zugHistorie, spielbrett) ||
-            SCHACH_CHECK.istPositionBedroht(halbzug.to, zugFigur.color, zugHistorie, spielbrett)) {
+        if (SCHACH_CHECK.istPositionBedroht(halbzug.from, zugFigur.color, halbzugHistorie, spielbrett) ||
+            SCHACH_CHECK.istPositionBedroht(midPos, zugFigur.color, halbzugHistorie, spielbrett) ||
+            SCHACH_CHECK.istPositionBedroht(halbzug.to, zugFigur.color, halbzugHistorie, spielbrett)) {
 
             return new RochadenCheckResult(Zugregel.ROCHADE_FELD_STEHT_IM_SCHACH);
         }
