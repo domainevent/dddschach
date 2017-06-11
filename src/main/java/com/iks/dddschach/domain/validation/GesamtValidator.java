@@ -44,7 +44,7 @@ public class GesamtValidator implements HalbzugValidation, DomainService {
         }
 
         final ValidationResult enPassantCheckResult = ENPASSANT_CHECK.validiere(halbzug, halbzugHistorie, spielbrett);
-        if (enPassantCheckResult.gueltig || istEnPassantZugAberUnzulaessig(rochadenCheckResult)) {
+        if (enPassantCheckResult.gueltig || istEnPassantZugAberUnzulaessig(enPassantCheckResult)) {
             return enPassantCheckResult;
         }
 
@@ -66,9 +66,9 @@ public class GesamtValidator implements HalbzugValidation, DomainService {
     }
 
 
-    private boolean istEnPassantZugAberUnzulaessig(ValidationResult rochadenCheckResult) {
-        return !rochadenCheckResult.gueltig &&
-                rochadenCheckResult.verletzteZugregel != Zugregel.HALBZUG_IST_KEIN_EN_PASSANT;
+    private boolean istEnPassantZugAberUnzulaessig(ValidationResult enPassantCheckResult) {
+        return !enPassantCheckResult.gueltig &&
+                enPassantCheckResult.verletzteZugregel != Zugregel.HALBZUG_IST_KEIN_EN_PASSANT;
     }
 
     private boolean istRouchadenZugAberUnzulaessig(ValidationResult rochadenCheckResult) {
