@@ -62,7 +62,7 @@ public class GesamtValidator implements HalbzugValidation, DomainService {
 
     private boolean istRouchadenZugAberUnzulaessig(ValidationResult rochadenCheckResult) {
         return !rochadenCheckResult.gueltig &&
-                rochadenCheckResult.verletzteZugregel != Zugregel.HALBZUG_IST_KEIN_ROCHADE;
+                rochadenCheckResult.verletzteZugregel != Zugregel.HALBZUG_IST_KEINE_ROCHADE;
     }
 
 

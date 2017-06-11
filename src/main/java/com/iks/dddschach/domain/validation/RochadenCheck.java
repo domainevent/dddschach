@@ -74,10 +74,10 @@ public class RochadenCheck implements HalbzugValidation {
         final Halbzug zugehoerigerTurmHalbzug = ZUGEHOERIGE_TURM_HALBZEUGE.get(halbzug);
 
         if (zugFigur.figure != FigurenTyp.KOENIG) {
-            return new RochadenCheckResult(Zugregel.HALBZUG_IST_KEIN_ROCHADE);
+            return new RochadenCheckResult(Zugregel.HALBZUG_IST_KEINE_ROCHADE);
         }
         if (!GUELTIGE_ROCHADEN_HALBZEUGE.contains(halbzug)) {
-            return new RochadenCheckResult(Zugregel.HALBZUG_IST_KEIN_ROCHADE);
+            return new RochadenCheckResult(Zugregel.HALBZUG_IST_KEINE_ROCHADE);
         }
 
         // Freie Bahn vom König zum Turm checken:
