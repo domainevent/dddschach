@@ -36,38 +36,26 @@ public class SchachCheck implements HalbzugValidation {
         final Position koenigsposition = sucheKoenig(spielerFarbe, brettMitSimulHalbzug);
 
         // Gehe alle Figuren des Gegners durch und prüfe, ob diese meinen König schlagen könnten:
-        if (istPositionBedroht(koenigsposition, spielerFarbe, halbzugHistorie, brettMitSimulHalbzug))
-            return new ValidationResult(Zugregel.KOENIG_STEHT_IM_SCHACH);
-        return new ValidationResult();
-    }
-
-
-    public boolean istPositionBedroht(Position position,
-                                      Farbe spielerFarbe,
-                                      List<Halbzug> zugHistorie,
-                                      Spielbrett spielbrett) {
         for (Spalte spalte : Spalte.values()) {
             for (Zeile zeile : Zeile.values()) {
                 final Position lfdPos = new Position(spalte, zeile);
                 final Spielfigur spielfigur = spielbrett.getSchachfigurAnPosition(lfdPos);
                 if (isGegnerischeFigur(spielfigur, spielerFarbe)) {
-                    final Halbzug halbzug = new Halbzug(lfdPos, position);
-
-                    if (istZielDesHalbzugsBedroht(halbzug, zugHistorie, spielbrett)) {
-                        return true;
+                    final Halbzug lfdHalbzug = new Halbzug(lfdPos, koenigsposition);
+                    if (istZielDesHalbzugsBedroht(lfdHalbzug, halbzugHistorie, spielbrett)) {
+                        return new ValidationResult(Zugregel.KOENIG_STEHT_IM_SCHACH);
                     }
                 }
             }
         }
-        return false;
+        return new ValidationResult();
     }
 
 
-    private boolean istZielDesHalbzugsBedroht(final Halbzug halbzugDessenZielWomoeglichBedrohtIst,
-                                              final List<Halbzug> zugHistorie,
+    private boolean istZielDesHalbzugsBedroht(final Halbzug halbzug,
+                                              final List<Halbzug> halbzugHistorie,
                                               final Spielbrett spielbrett) {
-        return ERREICHE_ZIEL_CHECK.validiere(
-                halbzugDessenZielWomoeglichBedrohtIst, zugHistorie, spielbrett).gueltig;
+        return ERREICHE_ZIEL_CHECK.validiere(halbzug, halbzugHistorie, spielbrett).gueltig;
     }
 
 
