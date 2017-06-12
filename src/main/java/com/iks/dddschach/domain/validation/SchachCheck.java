@@ -39,10 +39,10 @@ public class SchachCheck implements HalbzugValidation {
         for (Spalte spalte : Spalte.values()) {
             for (Zeile zeile : Zeile.values()) {
                 final Position lfdPos = new Position(spalte, zeile);
-                final Spielfigur spielfigur = spielbrett.getSchachfigurAnPosition(lfdPos);
+                final Spielfigur spielfigur = brettMitSimulHalbzug.getSchachfigurAnPosition(lfdPos);
                 if (isGegnerischeFigur(spielfigur, spielerFarbe)) {
                     final Halbzug lfdHalbzug = new Halbzug(lfdPos, koenigsposition);
-                    if (istZielDesHalbzugsBedroht(lfdHalbzug, halbzugHistorie, spielbrett)) {
+                    if (istZielDesHalbzugsBedroht(lfdHalbzug, halbzugHistorie, brettMitSimulHalbzug)) {
                         return new ValidationResult(Zugregel.KOENIG_STEHT_IM_SCHACH);
                     }
                 }
