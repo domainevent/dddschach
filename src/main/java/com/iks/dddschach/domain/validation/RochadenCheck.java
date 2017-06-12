@@ -103,12 +103,12 @@ public class RochadenCheck implements HalbzugValidation {
         //
         final Position midPos = ValidationUtils.middle(halbzug.from, halbzug.to);
 
-        boolean sindAllePositionenDesKoenigHalbzugsUnbedoht =
+        boolean sindAllePositionenDesKoenigHalbzugsUnbedroht =
                 SCHACH_CHECK.validiere(new Halbzug(halbzug.from, halbzug.from), halbzugHistorie, spielbrett).gueltig &&
                 SCHACH_CHECK.validiere(new Halbzug(halbzug.from, midPos), halbzugHistorie, spielbrett).gueltig &&
                 SCHACH_CHECK.validiere(halbzug, halbzugHistorie, spielbrett).gueltig;
 
-        return sindAllePositionenDesKoenigHalbzugsUnbedoht?
+        return sindAllePositionenDesKoenigHalbzugsUnbedroht?
                 new RochadenCheckResult(zugehoerigerTurmHalbzug) :
                 new RochadenCheckResult(Zugregel.ROCHADE_FELD_STEHT_IM_SCHACH);
     }
