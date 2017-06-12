@@ -1,7 +1,7 @@
 package com.iks.dddschach.util;
 
 /**
- * Created by vollmer on 02.06.17.
+ * Repräsentiert ein Tupel bestehende aus zwei Integer-Werten.
  */
 public class IntegerTupel extends Tupel<Integer, Integer> {
 

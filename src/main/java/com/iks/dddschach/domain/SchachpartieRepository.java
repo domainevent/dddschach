@@ -6,7 +6,7 @@ import java.util.Optional;
 
 
 /**
- * Created by vollmer on 18.05.17.
+ * Repository zum Speichern und Finden von Schachpartien
  */
 public class SchachpartieRepository {
 
