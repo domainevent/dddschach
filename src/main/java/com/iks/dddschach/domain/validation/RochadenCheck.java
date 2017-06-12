@@ -102,16 +102,15 @@ public class RochadenCheck implements HalbzugValidation {
         // Ist ein Feld zwischen Start und Zielposition des Königs bedroht?
         //
         final Position midPos = ValidationUtils.middle(halbzug.from, halbzug.to);
-        if (SCHACH_CHECK.istPositionBedroht(halbzug.from, zugFigur.color, halbzugHistorie, spielbrett) ||
-            SCHACH_CHECK.istPositionBedroht(midPos, zugFigur.color, halbzugHistorie, spielbrett) ||
-            SCHACH_CHECK.istPositionBedroht(halbzug.to, zugFigur.color, halbzugHistorie, spielbrett)) {
 
-            return new RochadenCheckResult(Zugregel.ROCHADE_FELD_STEHT_IM_SCHACH);
-        }
+        boolean sindAllePositionenDesKoenigHalbzugsUnbedoht =
+                SCHACH_CHECK.validiere(new Halbzug(halbzug.from, halbzug.from), halbzugHistorie, spielbrett).gueltig &&
+                SCHACH_CHECK.validiere(new Halbzug(halbzug.from, midPos), halbzugHistorie, spielbrett).gueltig &&
+                SCHACH_CHECK.validiere(halbzug, halbzugHistorie, spielbrett).gueltig;
 
-        // Ansonsten ist die Rochade ok:
-        //
-        return new RochadenCheckResult(zugehoerigerTurmHalbzug);
+        return sindAllePositionenDesKoenigHalbzugsUnbedoht?
+                new RochadenCheckResult(zugehoerigerTurmHalbzug) :
+                new RochadenCheckResult(Zugregel.ROCHADE_FELD_STEHT_IM_SCHACH);
     }
 
 }
