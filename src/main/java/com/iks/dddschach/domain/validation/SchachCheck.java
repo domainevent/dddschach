@@ -32,7 +32,6 @@ public class SchachCheck implements HalbzugValidation {
 
         final Farbe spielerFarbe = ermittelSpielerFarbe(halbzug, spielbrett);
         final Spielbrett brettMitSimulHalbzug = spielbrett.wendeHalbzugAn(halbzug);
-
         final Position koenigsposition = sucheKoenig(spielerFarbe, brettMitSimulHalbzug);
 
         // Gehe alle Figuren des Gegners durch und prüfe, ob diese meinen König schlagen könnten:
