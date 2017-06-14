@@ -7,8 +7,7 @@ import com.iks.dddschach.domain.SpielId;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
 import java.util.Optional;
 
 
@@ -17,27 +16,21 @@ import java.util.Optional;
  */
 public class SchachpartieRepositoryDB implements SchachpartieRepository {
 
-    private Map<SpielId, Schachpartie> repository = new HashMap<>();
+    public final String DATABASE_NAME = "$objectdb/db/points.odb";
 
-    public Optional<Schachpartie> findById(SpielId spielId) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("$objectdb/db/points.odb");
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        final Schachpartie schachpartie = em.find(Schachpartie.class, spielId);
-        em.getTransaction().commit();
+    public Optional<Schachpartie> findById(SpielId spielId) throws IOException {
+        EntityManager em = Persistence.createEntityManagerFactory(DATABASE_NAME).createEntityManager();
+        final SchachpartieDB schachpartieDB = em.find(SchachpartieDB.class, spielId.id);
         em.close();
-        emf.close();
-        return Optional.ofNullable(schachpartie);
+        return (schachpartieDB == null)? Optional.empty() : Optional.of(schachpartieDB.toSchachpartie());
     }
 
-    public void save(Schachpartie schachpartie) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("$objectdb/db/points.odb");
-        EntityManager em = emf.createEntityManager();
+    public void save(Schachpartie schachpartie) throws IOException {
+        EntityManager em = Persistence.createEntityManagerFactory(DATABASE_NAME).createEntityManager();
         em.getTransaction().begin();
-        em.persist(schachpartie);
+        em.merge(new SchachpartieDB(schachpartie));
         em.getTransaction().commit();
         em.close();
-        emf.close();
     }
 
 }
