@@ -1,5 +1,8 @@
 package com.iks.dddschach.domain.base;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -8,4 +11,10 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType
 public abstract class EntityObject {
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+    }
+
 }
