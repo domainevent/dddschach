@@ -16,8 +16,8 @@ import com.iks.dddschach.domain.validation.RochadenCheck.RochadenCheckResult;
 public class Schachpartie extends EntityIdObject<SpielId> {
 
     final static HalbzugValidation VALIDATION = new GesamtValidator();
-    final HalbzugHistorie halbzugHistorie = new HalbzugHistorie();
-    private Spielbrett spielbrett;
+    protected HalbzugHistorie halbzugHistorie = new HalbzugHistorie();
+    protected Spielbrett spielbrett;
 
 
     /**
@@ -87,7 +87,7 @@ public class Schachpartie extends EntityIdObject<SpielId> {
      * Liefert die Historie alle bislang ausgeführten Halbzüge
      * @return {@link HalbzugHistorie}
      */
-    public HalbzugHistorie spielzuege() {
+    public HalbzugHistorie halbzugHistorie() {
         return halbzugHistorie;
     }
 
