@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.iks.dddschach.api.SchachpartieApi;
 import com.iks.dddschach.api.SchachpartieApiImpl;
+import com.iks.dddschach.persistence.SchachpartieRepositoryDB;
+import com.iks.dddschach.persistence.SchachpartieRepositoryMemory;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 
@@ -16,7 +18,7 @@ public class RestApplication extends ResourceConfig {
     public RestApplication() {
         register(new AbstractBinder() {
             protected void configure() {
-                bind(new SchachpartieApiImpl()).to(SchachpartieApi.class);
+                bind(new SchachpartieApiImpl(new SchachpartieRepositoryDB())).to(SchachpartieApi.class);
             }
         });
         register(new JacksonJsonProvider().configure(SerializationFeature.INDENT_OUTPUT, true));

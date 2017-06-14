@@ -1,7 +1,6 @@
 package com.iks.dddschach.api;
 
 import com.iks.dddschach.domain.*;
-
 import java.text.ParseException;
 import java.util.Optional;
 
@@ -12,8 +11,11 @@ import java.util.Optional;
 public class SchachpartieApiImpl implements SchachpartieApi {
 
     public final static SchachpartieFactory SCHACHPARTIE_FACTORY = new SchachpartieFactory();
-    public final static SchachpartieRepository SCHACHPARTIE_REPOSITORY = new SchachpartieRepository();
+    private final SchachpartieRepository SCHACHPARTIE_REPOSITORY;
 
+    public SchachpartieApiImpl(SchachpartieRepository schachpartieRepository) {
+        SCHACHPARTIE_REPOSITORY = schachpartieRepository;
+    }
 
     @Override
     public SpielId neuesSpiel(Optional<String> vermerk) {

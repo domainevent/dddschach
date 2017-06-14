@@ -1,6 +1,7 @@
 package com.iks.dddschach.api;
 
 import com.iks.dddschach.domain.*;
+import com.iks.dddschach.persistence.SchachpartieRepositoryMemory;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +18,7 @@ import static com.iks.dddschach.domain.SpielNotationParser.parse;
  */
 public class SchachspielApiTest {
 
-    private SchachpartieApi api = new SchachpartieApiImpl();
+    private SchachpartieApi api = new SchachpartieApiImpl(new SchachpartieRepositoryMemory());
     private final static Optional<String> VERMERK = Optional.of("Vermerk");
 
     @Before
