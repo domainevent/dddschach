@@ -5,6 +5,7 @@ import com.iks.dddschach.domain.SpielId;
 import com.iks.dddschach.domain.Halbzug;
 import com.iks.dddschach.domain.validation.Zugregel;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Optional;
 
@@ -78,7 +79,7 @@ public interface SchachpartieApi {
      * @throws Exception bei sonstigen (technischen) Problemen
      */
     int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug)
-            throws UngueltigerHalbzugException, UngueltigeSpielIdException;
+            throws UngueltigerHalbzugException, UngueltigeSpielIdException, IOException;
 
 
     /**
@@ -89,6 +90,6 @@ public interface SchachpartieApi {
      * @throws UngueltigeSpielIdException falls es keine Partie zu <code>spielId</code> gibt
      * @throws Exception bei sonstigen (technischen) Problemen
      */
-    Spielbrett aktuellesSpielbrett(SpielId spielId) throws UngueltigeSpielIdException;
+    Spielbrett aktuellesSpielbrett(SpielId spielId) throws UngueltigeSpielIdException, IOException;
 
 }
