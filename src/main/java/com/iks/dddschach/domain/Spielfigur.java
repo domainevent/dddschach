@@ -77,6 +77,11 @@ public class Spielfigur extends ValueObject {
         this.color = color;
     }
 
+    @SuppressWarnings("unused")
+    private Spielfigur() {
+        this(null, null);
+    }
+
     @Override
     public String toString() {
         return "" + figure.marshal() + color.marshal();
