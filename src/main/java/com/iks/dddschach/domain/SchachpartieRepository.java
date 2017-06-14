@@ -1,5 +1,6 @@
 package com.iks.dddschach.domain;
 
+import java.io.IOException;
 import java.util.Optional;
 
 
@@ -8,8 +9,8 @@ import java.util.Optional;
  */
 public interface SchachpartieRepository {
 
-    Optional<Schachpartie> findById(SpielId spielId);
+    Optional<Schachpartie> findById(SpielId spielId) throws IOException;
 
-    void save(Schachpartie schachpartie);
+    void save(Schachpartie schachpartie) throws IOException;
 
 }
