@@ -16,7 +16,7 @@ import java.util.Optional;
  */
 public class SchachpartieRepositoryDB implements SchachpartieRepository {
 
-    public final String DATABASE_NAME = "$objectdb/db/points.odb";
+    public final String DATABASE_NAME = "$objectdb/db/dddschach.odb";
 
     public Optional<Schachpartie> findById(SpielId spielId) throws IOException {
         EntityManager em = Persistence.createEntityManagerFactory(DATABASE_NAME).createEntityManager();
