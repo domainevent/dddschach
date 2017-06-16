@@ -39,7 +39,7 @@ public class SchachCheck implements HalbzugValidation {
             for (Zeile zeile : Zeile.values()) {
                 final Position lfdPos = new Position(spalte, zeile);
                 final Spielfigur spielfigur = brettMitSimulHalbzug.getSchachfigurAnPosition(lfdPos);
-                if (isGegnerischeFigur(spielfigur, spielerFarbe)) {
+                if (istGegnerischeFigur(spielfigur, spielerFarbe)) {
                     final Halbzug lfdHalbzug = new Halbzug(lfdPos, koenigsposition);
                     if (istZielDesHalbzugsBedroht(lfdHalbzug, halbzugHistorie, brettMitSimulHalbzug)) {
                         return new ValidationResult(Zugregel.KOENIG_STEHT_IM_SCHACH);
@@ -62,7 +62,7 @@ public class SchachCheck implements HalbzugValidation {
      * Ermittelt, ob <code>spielfigur</code> eine gegnerischen Figur ist in Bezug auf
      * dem Spieler (mit der Farbe <code>spielerFarbe</code>).
      */
-    private boolean isGegnerischeFigur(Spielfigur spielfigur, Farbe spielerFarbe) {
+    private boolean istGegnerischeFigur(Spielfigur spielfigur, Farbe spielerFarbe) {
         return spielfigur != null && spielfigur.color != spielerFarbe;
     }
 
