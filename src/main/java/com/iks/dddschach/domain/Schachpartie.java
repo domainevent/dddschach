@@ -9,10 +9,9 @@ import com.iks.dddschach.domain.validation.HalbzugValidation.ValidationResult;
 import com.iks.dddschach.domain.validation.GesamtValidator;
 import com.iks.dddschach.domain.validation.PattMattCheck;
 import com.iks.dddschach.domain.validation.RochadenCheck.RochadenCheckResult;
-import com.iks.dddschach.domain.validation.Zugregel;
 
-import static com.iks.dddschach.domain.validation.Zugregel.DIE_PARTIE_ENDED_MATT;
-import static com.iks.dddschach.domain.validation.Zugregel.DIE_PARTIE_ENDED_PATT;
+import static com.iks.dddschach.domain.validation.Zugregel.DIE_PARTIE_ENDET_MATT;
+import static com.iks.dddschach.domain.validation.Zugregel.DIE_PARTIE_ENDET_PATT;
 
 
 /**
@@ -51,8 +50,8 @@ public class Schachpartie extends EntityIdObject<SpielId> {
         if (!validationResult.gueltig) {
             final PattMattCheck.PattMatt pattMatt = PATT_MATT_CHECK.analysiere(halbzugHistorie.halbzuege, spielbrett);
             switch (pattMatt) {
-                case MATT: throw new UngueltigerHalbzugException(halbzug, DIE_PARTIE_ENDED_MATT);
-                case PATT: throw new UngueltigerHalbzugException(halbzug, DIE_PARTIE_ENDED_PATT);
+                case MATT: throw new UngueltigerHalbzugException(halbzug, DIE_PARTIE_ENDET_MATT);
+                case PATT: throw new UngueltigerHalbzugException(halbzug, DIE_PARTIE_ENDET_PATT);
             }
             throw new UngueltigerHalbzugException(halbzug, validationResult.verletzteZugregel);
         }
