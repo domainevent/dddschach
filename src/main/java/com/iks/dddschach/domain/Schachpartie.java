@@ -7,7 +7,13 @@ import com.iks.dddschach.domain.validation.EnPassantCheck.EnPassantCheckResult;
 import com.iks.dddschach.domain.validation.HalbzugValidation;
 import com.iks.dddschach.domain.validation.HalbzugValidation.ValidationResult;
 import com.iks.dddschach.domain.validation.GesamtValidator;
+import com.iks.dddschach.domain.validation.PattMattCheck;
 import com.iks.dddschach.domain.validation.RochadenCheck.RochadenCheckResult;
+import com.iks.dddschach.domain.validation.Zugregel;
+
+import static com.iks.dddschach.domain.validation.Zugregel.DIE_PARTIE_ENDED_MATT;
+import static com.iks.dddschach.domain.validation.Zugregel.DIE_PARTIE_ENDED_PATT;
+
 
 /**
  * Das zentrale Aggregat, über das die Anwendung bedient wird.
@@ -15,7 +21,8 @@ import com.iks.dddschach.domain.validation.RochadenCheck.RochadenCheckResult;
  */
 public class Schachpartie extends EntityIdObject<SpielId> {
 
-    final static HalbzugValidation VALIDATION = new GesamtValidator();
+    final static HalbzugValidation VALIDATOR = new GesamtValidator();
+    final static PattMattCheck PATT_MATT_CHECK = new PattMattCheck();
     protected HalbzugHistorie halbzugHistorie = new HalbzugHistorie();
     protected Spielbrett spielbrett;
 
@@ -40,9 +47,13 @@ public class Schachpartie extends EntityIdObject<SpielId> {
      */
     public int fuehreHalbzugAus(Halbzug halbzug) throws UngueltigerHalbzugException {
         final ValidationResult validationResult =
-                VALIDATION.validiere(halbzug, halbzugHistorie.halbzuege, spielbrett);
-
+                VALIDATOR.validiere(halbzug, halbzugHistorie.halbzuege, spielbrett);
         if (!validationResult.gueltig) {
+            final PattMattCheck.PattMatt pattMatt = PATT_MATT_CHECK.analysiere(halbzugHistorie.halbzuege, spielbrett);
+            switch (pattMatt) {
+                case MATT: throw new UngueltigerHalbzugException(halbzug, DIE_PARTIE_ENDED_MATT);
+                case PATT: throw new UngueltigerHalbzugException(halbzug, DIE_PARTIE_ENDED_PATT);
+            }
             throw new UngueltigerHalbzugException(halbzug, validationResult.verletzteZugregel);
         }
         spielbrett = spielbrett.wendeHalbzugAn(halbzug);
