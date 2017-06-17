@@ -28,7 +28,6 @@ public class GesamtValidator implements HalbzugValidation, DomainService {
             List<Halbzug> halbzugHistorie,
             Spielbrett spielbrett) {
 
-
         final Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.from);
         if (zugFigur == null) {
             return new ValidationResult(Zugregel.STARTFELD_MUSS_SPIELFIGUR_ENTHALTEN);
@@ -36,6 +35,18 @@ public class GesamtValidator implements HalbzugValidation, DomainService {
 
         if (!istRichtigerSpielerAmZug(zugFigur, halbzugHistorie)) {
             return new ValidationResult(false, DER_RICHTIGE_SPIELER_MUSS_AM_ZUG_SEIN);
+        }
+
+        ValidationResult schlagRegelResult = SCHLAG_REGEL.validiere(halbzug, halbzugHistorie, spielbrett);
+        if (!schlagRegelResult.gueltig) {
+            return schlagRegelResult;
+        }
+
+        // Die Schach-Regel muss von den Sonderregeln Rochade, EnPassant und Bauernumwandlung
+        // erfolgen, die sie sonst ihre Züge zuließen, obwohl man im Schach stünde.
+        ValidationResult schachCheckResult = SCHACH_CHECK.validiere(halbzug, halbzugHistorie, spielbrett);
+        if (!schachCheckResult.gueltig) {
+            return schachCheckResult;
         }
 
         final ValidationResult rochadenCheckResult = ROCHADEN_CHECK.validiere(halbzug, halbzugHistorie, spielbrett);
@@ -53,14 +64,12 @@ public class GesamtValidator implements HalbzugValidation, DomainService {
             return bauernumwCheckResult;
         }
 
+        // Die folgende Regel muss nach den Sonderregeln Rochade und En-Passant erfolgen, da
+        // letztere sonst von dieser Regel abgelehnt würden:
         ValidationResult zielErreichbarResult = ERREICHE_ZIEL_CHECK.validiere(halbzug, halbzugHistorie, spielbrett);
-        if (!zielErreichbarResult.gueltig) return zielErreichbarResult;
-
-        ValidationResult schlagRegelResult = SCHLAG_REGEL.validiere(halbzug, halbzugHistorie, spielbrett);
-        if (!schlagRegelResult.gueltig) return schlagRegelResult;
-
-        ValidationResult schachCheckResult = SCHACH_CHECK.validiere(halbzug, halbzugHistorie, spielbrett);
-        if (!schachCheckResult.gueltig) return schachCheckResult;
+        if (!zielErreichbarResult.gueltig) {
+            return zielErreichbarResult;
+        }
 
         return new ValidationResult();
     }
