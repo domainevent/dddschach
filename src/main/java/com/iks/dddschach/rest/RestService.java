@@ -98,7 +98,7 @@ public class RestService {
         try {
             final Spielbrett spielbrett = schachpartieApi.aktuellesSpielbrett(new SpielId(spielId));
             CacheControl cc = new CacheControl();
-            cc.setMaxAge(-1);
+            cc.setMaxAge(60);
             EntityTag etag = new EntityTag(clientId + spielbrett.hashCode());
             Response.ResponseBuilder builder = request.evaluatePreconditions(etag);
 
