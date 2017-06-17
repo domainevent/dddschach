@@ -37,8 +37,8 @@ public class PattMattCheck {
                         GESAMT_VALIDATOR.validiere(halbzug, halbzugHistorie, spielbrett);
 
                 if (validationResult.gueltig) {
-                    System.out.println(spielbrett);
-                    System.out.println("Halbzug"+ halbzug);
+                    //  System.out.println(spielbrett);
+                    //  System.out.println("Halbzug"+ halbzug);
                     return NONE;
                 }
             }
