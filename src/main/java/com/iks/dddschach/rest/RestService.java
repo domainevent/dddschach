@@ -90,14 +90,16 @@ public class RestService {
             @ResponseCode(code = 500, condition = "An exception occured")
     })
     public Response spielbrett(final @NotNull @PathParam("gameId") String spielId,
-                                 final @Context Request request) throws UngueltigeSpielIdException {
-        log.info("SpielId=" + spielId + ": Abfrage des Spielfeldes");
+                               final @HeaderParam("clientId") String clientId,
+                               final @Context Request request
+    ) throws UngueltigeSpielIdException {
 
+        log.info("SpielId=" + spielId + ": Abfrage des Spielfeldes");
         try {
             final Spielbrett spielbrett = schachpartieApi.aktuellesSpielbrett(new SpielId(spielId));
             CacheControl cc = new CacheControl();
             cc.setMaxAge(-1);
-            EntityTag etag = new EntityTag(""+ spielbrett.hashCode());
+            EntityTag etag = new EntityTag(clientId + spielbrett.hashCode());
             Response.ResponseBuilder builder = request.evaluatePreconditions(etag);
 
             if (builder == null) {
