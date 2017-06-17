@@ -11,12 +11,12 @@ import static com.iks.dddschach.domain.validation.PattMattCheck.PattMatt.PATT;
 
 
 /**
- * Checkt, ob sich der ziehende Spieler nach seinem Halbzug (noch) im Schach befindet
  * @author javacook
  */
 public class PattMattCheck {
 
-    private final static GesamtValidator VALIDATOR = new GesamtValidator();
+    private final static GesamtValidator GESAMT_VALIDATOR = new GesamtValidator();
+    private final static SchachCheck SCHACH_CHECK = new SchachCheck();
 
     public enum PattMatt {
         PATT, MATT, NONE
@@ -34,7 +34,7 @@ public class PattMattCheck {
             for (Position moeglichesZiel : spielbrett.getAllePositionen()) {
                 final Halbzug halbzug = new Halbzug(meinePosition, moeglichesZiel);
                 final HalbzugValidation.ValidationResult validationResult =
-                        VALIDATOR.validiere(halbzug, halbzugHistorie, spielbrett);
+                        GESAMT_VALIDATOR.validiere(halbzug, halbzugHistorie, spielbrett);
 
                 if (validationResult.gueltig) {
                     System.out.println(spielbrett);
@@ -45,7 +45,7 @@ public class PattMattCheck {
         }
         final Position koenigsPosition = spielbrett.sucheKoenigsPosition(spielerFarbe);
         final Halbzug dummyHalbzug = new Halbzug(koenigsPosition, koenigsPosition);
-        return VALIDATOR.validiere(dummyHalbzug, halbzugHistorie, spielbrett).gueltig?
+        return SCHACH_CHECK.validiere(dummyHalbzug, halbzugHistorie, spielbrett).gueltig?
                 PATT : MATT;
     }
 
