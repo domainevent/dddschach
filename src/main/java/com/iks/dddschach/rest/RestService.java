@@ -89,11 +89,25 @@ public class RestService {
             @ResponseCode(code = 404, condition = "The game id is not valid"),
             @ResponseCode(code = 500, condition = "An exception occured")
     })
-    public Spielbrett spielbrett(final @NotNull @PathParam("gameId") String spielId) throws UngueltigeSpielIdException {
+    public Response spielbrett(final @NotNull @PathParam("gameId") String spielId,
+                                 final @Context Request request) throws UngueltigeSpielIdException {
         log.info("SpielId=" + spielId + ": Abfrage des Spielfeldes");
 
         try {
-            return schachpartieApi.aktuellesSpielbrett(new SpielId(spielId));
+            final Spielbrett spielbrett = schachpartieApi.aktuellesSpielbrett(new SpielId(spielId));
+            CacheControl cc = new CacheControl();
+            cc.setMaxAge(-1);
+            EntityTag etag = new EntityTag(""+ spielbrett.hashCode());
+            Response.ResponseBuilder builder = request.evaluatePreconditions(etag);
+
+            if (builder == null) {
+                // nothing cached found, so transfer board again
+                builder = Response.ok(spielbrett);
+                builder.tag(etag);
+            }
+            // elsewhere a status vode 304 (NOT MODIFIED) ist produced
+            builder.cacheControl(cc);
+            return builder.build();
         }
         catch (UngueltigeSpielIdException e) {
             log.warn("SpielId=" + spielId + ": Die Spiel-ID '" + e.spielId + "' ist ungültig.");
@@ -158,7 +172,7 @@ public class RestService {
      *     }
      * </pre>
      */
-	@POST
+    @POST
     @Path("games/{gameId}/moves")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -195,8 +209,8 @@ public class RestService {
         log.debug("SpielId=" + spielId + ": Der " + zugIndex + ". Halbzug " + halbzug + " war erfolgreich.");
 
         // Erzeugen der JSON-Antwort und des Location-Headers:
-		@SuppressWarnings("serial")
-		HashMap<String, Object> json = new HashMap<String, Object>() {{
+        @SuppressWarnings("serial")
+        HashMap<String, Object> json = new HashMap<String, Object>() {{
             put("index", zugIndex);
         }};
         UriBuilder ub = uriInfo.getAbsolutePathBuilder();
