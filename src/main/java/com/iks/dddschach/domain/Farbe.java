@@ -33,4 +33,4 @@ public enum Farbe implements EnumObject<Character> {
         throw new IllegalArgumentException("Unexpected marshalled character " + encoded);
     }
 
-};
+}

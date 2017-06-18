@@ -14,7 +14,7 @@ import java.util.Optional;
  */
 public class SchachpartieRepositoryMemory implements SchachpartieRepository {
 
-    private Map<SpielId, Schachpartie> repository = new HashMap<>();
+    private final Map<SpielId, Schachpartie> repository = new HashMap<>();
 
     public Optional<Schachpartie> findById(SpielId spielId) {
         return Optional.ofNullable(repository.get(spielId));

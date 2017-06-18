@@ -53,7 +53,7 @@ public class Spielfigur extends ValueObject {
             }
             throw new IllegalArgumentException("Unexpected marshalled character " + encoded);
         }
-    };
+    }
 
 
     /**

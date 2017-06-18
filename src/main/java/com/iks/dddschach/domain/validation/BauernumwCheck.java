@@ -13,7 +13,7 @@ import static com.iks.dddschach.domain.Spielfigur.FigurenTyp.DAME;
 
 public class BauernumwCheck implements HalbzugValidation {
 
-	final static BauernRegel BAUERNREGEL = new BauernRegel();
+	final private static BauernRegel BAUERNREGEL = new BauernRegel();
 
     public static class BauernumwCheckResult extends ValidationResult {
         public final Spielfigur zielFigur;

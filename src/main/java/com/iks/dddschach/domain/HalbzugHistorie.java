@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class HalbzugHistorie extends EntityObject {
 
-    protected List<Halbzug> halbzuege = new ArrayList<>();
+    protected final List<Halbzug> halbzuege = new ArrayList<>();
 
     public void addHalbzug(Halbzug halbzug) {
         halbzuege.add(halbzug);

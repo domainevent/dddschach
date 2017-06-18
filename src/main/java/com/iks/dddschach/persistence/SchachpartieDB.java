@@ -16,10 +16,10 @@ import java.io.StringWriter;
  * Created by vollmer on 14.06.17.
  */
 @Entity
-public class SchachpartieDB {
+class SchachpartieDB {
 
     @Id
-    String id;
+    final String id;
     String spielbrett;
     String halbzugHistorie;
 

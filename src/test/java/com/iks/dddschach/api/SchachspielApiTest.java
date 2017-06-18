@@ -18,12 +18,8 @@ import static com.iks.dddschach.domain.SpielNotationParser.parse;
  */
 public class SchachspielApiTest {
 
-    private SchachpartieApi api = new SchachpartieApiImpl(new SchachpartieRepositoryMemory());
+    private final SchachpartieApi api = new SchachpartieApiImpl(new SchachpartieRepositoryMemory());
     private final static Optional<String> VERMERK = Optional.of("Vermerk");
-
-    @Before
-    public void setUp() throws Exception {
-    }
 
     @Test
     public void funktionertNeueSpieleErzeugen() throws Exception {

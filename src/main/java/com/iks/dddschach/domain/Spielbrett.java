@@ -212,7 +212,7 @@ public class Spielbrett extends ValueObject {
                     result += "_";
                 }
                 else {
-                    char ch = figure.figure.marshal().charValue();
+                    char ch = figure.figure.marshal();
                     result += (figure.color == Farbe.WEISS)? toUpperCase(ch) : toLowerCase(ch);
                 }
             }
