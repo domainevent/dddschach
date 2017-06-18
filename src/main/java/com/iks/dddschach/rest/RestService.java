@@ -94,12 +94,12 @@ public class RestService {
                                final @Context Request request
     ) throws UngueltigeSpielIdException {
 
-        log.info("SpielId=" + spielId + ": Abfrage des Spielfeldes");
+        log.info("SpielId=" + spielId + ": Abfrage des Spielfeldes, ClientId=" + clientId);
         try {
             final Spielbrett spielbrett = schachpartieApi.aktuellesSpielbrett(new SpielId(spielId));
             CacheControl cc = new CacheControl();
             cc.setMaxAge(60);
-            EntityTag etag = new EntityTag(clientId + spielbrett.hashCode());
+            EntityTag etag = new EntityTag(clientId + spielbrett.encode());
             Response.ResponseBuilder builder = request.evaluatePreconditions(etag);
 
             if (builder == null) {
