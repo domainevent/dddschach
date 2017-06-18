@@ -16,6 +16,8 @@ import static com.iks.dddschach.domain.Position.Zeile._1;
 import static com.iks.dddschach.domain.Position.Zeile;
 import static com.iks.dddschach.domain.Position.Spalte;
 import static com.iks.dddschach.domain.Spielfigur.FigurenTyp.KOENIG;
+import static java.lang.Character.toLowerCase;
+import static java.lang.Character.toUpperCase;
 
 
 /**
@@ -195,6 +197,27 @@ public class Spielbrett extends ValueObject {
             }
         }
         return boardAsStr;
+    }
+
+
+    /**
+     * Gibt die Spielposition in möglichst komprimierter Form aus (String der Länge 64)
+     */
+    public String encode() {
+        String result = "";
+        for(Zeile zeile : Zeile.values()) {
+            for(Spalte spalte : Spalte.values()) {
+                Spielfigur figure = board[spalte.ordinal()][zeile.ordinal()];
+                if (figure == null) {
+                    result += "_";
+                }
+                else {
+                    char ch = figure.figure.marshal().charValue();
+                    result += (figure.color == Farbe.WEISS)? toUpperCase(ch) : toLowerCase(ch);
+                }
+            }
+        }
+        return result;
     }
 
 }
