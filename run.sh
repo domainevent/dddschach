@@ -1,3 +1,3 @@
 #!/bin/bash
-docker build -t myapp .
-docker run -it --rm -p 8080:8080 myapp
+docker build -t dddschach .
+docker run -it --rm -p 8080:8080 dddschach
