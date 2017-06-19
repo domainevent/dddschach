@@ -5,7 +5,6 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.iks.dddschach.api.SchachpartieApi;
 import com.iks.dddschach.api.SchachpartieApiImpl;
 import com.iks.dddschach.persistence.SchachpartieRepositoryDB;
-import com.iks.dddschach.persistence.SchachpartieRepositoryMemory;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 

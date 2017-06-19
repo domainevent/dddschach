@@ -14,6 +14,12 @@ import static com.iks.dddschach.domain.Position.Zeile._1;
 import static com.iks.dddschach.domain.Position.Zeile._8;
 
 
+/**
+ * Überprüft, ob der Königszug eine Rochade versucht, und ob dieser zulässig ist. Ein Rochaden-Versuch
+ * ist dann gegeben, wenn der König von seiner Position aus zwei Felder nach links oder rechts bewegt
+ * werden soll. In diesem Fall wird der Turmzug anschließend zusätzlich ausgeführt.
+ * @see com.iks.dddschach.domain.Schachpartie#fuehreHalbzugAus
+ */
 public class RochadenCheck implements HalbzugValidation {
 
 	final static FreieBahnCheck FREIE_BAHN_CHECK = new FreieBahnCheck();
@@ -70,7 +76,6 @@ public class RochadenCheck implements HalbzugValidation {
         Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.from);
         Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.from);
 
-        final Set<Position> startPositionen = halbzugHistorie.stream().map(hz -> hz.from).collect(Collectors.toSet());
         final Halbzug zugehoerigerTurmHalbzug = ZUGEHOERIGE_TURM_HALBZEUGE.get(halbzug);
 
         if (zugFigur.figure != FigurenTyp.KOENIG) {
@@ -90,8 +95,12 @@ public class RochadenCheck implements HalbzugValidation {
             return new RochadenCheckResult(freieBahnCheckResult.verletzteZugregel);
         }
 
-        // Wurden König oder Turm schon einmal bewegt?
+        // Wurden König oder Turm schon einmal bewegt? Dazu die Startpositionen aller historischen
+        // Halbzüge ermitteln.
         //
+        final Set<Position> startPositionen = halbzugHistorie.stream().map(hz -> hz.from).collect(Collectors.toSet());
+
+        // Hinweis: Dass auf Halbzug.from der König steht, wurde oben gecheckt:
         if (startPositionen.contains(halbzug.from)) {
             return new RochadenCheckResult(Zugregel.ROCHADE_KOENIG_WURDE_BEREITS_BEWEGT);
         }

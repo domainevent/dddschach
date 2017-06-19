@@ -4,7 +4,6 @@ package com.iks.dddschach.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.iks.dddschach.domain.Spielfigur.FigurenTyp;
 import com.iks.dddschach.domain.base.ValueObject;
-import com.iks.dddschach.domain.validation.Zugregel;
 import com.webcohesion.enunciate.metadata.DocumentationExample;
 
 import java.util.Arrays;

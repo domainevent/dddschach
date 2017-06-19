@@ -11,7 +11,7 @@ import java.util.Optional;
 
 
 /**
- * TODO: Gewuenscht ist, die Exceptions noch genauer zu klassifizieren
+ * Schnittstelle zu dddschach.
  */
 public interface SchachpartieApi {
 
@@ -72,11 +72,11 @@ public interface SchachpartieApi {
      * nicht implementiert werden.
      *
      * @param spielId (eindeutige) ID, die anfangs durch <code>neuesSpiel</code> erzeugt worden ist.
-     * @param halbzug
+     * @param halbzug Der auszuführende {@link Halbzug}
      * @return der Index des Zuges (beginnend mit 1)
      * @throws UngueltigerHalbzugException falls der Halbzug ungueltig ist
      * @throws UngueltigeSpielIdException falls es keine Partie zu <code>spielId</code> gibt
-     * @throws Exception bei sonstigen (technischen) Problemen
+     * @throws IOException bei sonstigen (technischen) Problemen
      */
     int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug)
             throws UngueltigerHalbzugException, UngueltigeSpielIdException, IOException;
@@ -88,7 +88,7 @@ public interface SchachpartieApi {
      * @param spielId (eindeutige) ID, die anfangs durch <code>neuesSpiel</code> erzeugt worden ist.
      * @return das aktuelle Schachbrett
      * @throws UngueltigeSpielIdException falls es keine Partie zu <code>spielId</code> gibt
-     * @throws Exception bei sonstigen (technischen) Problemen
+     * @throws IOException bei sonstigen (technischen) Problemen
      */
     Spielbrett aktuellesSpielbrett(SpielId spielId) throws UngueltigeSpielIdException, IOException;
 

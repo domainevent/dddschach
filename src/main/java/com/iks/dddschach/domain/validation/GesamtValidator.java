@@ -12,7 +12,7 @@ import static com.iks.dddschach.domain.validation.Zugregel.DER_RICHTIGE_SPIELER_
 
 
 /**
- * Start der Validation. Von hier aus werden alle weiteren Validationen gestartet und verarbeitet.
+ * Start der Gesamt-Validation. Von hier aus werden alle weiteren Validationen gestartet und verarbeitet.
  */
 public class GesamtValidator implements HalbzugValidation, DomainService {
 
@@ -37,13 +37,15 @@ public class GesamtValidator implements HalbzugValidation, DomainService {
             return new ValidationResult(false, DER_RICHTIGE_SPIELER_MUSS_AM_ZUG_SEIN);
         }
 
+        // Überprüft, ob ich versuche mich selbst oder einen König zu schlagen:
         ValidationResult schlagRegelResult = SCHLAG_REGEL.validiere(halbzug, halbzugHistorie, spielbrett);
         if (!schlagRegelResult.gueltig) {
             return schlagRegelResult;
         }
 
-        // Die Schach-Regel muss von den Sonderregeln Rochade, EnPassant und Bauernumwandlung
+        // Die Schach-Regel muss vor den Sonderregeln Rochade, EnPassant und Bauernumwandlung
         // erfolgen, die sie sonst ihre Züge zuließen, obwohl man im Schach stünde.
+        //
         ValidationResult schachCheckResult = SCHACH_CHECK.validiere(halbzug, halbzugHistorie, spielbrett);
         if (!schachCheckResult.gueltig) {
             return schachCheckResult;
@@ -66,6 +68,7 @@ public class GesamtValidator implements HalbzugValidation, DomainService {
 
         // Die folgende Regel muss nach den Sonderregeln Rochade und En-Passant erfolgen, da
         // letztere sonst von dieser Regel abgelehnt würden:
+        //
         ValidationResult zielErreichbarResult = ERREICHE_ZIEL_CHECK.validiere(halbzug, halbzugHistorie, spielbrett);
         if (!zielErreichbarResult.gueltig) {
             return zielErreichbarResult;

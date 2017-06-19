@@ -3,7 +3,6 @@ package com.iks.dddschach.api;
 import com.iks.dddschach.domain.*;
 import com.iks.dddschach.persistence.SchachpartieRepositoryMemory;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Optional;

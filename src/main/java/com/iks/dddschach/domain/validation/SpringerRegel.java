@@ -10,9 +10,10 @@ import java.util.List;
 import java.util.Objects;
 
 
+/**
+ * Überprüft, ob der Springer einen 2x1- bzw. 1x2-Haken zieht
+ */
 public class SpringerRegel implements HalbzugValidation {
-
-	private final static FreieBahnCheck FREIE_BAHN_CHECK = new FreieBahnCheck();
 
 	@Override
 	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> halbzugHistorie, Spielbrett spielbrett) {

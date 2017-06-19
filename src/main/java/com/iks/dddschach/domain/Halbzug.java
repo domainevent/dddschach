@@ -35,7 +35,7 @@ public class Halbzug extends ValueObject {
      */
     @SuppressWarnings("unused")
 	private Halbzug() {
-        this((Position)null, (Position)null);
+        this(null, null);
     }
 
     @Override

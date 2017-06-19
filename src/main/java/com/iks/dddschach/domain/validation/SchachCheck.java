@@ -7,7 +7,6 @@ import java.util.Objects;
 
 import static com.iks.dddschach.domain.Farbe.SCHWARZ;
 import static com.iks.dddschach.domain.Farbe.WEISS;
-import static com.iks.dddschach.domain.Spielfigur.FigurenTyp.KOENIG;
 import static com.iks.dddschach.domain.validation.ValidationUtils.spielerFarbe;
 
 

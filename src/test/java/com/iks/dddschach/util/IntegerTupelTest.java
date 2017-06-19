@@ -3,8 +3,6 @@ package com.iks.dddschach.util;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 
 /**
  * Created by vollmer on 02.06.17.

@@ -10,7 +10,7 @@ import java.util.Objects;
 
 
 /**
- * Überprüft, ob versucht wird eine eigenen Figur oder einen König zu schlagen.
+ * Überprüft den Versuch, eine eigenen Figur oder einen König zu schlagen.
  */
 public class SchlagRegel implements HalbzugValidation {
 

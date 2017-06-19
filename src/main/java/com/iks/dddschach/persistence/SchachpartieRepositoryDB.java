@@ -5,7 +5,6 @@ import com.iks.dddschach.domain.SchachpartieRepository;
 import com.iks.dddschach.domain.SpielId;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.io.IOException;
 import java.util.Optional;
