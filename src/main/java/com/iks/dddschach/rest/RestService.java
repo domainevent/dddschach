@@ -66,7 +66,7 @@ public class RestService {
     public SpielId neuesSpiel(@FormParam("note") String vermerk) {
         try {
             final SpielId spielId = schachpartieApi.neuesSpiel(Optional.ofNullable(vermerk));
-            log.info("SpielId=" + spielId + ": (neu erzeugt) mit Vermerk '" + vermerk + "'");
+            log.info("Neue Partie mit Spiel-ID='" + spielId + ", Vermerk='" + vermerk + "'");
             return spielId;
         }
         catch (Exception e) {
@@ -94,7 +94,7 @@ public class RestService {
                                final @Context Request request
     ) throws UngueltigeSpielIdException {
 
-        log.info("SpielId=" + spielId + ": Abfrage des Spielfeldes, ClientId=" + clientId);
+        log.debug("Abfrage des Spielfeldes");
         try {
             final Spielbrett spielbrett = schachpartieApi.aktuellesSpielbrett(new SpielId(spielId));
             CacheControl cc = new CacheControl();
@@ -112,7 +112,7 @@ public class RestService {
             return builder.build();
         }
         catch (UngueltigeSpielIdException e) {
-            log.warn("SpielId=" + spielId + ": Die Spiel-ID '" + e.spielId + "' ist ungueltig.");
+            log.warn("Die Spiel-ID '" + e.spielId + "' ist ungueltig.");
             throw e;
         }
         catch (Exception e) {
@@ -151,7 +151,7 @@ public class RestService {
             throws UngueltigerHalbzugException, UngueltigeSpielIdException {
 
         if (halbzug == null) {
-            log.warn("SpielId=" + spielId + ": Der Parameter move fehlt.");
+            log.warn("Der Parameter move fehlt.");
             throw new BadRequestException("Missing form parameter move");
         }
         try {
@@ -189,18 +189,18 @@ public class RestService {
             final @NotNull @PathParam("gameId") String spielId,
             final @NotNull Halbzug halbzug) throws UngueltigerHalbzugException, UngueltigeSpielIdException {
 
-        log.info("SpielId=" + spielId + ": Ausfuehren des Halbzuges " + halbzug);
+        log.info("Ausfuehren des Halbzuges " + halbzug);
 
         final int zugIndex;
         try {
             zugIndex = schachpartieApi.fuehreHalbzugAus(new SpielId(spielId), halbzug);
         }
         catch (UngueltigeSpielIdException e) {
-            log.warn("SpielId=" + spielId + ": Die Spiel-ID '" + e.spielId + "' ist ungueltig.");
+            log.warn("Die Spiel-ID '" + e.spielId + "' ist ungueltig.");
             throw e;
         }
         catch (UngueltigerHalbzugException e) {
-            log.debug("SpielId=" + spielId + ": Der Halbzug " + halbzug + " ist ungueltig.");
+            log.debug("Der Halbzug " + halbzug + " ist ungueltig.");
             throw e;
         }
         catch (Exception e) {
@@ -208,7 +208,7 @@ public class RestService {
             throw new InternalServerErrorException(e);
         }
 
-        log.debug("SpielId=" + spielId + ": Der " + zugIndex + ". Halbzug " + halbzug + " war erfolgreich.");
+        log.debug("Der " + zugIndex + ". Halbzug " + halbzug + " war erfolgreich.");
 
         // Erzeugen der JSON-Antwort und des Location-Headers:
         @SuppressWarnings("serial")
