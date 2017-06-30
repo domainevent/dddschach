@@ -4,6 +4,7 @@ import com.iks.dddschach.domain.Halbzug;
 import com.iks.dddschach.domain.Spielbrett;
 import com.iks.dddschach.domain.Spielfigur;
 import com.iks.dddschach.domain.base.DomainService;
+import org.apache.commons.lang3.Validate;
 
 import java.util.List;
 import java.util.Objects;
@@ -27,6 +28,10 @@ public class GesamtValidator implements HalbzugValidation, DomainService {
             Halbzug halbzug,
             List<Halbzug> halbzugHistorie,
             Spielbrett spielbrett) {
+
+        Validate.isTrue(halbzug != null, "Argument halbzug is null.");
+        Validate.isTrue(halbzugHistorie != null, "Argument halbzugHistorie is null.");
+        Validate.isTrue(spielbrett != null, "Argument spielbrett is null.");
 
         final Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.from);
         if (zugFigur == null) {
