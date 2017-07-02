@@ -20,7 +20,7 @@ public class GeneralExceptionMapper extends Exception implements ExceptionMapper
         Throwable cause = e.getCause();
 
         while (cause != null) {
-            messages += " <= " + cause.getMessage();
+            messages += " <= " + cause;
             cause = cause.getCause();
         }
         return Response
