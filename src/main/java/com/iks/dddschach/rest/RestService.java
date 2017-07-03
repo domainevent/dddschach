@@ -10,7 +10,9 @@ import com.webcohesion.enunciate.metadata.rs.ResponseCode;
 import com.webcohesion.enunciate.metadata.rs.StatusCodes;
 import org.apache.log4j.Logger;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.net.URI;
@@ -63,7 +65,7 @@ public class RestService {
             @ResponseCode(code = 200, condition = "ok"),
             @ResponseCode(code = 500, condition = "An exception occured")
     })
-    public SpielId neuesSpiel(@FormParam("note") String vermerk) {
+    public SpielId neuesSpiel(@Size(max=100) @FormParam("note") String vermerk) {
         try {
             final SpielId spielId = schachpartieApi.neuesSpiel(Optional.ofNullable(vermerk));
             log.info("Neue Partie mit Spiel-ID='" + spielId + ", Vermerk='" + vermerk + "'");
@@ -89,11 +91,10 @@ public class RestService {
             @ResponseCode(code = 404, condition = "The game id is not valid"),
             @ResponseCode(code = 500, condition = "An exception occured")
     })
-    public Response spielbrett(final @NotNull @PathParam("gameId") String spielId,
+    public Response spielbrett(final @PathParam("gameId") String spielId,
                                final @HeaderParam("clientId") String clientId,
-                               final @Context Request request
-    ) throws UngueltigeSpielIdException {
-
+                               final @Context Request request) throws UngueltigeSpielIdException
+    {
         log.debug("Abfrage des Spielfeldes");
         try {
             final Spielbrett spielbrett = schachpartieApi.aktuellesSpielbrett(new SpielId(spielId));
@@ -146,14 +147,11 @@ public class RestService {
             @ResponseCode(code = 500, condition = "An exception occured")
     })
     public Response fuehreHalbzugAus(
-            final @NotNull @PathParam("gameId") String spielId,
-            final @NotNull @FormParam("move") String halbzug)
+            final @PathParam("gameId") String spielId,
+            final @NotNull(message = "The form parameter move is mandatory.")
+                  @FormParam("move") String halbzug)
             throws UngueltigerHalbzugException, UngueltigeSpielIdException {
 
-        if (halbzug == null) {
-            log.warn("Der Parameter move fehlt.");
-            throw new BadRequestException("Missing form parameter move");
-        }
         try {
             return fuehreHalbzugAus(spielId, schachpartieApi.parse(halbzug));
         }
@@ -186,8 +184,9 @@ public class RestService {
             @ResponseCode(code = 500, condition = "An exception occured")
     })
     public Response fuehreHalbzugAus(
-            final @NotNull @PathParam("gameId") String spielId,
-            final @NotNull Halbzug halbzug) throws UngueltigerHalbzugException, UngueltigeSpielIdException {
+            final @PathParam("gameId") String spielId,
+            final @NotNull(message = "A body of type Halbzug is required.") @Valid Halbzug halbzug)
+            throws UngueltigerHalbzugException, UngueltigeSpielIdException {
 
         log.info("Ausfuehren des Halbzuges " + halbzug);
 
