@@ -10,7 +10,7 @@
 
     <appender name="file" class="org.apache.log4j.RollingFileAppender">
         <param name="append" value="false" />
-        <param name="maxFileSize" value="100KB" />
+        <param name="maxFileSize" value="110KB" />
         <param name="maxBackupIndex" value="10" />
         <!-- For Tomcat -->
         <param name="file" value="${catalina.home}/logs/dddschach.log" />
@@ -22,8 +22,8 @@
 
     <root>
         <level value="DEBUG" />
-        <appender-ref ref="file" />
         <appender-ref ref="console" />
+        <appender-ref ref="file" />
     </root>
 
 </log4j:configuration>
