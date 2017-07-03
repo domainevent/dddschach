@@ -2,6 +2,9 @@ package com.iks.dddschach.domain;
 
 import com.iks.dddschach.domain.base.ValueObject;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 
 /**
  * Ein Halbzug im Schach ist der Zug einer Figur, beispielsweise des Bauern von e2 nach e4.
@@ -12,11 +15,13 @@ public class Halbzug extends ValueObject {
     /**
      * Startposition des Halbzuges
      */
+    @Valid @NotNull
     public final Position from;
 
     /**
      * Zielposition des Halbzuges
      */
+    @Valid @NotNull
     public final Position to;
 
 
@@ -40,6 +45,7 @@ public class Halbzug extends ValueObject {
 
     @Override
     public String toString() {
-        return from + "-" + to;
+        return (from == null? "<null>" : from) + "-" + (to == null? "<null>" : to);
     }
+
 }

@@ -1,12 +1,10 @@
 package com.iks.dddschach.domain;
 
-
 import com.iks.dddschach.domain.base.EnumObject;
 import com.iks.dddschach.domain.base.ValueObject;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlEnum;
-import java.util.Objects;
 
 
 /**
@@ -83,8 +81,8 @@ public class Position extends ValueObject {
      * @param zeile (horizontale) Zeilen-Koordinate des Schachbretts (a-h)
      */
     public Position(Spalte spalte, Zeile zeile) {
-        this.horCoord = Objects.requireNonNull(spalte, "Argument spalte is null.");
-        this.vertCoord = Objects.requireNonNull(zeile, "Argument zeile is null.");
+        this.horCoord = spalte;
+        this.vertCoord = zeile;
     }
 
 
