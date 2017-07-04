@@ -1,7 +1,5 @@
 package com.iks.dddschach.rest.providers;
 
-import com.iks.dddschach.rest.RestService;
-import com.sun.org.apache.regexp.internal.RE;
 import org.apache.log4j.Logger;
 
 import javax.ws.rs.core.MediaType;
