@@ -144,59 +144,32 @@
 
                 <configuration>
                     <images>
+                        <!-- A single's image configuration -->
                         <image>
-                            <alias>service</alias>
-                            <name>javacook/docker-demo:${project.version}</name>
-
+                            <alias>dddschach</alias>
+                            <name>javacook/dddschach:${project.version}</name>
                             <build>
-                                <from>java:8</from>
-                                <assembly>
-                                    <descriptor>docker-assembly.xml</descriptor>
-                                </assembly>
-                                <cmd>
-                                    <shell>java -jar /maven/service.jar</shell>
-                                </cmd>
+                                <dockerFileDir>${project.basedir}</dockerFileDir>
                             </build>
-
                             <run>
                                 <ports>
                                     <port>tomcat.port:8080</port>
                                 </ports>
                                 <wait>
                                     <http>
-                                        <url>http://localhost:8080/access</url>
+                                        <url>http://localhost:${tomcat.port}/dddschach/api/isalive</url>
                                     </http>
                                     <time>10000</time>
-                                </wait>
-                                <links>
-                                    <link>database:db</link>
-                                </links>
-                            </run>
-                        </image>
-
-                        <image>
-                            <alias>database</alias>
-                            <name>postgres:9</name>
-                            <run>
-                                <wait>
-                                    <log>database system is ready to accept connections</log>
-                                    <time>20000</time>
                                 </wait>
                             </run>
                         </image>
                     </images>
                 </configuration>
-
-                <!-- Connect start/stop to pre- and
-                     post-integration-test phase, respectively if you want to start
-                     your docker containers during integration tests -->
                 <executions>
                     <execution>
                         <id>start</id>
                         <phase>pre-integration-test</phase>
                         <goals>
-                            <!-- "build" should be used to create the images with the
-                                 artifact -->
                             <goal>build</goal>
                             <goal>start</goal>
                         </goals>
@@ -210,6 +183,27 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <configuration>
+                    <systemPropertyVariables>
+                        <!-- Docker-Plugin ersetzt diesen Wert -->
+                        <docker.container.ip>${docker.container.dddschach.ip}</docker.container.ip>
+                        <docker.container.port>${tomcat.port}</docker.container.port>
+                    </systemPropertyVariables>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 
