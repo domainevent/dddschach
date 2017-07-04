@@ -27,6 +27,9 @@ import static java.lang.Character.toUpperCase;
  */
 public class Spielbrett extends ValueObject {
 
+    final static int ANZAHL_SPALTEN = Spalte.values().length;
+    final static int ANZAHL_ZEILEN  = Zeile.values().length;
+
     /**
      * Zweidimensionales Array, das das Spielbrett repräsentiert.
      */
@@ -36,7 +39,7 @@ public class Spielbrett extends ValueObject {
      * Default-Konstruktor
      */
     public Spielbrett() {
-        board = new Spielfigur[Spalte.values().length][Zeile.values().length];
+        board = new Spielfigur[ANZAHL_SPALTEN][ANZAHL_ZEILEN];
     }
 
     /**
@@ -55,10 +58,9 @@ public class Spielbrett extends ValueObject {
      */
     @DocumentationExample(exclude = true)
     public Spielfigur[][] getBoard() {
-        final Spielfigur[][] copy = new Spielfigur[Spalte.values().length][Zeile.values().length];
-
-        for (int i = 0; i < Spalte.values().length; i++) {
-            for (int j = 0; j < Zeile.values().length; j++) {
+        final Spielfigur[][] copy = new Spielfigur[ANZAHL_SPALTEN][ANZAHL_ZEILEN];
+        for (int i = 0; i < ANZAHL_SPALTEN; i++) {
+            for (int j = 0; j < ANZAHL_ZEILEN; j++) {
                 copy[i][j] = board[i][j];
             }
         }
@@ -204,8 +206,8 @@ public class Spielbrett extends ValueObject {
      */
     public String encode() {
         String result = "";
-        for(Zeile zeile : Zeile.values()) {
-            for(Spalte spalte : Spalte.values()) {
+        for (Zeile zeile : Zeile.values()) {
+            for (Spalte spalte : Spalte.values()) {
                 Spielfigur figure = board[spalte.ordinal()][zeile.ordinal()];
                 if (figure == null) {
                     result += "_";
