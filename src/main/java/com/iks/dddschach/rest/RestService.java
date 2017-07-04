@@ -65,7 +65,8 @@ public class RestService {
             @ResponseCode(code = 200, condition = "ok"),
             @ResponseCode(code = 500, condition = "An exception occured")
     })
-    public SpielId neuesSpiel(@Size(max=100) @FormParam("note") String vermerk) {
+    public SpielId neuesSpiel(@Size(max=100) @FormParam("note") String vermerk)
+    {
         try {
             final SpielId spielId = schachpartieApi.neuesSpiel(Optional.ofNullable(vermerk));
             LOG.info("Neue Partie mit Spiel-ID='" + spielId + ", Vermerk='" + vermerk + "'");
@@ -150,8 +151,8 @@ public class RestService {
             final @PathParam("gameId") String spielId,
             final @NotNull(message = "The form parameter move is mandatory.")
                   @FormParam("move") String halbzug)
-            throws UngueltigerHalbzugException, UngueltigeSpielIdException {
-
+            throws UngueltigerHalbzugException, UngueltigeSpielIdException
+    {
         try {
             return fuehreHalbzugAus(spielId, schachpartieApi.parse(halbzug));
         }
@@ -186,8 +187,8 @@ public class RestService {
     public Response fuehreHalbzugAus(
             final @PathParam("gameId") String spielId,
             final @NotNull(message = "A body of type Halbzug is required.") @Valid Halbzug halbzug)
-            throws UngueltigerHalbzugException, UngueltigeSpielIdException {
-
+            throws UngueltigerHalbzugException, UngueltigeSpielIdException
+    {
         LOG.info("Ausfuehren des Halbzuges " + halbzug);
 
         final int zugIndex;
