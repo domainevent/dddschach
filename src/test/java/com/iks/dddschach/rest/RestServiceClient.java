@@ -1,10 +1,12 @@
 package com.iks.dddschach.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.iks.dddschach.api.SchachpartieApi;
 import com.iks.dddschach.api.SchachpartieApi.UngueltigeSpielIdException;
+import com.iks.dddschach.api.SchachpartieApi.UngueltigerHalbzugException;
 import com.iks.dddschach.domain.Halbzug;
 import com.iks.dddschach.domain.SpielId;
+import com.iks.dddschach.domain.SpielNotationParser;
+import com.iks.dddschach.domain.validation.Zugregel;
 
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.client.Client;
@@ -12,9 +14,12 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Form;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.Map;
 
 
 /**
@@ -34,7 +39,8 @@ public class RestServiceClient implements RestServiceInterface {
     private final static Client CLIENT = ClientBuilder.newClient();
     private final WebTarget webTarget;
 
-    RestServiceClient() {
+    RestServiceClient()
+    {
         final String host = System.getProperty("docker.container.ip");
         final String port = System.getProperty("docker.container.port");
         final String dockerHost = (host == null)? "localhost" : host;
@@ -45,13 +51,15 @@ public class RestServiceClient implements RestServiceInterface {
 
 
     @Override
-    public String isAlive() {
+    public String isAlive()
+    {
         final Response response = webTarget.path("isalive").request().get();
         return handleResponse(response, String.class);
     }
 
     @Override
-    public SpielId neuesSpiel(String vermerk) {
+    public SpielId neuesSpiel(String vermerk)
+    {
         final Form note = new Form("note", vermerk);
         final Response response = webTarget.path("games").request().post(Entity.form(note));
         return handleResponse(response, SpielId.class);
@@ -59,7 +67,8 @@ public class RestServiceClient implements RestServiceInterface {
 
     @Override
     public Response spielbrett(String spielId, String clientId, Request request)
-            throws UngueltigeSpielIdException {
+            throws UngueltigeSpielIdException
+    {
         final Response response = webTarget.path("games").path(spielId).path("board").request().get();
         final int status = response.getStatus();
         switch (status) {
@@ -71,12 +80,27 @@ public class RestServiceClient implements RestServiceInterface {
     }
 
     @Override
-    public Response fuehreHalbzugAus(String spielId, String halbzug) throws SchachpartieApi.UngueltigerHalbzugException, UngueltigeSpielIdException {
-        return null;
+    public Response fuehreHalbzugAus(String spielId, String halbzug)
+            throws UngueltigerHalbzugException, UngueltigeSpielIdException
+    {
+        final Form move = new Form("move", halbzug);
+        final Response response = webTarget.path("games").path(spielId).path("moves")
+                .request().post(Entity.form(move));
+        final int status = response.getStatus();
+        switch (status) {
+            case 201: return response;
+            case 422:
+                final Map<String, Object> json = response.readEntity(new GenericType<Map<String, Object>>() {});
+                final String verletztelZugregel = (String)json.get(json.get(json.get("error code")));
+                throw new UngueltigerHalbzugException(parseHalbzug(halbzug), Zugregel.valueOf(verletztelZugregel));
+            case 404: throw new UngueltigeSpielIdException(new SpielId(spielId));
+            case 500: throw new InternalServerErrorException();
+            default: throw new RestCallFailedException(status, response.readEntity(String.class));
+        }
     }
 
     @Override
-    public Response fuehreHalbzugAus(String spielId, Halbzug halbzug) throws SchachpartieApi.UngueltigerHalbzugException, UngueltigeSpielIdException {
+    public Response fuehreHalbzugAus(String spielId, Halbzug halbzug) throws UngueltigerHalbzugException, UngueltigeSpielIdException {
         return null;
     }
 
@@ -109,4 +133,14 @@ public class RestServiceClient implements RestServiceInterface {
             throw new RuntimeException("Could not unmarshal '"+str+"' to object of "+cl, e);
         }
     }
+
+    private Halbzug parseHalbzug(String halbzugStr) {
+        try {
+            return SpielNotationParser.parse(halbzugStr);
+        }
+        catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
