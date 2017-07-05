@@ -27,7 +27,7 @@ import java.util.Optional;
  * zu spielen.
  */
 @Path("/")
-public class RestService {
+public class RestService implements RestServiceInterface {
 
     @Context
     SchachpartieApi schachpartieApi;
@@ -43,6 +43,7 @@ public class RestService {
      *
      * @return Eine Bestätigungsmeldung mit aktuellem Datum und Uhrzeit
      */
+    @Override
     @GET
     @Path("isalive")
     @Produces(MediaType.TEXT_PLAIN)
@@ -58,6 +59,7 @@ public class RestService {
      * @param vermerk Vermerk zu diesem Spiel
      * @return Eine (weltweit) eindeutige Id dieses Spiels
      */
+    @Override
     @POST
     @Path("games")
     @Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
@@ -65,7 +67,7 @@ public class RestService {
             @ResponseCode(code = 200, condition = "ok"),
             @ResponseCode(code = 500, condition = "An exception occured")
     })
-    public SpielId neuesSpiel(@Size(max=100) @FormParam("note") String vermerk)
+    public SpielId neuesSpiel(@Size(max = 100) @FormParam("note") String vermerk)
     {
         try {
             final SpielId spielId = schachpartieApi.neuesSpiel(Optional.ofNullable(vermerk));
@@ -84,6 +86,7 @@ public class RestService {
      *
      * @return das Schachbrett einschließlich seiner Figuren
      */
+    @Override
     @GET
     @Path("games/{gameId}/board")
     @Produces(MediaType.APPLICATION_JSON)
@@ -136,6 +139,7 @@ public class RestService {
      *     }
      * </pre>
      */
+    @Override
     @POST
     @Path("games/{gameId}/moves")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -150,7 +154,7 @@ public class RestService {
     public Response fuehreHalbzugAus(
             final @PathParam("gameId") String spielId,
             final @NotNull(message = "The form parameter move is mandatory.")
-                  @FormParam("move") String halbzug)
+            @FormParam("move") String halbzug)
             throws UngueltigerHalbzugException, UngueltigeSpielIdException
     {
         try {
@@ -173,6 +177,7 @@ public class RestService {
      *     }
      * </pre>
      */
+    @Override
     @POST
     @Path("games/{gameId}/moves")
     @Consumes(MediaType.APPLICATION_JSON)
