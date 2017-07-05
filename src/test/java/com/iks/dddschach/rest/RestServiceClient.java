@@ -105,6 +105,9 @@ public class RestServiceClient implements RestServiceInterface {
     }
 
 
+    /*======================================================*\
+     * Utils                                                *
+    \*======================================================*/
 
     private <T> T handleResponse(Response response, Class<T> cl) {
         final int status = response.getStatus();
@@ -113,15 +116,6 @@ public class RestServiceClient implements RestServiceInterface {
             throw new RestCallFailedException(status, content);
         }
         return unmarshal(content, cl);
-    }
-
-    private Response handleResponse(Response response) {
-        final int status = response.getStatus();
-        final String content = response.readEntity(String.class);
-        if (status != 200) {
-            throw new RestCallFailedException(status, content);
-        }
-        return response;
     }
 
     private <T> T unmarshal(String str, Class<T> cl) {
