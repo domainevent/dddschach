@@ -24,16 +24,18 @@ public interface RestServiceInterface {
 
     Response spielbrett(String spielId,
                         String clientId,
-                        Request request) throws UngueltigeSpielIdException;
+                        Request request)
+            throws UngueltigeSpielIdException;
+
 
     Response fuehreHalbzugAus(
             String spielId,
-            @NotNull(message = "The form parameter move is mandatory.")
-            String halbzug)
-        throws UngueltigerHalbzugException, UngueltigeSpielIdException;
+            @NotNull(message = "The form parameter move is mandatory.") String halbzug)
+            throws UngueltigerHalbzugException, UngueltigeSpielIdException;
+
 
     Response fuehreHalbzugAus(
              String spielId,
              @NotNull(message = "A body of type Halbzug is required.") @Valid Halbzug halbzug)
-                throws UngueltigerHalbzugException, UngueltigeSpielIdException;
+            throws UngueltigerHalbzugException, UngueltigeSpielIdException;
 }
