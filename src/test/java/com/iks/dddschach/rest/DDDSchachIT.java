@@ -86,27 +86,22 @@ public class DDDSchachIT {
     }
 
     @Test
-    public void fuehreGueltigenHalbzugAus() {
+    public void fuehreGueltigenHalbzugAus() throws Exception {
         System.out.println("Test: fuehreGueltigenHalbzugAus");
         final RestServiceClient client = new RestServiceClient();
-        try {
-            final SpielId spielId = client.neuesSpiel("Vermerk");
-            final Halbzug halbzug = new Halbzug(new Position(E, _2), new Position(E, _4));
-            final Response resp1 = client.fuehreHalbzugAus(spielId.id, halbzug.toString());
-            Assert.assertEquals(201, resp1.getStatus());
-            // Spielbrett überprüfen:
-            final Response resp2 = client.spielbrett(spielId.id, "Tester", null);
-            final Spielbrett actual = resp2.readEntity(Spielbrett.class);
-            final Spielbrett expected = createInitialesSpielbrett().wendeHalbzugAn(halbzug);
-            Assert.assertEquals(expected, actual);
 
-        }
-        catch (SchachpartieApi.UngueltigeSpielIdException e) {
-            Assert.fail(e.toString());
-        }
-        catch (UngueltigerHalbzugException e) {
-            Assert.fail(e.toString());
-        }
+        final SpielId spielId = client.neuesSpiel("Vermerk");
+        // Halbzug ausführen:
+        //
+        final Halbzug halbzug = new Halbzug(new Position(E, _2), new Position(E, _4));
+        final Response resp1 = client.fuehreHalbzugAus(spielId.id, halbzug.toString());
+        Assert.assertEquals(201, resp1.getStatus());
+        // Spielbrett überprüfen:
+        //
+        final Response resp2 = client.spielbrett(spielId.id, "Tester", null);
+        final Spielbrett actual = resp2.readEntity(Spielbrett.class);
+        final Spielbrett expected = createInitialesSpielbrett().wendeHalbzugAn(halbzug);
+        Assert.assertEquals(expected, actual);
     }
 
 
@@ -137,7 +132,6 @@ public class DDDSchachIT {
                     "|Qb|  |  |  |  |  |Bb|  |" +CR+
                     "-------------------------";
 
-
     @Test
     public void unsterblicheParty() throws Exception {
         System.out.println("Test: unsterblicheParty");
@@ -153,7 +147,7 @@ public class DDDSchachIT {
             final Halbzug halbzug = SpielNotationParser.parse(halbzugStr);
             client.fuehreHalbzugAus(spielId.id, halbzug.toString());
         }
-        // Versuch, Zug auszuführen, nachdem schon matt ist:
+        // Versuch, Zug auszuführen, nachdem Schwarz schon matt ist:
         //
         final Halbzug halbzug = SpielNotationParser.parse("d8-c7");
         try {
