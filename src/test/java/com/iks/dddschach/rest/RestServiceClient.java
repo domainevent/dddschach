@@ -91,8 +91,8 @@ public class RestServiceClient implements RestServiceInterface {
             case 201: return response;
             case 422:
                 final Map<String, Object> json = response.readEntity(new GenericType<Map<String, Object>>() {});
-                final String verletztelZugregel = (String)json.get(json.get(json.get("error code")));
-                throw new UngueltigerHalbzugException(parseHalbzug(halbzug), Zugregel.valueOf(verletztelZugregel));
+                final String verletzteZugregel = (String)json.get(json.get(json.get("error code")));
+                throw new UngueltigerHalbzugException(parseHalbzug(halbzug), Zugregel.valueOf(verletzteZugregel));
             case 404: throw new UngueltigeSpielIdException(new SpielId(spielId));
             case 500: throw new InternalServerErrorException();
             default: throw new RestCallFailedException(status, response.readEntity(String.class));
