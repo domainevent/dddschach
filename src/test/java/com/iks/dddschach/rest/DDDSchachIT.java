@@ -1,6 +1,7 @@
 package com.iks.dddschach.rest;
 
 import com.iks.dddschach.api.SchachpartieApi;
+import com.iks.dddschach.api.SchachpartieApi.UngueltigerHalbzugException;
 import com.iks.dddschach.domain.*;
 import com.iks.dddschach.domain.validation.Zugregel;
 import org.junit.Assert;
@@ -103,10 +104,11 @@ public class DDDSchachIT {
         catch (SchachpartieApi.UngueltigeSpielIdException e) {
             Assert.fail(e.toString());
         }
-        catch (SchachpartieApi.UngueltigerHalbzugException e) {
+        catch (UngueltigerHalbzugException e) {
             Assert.fail(e.toString());
         }
     }
+
 
     String[] UNSTERBLICHE_PARTY = {
             "e2-e4", "e7-e5", "f2-f4", "e5-f4", "f1-c4", "d8-h4", "e1-f1", "b7-b5", "c4-b5",
@@ -137,32 +139,35 @@ public class DDDSchachIT {
 
 
     @Test
-    public void unsterblicheParty() {
+    public void unsterblicheParty() throws Exception {
         System.out.println("Test: unsterblicheParty");
         final RestServiceClient client = new RestServiceClient();
+
+        // Spiel erstellen:
+        //
+        final SpielId spielId = client.neuesSpiel("Vermerk");
+
+        // alle Züge sukzessiv ausführen:
+        //
+        for (String halbzugStr : UNSTERBLICHE_PARTY) {
+            final Halbzug halbzug = SpielNotationParser.parse(halbzugStr);
+            client.fuehreHalbzugAus(spielId.id, halbzug.toString());
+        }
+        // Versuch, Zug auszuführen, nachdem schon matt ist:
+        //
+        final Halbzug halbzug = SpielNotationParser.parse("d8-c7");
         try {
-            final SpielId spielId = client.neuesSpiel("Vermerk");
-            for (String halbzugStr : UNSTERBLICHE_PARTY) {
-                final Halbzug halbzug = SpielNotationParser.parse(halbzugStr);
-                client.fuehreHalbzugAus(spielId.id, halbzug.toString());
-            }
-            final Halbzug halbzug = SpielNotationParser.parse("d8-c7");
-            try {
-                client.fuehreHalbzugAus(spielId.id, halbzug.toString());
-                Assert.fail("Expected UngueltigerHalbzugException not occured");
-            }
-            catch (SchachpartieApi.UngueltigerHalbzugException e) {
-                // expected case
-                Assert.assertEquals(Zugregel.DIE_PARTIE_ENDET_MATT, e.verletzteZugregel);
-            }
-            // Spielbrett überprüfen:
-            final Response resp2 = client.spielbrett(spielId.id, "Tester", null);
-            final Spielbrett actual = resp2.readEntity(Spielbrett.class);
-            Assert.assertEquals(FINALES_SPIELBRETT, actual.toString());
+            client.fuehreHalbzugAus(spielId.id, halbzug.toString());
+            Assert.fail("Expected UngueltigerHalbzugException not occured");
         }
-        catch (Exception e) {
-            Assert.fail(e.toString());
+        catch (UngueltigerHalbzugException e) {
+            Assert.assertEquals(Zugregel.DIE_PARTIE_ENDET_MATT, e.verletzteZugregel);
         }
+        // Spielbrett überprüfen:
+        //
+        final Response resp2 = client.spielbrett(spielId.id, "Tester", null);
+        final Spielbrett actual = resp2.readEntity(Spielbrett.class);
+        Assert.assertEquals(FINALES_SPIELBRETT, actual.toString());
     }
 
 
