@@ -122,7 +122,7 @@ public class DDDSchachIT {
     }
 
 
-    String[] UNSTERBLICHE_PARTY = {
+    String[] UNSTERBLICHE_PARTIE = {
             "e2-e4", "e7-e5", "f2-f4", "e5-f4", "f1-c4", "d8-h4", "e1-f1", "b7-b5", "c4-b5",
             "g8-f6", "g1-f3", "h4-h6", "d2-d3", "f6-h5", "f3-h4", "h6-g5", "h4-f5", "c7-c6",
             "g2-g4", "h5-f6", "h1-g1", "c6-b5", "h2-h4", "g5-g6", "h4-h5", "g6-g5", "d1-f3",
@@ -160,7 +160,7 @@ public class DDDSchachIT {
 
         // alle Züge sukzessiv ausführen:
         //
-        for (String halbzugStr : UNSTERBLICHE_PARTY) {
+        for (String halbzugStr : UNSTERBLICHE_PARTIE) {
             final Halbzug halbzug = SpielNotationParser.parse(halbzugStr);
             client.fuehreHalbzugAus(spielId.id, halbzug.toString());
         }
