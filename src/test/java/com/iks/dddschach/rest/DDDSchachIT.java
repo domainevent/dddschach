@@ -150,8 +150,8 @@ public class DDDSchachIT {
                     "-------------------------";
 
     @Test
-    public void unsterblicheParty() throws Exception {
-        System.out.println("Test: unsterblicheParty");
+    public void unsterblichePartie() throws Exception {
+        System.out.println("Test: unsterblichePartie");
         final RestServiceClient client = new RestServiceClient();
 
         // Spiel erstellen:
