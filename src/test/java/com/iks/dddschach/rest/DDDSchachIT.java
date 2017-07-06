@@ -7,9 +7,8 @@ import com.iks.dddschach.domain.validation.Zugregel;
 import org.junit.Assert;
 import org.junit.Test;
 
+import javax.ws.rs.core.EntityTag;
 import javax.ws.rs.core.Response;
-
-import java.text.ParseException;
 
 import static com.iks.dddschach.domain.Position.Spalte.E;
 import static com.iks.dddschach.domain.Position.Zeile._2;
@@ -84,6 +83,23 @@ public class DDDSchachIT {
             Assert.fail(e.toString());
         }
     }
+
+//    @Test
+//    public void spielBrettWiederholteAbfrageMitGleichemSpieler() {
+//        System.out.println("Test: spielBrettDoppelteAbfrageErwarte304");
+//        final RestServiceClient client = new RestServiceClient();
+//        try {
+//            final SpielId spielId = client.neuesSpiel("Vermerk");
+//            final Response resp1 =  client.spielbrett(spielId.id, "Test", null);
+//            final EntityTag entityTag = resp1.getEntityTag();
+//            final Response resp2 = client.spielbrett(spielId.id, "Test", null);
+//            Assert.assertEquals(304, resp2.getStatus());
+//        }
+//        catch (SchachpartieApi.UngueltigeSpielIdException e) {
+//            Assert.fail(e.toString());
+//        }
+//    }
+
 
     @Test
     public void fuehreGueltigenHalbzugAus() throws Exception {
