@@ -101,7 +101,7 @@ public class RestServiceClient implements RestServiceInterface {
 
     @Override
     public Response fuehreHalbzugAus(String spielId, Halbzug halbzug) throws UngueltigerHalbzugException, UngueltigeSpielIdException {
-        return null;
+        return fuehreHalbzugAus(spielId, halbzug.toString());
     }
 
 
