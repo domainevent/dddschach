@@ -13,10 +13,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Form;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.Request;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Map;
@@ -69,10 +66,15 @@ public class RestServiceClient implements RestServiceInterface {
     public Response spielbrett(String spielId, String clientId, Request request)
             throws UngueltigeSpielIdException
     {
-        final Response response = webTarget.path("games").path(spielId).path("board").request().get();
+        final Response response = webTarget.path("games").path(spielId).path("board")
+                .request(MediaType.APPLICATION_JSON)
+                .header("clientId", clientId)
+                .get();
+
         final int status = response.getStatus();
         switch (status) {
-            case 200: return response;
+            case 200:
+            case 304: return response;
             case 404: throw new UngueltigeSpielIdException(new SpielId(spielId));
             case 500: throw new InternalServerErrorException();
             default: throw new RestCallFailedException(status, response.readEntity(String.class));
