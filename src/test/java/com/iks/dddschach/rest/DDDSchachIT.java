@@ -87,7 +87,7 @@ public class DDDSchachIT {
 
     @Test
     public void spielBrettWiederholteAbfrageMitGleichemSpieler() {
-        System.out.println("Test: spielBrettDoppelteAbfrageErwarte304");
+        System.out.println("Test: spielBrettWiederholteAbfrageMitGleichemSpieler");
         final RestServiceClient client = new RestServiceClient();
         try {
             final SpielId spielId = client.neuesSpiel("Vermerk");
