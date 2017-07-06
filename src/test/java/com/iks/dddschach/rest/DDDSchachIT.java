@@ -176,8 +176,8 @@ public class DDDSchachIT {
         }
         // Spielbrett überprüfen:
         //
-        final Response resp2 = client.spielbrett(spielId.id, "Tester", null);
-        final Spielbrett actual = resp2.readEntity(Spielbrett.class);
+        final Response resp = client.spielbrett(spielId.id, "Tester", null);
+        final Spielbrett actual = resp.readEntity(Spielbrett.class);
         Assert.assertEquals(FINALES_SPIELBRETT, actual.toString());
     }
 
