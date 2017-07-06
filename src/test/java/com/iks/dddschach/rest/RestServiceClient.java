@@ -82,6 +82,10 @@ public class RestServiceClient implements RestServiceInterface {
     }
 
 
+    /**
+     * Eine zusätzliche Methode, mit der es möglich ist, eine etag-Wert zu setzen, der
+     * in den Header geschrieben wird.
+     */
     public Response spielbrettEtag(String spielId, String clientId, String etagValue)
             throws UngueltigeSpielIdException
     {
@@ -100,9 +104,6 @@ public class RestServiceClient implements RestServiceInterface {
             default: throw new RestCallFailedException(status, response.readEntity(String.class));
         }
     }
-
-
-
 
     @Override
     public Response fuehreHalbzugAus(String spielId, String halbzug)
