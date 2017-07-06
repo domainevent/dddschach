@@ -69,36 +69,51 @@ public class DDDSchachIT {
     }
 
     @Test
-    public void spielBrettGueltigeSpielId() {
+    public void spielBrettGueltigeSpielId() throws Exception {
         System.out.println("Test: spielBrettGueltigeSpielId");
         final RestServiceClient client = new RestServiceClient();
-        try {
-            final SpielId spielId = client.neuesSpiel("Vermerk");
-            final Response resp = client.spielbrett(spielId.id, "Test", null);
-            Assert.assertEquals(200, resp.getStatus());
-            final Spielbrett spielbrett = resp.readEntity(Spielbrett.class);
-            Assert.assertEquals(createInitialesSpielbrett(), spielbrett);
-        }
-        catch (SchachpartieApi.UngueltigeSpielIdException e) {
-            Assert.fail(e.toString());
-        }
+        final SpielId spielId = client.neuesSpiel("Vermerk");
+        final Response resp = client.spielbrett(spielId.id, "Test", null);
+        Assert.assertEquals(200, resp.getStatus());
+        final Spielbrett spielbrett = resp.readEntity(Spielbrett.class);
+        Assert.assertEquals(createInitialesSpielbrett(), spielbrett);
     }
 
 
     @Test
-    public void spielBrettWiederholteAbfrageMitGleichemSpieler() {
+    public void spielBrettWiederholteAbfrageMitGleichemSpieler() throws Exception {
         System.out.println("Test: spielBrettWiederholteAbfrageMitGleichemSpieler");
         final RestServiceClient client = new RestServiceClient();
-        try {
-            final SpielId spielId = client.neuesSpiel("Vermerk");
-            final Response resp1 =  client.spielbrett(spielId.id, "Test", null);
-            final EntityTag etag = resp1.getEntityTag();
-            final Response resp2 = client.spielbrettEtag(spielId.id, "Test", etag.getValue());
-            Assert.assertEquals(304, resp2.getStatus());
-        }
-        catch (SchachpartieApi.UngueltigeSpielIdException e) {
-            Assert.fail(e.toString());
-        }
+        final SpielId spielId = client.neuesSpiel("Vermerk");
+        final Response resp1 =  client.spielbrett(spielId.id, "Test", null);
+        final EntityTag etag = resp1.getEntityTag();
+        final Response resp2 = client.spielbrettEtag(spielId.id, "Test", etag.getValue());
+        Assert.assertEquals(304, resp2.getStatus());
+    }
+
+
+    @Test
+    public void spielBrettWiederholteAbfrageMitAnderemSpieler() throws Exception {
+        System.out.println("Test: spielBrettWiederholteAbfrageMitAnderemSpieler");
+        final RestServiceClient client = new RestServiceClient();
+        final SpielId spielId = client.neuesSpiel("Vermerk");
+        final Response resp1 =  client.spielbrett(spielId.id, "Test1", null);
+        final EntityTag etag = resp1.getEntityTag();
+        final Response resp2 = client.spielbrettEtag(spielId.id, "Test2", etag.getValue());
+        Assert.assertEquals(200, resp2.getStatus());
+    }
+
+
+    @Test
+    public void spielBrettWiederholteAbfrageMitZwischenzeitlichenHalbzug() throws Exception {
+        System.out.println("Test: spielBrettWiederholteAbfrageMitGleichemSpieler");
+        final RestServiceClient client = new RestServiceClient();
+        final SpielId spielId = client.neuesSpiel("Vermerk");
+        final Response resp1 =  client.spielbrett(spielId.id, "Test", null);
+        final EntityTag etag = resp1.getEntityTag();
+        client.fuehreHalbzugAus(spielId.id, "e2-e4");
+        final Response resp2 = client.spielbrettEtag(spielId.id, "Test", etag.getValue());
+        Assert.assertEquals(200, resp2.getStatus());
     }
 
 
@@ -111,7 +126,7 @@ public class DDDSchachIT {
         // Halbzug ausführen:
         //
         final Halbzug halbzug = new Halbzug(new Position(E, _2), new Position(E, _4));
-        final Response resp1 = client.fuehreHalbzugAus(spielId.id, halbzug.toString());
+        final Response resp1 = client.fuehreHalbzugAus(spielId.id, halbzug);
         Assert.assertEquals(201, resp1.getStatus());
         // Spielbrett überprüfen:
         //
