@@ -84,21 +84,22 @@ public class DDDSchachIT {
         }
     }
 
-//    @Test
-//    public void spielBrettWiederholteAbfrageMitGleichemSpieler() {
-//        System.out.println("Test: spielBrettDoppelteAbfrageErwarte304");
-//        final RestServiceClient client = new RestServiceClient();
-//        try {
-//            final SpielId spielId = client.neuesSpiel("Vermerk");
-//            final Response resp1 =  client.spielbrett(spielId.id, "Test", null);
-//            final EntityTag entityTag = resp1.getEntityTag();
-//            final Response resp2 = client.spielbrett(spielId.id, "Test", null);
-//            Assert.assertEquals(304, resp2.getStatus());
-//        }
-//        catch (SchachpartieApi.UngueltigeSpielIdException e) {
-//            Assert.fail(e.toString());
-//        }
-//    }
+
+    @Test
+    public void spielBrettWiederholteAbfrageMitGleichemSpieler() {
+        System.out.println("Test: spielBrettDoppelteAbfrageErwarte304");
+        final RestServiceClient client = new RestServiceClient();
+        try {
+            final SpielId spielId = client.neuesSpiel("Vermerk");
+            final Response resp1 =  client.spielbrett(spielId.id, "Test", null);
+            final EntityTag etag = resp1.getEntityTag();
+            final Response resp2 = client.spielbrettEtag(spielId.id, "Test", etag.getValue());
+            Assert.assertEquals(304, resp2.getStatus());
+        }
+        catch (SchachpartieApi.UngueltigeSpielIdException e) {
+            Assert.fail(e.toString());
+        }
+    }
 
 
     @Test
