@@ -180,6 +180,9 @@
                         <goals>
                             <goal>stop</goal>
                         </goals>
+                        <configuration>
+                            <keepContainer>true</keepContainer>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
