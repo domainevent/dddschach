@@ -46,7 +46,6 @@ public class SpielbrettFactory {
     
     public static Spielbrett decode(String schachbrettCompressed) {
         final Spielbrett spielbrett = new Spielbrett();
-        // RNB_KB_RPPP_PPPP_____N______________P________n__pppbqppprn__kb_r
         int idx = 0;
         final char[] chars = schachbrettCompressed.toCharArray();
         for (Zeile z : Zeile.values()) {
