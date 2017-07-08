@@ -44,7 +44,4 @@ public class FreieBahnCheck implements HalbzugValidation {
 			   success(new Halbzug(posMid, halbzug.to), spielbrett);
 	}
 
-
-
-
 }
