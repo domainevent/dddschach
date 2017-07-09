@@ -30,6 +30,18 @@
         </repository>
     </repositories>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>Artifactory</id>
+            <url>http://www.clean-coder.de:8080/artifactory/libs-snapshot-local</url>
+            <uniqueVersion>true</uniqueVersion>
+        </snapshotRepository>
+        <repository>
+            <id>Artifactory</id>
+            <url>http://www.clean-coder.de:8080/artifactory/libs-release-local</url>
+        </repository>
+    </distributionManagement>
+
     <profiles>
         <profile>
             <id>doc</id>
