@@ -67,6 +67,83 @@
                 </plugins>
             </build>
         </profile>
+
+        <profile>
+            <id>itest</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <version>0.21.0</version>
+
+                        <configuration>
+                            <images>
+                                <!-- A single's image configuration -->
+                                <image>
+                                    <alias>dddschach</alias>
+                                    <name>javacook/dddschach:${project.version}</name>
+                                    <build>
+                                        <dockerFileDir>${project.basedir}</dockerFileDir>
+                                    </build>
+                                    <run>
+                                        <ports>
+                                            <port>tomcat.port:8080</port>
+                                        </ports>
+                                        <wait>
+                                            <http>
+                                                <url>http://localhost:${tomcat.port}/dddschach/api/isalive</url>
+                                            </http>
+                                            <time>10000</time>
+                                        </wait>
+                                    </run>
+                                </image>
+                            </images>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>start</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>build</goal>
+                                    <goal>start</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>stop</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                                <configuration>
+                                    <keepContainer>true</keepContainer>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <configuration>
+                            <systemPropertyVariables>
+                                <!-- Docker-Plugin ersetzt diesen Wert -->
+                                <docker.container.ip>${docker.container.dddschach.ip}</docker.container.ip>
+                                <docker.container.port>${tomcat.port}</docker.container.port>
+                            </systemPropertyVariables>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                    <goal>verify</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
     <build>
@@ -148,77 +225,6 @@
                     <outputEncoding>ISO-8859-15</outputEncoding>
                 </configuration>
             </plugin>
-
-            <plugin>
-                <groupId>io.fabric8</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>0.21.0</version>
-
-                <configuration>
-                    <images>
-                        <!-- A single's image configuration -->
-                        <image>
-                            <alias>dddschach</alias>
-                            <name>javacook/dddschach:${project.version}</name>
-                            <build>
-                                <dockerFileDir>${project.basedir}</dockerFileDir>
-                            </build>
-                            <run>
-                                <ports>
-                                    <port>tomcat.port:8080</port>
-                                </ports>
-                                <wait>
-                                    <http>
-                                        <url>http://localhost:${tomcat.port}/dddschach/api/isalive</url>
-                                    </http>
-                                    <time>10000</time>
-                                </wait>
-                            </run>
-                        </image>
-                    </images>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>start</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>build</goal>
-                            <goal>start</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>stop</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>stop</goal>
-                        </goals>
-                        <configuration>
-                            <keepContainer>true</keepContainer>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <configuration>
-                    <systemPropertyVariables>
-                        <!-- Docker-Plugin ersetzt diesen Wert -->
-                        <docker.container.ip>${docker.container.dddschach.ip}</docker.container.ip>
-                        <docker.container.port>${tomcat.port}</docker.container.port>
-                    </systemPropertyVariables>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
         </plugins>
     </build>
 
@@ -303,6 +309,12 @@
             <groupId>javax.transaction</groupId>
             <artifactId>jta</artifactId>
             <version>1.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.1.0.Final</version>
         </dependency>
 
     </dependencies>
