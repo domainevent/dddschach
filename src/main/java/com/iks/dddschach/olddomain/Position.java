@@ -1,4 +1,4 @@
-package com.iks.dddschach.domain;
+package com.iks.dddschach.olddomain;
 
 import com.iks.dddschach.domain.base.EnumObject;
 import com.iks.dddschach.domain.base.ValueObject;

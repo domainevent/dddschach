@@ -1,8 +1,8 @@
-package com.iks.dddschach.domain;
+package com.iks.dddschach.olddomain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.iks.dddschach.domain.Spielfigur.FigurenTyp;
+import com.iks.dddschach.olddomain.Spielfigur.FigurenTyp;
 import com.iks.dddschach.domain.base.ValueObject;
 import com.webcohesion.enunciate.metadata.DocumentationExample;
 
@@ -11,10 +11,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.iks.dddschach.domain.Position.Zeile._1;
-import static com.iks.dddschach.domain.Position.Zeile;
-import static com.iks.dddschach.domain.Position.Spalte;
-import static com.iks.dddschach.domain.Spielfigur.FigurenTyp.KOENIG;
+import static com.iks.dddschach.olddomain.Position.Zeile._1;
+import static com.iks.dddschach.olddomain.Position.Zeile;
+import static com.iks.dddschach.olddomain.Position.Spalte;
+import static com.iks.dddschach.olddomain.Spielfigur.FigurenTyp.KOENIG;
 import static java.lang.Character.toLowerCase;
 import static java.lang.Character.toUpperCase;
 

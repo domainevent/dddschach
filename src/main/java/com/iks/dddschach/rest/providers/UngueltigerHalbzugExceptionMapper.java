@@ -1,6 +1,6 @@
 package com.iks.dddschach.rest.providers;
 
-import com.iks.dddschach.api.SchachpartieApi.UngueltigerHalbzugException;
+import com.iks.dddschach.service.api.SchachpartieApi.UngueltigerHalbzugException;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;

@@ -1,13 +1,13 @@
-package com.iks.dddschach.domain;
+package com.iks.dddschach.olddomain;
 
-import com.iks.dddschach.domain.Position.Spalte;
-import com.iks.dddschach.domain.Position.Zeile;
+import com.iks.dddschach.olddomain.Position.Spalte;
+import com.iks.dddschach.olddomain.Position.Zeile;
 
-import static com.iks.dddschach.domain.Farbe.SCHWARZ;
-import static com.iks.dddschach.domain.Farbe.WEISS;
-import static com.iks.dddschach.domain.Position.Zeile.*;
-import static com.iks.dddschach.domain.Position.Spalte.*;
-import static com.iks.dddschach.domain.Spielfigur.FigurenTyp.*;
+import static com.iks.dddschach.olddomain.Farbe.SCHWARZ;
+import static com.iks.dddschach.olddomain.Farbe.WEISS;
+import static com.iks.dddschach.olddomain.Position.Zeile.*;
+import static com.iks.dddschach.olddomain.Position.Spalte.*;
+import static com.iks.dddschach.olddomain.Spielfigur.FigurenTyp.*;
 
 
 /**

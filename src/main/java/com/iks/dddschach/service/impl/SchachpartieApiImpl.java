@@ -1,6 +1,10 @@
-package com.iks.dddschach.api;
+package com.iks.dddschach.service.impl;
 
-import com.iks.dddschach.domain.*;
+import com.iks.dddschach.domain.AktuellesSpielbrettRequest;
+import com.iks.dddschach.domain.AktuellesSpielbrettResponse;
+import com.iks.dddschach.domain.SpielbrettExt;
+import com.iks.dddschach.olddomain.*;
+import com.iks.dddschach.service.api.SchachpartieApi;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -33,6 +37,7 @@ public class SchachpartieApiImpl implements SchachpartieApi {
     }
 
 
+
     @Override
     public int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug)
             throws UngueltigerHalbzugException, UngueltigeSpielIdException, IOException {
@@ -48,12 +53,26 @@ public class SchachpartieApiImpl implements SchachpartieApi {
 
 
     @Override
-    public Spielbrett aktuellesSpielbrett(SpielId spielId) throws UngueltigeSpielIdException, IOException {
+    public AktuellesSpielbrettResponse aktuellesSpielbrett(AktuellesSpielbrettRequest request) throws UngueltigeSpielIdException, IOException {
+        final com.iks.dddschach.domain.SpielId spielId2 = request.getSpielId();
+        final SpielId spielId = new com.iks.dddschach.olddomain.SpielId(spielId2.getId());
         final Optional<Schachpartie> schachpartie = SCHACHPARTIE_REPOSITORY.findById(spielId);
         if (!schachpartie.isPresent()) {
             throw new UngueltigeSpielIdException(spielId);
         }
-        return schachpartie.get().aktuellesSpielbrett();
+        final SpielbrettExt spielbrettExt = new SpielbrettExt(schachpartie.get().aktuellesSpielbrett().getBoard());
+        return new AktuellesSpielbrettResponse(spielbrettExt);
     }
+
+
+//
+//    @Override
+//    public Spielbrett aktuellesSpielbrett(AktuellesSpielbrettRequest request) throws UngueltigeSpielIdException, IOException {
+//        final Optional<Schachpartie> schachpartie = SCHACHPARTIE_REPOSITORY.findById(spielId);
+//        if (!schachpartie.isPresent()) {
+//            throw new UngueltigeSpielIdException(spielId);
+//        }
+//        return schachpartie.get().aktuellesSpielbrett();
+//    }
 
 }

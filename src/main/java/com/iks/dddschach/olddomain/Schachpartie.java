@@ -1,6 +1,6 @@
-package com.iks.dddschach.domain;
+package com.iks.dddschach.olddomain;
 
-import com.iks.dddschach.api.SchachpartieApi.UngueltigerHalbzugException;
+import com.iks.dddschach.service.api.SchachpartieApi.UngueltigerHalbzugException;
 import com.iks.dddschach.domain.base.EntityIdObject;
 import com.iks.dddschach.domain.validation.BauernumwCheck.BauernumwCheckResult;
 import com.iks.dddschach.domain.validation.EnPassantCheck.EnPassantCheckResult;

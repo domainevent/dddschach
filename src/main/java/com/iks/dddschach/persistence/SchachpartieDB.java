@@ -1,10 +1,10 @@
 package com.iks.dddschach.persistence;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.iks.dddschach.domain.HalbzugHistorie;
-import com.iks.dddschach.domain.Schachpartie;
-import com.iks.dddschach.domain.SpielId;
-import com.iks.dddschach.domain.Spielbrett;
+import com.iks.dddschach.olddomain.HalbzugHistorie;
+import com.iks.dddschach.olddomain.Schachpartie;
+import com.iks.dddschach.olddomain.SpielId;
+import com.iks.dddschach.olddomain.Spielbrett;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

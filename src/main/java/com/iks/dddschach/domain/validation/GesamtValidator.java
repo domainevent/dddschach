@@ -1,8 +1,8 @@
 package com.iks.dddschach.domain.validation;
 
-import com.iks.dddschach.domain.Halbzug;
-import com.iks.dddschach.domain.Spielbrett;
-import com.iks.dddschach.domain.Spielfigur;
+import com.iks.dddschach.olddomain.Halbzug;
+import com.iks.dddschach.olddomain.Spielbrett;
+import com.iks.dddschach.olddomain.Spielfigur;
 import com.iks.dddschach.domain.base.DomainService;
 import org.apache.commons.lang3.Validate;
 

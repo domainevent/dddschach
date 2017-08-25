@@ -1,4 +1,4 @@
-package com.iks.dddschach.domain;
+package com.iks.dddschach.olddomain;
 
 import java.io.IOException;
 import java.util.Optional;

@@ -1,16 +1,47 @@
 package com.iks.dddschach.domain;
 
-import com.iks.dddschach.domain2.Spalte;
-import com.iks.dddschach.domain2.Spielbrett;
-import com.iks.dddschach.domain2.Spielfeld;
-import com.iks.dddschach.domain2.Zeile;
-import com.iks.dddschach.domain2.Spielfigur;
+import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.iks.dddschach.domain.Farbe.WEISS;
 import static java.lang.Character.toLowerCase;
 import static java.lang.Character.toUpperCase;
 
 
 public class SpielbrettExt extends Spielbrett {
+
+    public SpielbrettExt() {
+        super();
+    }
+
+    /**
+     * Fully-initialising value constructor
+     */
+    public SpielbrettExt(final List<Spielfeld> spielfelder) {
+        super(spielfelder);
+    }
+
+
+    public SpielbrettExt(final com.iks.dddschach.olddomain.Spielfigur[][] spielfiguren) {
+        final int ANZAHL_SPALTEN = Spalte.values().length;
+        final int ANZAHL_ZEILEN = Zeile.values().length;
+        spielfelder = new ArrayList<>();
+        for (int s = 0; s < ANZAHL_SPALTEN; s++) {
+            for (int z = 0; z < ANZAHL_ZEILEN; z++) {
+                com.iks.dddschach.olddomain.Spielfigur spielfigur = spielfiguren[s][z];
+                if (spielfigur == null) continue;
+                final FigurenTyp figurenTyp = FigurenTyp.valueOf(spielfigur.figure.name());
+                final Farbe color = Farbe.valueOf(spielfigur.color.name());
+                final Spielfigur spielfigur1 = new Spielfigur(figurenTyp, color);
+                final Spielfeld spielfeld = new Spielfeld(
+                        new Position(Zeile.values()[z], Spalte.values()[s]), spielfigur1);
+                spielfelder.add(spielfeld);
+            }
+        }
+    }
+
 
     public Spielfigur[][] getBoard() {
         final int ANZAHL_SPALTEN = Spalte.values().length;
@@ -37,12 +68,25 @@ public class SpielbrettExt extends Spielbrett {
                     result += "_";
                 }
                 else {
-                    char ch = figure.figure.marshal();
-                    result += (figure.color == Farbe.WEISS)? toUpperCase(ch) : toLowerCase(ch);
+                    char ch = encodeFigure(figure.getFigure());
+                    result += (figure.getColor() == WEISS)? toUpperCase(ch) : toLowerCase(ch);
                 }
             }
         }
         return result;
+    }
+
+
+    public Character encodeFigure(FigurenTyp figur) {
+        switch (figur) {
+            case KOENIG:  return 'K';
+            case DAME:    return 'Q';
+            case TURM:    return 'R';
+            case LAEUFER: return 'B';
+            case SPRINGER: return 'N';
+            case BAUER:   return 'P';
+        }
+        throw new IllegalArgumentException("Unexpected enum " + this);
     }
 
 }

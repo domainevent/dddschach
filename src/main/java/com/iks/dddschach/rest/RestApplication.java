@@ -2,8 +2,8 @@ package com.iks.dddschach.rest;
 
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-import com.iks.dddschach.api.SchachpartieApi;
-import com.iks.dddschach.api.SchachpartieApiImpl;
+import com.iks.dddschach.service.api.SchachpartieApi;
+import com.iks.dddschach.service.impl.SchachpartieApiImpl;
 import com.iks.dddschach.persistence.SchachpartieRepositoryDB;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;

@@ -1,5 +1,7 @@
 package com.iks.dddschach.domain;
 
+import com.iks.dddschach.olddomain.Spielbrett;
+import com.iks.dddschach.olddomain.SpielbrettFactory;
 import org.junit.Assert;
 import org.junit.Test;
 

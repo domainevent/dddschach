@@ -1,14 +1,16 @@
 package com.iks.dddschach.domain.validation;
 
-import com.iks.dddschach.domain.*;
-import com.iks.dddschach.domain.Spielfigur.FigurenTyp;
+import com.iks.dddschach.olddomain.Halbzug;
+import com.iks.dddschach.olddomain.Spielbrett;
+import com.iks.dddschach.olddomain.Spielfigur;
+import com.iks.dddschach.olddomain.Spielfigur.FigurenTyp;
 
 import java.util.*;
 
-import static com.iks.dddschach.domain.Farbe.SCHWARZ;
-import static com.iks.dddschach.domain.Farbe.WEISS;
-import static com.iks.dddschach.domain.Position.Zeile.*;
-import static com.iks.dddschach.domain.Spielfigur.FigurenTyp.DAME;
+import static com.iks.dddschach.olddomain.Farbe.SCHWARZ;
+import static com.iks.dddschach.olddomain.Farbe.WEISS;
+import static com.iks.dddschach.olddomain.Position.Zeile.*;
+import static com.iks.dddschach.olddomain.Spielfigur.FigurenTyp.DAME;
 
 
 public class BauernumwCheck implements HalbzugValidation {

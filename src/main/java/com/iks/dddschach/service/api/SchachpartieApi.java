@@ -1,8 +1,9 @@
-package com.iks.dddschach.api;
+package com.iks.dddschach.service.api;
 
-import com.iks.dddschach.domain.Spielbrett;
-import com.iks.dddschach.domain.SpielId;
-import com.iks.dddschach.domain.Halbzug;
+import com.iks.dddschach.domain.AktuellesSpielbrettRequest;
+import com.iks.dddschach.domain.AktuellesSpielbrettResponse;
+import com.iks.dddschach.olddomain.SpielId;
+import com.iks.dddschach.olddomain.Halbzug;
 import com.iks.dddschach.domain.validation.Zugregel;
 
 import java.io.IOException;
@@ -85,11 +86,11 @@ public interface SchachpartieApi {
     /**
      * Liefert das aktuelle Schachbrett zum Spiel mit der Id <code>spielId</code>
      *
-     * @param spielId (eindeutige) ID, die anfangs durch <code>neuesSpiel</code> erzeugt worden ist.
+     * @param request
      * @return das aktuelle Schachbrett
      * @throws UngueltigeSpielIdException falls es keine Partie zu <code>spielId</code> gibt
      * @throws IOException bei sonstigen (technischen) Problemen
      */
-    Spielbrett aktuellesSpielbrett(SpielId spielId) throws UngueltigeSpielIdException, IOException;
+    AktuellesSpielbrettResponse aktuellesSpielbrett(AktuellesSpielbrettRequest request) throws UngueltigeSpielIdException, IOException;
 
 }

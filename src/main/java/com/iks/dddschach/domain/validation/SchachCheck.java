@@ -1,12 +1,15 @@
 package com.iks.dddschach.domain.validation;
 
-import com.iks.dddschach.domain.*;
+import com.iks.dddschach.olddomain.Farbe;
+import com.iks.dddschach.olddomain.Halbzug;
+import com.iks.dddschach.olddomain.Position;
+import com.iks.dddschach.olddomain.Spielbrett;
 
 import java.util.List;
 import java.util.Objects;
 
-import static com.iks.dddschach.domain.Farbe.SCHWARZ;
-import static com.iks.dddschach.domain.Farbe.WEISS;
+import static com.iks.dddschach.olddomain.Farbe.SCHWARZ;
+import static com.iks.dddschach.olddomain.Farbe.WEISS;
 import static com.iks.dddschach.domain.validation.ValidationUtils.spielerFarbe;
 
 

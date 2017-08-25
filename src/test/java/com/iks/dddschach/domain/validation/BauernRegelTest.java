@@ -1,15 +1,14 @@
 package com.iks.dddschach.domain.validation;
 
-import com.iks.dddschach.domain.Halbzug;
-import com.iks.dddschach.domain.SpielNotationParser;
-import com.iks.dddschach.domain.Spielbrett;
-import com.iks.dddschach.domain.SpielbrettFactory;
+import com.iks.dddschach.olddomain.Halbzug;
+import com.iks.dddschach.olddomain.SpielNotationParser;
+import com.iks.dddschach.olddomain.Spielbrett;
+import com.iks.dddschach.olddomain.SpielbrettFactory;
 import com.iks.dddschach.domain.validation.HalbzugValidation.ValidationResult;
 import org.junit.Assert;
 import org.junit.Test;
 
 import static com.iks.dddschach.domain.validation.Zugregel.BAUER_ZIEHT_EIN_FELD_VORWAERTS_AUSSER_AM_ANFANG_ZWEI;
-import static org.junit.Assert.*;
 
 
 /**

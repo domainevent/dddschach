@@ -1,4 +1,4 @@
-package com.iks.dddschach.domain;
+package com.iks.dddschach.olddomain;
 
 /**
  * Fabrik zum Kreieren von Schachpartie-Aggregaten

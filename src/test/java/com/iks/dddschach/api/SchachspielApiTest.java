@@ -1,15 +1,20 @@
 package com.iks.dddschach.api;
 
-import com.iks.dddschach.domain.*;
+import com.iks.dddschach.domain.AktuellesSpielbrettRequest;
+import com.iks.dddschach.domain.AktuellesSpielbrettResponse;
+import com.iks.dddschach.domain.SpielbrettExt;
+import com.iks.dddschach.olddomain.*;
 import com.iks.dddschach.persistence.SchachpartieRepositoryMemory;
+import com.iks.dddschach.service.api.SchachpartieApi;
+import com.iks.dddschach.service.impl.SchachpartieApiImpl;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Optional;
 
-import static com.iks.dddschach.domain.Position.Zeile.*;
-import static com.iks.dddschach.domain.Position.Spalte.*;
-import static com.iks.dddschach.domain.SpielNotationParser.parse;
+import static com.iks.dddschach.olddomain.Position.Zeile.*;
+import static com.iks.dddschach.olddomain.Position.Spalte.*;
+import static com.iks.dddschach.olddomain.SpielNotationParser.parse;
 
 
 /**
@@ -39,9 +44,12 @@ public class SchachspielApiTest {
     @Test
     public void istAmStartInitialesSchachBrettVorhanden() throws Exception {
         final SpielId spielId = api.neuesSpiel(VERMERK);
-        final Spielbrett actual = api.aktuellesSpielbrett(spielId);
+        final AktuellesSpielbrettRequest request
+                = new AktuellesSpielbrettRequest(new com.iks.dddschach.domain.SpielId(spielId.id));
+        final AktuellesSpielbrettResponse response = api.aktuellesSpielbrett(request);
         final Spielbrett expected = SpielbrettFactory.createInitialesSpielbrett();
-        Assert.assertEquals(expected, actual);
+        SpielbrettExt spielbrett = (SpielbrettExt)response.getSpielbrett();
+        Assert.assertEquals(expected.encode(), spielbrett.encode());
     }
 
 
@@ -68,15 +76,22 @@ public class SchachspielApiTest {
                 }};
 
         final SpielId spielId1 = api.neuesSpiel(VERMERK);
+        final AktuellesSpielbrettRequest request1
+                = new AktuellesSpielbrettRequest(new com.iks.dddschach.domain.SpielId(spielId1.id));
         api.fuehreHalbzugAus(spielId1, new Halbzug(posFrom1, posTo1));
-        final Spielbrett actual1 = api.aktuellesSpielbrett(spielId1);
+        final AktuellesSpielbrettResponse response1 = api.aktuellesSpielbrett(request1);
 
         final SpielId spielId2 = api.neuesSpiel(VERMERK);
+        final AktuellesSpielbrettRequest request2
+                = new AktuellesSpielbrettRequest(new com.iks.dddschach.domain.SpielId(spielId2.id));
         api.fuehreHalbzugAus(spielId2, new Halbzug(posFrom2, posTo2));
-        final Spielbrett actual2 = api.aktuellesSpielbrett(spielId2);
+        final AktuellesSpielbrettResponse response2 = api.aktuellesSpielbrett(request2);
 
-        Assert.assertEquals(expected1, actual1);
-        Assert.assertEquals(expected2, actual2);
+        SpielbrettExt spielbrett1 = (SpielbrettExt)response1.getSpielbrett();
+        SpielbrettExt spielbrett2 = (SpielbrettExt)response2.getSpielbrett();
+
+        Assert.assertEquals(expected1.encode(), spielbrett1.encode());
+        Assert.assertEquals(expected2.encode(), spielbrett2.encode());
     }
 
 

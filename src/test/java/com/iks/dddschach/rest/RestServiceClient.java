@@ -1,11 +1,11 @@
 package com.iks.dddschach.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.iks.dddschach.api.SchachpartieApi.UngueltigeSpielIdException;
-import com.iks.dddschach.api.SchachpartieApi.UngueltigerHalbzugException;
-import com.iks.dddschach.domain.Halbzug;
-import com.iks.dddschach.domain.SpielId;
-import com.iks.dddschach.domain.SpielNotationParser;
+import com.iks.dddschach.service.api.SchachpartieApi.UngueltigeSpielIdException;
+import com.iks.dddschach.service.api.SchachpartieApi.UngueltigerHalbzugException;
+import com.iks.dddschach.olddomain.Halbzug;
+import com.iks.dddschach.olddomain.SpielId;
+import com.iks.dddschach.olddomain.SpielNotationParser;
 import com.iks.dddschach.domain.validation.Zugregel;
 
 import javax.ws.rs.InternalServerErrorException;

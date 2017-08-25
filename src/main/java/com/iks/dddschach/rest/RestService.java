@@ -1,11 +1,14 @@
 package com.iks.dddschach.rest;
 
-import com.iks.dddschach.api.SchachpartieApi;
-import com.iks.dddschach.api.SchachpartieApi.UngueltigeSpielIdException;
-import com.iks.dddschach.api.SchachpartieApi.UngueltigerHalbzugException;
-import com.iks.dddschach.domain.Halbzug;
-import com.iks.dddschach.domain.SpielId;
+import com.iks.dddschach.domain.AktuellesSpielbrettRequest;
+import com.iks.dddschach.domain.AktuellesSpielbrettResponse;
 import com.iks.dddschach.domain.Spielbrett;
+import com.iks.dddschach.domain.SpielbrettExt;
+import com.iks.dddschach.service.api.SchachpartieApi;
+import com.iks.dddschach.service.api.SchachpartieApi.UngueltigeSpielIdException;
+import com.iks.dddschach.service.api.SchachpartieApi.UngueltigerHalbzugException;
+import com.iks.dddschach.olddomain.Halbzug;
+import com.iks.dddschach.olddomain.SpielId;
 import com.webcohesion.enunciate.metadata.rs.ResponseCode;
 import com.webcohesion.enunciate.metadata.rs.StatusCodes;
 import org.apache.log4j.Logger;
@@ -101,7 +104,9 @@ public class RestService implements RestServiceInterface {
     {
         LOG.debug("Abfrage des Spielfeldes");
         try {
-            final Spielbrett spielbrett = schachpartieApi.aktuellesSpielbrett(new SpielId(spielId));
+            final AktuellesSpielbrettRequest spielbrettRequest = new AktuellesSpielbrettRequest(new com.iks.dddschach.domain.SpielId(spielId));
+            final AktuellesSpielbrettResponse aktuellesSpielbrettResponse = schachpartieApi.aktuellesSpielbrett(spielbrettRequest);
+            final SpielbrettExt spielbrett = (SpielbrettExt)aktuellesSpielbrettResponse.getSpielbrett();
             CacheControl cc = new CacheControl();
             cc.setMaxAge(60);
             EntityTag etag = new EntityTag(clientId + spielbrett.encode());

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="contract.xsl"?>
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:xml="http://www.w3.org/XML/1998/namespace"
+        xmlns:service="http://www.informatikbuero.com/services"
+        xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+        jaxb:version="2.0"
+        xmlns:tns="http://www.informatikbuero.com/services/calculator/api/model"
+        targetNamespace="http://www.informatikbuero.com/services/calculator/api/model"
+        elementFormDefault="qualified" attributeFormDefault="qualified"
+        version="1.0">
+
+    <!-- ################################################### -->
+    <!-- ################### Messages ###################### -->
+    <!-- ################################################### -->
+
+    <xs:element name="AktuellesSpielbrettRequest">
+        <xs:annotation><xs:documentation>Fordert das aktuelle Spielbrett an</xs:documentation></xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="spielId" type="tns:SpielId">
+                    <xs:annotation><xs:documentation>SpielId</xs:documentation></xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AktuellesSpielbrettResponse">
+        <xs:annotation><xs:documentation>Das aktuelle Spielbrett</xs:documentation></xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="spielbrett" type="tns:Spielbrett">
+                    <xs:annotation><xs:documentation>Calculation results</xs:documentation></xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:complexType name="SpielId">
+        <xs:annotation><xs:documentation>SpielId</xs:documentation></xs:annotation>
+        <xs:sequence>
+            <xs:element name="id" type="xs:string">
+                <xs:annotation><xs:documentation>Single calculation</xs:documentation></xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="Spielbrett">
+        <xs:annotation>
+            <xs:documentation>Spielbrett</xs:documentation>
+            <xs:appinfo><jaxb:class implClass="SpielbrettExt" /></xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="spielfelder" type="tns:Spielfeld" minOccurs="1" maxOccurs="64">
+                <xs:annotation><xs:documentation>Spielfeld</xs:documentation></xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Spielfeld">
+        <xs:annotation><xs:documentation>Spielfeld</xs:documentation></xs:annotation>
+        <xs:sequence>
+            <xs:element name="position" type="tns:Position">
+                <xs:annotation><xs:documentation>Spielfeld</xs:documentation></xs:annotation>
+            </xs:element>
+            <xs:element name="spielfigur" type="tns:Spielfigur">
+                <xs:annotation><xs:documentation>Spielfeld</xs:documentation></xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Position">
+        <xs:annotation><xs:documentation>Position</xs:documentation></xs:annotation>
+        <xs:sequence>
+            <xs:element name="zeile" type="tns:Zeile">
+                <xs:annotation><xs:documentation>Spielfeld</xs:documentation></xs:annotation>
+            </xs:element>
+            <xs:element name="spalte" type="tns:Spalte">
+                <xs:annotation><xs:documentation>Spielfeld</xs:documentation></xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="Zeile">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="A"/>
+            <xs:enumeration value="B"/>
+            <xs:enumeration value="C"/>
+            <xs:enumeration value="D"/>
+            <xs:enumeration value="E"/>
+            <xs:enumeration value="F"/>
+            <xs:enumeration value="G"/>
+            <xs:enumeration value="H"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="Spalte">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="I"/>
+            <xs:enumeration value="II"/>
+            <xs:enumeration value="III"/>
+            <xs:enumeration value="IV"/>
+            <xs:enumeration value="V"/>
+            <xs:enumeration value="VI"/>
+            <xs:enumeration value="VII"/>
+            <xs:enumeration value="VIII"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="Spielfigur">
+        <xs:sequence>
+            <xs:element name="figure" type="tns:FigurenTyp">
+                <xs:annotation><xs:documentation>FigurenTyp</xs:documentation></xs:annotation>
+            </xs:element>
+            <xs:element name="color" type="tns:Farbe">
+                <xs:annotation><xs:documentation>Farbe</xs:documentation></xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="FigurenTyp">
+
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="KOENIG"/>
+            <xs:enumeration value="DAME"/>
+            <xs:enumeration value="TURM"/>
+            <xs:enumeration value="LAEUFER"/>
+            <xs:enumeration value="SPRINGER"/>
+            <xs:enumeration value="BAUER"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+    <xs:simpleType name="Farbe">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="WEISS"/>
+            <xs:enumeration value="SCHWARZ"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

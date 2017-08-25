@@ -3,14 +3,16 @@ package com.iks.dddschach.domain.validation;
 import java.util.List;
 import java.util.Objects;
 
-import com.iks.dddschach.domain.*;
-import com.iks.dddschach.domain.Spielfigur.FigurenTyp;
+import com.iks.dddschach.olddomain.Halbzug;
+import com.iks.dddschach.olddomain.Spielbrett;
+import com.iks.dddschach.olddomain.Spielfigur;
+import com.iks.dddschach.olddomain.Spielfigur.FigurenTyp;
 import com.iks.dddschach.util.IntegerTupel;
 
-import static com.iks.dddschach.domain.Farbe.SCHWARZ;
-import static com.iks.dddschach.domain.Farbe.WEISS;
-import static com.iks.dddschach.domain.Position.Zeile._2;
-import static com.iks.dddschach.domain.Position.Zeile._7;
+import static com.iks.dddschach.olddomain.Farbe.SCHWARZ;
+import static com.iks.dddschach.olddomain.Farbe.WEISS;
+import static com.iks.dddschach.olddomain.Position.Zeile._2;
+import static com.iks.dddschach.olddomain.Position.Zeile._7;
 
 
 public class BauernRegel implements HalbzugValidation {

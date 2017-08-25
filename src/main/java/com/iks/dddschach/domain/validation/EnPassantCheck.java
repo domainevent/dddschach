@@ -1,15 +1,15 @@
 package com.iks.dddschach.domain.validation;
 
-import com.iks.dddschach.domain.*;
-import com.iks.dddschach.domain.Spielfigur.FigurenTyp;
+import com.iks.dddschach.olddomain.*;
+import com.iks.dddschach.olddomain.Spielfigur.FigurenTyp;
 import com.iks.dddschach.util.IntegerTupel;
 import org.apache.commons.lang3.Validate;
 
 import java.util.*;
 
-import static com.iks.dddschach.domain.Farbe.SCHWARZ;
-import static com.iks.dddschach.domain.Farbe.WEISS;
-import static com.iks.dddschach.domain.Position.Zeile.*;
+import static com.iks.dddschach.olddomain.Farbe.SCHWARZ;
+import static com.iks.dddschach.olddomain.Farbe.WEISS;
+import static com.iks.dddschach.olddomain.Position.Zeile.*;
 import static com.iks.dddschach.domain.validation.ValidationUtils.toIntegerTupel;
 
 

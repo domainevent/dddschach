@@ -1,11 +1,9 @@
 package com.iks.dddschach.domain.validation;
 
-import com.iks.dddschach.domain.*;
+import com.iks.dddschach.olddomain.*;
 import com.iks.dddschach.util.IntegerTupel;
 
 import java.util.Objects;
-
-import static com.iks.dddschach.domain.validation.ValidationUtils.toIntegerTupel;
 
 
 /**

@@ -1,8 +1,8 @@
 package com.iks.dddschach.rest;
 
-import com.iks.dddschach.api.SchachpartieApi;
-import com.iks.dddschach.api.SchachpartieApi.UngueltigerHalbzugException;
-import com.iks.dddschach.domain.*;
+import com.iks.dddschach.olddomain.*;
+import com.iks.dddschach.service.api.SchachpartieApi;
+import com.iks.dddschach.service.api.SchachpartieApi.UngueltigerHalbzugException;
 import com.iks.dddschach.domain.validation.Zugregel;
 import org.junit.Assert;
 import org.junit.Test;
@@ -10,10 +10,10 @@ import org.junit.Test;
 import javax.ws.rs.core.EntityTag;
 import javax.ws.rs.core.Response;
 
-import static com.iks.dddschach.domain.Position.Spalte.E;
-import static com.iks.dddschach.domain.Position.Zeile._2;
-import static com.iks.dddschach.domain.Position.Zeile._4;
-import static com.iks.dddschach.domain.SpielbrettFactory.createInitialesSpielbrett;
+import static com.iks.dddschach.olddomain.Position.Spalte.E;
+import static com.iks.dddschach.olddomain.Position.Zeile._2;
+import static com.iks.dddschach.olddomain.Position.Zeile._4;
+import static com.iks.dddschach.olddomain.SpielbrettFactory.createInitialesSpielbrett;
 
 
 /**

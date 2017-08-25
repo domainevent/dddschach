@@ -1,24 +1,25 @@
 package com.iks.dddschach.domain.validation;
 
-import com.iks.dddschach.domain.Halbzug;
-import com.iks.dddschach.domain.Position;
-import com.iks.dddschach.domain.Spielbrett;
-import com.iks.dddschach.domain.Spielfigur;
-import com.iks.dddschach.domain.Spielfigur.FigurenTyp;
+import com.iks.dddschach.olddomain.Halbzug;
+import com.iks.dddschach.olddomain.Position;
+import com.iks.dddschach.olddomain.Schachpartie;
+import com.iks.dddschach.olddomain.Spielbrett;
+import com.iks.dddschach.olddomain.Spielfigur;
+import com.iks.dddschach.olddomain.Spielfigur.FigurenTyp;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.iks.dddschach.domain.Position.Spalte.*;
-import static com.iks.dddschach.domain.Position.Zeile._1;
-import static com.iks.dddschach.domain.Position.Zeile._8;
+import static com.iks.dddschach.olddomain.Position.Spalte.*;
+import static com.iks.dddschach.olddomain.Position.Zeile._1;
+import static com.iks.dddschach.olddomain.Position.Zeile._8;
 
 
 /**
  * Überprüft, ob der Königszug eine Rochade versucht, und ob dieser zulässig ist. Ein Rochaden-Versuch
  * ist dann gegeben, wenn der König von seiner Position aus zwei Felder nach links oder rechts bewegt
  * werden soll. In diesem Fall wird der Turmzug anschließend zusätzlich ausgeführt.
- * @see com.iks.dddschach.domain.Schachpartie#fuehreHalbzugAus
+ * @see Schachpartie#fuehreHalbzugAus
  */
 public class RochadenCheck implements HalbzugValidation {
 
