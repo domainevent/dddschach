@@ -2,6 +2,8 @@ package com.iks.dddschach.service.api;
 
 import com.iks.dddschach.domain.AktuellesSpielbrettRequest;
 import com.iks.dddschach.domain.AktuellesSpielbrettResponse;
+import com.iks.dddschach.domain.NeuesSpielRequest;
+import com.iks.dddschach.domain.NeuesSpielResponse;
 import com.iks.dddschach.olddomain.SpielId;
 import com.iks.dddschach.olddomain.Halbzug;
 import com.iks.dddschach.domain.validation.Zugregel;
@@ -16,14 +18,18 @@ import java.util.Optional;
  */
 public interface SchachpartieApi {
 
+
+
+
     /**
      * Erzeugt ein neues Spiel
      *
-     * @param vermerk eine beliebiger Vermerk zu dieser Partie, z.B. Spieler, Ort, etc.
+     * @param request eine beliebiger Vermerk zu dieser Partie, z.B. Spieler, Ort, etc.
      * @return eine weltweit eindeutige Id
      * @throws Exception falls kein neues Spiel erzeugt werden konnte (technische Probleme)
      */
-    SpielId neuesSpiel(Optional<String> vermerk) throws Exception;
+    NeuesSpielResponse neuesSpiel(NeuesSpielRequest request) throws Exception;
+
 
 
     /**

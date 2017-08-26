@@ -1,9 +1,6 @@
 package com.iks.dddschach.rest;
 
-import com.iks.dddschach.domain.AktuellesSpielbrettRequest;
-import com.iks.dddschach.domain.AktuellesSpielbrettResponse;
-import com.iks.dddschach.domain.Spielbrett;
-import com.iks.dddschach.domain.SpielbrettExt;
+import com.iks.dddschach.domain.*;
 import com.iks.dddschach.service.api.SchachpartieApi;
 import com.iks.dddschach.service.api.SchachpartieApi.UngueltigeSpielIdException;
 import com.iks.dddschach.service.api.SchachpartieApi.UngueltigerHalbzugException;
@@ -73,9 +70,9 @@ public class RestService implements RestServiceInterface {
     public SpielId neuesSpiel(@Size(max = 100) @FormParam("note") String vermerk)
     {
         try {
-            final SpielId spielId = schachpartieApi.neuesSpiel(Optional.ofNullable(vermerk));
-            LOG.info("Neue Partie mit Spiel-ID='" + spielId + ", Vermerk='" + vermerk + "'");
-            return spielId;
+            final NeuesSpielResponse response = schachpartieApi.neuesSpiel(new NeuesSpielRequest(vermerk));
+            LOG.info("Neue Partie mit Spiel-ID='" + response.getSpielId() + ", Vermerk='" + vermerk + "'");
+            return new SpielId(response.getSpielId().getId());
         }
         catch (Exception e) {
             LOG.error("Interner Server-Error", e);

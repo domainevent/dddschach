@@ -1,9 +1,8 @@
 package com.iks.dddschach.service.impl;
 
-import com.iks.dddschach.domain.AktuellesSpielbrettRequest;
-import com.iks.dddschach.domain.AktuellesSpielbrettResponse;
-import com.iks.dddschach.domain.SpielbrettExt;
+import com.iks.dddschach.domain.*;
 import com.iks.dddschach.olddomain.*;
+import com.iks.dddschach.olddomain.SpielId;
 import com.iks.dddschach.service.api.SchachpartieApi;
 
 import java.io.IOException;
@@ -23,13 +22,21 @@ public class SchachpartieApiImpl implements SchachpartieApi {
         SCHACHPARTIE_REPOSITORY = schachpartieRepository;
     }
 
+//    @Override
+//    public SpielId neuesSpiel(Optional<String> vermerk) throws IOException {
+//        final Schachpartie schachpartie = SCHACHPARTIE_FACTORY.createSchachpartie();
+//        SCHACHPARTIE_REPOSITORY.save(schachpartie);
+//        return schachpartie.getId();
+//    }
+
     @Override
-    public SpielId neuesSpiel(Optional<String> vermerk) throws IOException {
+    public NeuesSpielResponse neuesSpiel(NeuesSpielRequest request) throws Exception {
         final Schachpartie schachpartie = SCHACHPARTIE_FACTORY.createSchachpartie();
         SCHACHPARTIE_REPOSITORY.save(schachpartie);
-        return schachpartie.getId();
+        final com.iks.dddschach.domain.SpielId spielId =
+                new com.iks.dddschach.domain.SpielId(schachpartie.getId().id);
+        return new NeuesSpielResponse(spielId);
     }
-
 
     @Override
     public Halbzug parse(String eingabe) throws ParseException {
@@ -64,15 +71,5 @@ public class SchachpartieApiImpl implements SchachpartieApi {
         return new AktuellesSpielbrettResponse(spielbrettExt);
     }
 
-
-//
-//    @Override
-//    public Spielbrett aktuellesSpielbrett(AktuellesSpielbrettRequest request) throws UngueltigeSpielIdException, IOException {
-//        final Optional<Schachpartie> schachpartie = SCHACHPARTIE_REPOSITORY.findById(spielId);
-//        if (!schachpartie.isPresent()) {
-//            throw new UngueltigeSpielIdException(spielId);
-//        }
-//        return schachpartie.get().aktuellesSpielbrett();
-//    }
 
 }

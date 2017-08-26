@@ -15,6 +15,32 @@
     <!-- ################### Messages ###################### -->
     <!-- ################################################### -->
 
+    <xs:element name="NeuesSpielRequest">
+        <xs:annotation><xs:documentation>Erzeugt eine neue Spielpartie</xs:documentation></xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="vermerk" type="xs:string" minOccurs="0">
+                    <xs:annotation><xs:documentation>Vermerk zur Spielpartie</xs:documentation></xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="NeuesSpielResponse">
+        <xs:annotation><xs:documentation>Die Id des neu erzeugten Spiels</xs:documentation></xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="spielId" type="tns:SpielId">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Eine eindeutige neues Id, über die Spielpartie identifiziert werden kann
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <xs:element name="AktuellesSpielbrettRequest">
         <xs:annotation><xs:documentation>Fordert das aktuelle Spielbrett an</xs:documentation></xs:annotation>
         <xs:complexType>
