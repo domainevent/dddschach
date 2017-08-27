@@ -48,4 +48,13 @@ public class Halbzug extends ValueObject {
         return (from == null? "<null>" : from) + "-" + (to == null? "<null>" : to);
     }
 
+    public static Halbzug fromNew(com.iks.dddschach.domain.Halbzug halbzug) {
+        return new Halbzug(Position.fromNew(halbzug.getVon()), Position.fromNew(halbzug.getNach()));
+    }
+
+
+    public static com.iks.dddschach.domain.Halbzug fromOld(Halbzug halbzug) {
+        return new com.iks.dddschach.domain.Halbzug(Position.fromOld(halbzug.from), Position.fromOld(halbzug.to));
+    }
+
 }

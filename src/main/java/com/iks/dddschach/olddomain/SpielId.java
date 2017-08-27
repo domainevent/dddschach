@@ -27,4 +27,8 @@ public class SpielId extends ValueObject {
         return id;
     }
 
+    public static SpielId fromNew(com.iks.dddschach.domain.SpielId spielId) {
+        return new SpielId(spielId.getId());
+    }
+
 }

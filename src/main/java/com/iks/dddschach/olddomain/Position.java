@@ -2,6 +2,7 @@ package com.iks.dddschach.olddomain;
 
 import com.iks.dddschach.domain.base.EnumObject;
 import com.iks.dddschach.domain.base.ValueObject;
+import javafx.geometry.Pos;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlEnum;
@@ -32,6 +33,14 @@ public class Position extends ValueObject {
         public String toString() {
             return marshal().toString();
         }
+
+        public static Spalte fromNew(com.iks.dddschach.domain.Spalte spalte) {
+            return Spalte.values()[spalte.ordinal()];
+        }
+
+        public static com.iks.dddschach.domain.Spalte fromOld(Spalte spalte) {
+            return com.iks.dddschach.domain.Spalte.values()[spalte.ordinal()];
+        }
     }
 
 
@@ -58,6 +67,14 @@ public class Position extends ValueObject {
         @Override
         public String toString() {
             return "" + marshal();
+        }
+
+        public static Zeile fromNew(com.iks.dddschach.domain.Zeile zeile) {
+            return Zeile.values()[zeile.ordinal()];
+        }
+
+        public static com.iks.dddschach.domain.Zeile fromOld(Zeile spalte) {
+            return com.iks.dddschach.domain.Zeile.values()[spalte.ordinal()];
         }
     }
 
@@ -100,6 +117,15 @@ public class Position extends ValueObject {
         return "" +
                 (horCoord  == null? "<null>" : horCoord) +
                 (vertCoord  == null? "<null>" : vertCoord);
+    }
+
+
+    public static Position fromNew(com.iks.dddschach.domain.Position position) {
+        return new Position(Spalte.fromNew(position.getSpalte()), Zeile.fromNew(position.getZeile()));
+    }
+
+    public static com.iks.dddschach.domain.Position fromOld(Position position) {
+        return new com.iks.dddschach.domain.Position(Zeile.fromOld(position.vertCoord), Spalte.fromOld(position.horCoord));
     }
 
 }

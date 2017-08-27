@@ -1,10 +1,10 @@
 package com.iks.dddschach.api;
 
 import com.iks.dddschach.domain.*;
-import com.iks.dddschach.olddomain.*;
+import com.iks.dddschach.olddomain.Halbzug;
 import com.iks.dddschach.olddomain.Position;
-import com.iks.dddschach.olddomain.SpielId;
 import com.iks.dddschach.olddomain.Spielbrett;
+import com.iks.dddschach.olddomain.*;
 import com.iks.dddschach.olddomain.Spielfigur;
 import com.iks.dddschach.persistence.SchachpartieRepositoryMemory;
 import com.iks.dddschach.service.api.SchachpartieApi;
@@ -14,9 +14,10 @@ import org.junit.Test;
 
 import java.util.Optional;
 
-import static com.iks.dddschach.olddomain.Position.Zeile.*;
-import static com.iks.dddschach.olddomain.Position.Spalte.*;
-import static com.iks.dddschach.olddomain.SpielNotationParser.parse;
+import static com.iks.dddschach.olddomain.Position.Spalte.D;
+import static com.iks.dddschach.olddomain.Position.Spalte.E;
+import static com.iks.dddschach.olddomain.Position.Zeile._2;
+import static com.iks.dddschach.olddomain.Position.Zeile._4;
 
 
 /**
@@ -46,12 +47,12 @@ public class SchachspielApiTest {
     @Test
     public void istAmStartInitialesSchachBrettVorhanden() throws Exception {
         final NeuesSpielResponse response1 = api.neuesSpiel(new NeuesSpielRequest("Vermerk"));
-        final SpielId spielId = new SpielId(response1.getSpielId().getId());
-        final AktuellesSpielbrettRequest request
-                = new AktuellesSpielbrettRequest(new com.iks.dddschach.domain.SpielId(spielId.id));
-        final AktuellesSpielbrettResponse response = api.aktuellesSpielbrett(request);
+
+        final AktuellesSpielbrettRequest request = new AktuellesSpielbrettRequest(response1.getSpielId());
+        final AktuellesSpielbrettResponse response2 = api.aktuellesSpielbrett(request);
+
         final Spielbrett expected = SpielbrettFactory.createInitialesSpielbrett();
-        SpielbrettExt spielbrett = (SpielbrettExt)response.getSpielbrett();
+        SpielbrettExt spielbrett = (SpielbrettExt)response2.getSpielbrett();
         Assert.assertEquals(expected.encode(), spielbrett.encode());
     }
 
@@ -78,24 +79,28 @@ public class SchachspielApiTest {
                     setSchachfigurAnPosition(posTo2, figure);
                 }};
 
-        final NeuesSpielResponse response = api.neuesSpiel(new NeuesSpielRequest("Vermerk"));
-        final SpielId spielId = new SpielId(response.getSpielId().getId());
-        final AktuellesSpielbrettRequest request1
-                = new AktuellesSpielbrettRequest(new com.iks.dddschach.domain.SpielId(spielId.id));
-        api.fuehreHalbzugAus(spielId, new Halbzug(posFrom1, posTo1));
+        final NeuesSpielResponse neuesSpielResponse1 = api.neuesSpiel(new NeuesSpielRequest("Vermerk"));
+        final Halbzug halbzugOld1 = new Halbzug(posFrom1, posTo1);
+        final FuehreHalbzugAusRequest fuehreHalbzugAusRequest1 = new FuehreHalbzugAusRequest(neuesSpielResponse1.getSpielId(), HalbzugExt.fromOld(halbzugOld1));
 
-        final AktuellesSpielbrettResponse response1 = api.aktuellesSpielbrett(request1);
+        api.fuehreHalbzugAus(fuehreHalbzugAusRequest1);
 
-        final NeuesSpielResponse response2 = api.neuesSpiel(new NeuesSpielRequest("Vermerk"));
-        final SpielId spielId2 = new SpielId(response2.getSpielId().getId());
-        final AktuellesSpielbrettRequest request2
-                = new AktuellesSpielbrettRequest(new com.iks.dddschach.domain.SpielId(spielId2.id));
-        api.fuehreHalbzugAus(spielId2, new Halbzug(posFrom2, posTo2));
+        final AktuellesSpielbrettRequest aktuellesSpielbrettRequest1 = new AktuellesSpielbrettRequest(neuesSpielResponse1.getSpielId());
+        final AktuellesSpielbrettResponse aktuellesSpielbrettResponse1 = api.aktuellesSpielbrett(aktuellesSpielbrettRequest1);
 
-        final AktuellesSpielbrettResponse response3 = api.aktuellesSpielbrett(request2);
+        final NeuesSpielResponse neuesSpielResponse2 = api.neuesSpiel(new NeuesSpielRequest("Vermerk"));
+        final Halbzug halbzugOld2 = new Halbzug(posFrom2, posTo2);
 
-        SpielbrettExt spielbrett1 = (SpielbrettExt)response1.getSpielbrett();
-        SpielbrettExt spielbrett2 = (SpielbrettExt)response3.getSpielbrett();
+        final FuehreHalbzugAusRequest fuehreHalbzugAusRequest2 = new FuehreHalbzugAusRequest(neuesSpielResponse2.getSpielId(), HalbzugExt.fromOld(halbzugOld2));
+        api.fuehreHalbzugAus(fuehreHalbzugAusRequest2);
+
+        final AktuellesSpielbrettRequest aktuellesSpielbrettRequest2
+                = new AktuellesSpielbrettRequest(neuesSpielResponse2.getSpielId());
+
+        final AktuellesSpielbrettResponse aktuellesSpielbrettResponse2 = api.aktuellesSpielbrett(aktuellesSpielbrettRequest2);
+
+        SpielbrettExt spielbrett1 = (SpielbrettExt)aktuellesSpielbrettResponse1.getSpielbrett();
+        SpielbrettExt spielbrett2 = (SpielbrettExt)aktuellesSpielbrettResponse2.getSpielbrett();
 
         Assert.assertEquals(expected1.encode(), spielbrett1.encode());
         Assert.assertEquals(expected2.encode(), spielbrett2.encode());
@@ -105,26 +110,28 @@ public class SchachspielApiTest {
     @Test
     public void fuehreZuegeVonWeissDanachSchwarzInEinerPartieAus() throws Exception {
         final NeuesSpielResponse response1 = api.neuesSpiel(new NeuesSpielRequest("Vermerk"));
-        final SpielId spielId = new SpielId(response1.getSpielId().getId());
-        api.fuehreHalbzugAus(spielId, parse("e2-e4"));
-        api.fuehreHalbzugAus(spielId, parse("d7-d5"));
+        final FuehreHalbzugAusRequest fuehreHalbzugAusRequest1 = new FuehreHalbzugAusRequest(response1.getSpielId(), new HalbzugExt("e2-e4"));
+        api.fuehreHalbzugAus(fuehreHalbzugAusRequest1);
+        final FuehreHalbzugAusRequest fuehreHalbzugAusRequest2 = new FuehreHalbzugAusRequest(response1.getSpielId(), new HalbzugExt("d7-d5"));
+        api.fuehreHalbzugAus(fuehreHalbzugAusRequest2);
     }
 
 
     @Test(expected = Exception.class)
     public void ungueltigerZugWeilZweimalGleicherSpieler() throws Exception {
         final NeuesSpielResponse response1 = api.neuesSpiel(new NeuesSpielRequest("Vermerk"));
-        final SpielId spielId = new SpielId(response1.getSpielId().getId());
-        api.fuehreHalbzugAus(spielId, parse("e2-e4"));
-        api.fuehreHalbzugAus(spielId, parse("e4-e5"));
+        final FuehreHalbzugAusRequest fuehreHalbzugAusRequest1 = new FuehreHalbzugAusRequest(response1.getSpielId(), new HalbzugExt("e2-e4"));
+        api.fuehreHalbzugAus(fuehreHalbzugAusRequest1);
+        final FuehreHalbzugAusRequest fuehreHalbzugAusRequest2 = new FuehreHalbzugAusRequest(response1.getSpielId(), new HalbzugExt("e4-e5"));
+        api.fuehreHalbzugAus(fuehreHalbzugAusRequest2);
     }
 
 
     @Test(expected = Exception.class)
     public void ungueltigerZugDennKeineSpielfigurAufStartfeld() throws Exception {
         final NeuesSpielResponse response1 = api.neuesSpiel(new NeuesSpielRequest("Vermerk"));
-        final SpielId spielId = new SpielId(response1.getSpielId().getId());
-        api.fuehreHalbzugAus(spielId, parse("e3-e4"));
+        final FuehreHalbzugAusRequest fuehreHalbzugAusRequest1 = new FuehreHalbzugAusRequest(response1.getSpielId(), new HalbzugExt("e3-e4"));
+        api.fuehreHalbzugAus(fuehreHalbzugAusRequest1);
     }
 
 }

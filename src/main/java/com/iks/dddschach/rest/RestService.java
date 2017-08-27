@@ -200,7 +200,12 @@ public class RestService implements RestServiceInterface {
 
         final int zugIndex;
         try {
-            zugIndex = schachpartieApi.fuehreHalbzugAus(new SpielId(spielId), halbzug);
+
+            final FuehreHalbzugAusRequest request = new FuehreHalbzugAusRequest(
+                            new com.iks.dddschach.domain.SpielId(spielId),
+                            HalbzugExt.fromOld(halbzug));
+
+            zugIndex = schachpartieApi.fuehreHalbzugAus(request).getHalbzugZaehler();
         }
         catch (UngueltigeSpielIdException e) {
             LOG.warn("Die Spiel-ID '" + e.spielId + "' ist ungueltig.");

@@ -14,6 +14,7 @@ public enum Farbe implements EnumObject<Character> {
     /** schwarz */
     SCHWARZ;
 
+
     @Override
     public Character marshal() {
         switch (this) {
@@ -31,6 +32,11 @@ public enum Farbe implements EnumObject<Character> {
             case 'b': return SCHWARZ;
         }
         throw new IllegalArgumentException("Unexpected marshalled character " + encoded);
+    }
+
+
+    public static Farbe fromNew(com.iks.dddschach.domain.Farbe farbe) {
+        return Farbe.valueOf(farbe.name());
     }
 
 }

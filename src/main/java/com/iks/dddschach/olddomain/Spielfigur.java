@@ -1,6 +1,7 @@
 package com.iks.dddschach.olddomain;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.iks.dddschach.domain.FigurenTyp;
 import com.iks.dddschach.domain.base.EnumObject;
 import com.iks.dddschach.domain.base.ValueObject;
 
@@ -53,6 +54,10 @@ public class Spielfigur extends ValueObject {
             }
             throw new IllegalArgumentException("Unexpected marshalled character " + encoded);
         }
+
+        public static FigurenTyp fromNew(com.iks.dddschach.domain.FigurenTyp figurenTyp) {
+            return FigurenTyp.valueOf(figurenTyp.name());
+        }
     }
 
 
@@ -85,6 +90,10 @@ public class Spielfigur extends ValueObject {
     @Override
     public String toString() {
         return "" + figure.marshal() + color.marshal();
+    }
+
+    public Spielfigur fromNew(com.iks.dddschach.domain.Spielfigur spielfigur) {
+        return new Spielfigur(FigurenTyp.fromNew(spielfigur.getFigure()), Farbe.fromNew(spielfigur.getFarbe()));
     }
 
 }

@@ -69,7 +69,7 @@ public class SpielbrettExt extends Spielbrett {
                 }
                 else {
                     char ch = encodeFigure(figure.getFigure());
-                    result += (figure.getColor() == WEISS)? toUpperCase(ch) : toLowerCase(ch);
+                    result += (figure.getFarbe() == WEISS)? toUpperCase(ch) : toLowerCase(ch);
                 }
             }
         }

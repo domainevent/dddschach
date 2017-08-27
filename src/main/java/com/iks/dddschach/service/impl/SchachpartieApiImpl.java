@@ -2,6 +2,7 @@ package com.iks.dddschach.service.impl;
 
 import com.iks.dddschach.domain.*;
 import com.iks.dddschach.olddomain.*;
+import com.iks.dddschach.olddomain.Halbzug;
 import com.iks.dddschach.olddomain.SpielId;
 import com.iks.dddschach.service.api.SchachpartieApi;
 
@@ -22,12 +23,6 @@ public class SchachpartieApiImpl implements SchachpartieApi {
         SCHACHPARTIE_REPOSITORY = schachpartieRepository;
     }
 
-//    @Override
-//    public SpielId neuesSpiel(Optional<String> vermerk) throws IOException {
-//        final Schachpartie schachpartie = SCHACHPARTIE_FACTORY.createSchachpartie();
-//        SCHACHPARTIE_REPOSITORY.save(schachpartie);
-//        return schachpartie.getId();
-//    }
 
     @Override
     public NeuesSpielResponse neuesSpiel(NeuesSpielRequest request) throws Exception {
@@ -45,24 +40,28 @@ public class SchachpartieApiImpl implements SchachpartieApi {
 
 
 
+
     @Override
-    public int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug)
+    public FuehreHalbzugAusResponse fuehreHalbzugAus(FuehreHalbzugAusRequest request)
             throws UngueltigerHalbzugException, UngueltigeSpielIdException, IOException {
 
-        final Optional<Schachpartie> schachpartie = SCHACHPARTIE_REPOSITORY.findById(spielId);
+        final SpielId spielId = SpielId.fromNew(request.getSpielId());
+        final Halbzug halbzug = Halbzug.fromNew(request.getHalbzug());
+
+        final Optional<Schachpartie> schachpartie =
+                SCHACHPARTIE_REPOSITORY.findById(spielId);
         if (!schachpartie.isPresent()) {
             throw new UngueltigeSpielIdException(spielId);
         }
         final int no = schachpartie.get().fuehreHalbzugAus(halbzug);
         SCHACHPARTIE_REPOSITORY.save(schachpartie.get());
-        return no;
+        return new FuehreHalbzugAusResponse(no);
     }
 
 
     @Override
     public AktuellesSpielbrettResponse aktuellesSpielbrett(AktuellesSpielbrettRequest request) throws UngueltigeSpielIdException, IOException {
-        final com.iks.dddschach.domain.SpielId spielId2 = request.getSpielId();
-        final SpielId spielId = new com.iks.dddschach.olddomain.SpielId(spielId2.getId());
+        final SpielId spielId = SpielId.fromNew(request.getSpielId());
         final Optional<Schachpartie> schachpartie = SCHACHPARTIE_REPOSITORY.findById(spielId);
         if (!schachpartie.isPresent()) {
             throw new UngueltigeSpielIdException(spielId);

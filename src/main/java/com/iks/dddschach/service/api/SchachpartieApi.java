@@ -1,9 +1,6 @@
 package com.iks.dddschach.service.api;
 
-import com.iks.dddschach.domain.AktuellesSpielbrettRequest;
-import com.iks.dddschach.domain.AktuellesSpielbrettResponse;
-import com.iks.dddschach.domain.NeuesSpielRequest;
-import com.iks.dddschach.domain.NeuesSpielResponse;
+import com.iks.dddschach.domain.*;
 import com.iks.dddschach.olddomain.SpielId;
 import com.iks.dddschach.olddomain.Halbzug;
 import com.iks.dddschach.domain.validation.Zugregel;
@@ -17,8 +14,6 @@ import java.util.Optional;
  * Schnittstelle zu dddschach.
  */
 public interface SchachpartieApi {
-
-
 
 
     /**
@@ -78,14 +73,13 @@ public interface SchachpartieApi {
      * Hinweis: Eine komplette Validation nach den Schachregeln soll im Rahmen des DDD-Workshops
      * nicht implementiert werden.
      *
-     * @param spielId (eindeutige) ID, die anfangs durch <code>neuesSpiel</code> erzeugt worden ist.
-     * @param halbzug Der auszuführende {@link Halbzug}
+     * @param request (eindeutige) ID, die anfangs durch <code>neuesSpiel</code> erzeugt worden ist.
      * @return der Index des Zuges (beginnend mit 1)
      * @throws UngueltigerHalbzugException falls der Halbzug ungueltig ist
      * @throws UngueltigeSpielIdException falls es keine Partie zu <code>spielId</code> gibt
      * @throws IOException bei sonstigen (technischen) Problemen
      */
-    int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug)
+    FuehreHalbzugAusResponse fuehreHalbzugAus(FuehreHalbzugAusRequest request)
             throws UngueltigerHalbzugException, UngueltigeSpielIdException, IOException;
 
 
