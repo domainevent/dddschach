@@ -94,6 +94,18 @@
     </xs:element>
 
 
+    <xs:complexType name="Schachpartie">
+        <xs:sequence>
+            <xs:element name="halbzugHistorie" type="tns:HalbzugHistorie">
+                <xs:annotation><xs:documentation>Spielfeld</xs:documentation></xs:annotation>
+            </xs:element>
+            <xs:element name="spielbrett" type="tns:Spielbrett">
+                <xs:annotation><xs:documentation>Spielfeld</xs:documentation></xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
     <xs:complexType name="SpielId">
         <xs:annotation><xs:documentation>SpielId</xs:documentation></xs:annotation>
         <xs:sequence>
@@ -123,6 +135,15 @@
                 <xs:annotation><xs:documentation>Spielfeld</xs:documentation></xs:annotation>
             </xs:element>
             <xs:element name="spielfigur" type="tns:Spielfigur">
+                <xs:annotation><xs:documentation>Spielfeld</xs:documentation></xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="HalbzugHistorie">
+        <xs:sequence>
+            <xs:element name="halbzuege" type="tns:Halbzug" minOccurs="0" maxOccurs="unbounded">
                 <xs:annotation><xs:documentation>Spielfeld</xs:documentation></xs:annotation>
             </xs:element>
         </xs:sequence>
