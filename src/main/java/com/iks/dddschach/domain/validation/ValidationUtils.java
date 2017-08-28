@@ -16,7 +16,7 @@ public class ValidationUtils {
     }
 
     public static Position toPosition(IntegerTupel tupel) {
-        return new Position(Zeile.values()[tupel.y()], Spalte.values()[tupel.x()]);
+        return new Position(Spalte.values()[tupel.x()], Zeile.values()[tupel.y()]);
     }
 
     public static Position middle(Position from, Position to) {

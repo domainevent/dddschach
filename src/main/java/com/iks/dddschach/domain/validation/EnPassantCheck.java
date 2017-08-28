@@ -6,6 +6,7 @@ import org.apache.commons.lang3.Validate;
 
 import java.util.*;
 
+import static com.iks.dddschach.domain.Farbe.SCHWARZ;
 import static com.iks.dddschach.domain.Farbe.WEISS;
 import static com.iks.dddschach.domain.validation.ValidationUtils.toIntegerTupel;
 
@@ -46,8 +47,8 @@ public class EnPassantCheck implements HalbzugValidation {
             Validate.isTrue(halbzugHistorie.size() > 0,"No halbzugHistorie present" );
 
             final Halbzug erwarteterVorgaengerHalbzug = new Halbzug(
-                    new Position(halbzug.getNach().getZeile(), zugFigur.getFarbe() == WEISS ? Zeile.VII : Zeile.II),
-                    new Position(halbzug.getNach().getZeile(), zugFigur.getFarbe() == WEISS ? Zeile.V : Zeile.IV));
+                    new Position(halbzug.getNach().getSpalte(), zugFigur.getFarbe() == WEISS ? Zeile.VII : Zeile.II),
+                    new Position(halbzug.getNach().getSpalte(), zugFigur.getFarbe() == WEISS ? Zeile.V : Zeile.IV));
 
             final Halbzug tatsaelicherVorgaengerHalbzug = halbzugHistorie.get(halbzugHistorie.size()-1);
 
@@ -64,21 +65,21 @@ public class EnPassantCheck implements HalbzugValidation {
     }
 
 
-    private boolean istMeinZielfeldFrei(Halbzug halbzug, Spielbrett spielbrett) {
-        return spielbrett.getSchachfigurAnPosition(halbzug.to) == null;
+    private boolean istMeinZielfeldFrei(Halbzug halbzug, SpielbrettExt spielbrett) {
+        return spielbrett.getSchachfigurAnPosition(halbzug.getNach()) == null;
     }
 
-    private boolean stehtNebenMirEinGegnerischerBauer(Halbzug halbzug, Spielbrett spielbrett, Farbe zugFigurFarbe) {
-        final Position feldNebenMir = new Position(halbzug.to.horCoord, halbzug.from.vertCoord);
+    private boolean stehtNebenMirEinGegnerischerBauer(Halbzug halbzug, SpielbrettExt spielbrett, Farbe zugFigurFarbe) {
+        final Position feldNebenMir = new Position(halbzug.getNach().getSpalte(), halbzug.getVon().getZeile());
         final Spielfigur generischerBauer = new Spielfigur(FigurenTyp.BAUER, (zugFigurFarbe == WEISS)? SCHWARZ : WEISS);
         return generischerBauer.equals(spielbrett.getSchachfigurAnPosition(feldNebenMir));
     }
 
     private boolean zieheIchVonMitteEinFeldDiagonalNachVorn(Halbzug halbzug, Farbe zugFigurFarbe) {
-        if ((zugFigurFarbe == WEISS   && halbzug.from.vertCoord == _5) ||
-            (zugFigurFarbe == SCHWARZ && halbzug.from.vertCoord == _4)) {
+        if ((zugFigurFarbe == WEISS   && halbzug.getVon().getZeile() == Zeile.V) ||
+            (zugFigurFarbe == SCHWARZ && halbzug.getVon().getZeile() == Zeile.IV)) {
 
-            final IntegerTupel diff = toIntegerTupel(halbzug.to).minus(toIntegerTupel(halbzug.from));
+            final IntegerTupel diff = toIntegerTupel(halbzug.getNach()).minus(toIntegerTupel(halbzug.getVon()));
             return diff.abs().x() == 1 && diff.y() == (zugFigurFarbe == WEISS ? 1 : -1);
         }
         return false;

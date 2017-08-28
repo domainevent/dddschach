@@ -1,5 +1,8 @@
 package com.iks.dddschach.olddomain;
 
+import com.iks.dddschach.domain.Schachpartie;
+import com.iks.dddschach.domain.SpielId;
+
 import java.io.IOException;
 import java.util.Optional;
 

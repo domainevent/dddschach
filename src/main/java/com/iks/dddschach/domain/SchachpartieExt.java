@@ -1,17 +1,17 @@
 package com.iks.dddschach.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.iks.dddschach.domain.validation.*;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
+import com.iks.dddschach.service.api.SchachpartieApi.UngueltigerHalbzugException;
 
 import static com.iks.dddschach.domain.validation.Zugregel.DIE_PARTIE_ENDET_MATT;
 import static com.iks.dddschach.domain.validation.Zugregel.DIE_PARTIE_ENDET_PATT;
 
 
 public class SchachpartieExt extends Schachpartie {
+
+    public SchachpartieExt() {
+    }
+
 
     /**
      * Führt den Halbzug auf dem Brett unter Berücksichtigung alle Schachregeln aus. Hält der
@@ -43,7 +43,7 @@ public class SchachpartieExt extends Schachpartie {
         // bei einem En-Passant-Zug muss der geschlagene Bauer noch entfernt werden:
         if (validationResult instanceof EnPassantCheck.EnPassantCheckResult) {
             final EnPassantCheck.EnPassantCheckResult enPassantCheckResult = (EnPassantCheck.EnPassantCheckResult) validationResult;
-            spielbrett = new Spielbrett(spielbrett) {{
+            spielbrett = new SpielbrettExt(spielbrett) {{
                 setSchachfigurAnPosition(enPassantCheckResult.positionGeschlBauer, null);
             }};
         }
@@ -51,13 +51,13 @@ public class SchachpartieExt extends Schachpartie {
         // Bei einer Bauernumwandlung muss der Bauer anschließend noch gegen die Zielfigur eingetauscht werden:
         if (validationResult instanceof BauernumwCheck.BauernumwCheckResult) {
             final BauernumwCheck.BauernumwCheckResult bauernumwCheckResult = (BauernumwCheck.BauernumwCheckResult) validationResult;
-            spielbrett = new Spielbrett(spielbrett) {{
-                setSchachfigurAnPosition(halbzug.to, bauernumwCheckResult.zielFigur);
+            spielbrett = new SpielbrettExt(spielbrett) {{
+                setSchachfigurAnPosition(halbzug.getNach(), bauernumwCheckResult.zielFigur);
             }};
         }
 
-        halbzugHistorie.addHalbzug(halbzug);
-        return halbzugHistorie.size();
+        halbzugHistorie.withHalbzuege(halbzug);
+        return halbzugHistorie.halbzuege.size();
     }
 
 

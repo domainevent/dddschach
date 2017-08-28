@@ -1,5 +1,7 @@
 package com.iks.dddschach.persistence;
 
+import com.iks.dddschach.domain.Schachpartie;
+import com.iks.dddschach.domain.SpielId;
 import com.iks.dddschach.olddomain.SchachpartieRepository;
 
 import javax.persistence.EntityManager;
@@ -17,7 +19,7 @@ public class SchachpartieRepositoryDB implements SchachpartieRepository {
 
     public Optional<Schachpartie> findById(SpielId spielId) throws IOException {
         EntityManager em = Persistence.createEntityManagerFactory(DATABASE_NAME).createEntityManager();
-        final SchachpartieDB schachpartieDB = em.find(SchachpartieDB.class, spielId.id);
+        final SchachpartieDB schachpartieDB = em.find(SchachpartieDB.class, spielId.getId());
         em.close();
         return (schachpartieDB == null)? Optional.empty() : Optional.of(schachpartieDB.toSchachpartie());
     }

@@ -1,5 +1,7 @@
 package com.iks.dddschach.persistence;
 
+import com.iks.dddschach.domain.Schachpartie;
+import com.iks.dddschach.domain.SpielId;
 import com.iks.dddschach.olddomain.SchachpartieRepository;
 
 import java.util.HashMap;

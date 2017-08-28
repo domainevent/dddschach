@@ -1,9 +1,6 @@
 package com.iks.dddschach.domain.validation;
 
-import com.iks.dddschach.domain.Farbe;
-import com.iks.dddschach.domain.Halbzug;
-import com.iks.dddschach.domain.Spielbrett;
-import com.iks.dddschach.domain.SpielbrettExt;
+import com.iks.dddschach.domain.*;
 
 import java.util.List;
 import java.util.Objects;

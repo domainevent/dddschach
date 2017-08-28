@@ -30,7 +30,7 @@ public class RochadenCheck implements HalbzugValidation {
 
 	final static Halbzug ROCHADE_HALBZUG_KOENIG_WEISS_GROSS   = new Halbzug(UR_POSITION_KOENIG_WEISS, new Position(C,I));
     final static Halbzug ROCHADE_HALBZUG_KOENIG_WEISS_KLEIN   = new Halbzug(UR_POSITION_KOENIG_WEISS, new Position(G,I));
-    final static Halbzug ROCHADE_HALBZUG_KOENIG_SCHWARZ_GROSS = new Halbzug(UR_POSITION_KOENIG_SCHWARZ, new Position(C,VIII);
+    final static Halbzug ROCHADE_HALBZUG_KOENIG_SCHWARZ_GROSS = new Halbzug(UR_POSITION_KOENIG_SCHWARZ, new Position(C,VIII));
     final static Halbzug ROCHADE_HALBZUG_KOENIG_SCHWARZ_KLEIN = new Halbzug(UR_POSITION_KOENIG_SCHWARZ, new Position(G,VIII));
 
     final static Halbzug ROCHADE_HALBZUG_TURM_WEISS_GROSS   = new Halbzug(UR_POSITION_TURM_LINKS_WEISS, new Position(D,I));

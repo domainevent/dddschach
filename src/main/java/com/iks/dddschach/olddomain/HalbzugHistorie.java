@@ -1,5 +1,6 @@
 package com.iks.dddschach.olddomain;
 
+import com.iks.dddschach.domain.Halbzug;
 import com.iks.dddschach.domain.base.EntityObject;
 
 import java.util.ArrayList;

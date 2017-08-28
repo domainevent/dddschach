@@ -1,6 +1,7 @@
 package com.iks.dddschach.persistence;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.iks.dddschach.domain.Schachpartie;
 import com.iks.dddschach.olddomain.HalbzugHistorie;
 
 import javax.persistence.Entity;
