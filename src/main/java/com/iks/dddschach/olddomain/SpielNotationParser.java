@@ -1,5 +1,10 @@
 package com.iks.dddschach.olddomain;
 
+import com.iks.dddschach.domain.Halbzug;
+import com.iks.dddschach.domain.Position;
+import com.iks.dddschach.domain.Spalte;
+import com.iks.dddschach.domain.Zeile;
+
 import java.text.ParseException;
 
 
@@ -35,8 +40,8 @@ public class SpielNotationParser {
      */
     public static Position parsePosition(String eingabe) throws ParseException {
         try {
-            Position.Spalte spalte = Position.Spalte.valueOf(eingabe.substring(0, 1).toUpperCase());
-            Position.Zeile zeile = Position.Zeile.valueOf("_" + eingabe.substring(1, 2));
+            Spalte spalte = Spalte.valueOf(eingabe.substring(0, 1).toUpperCase());
+            Zeile zeile = Zeile.valueOf("_" + eingabe.substring(1, 2));
             return new Position(spalte, zeile);
         }
         catch (Exception e) {
