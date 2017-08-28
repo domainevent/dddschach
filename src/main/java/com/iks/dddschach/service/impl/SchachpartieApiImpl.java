@@ -26,8 +26,7 @@ public class SchachpartieApiImpl implements SchachpartieApi {
     public NeuesSpielResponse neuesSpiel(NeuesSpielRequest request) throws Exception {
         final SchachpartieExt schachpartie = SCHACHPARTIE_FACTORY.createSchachpartie();
         SCHACHPARTIE_REPOSITORY.save(schachpartie);
-        final com.iks.dddschach.domain.SpielId spielId =
-                new com.iks.dddschach.domain.SpielId(schachpartie.getSpielId().getId());
+        final SpielIdExt spielId = new SpielIdExt(schachpartie.getSpielId().getId());
         return new NeuesSpielResponse(spielId);
     }
 

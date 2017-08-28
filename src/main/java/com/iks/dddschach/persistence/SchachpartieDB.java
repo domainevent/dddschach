@@ -36,7 +36,7 @@ class SchachpartieDB {
         final Spielbrett sb = mapper.readValue(this.spielbrett, Spielbrett.class);
         final HalbzugHistorie hh = mapper.readValue(this.halbzugHistorie, HalbzugHistorie.class);
 
-        return new SchachpartieExt(new SpielId(id)) {{
+        return new SchachpartieExt(new SpielIdExt(id)) {{
             this.setSpielbrett(sb);
             this.setHalbzugHistorie(hh);
         }};

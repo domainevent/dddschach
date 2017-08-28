@@ -41,7 +41,7 @@ public class SchachspielApiTest {
     public void istAmStartInitialesSchachBrettVorhanden() throws Exception {
         final NeuesSpielResponse response1 = api.neuesSpiel(new NeuesSpielRequest("Vermerk"));
 
-        final AktuellesSpielbrettRequest request = new AktuellesSpielbrettRequest(response1.getSpielId());
+        final AktuellesSpielbrettRequest request = new AktuellesSpielbrettRequest((SpielIdExt) response1.getSpielId());
         final AktuellesSpielbrettResponse response2 = api.aktuellesSpielbrett(request);
 
         final SpielbrettExt expected = SpielbrettFactory.createInitialesSpielbrett();
@@ -74,21 +74,21 @@ public class SchachspielApiTest {
 
         final NeuesSpielResponse neuesSpielResponse1 = api.neuesSpiel(new NeuesSpielRequest("Vermerk"));
         final HalbzugExt halbzug1 = new HalbzugExt(posFrom1, posTo1);
-        final FuehreHalbzugAusRequest fuehreHalbzugAusRequest1 = new FuehreHalbzugAusRequest(neuesSpielResponse1.getSpielId(), halbzug1);
+        final FuehreHalbzugAusRequest fuehreHalbzugAusRequest1 = new FuehreHalbzugAusRequest((SpielIdExt)neuesSpielResponse1.getSpielId(), halbzug1);
 
         api.fuehreHalbzugAus(fuehreHalbzugAusRequest1);
 
-        final AktuellesSpielbrettRequest aktuellesSpielbrettRequest1 = new AktuellesSpielbrettRequest(neuesSpielResponse1.getSpielId());
+        final AktuellesSpielbrettRequest aktuellesSpielbrettRequest1 = new AktuellesSpielbrettRequest((SpielIdExt)neuesSpielResponse1.getSpielId());
         final AktuellesSpielbrettResponse aktuellesSpielbrettResponse1 = api.aktuellesSpielbrett(aktuellesSpielbrettRequest1);
 
         final NeuesSpielResponse neuesSpielResponse2 = api.neuesSpiel(new NeuesSpielRequest("Vermerk"));
         final HalbzugExt halbzug2 = new HalbzugExt(posFrom2, posTo2);
 
-        final FuehreHalbzugAusRequest fuehreHalbzugAusRequest2 = new FuehreHalbzugAusRequest(neuesSpielResponse2.getSpielId(), halbzug2);
+        final FuehreHalbzugAusRequest fuehreHalbzugAusRequest2 = new FuehreHalbzugAusRequest((SpielIdExt)neuesSpielResponse2.getSpielId(), halbzug2);
         api.fuehreHalbzugAus(fuehreHalbzugAusRequest2);
 
         final AktuellesSpielbrettRequest aktuellesSpielbrettRequest2
-                = new AktuellesSpielbrettRequest(neuesSpielResponse2.getSpielId());
+                = new AktuellesSpielbrettRequest((SpielIdExt)neuesSpielResponse2.getSpielId());
 
         final AktuellesSpielbrettResponse aktuellesSpielbrettResponse2 = api.aktuellesSpielbrett(aktuellesSpielbrettRequest2);
 
@@ -103,9 +103,9 @@ public class SchachspielApiTest {
     @Test
     public void fuehreZuegeVonWeissDanachSchwarzInEinerPartieAus() throws Exception {
         final NeuesSpielResponse response1 = api.neuesSpiel(new NeuesSpielRequest("Vermerk"));
-        final FuehreHalbzugAusRequest fuehreHalbzugAusRequest1 = new FuehreHalbzugAusRequest(response1.getSpielId(), new HalbzugExt("e2-e4"));
+        final FuehreHalbzugAusRequest fuehreHalbzugAusRequest1 = new FuehreHalbzugAusRequest((SpielIdExt)response1.getSpielId(), new HalbzugExt("e2-e4"));
         api.fuehreHalbzugAus(fuehreHalbzugAusRequest1);
-        final FuehreHalbzugAusRequest fuehreHalbzugAusRequest2 = new FuehreHalbzugAusRequest(response1.getSpielId(), new HalbzugExt("d7-d5"));
+        final FuehreHalbzugAusRequest fuehreHalbzugAusRequest2 = new FuehreHalbzugAusRequest((SpielIdExt)response1.getSpielId(), new HalbzugExt("d7-d5"));
         api.fuehreHalbzugAus(fuehreHalbzugAusRequest2);
     }
 
@@ -113,9 +113,9 @@ public class SchachspielApiTest {
     @Test(expected = Exception.class)
     public void ungueltigerZugWeilZweimalGleicherSpieler() throws Exception {
         final NeuesSpielResponse response1 = api.neuesSpiel(new NeuesSpielRequest("Vermerk"));
-        final FuehreHalbzugAusRequest fuehreHalbzugAusRequest1 = new FuehreHalbzugAusRequest(response1.getSpielId(), new HalbzugExt("e2-e4"));
+        final FuehreHalbzugAusRequest fuehreHalbzugAusRequest1 = new FuehreHalbzugAusRequest((SpielIdExt)response1.getSpielId(), new HalbzugExt("e2-e4"));
         api.fuehreHalbzugAus(fuehreHalbzugAusRequest1);
-        final FuehreHalbzugAusRequest fuehreHalbzugAusRequest2 = new FuehreHalbzugAusRequest(response1.getSpielId(), new HalbzugExt("e4-e5"));
+        final FuehreHalbzugAusRequest fuehreHalbzugAusRequest2 = new FuehreHalbzugAusRequest((SpielIdExt)response1.getSpielId(), new HalbzugExt("e4-e5"));
         api.fuehreHalbzugAus(fuehreHalbzugAusRequest2);
     }
 
@@ -123,7 +123,7 @@ public class SchachspielApiTest {
     @Test(expected = Exception.class)
     public void ungueltigerZugDennKeineSpielfigurAufStartfeld() throws Exception {
         final NeuesSpielResponse response1 = api.neuesSpiel(new NeuesSpielRequest("Vermerk"));
-        final FuehreHalbzugAusRequest fuehreHalbzugAusRequest1 = new FuehreHalbzugAusRequest(response1.getSpielId(), new HalbzugExt("e3-e4"));
+        final FuehreHalbzugAusRequest fuehreHalbzugAusRequest1 = new FuehreHalbzugAusRequest((SpielIdExt)response1.getSpielId(), new HalbzugExt("e3-e4"));
         api.fuehreHalbzugAus(fuehreHalbzugAusRequest1);
     }
 

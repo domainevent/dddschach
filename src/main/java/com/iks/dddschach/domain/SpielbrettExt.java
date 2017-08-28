@@ -139,12 +139,15 @@ public class SpielbrettExt extends Spielbrett {
      * @param figur die zu setzende Figur (z.B. Lw = weißer Läufer)
      */
     protected void setSchachfigurAnPosition(Position position, Spielfigur figur) {
+        Objects.requireNonNull(position, "Argument position is null");
         final List<Spielfeld> spielfelderAnPosition = spielfelder.stream()
                 .filter(spielfeld -> spielfeld.position.equals(position))
                 .collect(Collectors.toList());
 
         spielfelder.removeAll(spielfelderAnPosition);
-        spielfelder.add(new Spielfeld(position, figur));
+        if (figur != null) {
+            spielfelder.add(new Spielfeld(position, figur));
+        }
     }
 
 

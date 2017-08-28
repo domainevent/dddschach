@@ -69,7 +69,7 @@ public class RestService implements RestServiceInterface {
         try {
             final NeuesSpielResponse response = schachpartieApi.neuesSpiel(new NeuesSpielRequest(vermerk));
             LOG.info("Neue Partie mit Spiel-ID='" + response.getSpielId() + ", Vermerk='" + vermerk + "'");
-            return new SpielId(response.getSpielId().getId());
+            return new SpielIdExt(response.getSpielId().getId());
         }
         catch (Exception e) {
             LOG.error("Interner Server-Error", e);
@@ -98,7 +98,7 @@ public class RestService implements RestServiceInterface {
     {
         LOG.debug("Abfrage des Spielfeldes");
         try {
-            final AktuellesSpielbrettRequest spielbrettRequest = new AktuellesSpielbrettRequest(new com.iks.dddschach.domain.SpielId(spielId));
+            final AktuellesSpielbrettRequest spielbrettRequest = new AktuellesSpielbrettRequest(new SpielIdExt(spielId));
             final AktuellesSpielbrettResponse aktuellesSpielbrettResponse = schachpartieApi.aktuellesSpielbrett(spielbrettRequest);
             final SpielbrettExt spielbrett = (SpielbrettExt)aktuellesSpielbrettResponse.getSpielbrett();
             CacheControl cc = new CacheControl();
@@ -198,9 +198,8 @@ public class RestService implements RestServiceInterface {
         final int zugIndex;
         try {
 
-            final FuehreHalbzugAusRequest request = new FuehreHalbzugAusRequest(
-                            new com.iks.dddschach.domain.SpielId(spielId),
-                            halbzug);
+            final FuehreHalbzugAusRequest request =
+                    new FuehreHalbzugAusRequest(new SpielIdExt(spielId), halbzug);
 
             zugIndex = schachpartieApi.fuehreHalbzugAus(request).getHalbzugZaehler();
         }

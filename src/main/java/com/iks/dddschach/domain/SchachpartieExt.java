@@ -3,6 +3,8 @@ package com.iks.dddschach.domain;
 import com.iks.dddschach.domain.validation.*;
 import com.iks.dddschach.service.api.SchachpartieApi.UngueltigerHalbzugException;
 
+import java.util.ArrayList;
+
 import static com.iks.dddschach.domain.validation.Zugregel.DIE_PARTIE_ENDET_MATT;
 import static com.iks.dddschach.domain.validation.Zugregel.DIE_PARTIE_ENDET_PATT;
 
@@ -13,10 +15,11 @@ public class SchachpartieExt extends Schachpartie {
     final static PattMattCheck PATT_MATT_CHECK = new PattMattCheck();
 
     public SchachpartieExt() {
+        super();
     }
 
-    public SchachpartieExt(SpielId spielId) {
-        super(spielId, null, null);
+    public SchachpartieExt(SpielIdExt spielId) {
+        super(spielId, new HalbzugHistorie(new ArrayList<>()), new SpielbrettExt());
     }
 
 
