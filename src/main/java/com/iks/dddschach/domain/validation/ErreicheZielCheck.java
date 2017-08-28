@@ -1,5 +1,9 @@
 package com.iks.dddschach.domain.validation;
 
+import com.iks.dddschach.domain.Halbzug;
+import com.iks.dddschach.domain.SpielbrettExt;
+import com.iks.dddschach.domain.Spielfigur;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -11,14 +15,14 @@ import java.util.Objects;
  */
 public class ErreicheZielCheck implements HalbzugValidation {
 
-    public ValidationResult validiere(Halbzug halbzug, List<Halbzug> halbzugHistorie, Spielbrett spielbrett) {
+    public ValidationResult validiere(Halbzug halbzug, List<Halbzug> halbzugHistorie, SpielbrettExt spielbrett) {
         Objects.requireNonNull(halbzug, "Argument halbzug is null");
         Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
 
-        Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.from);
-        Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.from);
+        Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
+        Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.getNach());
 
-        switch (zugFigur.figure) {
+        switch (zugFigur.getFigur()) {
             case BAUER:
                 return new BauernRegel().validiere(halbzug, halbzugHistorie, spielbrett);
             case TURM:
@@ -32,7 +36,7 @@ public class ErreicheZielCheck implements HalbzugValidation {
             case KOENIG:
                 return new KoenigRegel().validiere(halbzug, halbzugHistorie, spielbrett);
             default:
-                throw new IllegalStateException("Unexpected enum: " + zugFigur.figure);
+                throw new IllegalStateException("Unexpected enum: " + zugFigur.getFigur());
         }
     }
 

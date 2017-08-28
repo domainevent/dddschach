@@ -1,6 +1,9 @@
 package com.iks.dddschach.domain.validation;
 
-import com.iks.dddschach.olddomain.Farbe;
+import com.iks.dddschach.domain.Farbe;
+import com.iks.dddschach.domain.Halbzug;
+import com.iks.dddschach.domain.Position;
+import com.iks.dddschach.domain.SpielbrettExt;
 
 import java.util.List;
 import java.util.Objects;
@@ -24,7 +27,7 @@ public class PattMattCheck {
 
 	/**
 	 */
-    public PattMatt analysiere(final List<Halbzug> halbzugHistorie, final Spielbrett spielbrett) {
+    public PattMatt analysiere(final List<Halbzug> halbzugHistorie, final SpielbrettExt spielbrett) {
         Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
         final Farbe spielerFarbe = ValidationUtils.spielerFarbe(halbzugHistorie.size());
 

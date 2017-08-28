@@ -5,6 +5,10 @@ import static com.iks.dddschach.domain.validation.ValidationUtils.toIntegerTupel
 import java.util.List;
 import java.util.Objects;
 
+import com.iks.dddschach.domain.Halbzug;
+import com.iks.dddschach.domain.Position;
+import com.iks.dddschach.domain.Spielbrett;
+import com.iks.dddschach.domain.SpielbrettExt;
 import com.iks.dddschach.util.IntegerTupel;
 
 
@@ -15,7 +19,7 @@ import com.iks.dddschach.util.IntegerTupel;
 public class FreieBahnCheck implements HalbzugValidation {
 
 	@Override
-	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> halbzugHistorie, Spielbrett spielbrett) {
+	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> halbzugHistorie, SpielbrettExt spielbrett) {
 		Objects.requireNonNull(halbzug, "Argument halbzug is null");
 		Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
 
@@ -27,18 +31,18 @@ public class FreieBahnCheck implements HalbzugValidation {
      * Überprüft, ob sich auf den Spielbrettpositionen innerhalb des Halbzuges (d.h. ohne
      * Berücksichtigung von Start und End-Position) Spielfiguren befinden.
      */
-	boolean success(Halbzug halbzug, Spielbrett spielbrett) {
-        final IntegerTupel from = toIntegerTupel(halbzug.from);
-        final IntegerTupel to = toIntegerTupel(halbzug.to);
+	boolean success(Halbzug halbzug, SpielbrettExt spielbrett) {
+        final IntegerTupel from = toIntegerTupel(halbzug.getVon());
+        final IntegerTupel to = toIntegerTupel(halbzug.getNach());
 
 		if (IntegerTupel.maxNorm(from, to) <=1) return true;
 
-        final Position posMid = ValidationUtils.middle(halbzug.from, halbzug.to);
+        final Position posMid = ValidationUtils.middle(halbzug.getVon(), halbzug.getNach());
         if (spielbrett.getSchachfigurAnPosition(posMid) != null) {
         	return false;
 		}
-		return success(new Halbzug(halbzug.from, posMid), spielbrett) &&
-			   success(new Halbzug(posMid, halbzug.to), spielbrett);
+		return success(new Halbzug(halbzug.getVon(), posMid), spielbrett) &&
+			   success(new Halbzug(posMid, halbzug.getNach()), spielbrett);
 	}
 
 }

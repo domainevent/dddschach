@@ -148,10 +148,10 @@
     <xs:complexType name="Position">
         <xs:annotation><xs:documentation>Position</xs:documentation></xs:annotation>
         <xs:sequence>
-            <xs:element name="zeile" type="tns:Zeile">
+            <xs:element name="spalte" type="tns:Spalte">
                 <xs:annotation><xs:documentation>Spielfeld</xs:documentation></xs:annotation>
             </xs:element>
-            <xs:element name="spalte" type="tns:Spalte">
+            <xs:element name="zeile" type="tns:Zeile">
                 <xs:annotation><xs:documentation>Spielfeld</xs:documentation></xs:annotation>
             </xs:element>
         </xs:sequence>
