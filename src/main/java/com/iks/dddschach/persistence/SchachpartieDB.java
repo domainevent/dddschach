@@ -1,8 +1,7 @@
 package com.iks.dddschach.persistence;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.iks.dddschach.domain.Schachpartie;
-import com.iks.dddschach.olddomain.HalbzugHistorie;
+import com.iks.dddschach.domain.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -21,10 +20,10 @@ class SchachpartieDB {
     String spielbrett;
     String halbzugHistorie;
 
-    public SchachpartieDB(Schachpartie schachpartie) throws IOException {
+    public SchachpartieDB(SchachpartieExt schachpartie) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         StringWriter sw1 = new StringWriter();
-        id = schachpartie.getId().id;
+        id = schachpartie.getSpielId().getId();
         mapper.writeValue(sw1, schachpartie.aktuellesSpielbrett());
         spielbrett = sw1.toString();
         StringWriter sw2 = new StringWriter();
@@ -32,14 +31,14 @@ class SchachpartieDB {
         halbzugHistorie = sw2.toString();
     }
 
-    public Schachpartie toSchachpartie() throws IOException {
+    public SchachpartieExt toSchachpartie() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         final Spielbrett sb = mapper.readValue(this.spielbrett, Spielbrett.class);
         final HalbzugHistorie hh = mapper.readValue(this.halbzugHistorie, HalbzugHistorie.class);
 
-        return new Schachpartie(new SpielId(id)) {{
-            this.spielbrett = sb;
-            this.halbzugHistorie = hh;
+        return new SchachpartieExt(new SpielId(id)) {{
+            this.setSpielbrett(sb);
+            this.setHalbzugHistorie(hh);
         }};
     }
 }

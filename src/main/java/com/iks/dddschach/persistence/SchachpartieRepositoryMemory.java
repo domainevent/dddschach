@@ -1,6 +1,7 @@
 package com.iks.dddschach.persistence;
 
 import com.iks.dddschach.domain.Schachpartie;
+import com.iks.dddschach.domain.SchachpartieExt;
 import com.iks.dddschach.domain.SpielId;
 import com.iks.dddschach.olddomain.SchachpartieRepository;
 
@@ -14,14 +15,14 @@ import java.util.Optional;
  */
 public class SchachpartieRepositoryMemory implements SchachpartieRepository {
 
-    private final Map<SpielId, Schachpartie> repository = new HashMap<>();
+    private final Map<SpielId, SchachpartieExt> repository = new HashMap<>();
 
-    public Optional<Schachpartie> findById(SpielId spielId) {
+    public Optional<SchachpartieExt> findById(SpielId spielId) {
         return Optional.ofNullable(repository.get(spielId));
     }
 
-    public void save(Schachpartie schachpartie) {
-        repository.put(schachpartie.getId(), schachpartie);
+    public void save(SchachpartieExt schachpartie) {
+        repository.put(schachpartie.getSpielId(), schachpartie);
     }
 
 }

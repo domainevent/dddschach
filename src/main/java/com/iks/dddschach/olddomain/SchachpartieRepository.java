@@ -1,6 +1,6 @@
 package com.iks.dddschach.olddomain;
 
-import com.iks.dddschach.domain.Schachpartie;
+import com.iks.dddschach.domain.SchachpartieExt;
 import com.iks.dddschach.domain.SpielId;
 
 import java.io.IOException;
@@ -12,8 +12,8 @@ import java.util.Optional;
  */
 public interface SchachpartieRepository {
 
-    Optional<Schachpartie> findById(SpielId spielId) throws IOException;
+    Optional<SchachpartieExt> findById(SpielId spielId) throws IOException;
 
-    void save(Schachpartie schachpartie) throws IOException;
+    void save(SchachpartieExt schachpartie) throws IOException;
 
 }

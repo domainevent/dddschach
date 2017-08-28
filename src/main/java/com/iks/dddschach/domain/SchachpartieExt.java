@@ -12,6 +12,10 @@ public class SchachpartieExt extends Schachpartie {
     public SchachpartieExt() {
     }
 
+    public SchachpartieExt(SpielId spielId) {
+        super(spielId, null, null);
+    }
+
 
     /**
      * Führt den Halbzug auf dem Brett unter Berücksichtigung alle Schachregeln aus. Hält der

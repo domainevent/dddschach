@@ -190,7 +190,7 @@ public class RestService implements RestServiceInterface {
     })
     public Response fuehreHalbzugAus(
             final @PathParam("gameId") String spielId,
-            final @NotNull(message = "A body of type Halbzug is required.") @Valid Halbzug halbzug)
+            final @NotNull(message = "A body of type Halbzug is required.") @Valid HalbzugExt halbzug)
             throws UngueltigerHalbzugException, UngueltigeSpielIdException
     {
         LOG.info("Ausfuehren des Halbzuges " + halbzug);
@@ -200,7 +200,7 @@ public class RestService implements RestServiceInterface {
 
             final FuehreHalbzugAusRequest request = new FuehreHalbzugAusRequest(
                             new com.iks.dddschach.domain.SpielId(spielId),
-                            HalbzugExt.fromOld(halbzug));
+                            halbzug);
 
             zugIndex = schachpartieApi.fuehreHalbzugAus(request).getHalbzugZaehler();
         }

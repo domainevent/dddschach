@@ -30,7 +30,7 @@ public interface SchachpartieApi {
      * @return einen {@link Halbzug}
      * @throws ParseException
      */
-    Halbzug parse(String eingabe) throws ParseException;
+    HalbzugExt parse(String eingabe) throws ParseException;
 
 
     /**
