@@ -1,11 +1,6 @@
 package com.iks.dddschach.api;
 
 import com.iks.dddschach.domain.*;
-import com.iks.dddschach.olddomain.Halbzug;
-import com.iks.dddschach.olddomain.Position;
-import com.iks.dddschach.olddomain.Spielbrett;
-import com.iks.dddschach.olddomain.*;
-import com.iks.dddschach.olddomain.Spielfigur;
 import com.iks.dddschach.persistence.SchachpartieRepositoryMemory;
 import com.iks.dddschach.service.api.SchachpartieApi;
 import com.iks.dddschach.service.impl.SchachpartieApiImpl;

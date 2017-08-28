@@ -1,13 +1,10 @@
 package com.iks.dddschach.service.api;
 
 import com.iks.dddschach.domain.*;
-import com.iks.dddschach.olddomain.SpielId;
-import com.iks.dddschach.olddomain.Halbzug;
 import com.iks.dddschach.domain.validation.Zugregel;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.Optional;
 
 
 /**

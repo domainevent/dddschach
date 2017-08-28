@@ -1,15 +1,12 @@
 package com.iks.dddschach.domain.validation;
 
-import com.iks.dddschach.olddomain.*;
-import com.iks.dddschach.olddomain.Spielfigur.FigurenTyp;
+import com.iks.dddschach.domain.*;
 import com.iks.dddschach.util.IntegerTupel;
 import org.apache.commons.lang3.Validate;
 
 import java.util.*;
 
-import static com.iks.dddschach.olddomain.Farbe.SCHWARZ;
-import static com.iks.dddschach.olddomain.Farbe.WEISS;
-import static com.iks.dddschach.olddomain.Position.Zeile.*;
+import static com.iks.dddschach.domain.Farbe.WEISS;
 import static com.iks.dddschach.domain.validation.ValidationUtils.toIntegerTupel;
 
 
@@ -31,31 +28,31 @@ public class EnPassantCheck implements HalbzugValidation {
 
 
 	@Override
-	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> halbzugHistorie, Spielbrett spielbrett) {
+	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> halbzugHistorie, SpielbrettExt spielbrett) {
         Objects.requireNonNull(halbzug, "Argument halbzug is null");
         Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
         Objects.requireNonNull(halbzugHistorie, "Argument zugHistorie is null");
 
-        Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.from);
-        Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.from);
+        Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
+        Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.getNach());
 
-        if (zugFigur.figure != FigurenTyp.BAUER) {
+        if (zugFigur.getFigur() != FigurenTyp.BAUER) {
             return new EnPassantCheckResult(Zugregel.HALBZUG_IST_KEIN_EN_PASSANT);
         }
-        if (zieheIchVonMitteEinFeldDiagonalNachVorn(halbzug, zugFigur.color) &&
-            stehtNebenMirEinGegnerischerBauer(halbzug, spielbrett, zugFigur.color) &&
+        if (zieheIchVonMitteEinFeldDiagonalNachVorn(halbzug, zugFigur.getFarbe()) &&
+            stehtNebenMirEinGegnerischerBauer(halbzug, spielbrett, zugFigur.getFarbe()) &&
             istMeinZielfeldFrei(halbzug, spielbrett)) {
 
             Validate.isTrue(halbzugHistorie.size() > 0,"No halbzugHistorie present" );
 
             final Halbzug erwarteterVorgaengerHalbzug = new Halbzug(
-                    new Position(halbzug.to.horCoord, zugFigur.color == WEISS ? _7 : _2),
-                    new Position(halbzug.to.horCoord, zugFigur.color == WEISS ? _5 : _4));
+                    new Position(halbzug.getNach().getZeile(), zugFigur.getFarbe() == WEISS ? Zeile.VII : Zeile.II),
+                    new Position(halbzug.getNach().getZeile(), zugFigur.getFarbe() == WEISS ? Zeile.V : Zeile.IV));
 
             final Halbzug tatsaelicherVorgaengerHalbzug = halbzugHistorie.get(halbzugHistorie.size()-1);
 
             if (erwarteterVorgaengerHalbzug.equals(tatsaelicherVorgaengerHalbzug)) {
-                return new EnPassantCheckResult(tatsaelicherVorgaengerHalbzug.to);
+                return new EnPassantCheckResult(tatsaelicherVorgaengerHalbzug.getNach());
             }
             else {
                 return new EnPassantCheckResult(Zugregel.EN_PASSANT_VORGAENGER_HALBZUG_MUSS_BAUER_SEIN);

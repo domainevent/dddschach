@@ -2,8 +2,6 @@ package com.iks.dddschach.service.impl;
 
 import com.iks.dddschach.domain.*;
 import com.iks.dddschach.olddomain.*;
-import com.iks.dddschach.olddomain.Halbzug;
-import com.iks.dddschach.olddomain.SpielId;
 import com.iks.dddschach.service.api.SchachpartieApi;
 
 import java.io.IOException;

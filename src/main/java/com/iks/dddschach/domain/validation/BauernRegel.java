@@ -1,18 +1,13 @@
 package com.iks.dddschach.domain.validation;
 
+import com.iks.dddschach.domain.*;
+import com.iks.dddschach.util.IntegerTupel;
+
 import java.util.List;
 import java.util.Objects;
 
-import com.iks.dddschach.olddomain.Halbzug;
-import com.iks.dddschach.olddomain.Spielbrett;
-import com.iks.dddschach.olddomain.Spielfigur;
-import com.iks.dddschach.olddomain.Spielfigur.FigurenTyp;
-import com.iks.dddschach.util.IntegerTupel;
-
-import static com.iks.dddschach.olddomain.Farbe.SCHWARZ;
-import static com.iks.dddschach.olddomain.Farbe.WEISS;
-import static com.iks.dddschach.olddomain.Position.Zeile._2;
-import static com.iks.dddschach.olddomain.Position.Zeile._7;
+import static com.iks.dddschach.domain.Farbe.SCHWARZ;
+import static com.iks.dddschach.domain.Farbe.WEISS;
 
 
 public class BauernRegel implements HalbzugValidation {
@@ -20,22 +15,22 @@ public class BauernRegel implements HalbzugValidation {
 	private final static FreieBahnCheck FREIE_BAHN_CHECK = new FreieBahnCheck();
 
 	@Override
-	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> halbzugHistorie, Spielbrett spielbrett) {
+	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> halbzugHistorie, SpielbrettExt spielbrett) {
         Objects.requireNonNull(halbzug, "Argument halbzug is null");
         Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
 
-		Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.from);
-        Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.from);
+		Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
+        Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.getNach());
 
-		if (zugFigur.figure != FigurenTyp.BAUER) {
+		if (zugFigur.getFigur() != FigurenTyp.BAUER) {
 			throw new IllegalArgumentException("Figure must be a pawn");
 		}
 
-		final IntegerTupel from = ValidationUtils.toIntegerTupel(halbzug.from);
-        final IntegerTupel to   = ValidationUtils.toIntegerTupel(halbzug.to);
+		final IntegerTupel from = ValidationUtils.toIntegerTupel(halbzug.getVon());
+        final IntegerTupel to   = ValidationUtils.toIntegerTupel(halbzug.getNach());
 		final IntegerTupel diff = to.minus(from);
 		final IntegerTupel absd = diff.abs();
-        final Spielfigur figurFrom = spielbrett.getSchachfigurAnPosition(halbzug.from);
+        final Spielfigur figurFrom = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
 
 		if (diff.x() == 0) {
 			if (isZweiFeldBedingungAmStartErfuellt(halbzug, figurFrom, diff) ||
@@ -70,18 +65,18 @@ public class BauernRegel implements HalbzugValidation {
      * Ergibt true, falls sich der Bauer genau um ein Feld noch vorne bewegt hat.
      */
     private boolean isEinfeldBedingungErfuellt(Spielfigur figurFrom, IntegerTupel diff) {
-        return (diff.y() == 1 && figurFrom.color == WEISS) || (diff.y() == -1 && figurFrom.color == SCHWARZ);
+        return (diff.y() == 1 && figurFrom.getFarbe() == WEISS) || (diff.y() == -1 && figurFrom.getFarbe() == SCHWARZ);
     }
 
 
     private boolean isZweiFeldBedingungAmStartErfuellt(Halbzug zuPruefen, Spielfigur figurFrom, IntegerTupel diff) {
-        return (diff.y() == 2 && figurFrom.color == WEISS && zuPruefen.from.vertCoord == _2) ||
-               (diff.y() == -2 && figurFrom.color == SCHWARZ && zuPruefen.from.vertCoord == _7);
+        return (diff.y() == 2 && figurFrom.getFarbe() == WEISS && zuPruefen.getVon().getZeile() == Zeile.II) ||
+               (diff.y() == -2 && figurFrom.getFarbe() == SCHWARZ && zuPruefen.getVon().getZeile() == Zeile.VII);
     }
 
 
-    private boolean isZielpositionFrei(Halbzug halbzug, Spielbrett spielbrett) {
-        return spielbrett.getSchachfigurAnPosition(halbzug.to) == null;
+    private boolean isZielpositionFrei(Halbzug halbzug, SpielbrettExt spielbrett) {
+        return spielbrett.getSchachfigurAnPosition(halbzug.getNach()) == null;
     }
 
 }

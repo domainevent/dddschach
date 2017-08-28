@@ -1,7 +1,8 @@
 package com.iks.dddschach.domain.validation;
 
-import com.iks.dddschach.olddomain.Halbzug;
-import com.iks.dddschach.olddomain.Spielbrett;
+import com.iks.dddschach.domain.Halbzug;
+import com.iks.dddschach.domain.Spielbrett;
+import com.iks.dddschach.domain.SpielbrettExt;
 
 import java.util.List;
 
@@ -42,6 +43,6 @@ public interface HalbzugValidation {
      *                      welche Figuren sich auf welchen Positionen befinden.
      * @return Das Validationsergebnis
      */
-    ValidationResult validiere(Halbzug zuPruefen, List<Halbzug> halbzugHistorie, Spielbrett aktSpielbrett);
+    ValidationResult validiere(Halbzug zuPruefen, List<Halbzug> halbzugHistorie, SpielbrettExt aktSpielbrett);
 
 }

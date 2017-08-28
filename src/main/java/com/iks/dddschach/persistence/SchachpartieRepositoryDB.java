@@ -1,8 +1,6 @@
 package com.iks.dddschach.persistence;
 
-import com.iks.dddschach.olddomain.Schachpartie;
 import com.iks.dddschach.olddomain.SchachpartieRepository;
-import com.iks.dddschach.olddomain.SpielId;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;

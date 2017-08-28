@@ -1,6 +1,6 @@
 package com.iks.dddschach.domain.validation;
 
-import com.iks.dddschach.olddomain.*;
+import com.iks.dddschach.domain.*;
 import com.iks.dddschach.util.IntegerTupel;
 
 import java.util.Objects;
@@ -12,11 +12,11 @@ import java.util.Objects;
 public class ValidationUtils {
 
     public static IntegerTupel toIntegerTupel(Position pos) {
-        return new IntegerTupel(pos.horCoord.ordinal(), pos.vertCoord.ordinal());
+        return new IntegerTupel(pos.getZeile().ordinal(), pos.getSpalte().ordinal());
     }
 
     public static Position toPosition(IntegerTupel tupel) {
-        return new Position(Position.Spalte.values()[tupel.x()], Position.Zeile.values()[tupel.y()]);
+        return new Position(Zeile.values()[tupel.y()], Spalte.values()[tupel.x()]);
     }
 
     public static Position middle(Position from, Position to) {
@@ -31,10 +31,10 @@ public class ValidationUtils {
     /**
      * Ermittelt die Farbe des Spielers, der den Halbzug <code>halbzug</code> ausführen will
      */
-    public static Farbe spielerFarbe(Halbzug halbzug, Spielbrett spielbrett) {
-        final Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.from);
-        Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.from);
-        return zugFigur.color;
+    public static Farbe spielerFarbe(Halbzug halbzug, SpielbrettExt spielbrett) {
+        final Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
+        Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.getVon());
+        return zugFigur.getFarbe();
     }
 
 }

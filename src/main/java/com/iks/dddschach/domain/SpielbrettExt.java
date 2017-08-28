@@ -4,6 +4,7 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.iks.dddschach.domain.Farbe.WEISS;
 import static java.lang.Character.toLowerCase;
@@ -24,23 +25,23 @@ public class SpielbrettExt extends Spielbrett {
     }
 
 
-    public SpielbrettExt(final com.iks.dddschach.olddomain.Spielfigur[][] spielfiguren) {
-        final int ANZAHL_SPALTEN = Spalte.values().length;
-        final int ANZAHL_ZEILEN = Zeile.values().length;
-        spielfelder = new ArrayList<>();
-        for (int s = 0; s < ANZAHL_SPALTEN; s++) {
-            for (int z = 0; z < ANZAHL_ZEILEN; z++) {
-                com.iks.dddschach.olddomain.Spielfigur spielfigur = spielfiguren[s][z];
-                if (spielfigur == null) continue;
-                final FigurenTyp figurenTyp = FigurenTyp.valueOf(spielfigur.figure.name());
-                final Farbe color = Farbe.valueOf(spielfigur.color.name());
-                final Spielfigur spielfigur1 = new Spielfigur(figurenTyp, color);
-                final Spielfeld spielfeld = new Spielfeld(
-                        new Position(Zeile.values()[z], Spalte.values()[s]), spielfigur1);
-                spielfelder.add(spielfeld);
-            }
-        }
-    }
+//    public SpielbrettExt(final com.iks.dddschach.olddomain.Spielfigur[][] spielfiguren) {
+//        final int ANZAHL_SPALTEN = Spalte.values().length;
+//        final int ANZAHL_ZEILEN = Zeile.values().length;
+//        spielfelder = new ArrayList<>();
+//        for (int s = 0; s < ANZAHL_SPALTEN; s++) {
+//            for (int z = 0; z < ANZAHL_ZEILEN; z++) {
+//                com.iks.dddschach.olddomain.Spielfigur spielfigur = spielfiguren[s][z];
+//                if (spielfigur == null) continue;
+//                final FigurenTyp figurenTyp = FigurenTyp.valueOf(spielfigur.figure.name());
+//                final Farbe color = Farbe.valueOf(spielfigur.color.name());
+//                final Spielfigur spielfigur1 = new Spielfigur(figurenTyp, color);
+//                final Spielfeld spielfeld = new Spielfeld(
+//                        new Position(Zeile.values()[z], Spalte.values()[s]), spielfigur1);
+//                spielfelder.add(spielfeld);
+//            }
+//        }
+//    }
 
 
     public Spielfigur[][] getBoard() {
@@ -87,6 +88,15 @@ public class SpielbrettExt extends Spielbrett {
             case BAUER:   return 'P';
         }
         throw new IllegalArgumentException("Unexpected enum " + this);
+    }
+
+
+    public Spielfigur getSchachfigurAnPosition(Position position) {
+        final Optional<Spielfeld> first = spielfelder
+                .stream()
+                .filter(spielfeld -> spielfeld.position.equals(position))
+                .findFirst();
+        return (first.isPresent())? first.get().spielfigur : null;
     }
 
 }

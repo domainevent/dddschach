@@ -1,8 +1,5 @@
 package com.iks.dddschach.domain.validation;
 
-import com.iks.dddschach.olddomain.Halbzug;
-import com.iks.dddschach.olddomain.Spielbrett;
-import com.iks.dddschach.olddomain.Spielfigur;
 import com.iks.dddschach.olddomain.Spielfigur.FigurenTyp;
 
 import java.util.List;

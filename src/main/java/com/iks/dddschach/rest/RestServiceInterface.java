@@ -2,8 +2,6 @@ package com.iks.dddschach.rest;
 
 import com.iks.dddschach.service.api.SchachpartieApi.UngueltigeSpielIdException;
 import com.iks.dddschach.service.api.SchachpartieApi.UngueltigerHalbzugException;
-import com.iks.dddschach.olddomain.Halbzug;
-import com.iks.dddschach.olddomain.SpielId;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

@@ -5,9 +5,6 @@ import static com.iks.dddschach.domain.validation.ValidationUtils.toIntegerTupel
 import java.util.List;
 import java.util.Objects;
 
-import com.iks.dddschach.olddomain.Halbzug;
-import com.iks.dddschach.olddomain.Position;
-import com.iks.dddschach.olddomain.Spielbrett;
 import com.iks.dddschach.util.IntegerTupel;
 
 

@@ -159,19 +159,6 @@
 
     <xs:simpleType name="Zeile">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="A"/>
-            <xs:enumeration value="B"/>
-            <xs:enumeration value="C"/>
-            <xs:enumeration value="D"/>
-            <xs:enumeration value="E"/>
-            <xs:enumeration value="F"/>
-            <xs:enumeration value="G"/>
-            <xs:enumeration value="H"/>
-        </xs:restriction>
-    </xs:simpleType>
-
-    <xs:simpleType name="Spalte">
-        <xs:restriction base="xs:string">
             <xs:enumeration value="I"/>
             <xs:enumeration value="II"/>
             <xs:enumeration value="III"/>
@@ -183,9 +170,22 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="Spalte">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="A"/>
+            <xs:enumeration value="B"/>
+            <xs:enumeration value="C"/>
+            <xs:enumeration value="D"/>
+            <xs:enumeration value="E"/>
+            <xs:enumeration value="F"/>
+            <xs:enumeration value="G"/>
+            <xs:enumeration value="H"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:complexType name="Spielfigur">
         <xs:sequence>
-            <xs:element name="figure" type="tns:FigurenTyp">
+            <xs:element name="figur" type="tns:FigurenTyp">
                 <xs:annotation><xs:documentation>FigurenTyp</xs:documentation></xs:annotation>
             </xs:element>
             <xs:element name="farbe" type="tns:Farbe">

@@ -1,9 +1,6 @@
 package com.iks.dddschach.domain.validation;
 
-import com.iks.dddschach.olddomain.Halbzug;
 import com.iks.dddschach.olddomain.SpielNotationParser;
-import com.iks.dddschach.olddomain.Spielbrett;
-import com.iks.dddschach.olddomain.SpielbrettFactory;
 import com.iks.dddschach.domain.validation.HalbzugValidation.ValidationResult;
 import org.junit.Assert;
 import org.junit.Test;

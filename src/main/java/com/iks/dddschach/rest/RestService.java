@@ -4,8 +4,6 @@ import com.iks.dddschach.domain.*;
 import com.iks.dddschach.service.api.SchachpartieApi;
 import com.iks.dddschach.service.api.SchachpartieApi.UngueltigeSpielIdException;
 import com.iks.dddschach.service.api.SchachpartieApi.UngueltigerHalbzugException;
-import com.iks.dddschach.olddomain.Halbzug;
-import com.iks.dddschach.olddomain.SpielId;
 import com.webcohesion.enunciate.metadata.rs.ResponseCode;
 import com.webcohesion.enunciate.metadata.rs.StatusCodes;
 import org.apache.log4j.Logger;
@@ -19,7 +17,6 @@ import java.net.URI;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Optional;
 
 
 /**

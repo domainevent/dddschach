@@ -1,16 +1,12 @@
 package com.iks.dddschach.domain.validation;
 
-import com.iks.dddschach.olddomain.Halbzug;
-import com.iks.dddschach.olddomain.Spielbrett;
-import com.iks.dddschach.olddomain.Spielfigur;
-import com.iks.dddschach.olddomain.Spielfigur.FigurenTyp;
+import com.iks.dddschach.domain.*;
 
 import java.util.*;
 
-import static com.iks.dddschach.olddomain.Farbe.SCHWARZ;
-import static com.iks.dddschach.olddomain.Farbe.WEISS;
-import static com.iks.dddschach.olddomain.Position.Zeile.*;
-import static com.iks.dddschach.olddomain.Spielfigur.FigurenTyp.DAME;
+import static com.iks.dddschach.domain.Farbe.SCHWARZ;
+import static com.iks.dddschach.domain.Farbe.WEISS;
+import static com.iks.dddschach.domain.FigurenTyp.DAME;
 
 
 public class BauernumwCheck implements HalbzugValidation {
@@ -27,15 +23,15 @@ public class BauernumwCheck implements HalbzugValidation {
     }
 
 	@Override
-	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> halbzugHistorie, Spielbrett spielbrett) {
+	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> halbzugHistorie, SpielbrettExt spielbrett) {
         Objects.requireNonNull(halbzug, "Argument halbzug is null");
         Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
         Objects.requireNonNull(halbzugHistorie, "Argument zugHistorie is null");
 
-        Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.from);
-        Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.from);
+        Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
+        Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.getVon());
 
-        if (zugFigur.figure != FigurenTyp.BAUER) {
+        if (zugFigur.getFigur() != FigurenTyp.BAUER) {
             return new BauernumwCheckResult(false, null);
         }
         final ValidationResult bauernregelResult = BAUERNREGEL.validiere(halbzug, halbzugHistorie, spielbrett);
@@ -43,9 +39,9 @@ public class BauernumwCheck implements HalbzugValidation {
             return bauernregelResult;
         }
 
-        if ((zugFigur.color == WEISS && halbzug.from.vertCoord == _7) ||
-            (zugFigur.color == SCHWARZ && halbzug.from.vertCoord == _2)) {
-            return new BauernumwCheckResult(true, new Spielfigur(DAME, zugFigur.color));
+        if ((zugFigur.getFarbe() == WEISS && halbzug.getVon().getZeile() == Zeile.VII) ||
+            (zugFigur.getFarbe() == SCHWARZ && halbzug.getVon().getZeile() == Zeile.II)) {
+            return new BauernumwCheckResult(true, new Spielfigur(DAME, zugFigur.getFarbe()));
         }
         return new BauernumwCheckResult(false, null);
     }
