@@ -21,12 +21,7 @@ public class HalbzugExt extends Halbzug {
 
 
     public HalbzugExt(String vonNach) throws ParseException {
-        this(com.iks.dddschach.olddomain.Halbzug.fromOld(SpielNotationParser.parse(vonNach)));
-    }
-
-    public static HalbzugExt fromOld(com.iks.dddschach.olddomain.Halbzug halbzug) {
-        return new HalbzugExt(com.iks.dddschach.olddomain.Position.fromOld(halbzug.from),
-                com.iks.dddschach.olddomain.Position.fromOld(halbzug.to));
+        this(SpielNotationParser.parse(vonNach));
     }
 
 }

@@ -1,12 +1,15 @@
 package com.iks.dddschach.domain.validation;
 
-import com.iks.dddschach.olddomain.Farbe;
+import com.iks.dddschach.domain.Farbe;
+import com.iks.dddschach.domain.Halbzug;
+import com.iks.dddschach.domain.Spielbrett;
+import com.iks.dddschach.domain.SpielbrettExt;
 
 import java.util.List;
 import java.util.Objects;
 
-import static com.iks.dddschach.olddomain.Farbe.SCHWARZ;
-import static com.iks.dddschach.olddomain.Farbe.WEISS;
+import static com.iks.dddschach.domain.Farbe.SCHWARZ;
+import static com.iks.dddschach.domain.Farbe.WEISS;
 import static com.iks.dddschach.domain.validation.ValidationUtils.spielerFarbe;
 
 
@@ -25,14 +28,14 @@ public class SchachCheck implements HalbzugValidation {
     @Override
     public ValidationResult validiere(final Halbzug halbzug,
                                       final List<Halbzug> halbzugHistorie,
-                                      final Spielbrett spielbrett) {
+                                      final SpielbrettExt spielbrett) {
 
         Objects.requireNonNull(halbzug, "Argument halbzug is null");
         Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
 
         final Farbe spielerFarbe = spielerFarbe(halbzug, spielbrett);
         Farbe gegnerFarbe = spielerFarbe == WEISS? SCHWARZ : WEISS;
-        final Spielbrett brettMitHalbzug = spielbrett.wendeHalbzugAn(halbzug);
+        final SpielbrettExt brettMitHalbzug = spielbrett.wendeHalbzugAn(halbzug);
         final Position koenigsPosition = brettMitHalbzug.sucheKoenigsPosition(spielerFarbe);
 
         // Gehe alle Figuren des Gegners durch und prüfe, ob diese meinen König schlagen könnten:
@@ -47,7 +50,7 @@ public class SchachCheck implements HalbzugValidation {
 
     private boolean istZielDesHalbzugsBedroht(final Halbzug halbzug,
                                               final List<Halbzug> halbzugHistorie,
-                                              final Spielbrett spielbrett) {
+                                              final SpielbrettExt spielbrett) {
         return ERREICHE_ZIEL_CHECK.validiere(halbzug, halbzugHistorie, spielbrett).gueltig;
     }
 

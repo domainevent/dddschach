@@ -95,6 +95,10 @@
 
 
     <xs:complexType name="Schachpartie">
+        <xs:annotation>
+            <xs:documentation>Schachpartie</xs:documentation>
+            <xs:appinfo><jaxb:class implClass="SchachpartieExt" /></xs:appinfo>
+        </xs:annotation>
         <xs:sequence>
             <xs:element name="halbzugHistorie" type="tns:HalbzugHistorie">
                 <xs:annotation><xs:documentation>Spielfeld</xs:documentation></xs:annotation>
