@@ -12,7 +12,7 @@ import java.util.Objects;
 public class ValidationUtils {
 
     public static IntegerTupel toIntegerTupel(Position pos) {
-        return new IntegerTupel(pos.getZeile().ordinal(), pos.getSpalte().ordinal());
+        return new IntegerTupel(pos.getSpalte().ordinal(), pos.getZeile().ordinal());
     }
 
     public static Position toPosition(IntegerTupel tupel) {
