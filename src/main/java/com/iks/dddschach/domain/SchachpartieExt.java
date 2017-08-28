@@ -19,7 +19,7 @@ public class SchachpartieExt extends Schachpartie {
     }
 
     public SchachpartieExt(SpielIdExt spielId) {
-        super(spielId, new HalbzugHistorie(new ArrayList<>()), new SpielbrettExt());
+        super(spielId, new HalbzugHistorie(new ArrayList<>()), SpielbrettFactory.createInitialesSpielbrett());
     }
 
 
