@@ -2,6 +2,8 @@ package com.iks.dddschach.domain.validation;
 
 import com.iks.dddschach.domain.Halbzug;
 import com.iks.dddschach.domain.Spielbrett;
+import com.iks.dddschach.domain.SpielbrettExt;
+import com.iks.dddschach.domain.SpielbrettFactory;
 import com.iks.dddschach.olddomain.SpielNotationParser;
 import com.iks.dddschach.domain.validation.HalbzugValidation.ValidationResult;
 import org.junit.Assert;
@@ -15,7 +17,7 @@ import static com.iks.dddschach.domain.validation.Zugregel.BAUER_ZIEHT_EIN_FELD_
  */
 public class BauernRegelTest {
 
-    public final static Spielbrett SPIELBRETT = SpielbrettFactory.createInitialesSpielbrett();
+    public final static SpielbrettExt SPIELBRETT = SpielbrettFactory.createInitialesSpielbrett();
     public final static BauernRegel BAUERN_REGEL = new BauernRegel();
 
     @Test

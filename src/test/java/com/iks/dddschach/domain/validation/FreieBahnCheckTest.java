@@ -13,7 +13,7 @@ import static com.iks.dddschach.domain.Zeile.*;
  */
 public class FreieBahnCheckTest {
 
-    public final static Spielbrett SPIELBRETT = SpielbrettFactory.createInitialesSpielbrett();
+    public final static SpielbrettExt SPIELBRETT = SpielbrettFactory.createInitialesSpielbrett();
     public final static FreieBahnCheck FREIE_BAHN_CHECK = new FreieBahnCheck();
 
 

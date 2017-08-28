@@ -17,7 +17,7 @@ import static java.lang.Character.toUpperCase;
 public class SpielbrettExt extends Spielbrett {
 
     public SpielbrettExt() {
-        super();
+        super(new ArrayList<>());
     }
 
     /**

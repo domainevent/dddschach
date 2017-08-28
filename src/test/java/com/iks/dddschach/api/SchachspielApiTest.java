@@ -44,7 +44,7 @@ public class SchachspielApiTest {
         final AktuellesSpielbrettRequest request = new AktuellesSpielbrettRequest(response1.getSpielId());
         final AktuellesSpielbrettResponse response2 = api.aktuellesSpielbrett(request);
 
-        final Spielbrett expected = SpielbrettFactory.createInitialesSpielbrett();
+        final SpielbrettExt expected = SpielbrettFactory.createInitialesSpielbrett();
         SpielbrettExt spielbrett = (SpielbrettExt)response2.getSpielbrett();
         Assert.assertEquals(expected.encode(), spielbrett.encode());
     }
@@ -58,23 +58,23 @@ public class SchachspielApiTest {
         Position posFrom2 = new Position(D, II);
         Position posTo2 = new Position(D, IV);
 
-        final Spielbrett expected1 =
-                new Spielbrett(SpielbrettFactory.createInitialesSpielbrett()) {{
+        final SpielbrettExt expected1 =
+                new SpielbrettExt(SpielbrettFactory.createInitialesSpielbrett()) {{
                     final Spielfigur figure = getSchachfigurAnPosition(posFrom1);
                     setSchachfigurAnPosition(posFrom1, null);
                     setSchachfigurAnPosition(posTo1, figure);
                 }};
 
-        final Spielbrett expected2 =
-                new Spielbrett(SpielbrettFactory.createInitialesSpielbrett()) {{
+        final SpielbrettExt expected2 =
+                new SpielbrettExt(SpielbrettFactory.createInitialesSpielbrett()) {{
                     final Spielfigur figure = getSchachfigurAnPosition(posFrom2);
                     setSchachfigurAnPosition(posFrom2, null);
                     setSchachfigurAnPosition(posTo2, figure);
                 }};
 
         final NeuesSpielResponse neuesSpielResponse1 = api.neuesSpiel(new NeuesSpielRequest("Vermerk"));
-        final Halbzug halbzugOld1 = new Halbzug(posFrom1, posTo1);
-        final FuehreHalbzugAusRequest fuehreHalbzugAusRequest1 = new FuehreHalbzugAusRequest(neuesSpielResponse1.getSpielId(), HalbzugExt.fromOld(halbzugOld1));
+        final HalbzugExt halbzug1 = new HalbzugExt(posFrom1, posTo1);
+        final FuehreHalbzugAusRequest fuehreHalbzugAusRequest1 = new FuehreHalbzugAusRequest(neuesSpielResponse1.getSpielId(), halbzug1);
 
         api.fuehreHalbzugAus(fuehreHalbzugAusRequest1);
 
@@ -82,9 +82,9 @@ public class SchachspielApiTest {
         final AktuellesSpielbrettResponse aktuellesSpielbrettResponse1 = api.aktuellesSpielbrett(aktuellesSpielbrettRequest1);
 
         final NeuesSpielResponse neuesSpielResponse2 = api.neuesSpiel(new NeuesSpielRequest("Vermerk"));
-        final Halbzug halbzugOld2 = new Halbzug(posFrom2, posTo2);
+        final HalbzugExt halbzug2 = new HalbzugExt(posFrom2, posTo2);
 
-        final FuehreHalbzugAusRequest fuehreHalbzugAusRequest2 = new FuehreHalbzugAusRequest(neuesSpielResponse2.getSpielId(), HalbzugExt.fromOld(halbzugOld2));
+        final FuehreHalbzugAusRequest fuehreHalbzugAusRequest2 = new FuehreHalbzugAusRequest(neuesSpielResponse2.getSpielId(), halbzug2);
         api.fuehreHalbzugAus(fuehreHalbzugAusRequest2);
 
         final AktuellesSpielbrettRequest aktuellesSpielbrettRequest2

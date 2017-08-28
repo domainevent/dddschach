@@ -75,7 +75,7 @@ public class DDDSchachIT {
         final Response resp = client.spielbrett(spielId.getId(), "Test", null);
         Assert.assertEquals(200, resp.getStatus());
         final Spielbrett spielbrett = resp.readEntity(Spielbrett.class);
-        Assert.assertEquals(createInitialesSpielbrett(), spielbrett);
+        Assert.assertEquals(SpielbrettFactory.createInitialesSpielbrett(), spielbrett);
     }
 
 
@@ -124,14 +124,14 @@ public class DDDSchachIT {
         final SpielId spielId = client.neuesSpiel("Vermerk");
         // Halbzug ausführen:
         //
-        final Halbzug halbzug = new Halbzug(new Position(E, II), new Position(E, IV));
+        final HalbzugExt halbzug = new HalbzugExt(new Position(E, II), new Position(E, IV));
         final Response resp1 = client.fuehreHalbzugAus(spielId.getId(), halbzug);
         Assert.assertEquals(201, resp1.getStatus());
         // Spielbrett überprüfen:
         //
         final Response resp2 = client.spielbrett(spielId.getId(), "Tester", null);
         final Spielbrett actual = resp2.readEntity(Spielbrett.class);
-        final Spielbrett expected = createInitialesSpielbrett().wendeHalbzugAn(halbzug);
+        final Spielbrett expected = SpielbrettFactory.createInitialesSpielbrett().wendeHalbzugAn(halbzug);
         Assert.assertEquals(expected, actual);
     }
 

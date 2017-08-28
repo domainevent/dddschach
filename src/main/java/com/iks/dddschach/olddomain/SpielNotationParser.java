@@ -38,11 +38,25 @@ public class SpielNotationParser {
     public static Position parsePosition(String eingabe) throws ParseException {
         try {
             Spalte spalte = Spalte.valueOf(eingabe.substring(0, 1).toUpperCase());
-            Zeile zeile = Zeile.valueOf("_" + eingabe.substring(1, 2));
+            Zeile zeile = parseZeile(eingabe.substring(1, 2));
             return new Position(spalte, zeile);
         }
         catch (Exception e) {
             throw new ParseException(eingabe, 0);
+        }
+    }
+
+    private static Zeile parseZeile(String zeile) {
+        switch (zeile) {
+            case "1": return Zeile.I;
+            case "2": return Zeile.II;
+            case "3": return Zeile.III;
+            case "4": return Zeile.IV;
+            case "5": return Zeile.V;
+            case "6": return Zeile.VI;
+            case "7": return Zeile.VII;
+            case "8": return Zeile.VIII;
+            default: throw new IllegalArgumentException("Invalid enum (for Zeile): " + zeile);
         }
     }
 

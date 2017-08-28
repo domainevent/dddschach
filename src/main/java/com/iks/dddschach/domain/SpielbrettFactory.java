@@ -1,13 +1,11 @@
 package com.iks.dddschach.domain;
 
-import com.iks.dddschach.domain.Position.Spalte;
-import com.iks.dddschach.domain.Position.Zeile;
 
 import static com.iks.dddschach.domain.Farbe.SCHWARZ;
 import static com.iks.dddschach.domain.Farbe.WEISS;
-import static com.iks.dddschach.domain.Position.Zeile.*;
-import static com.iks.dddschach.domain.Position.Spalte.*;
-import static com.iks.dddschach.domain.Spielfigur.FigurenTyp.*;
+import static com.iks.dddschach.domain.FigurenTyp.*;
+import static com.iks.dddschach.domain.Zeile.*;
+import static com.iks.dddschach.domain.Spalte.*;
 
 
 /**
@@ -18,34 +16,34 @@ public class SpielbrettFactory  {
     /**
      * Erzeugt ein initiales Schachbrett
      */
-    public static Spielbrett createInitialesSpielbrett() {
-        return new Spielbrett() {{
-            setSchachfigurAnPosition(A, _1, TURM, WEISS);
-            setSchachfigurAnPosition(B, _1, SPRINGER, WEISS);
-            setSchachfigurAnPosition(C, _1, LAEUFER, WEISS);
-            setSchachfigurAnPosition(D, _1, DAME, WEISS);
-            setSchachfigurAnPosition(E, _1, KOENIG, WEISS);
-            setSchachfigurAnPosition(F, _1, LAEUFER, WEISS);
-            setSchachfigurAnPosition(G, _1, SPRINGER, WEISS);
-            setSchachfigurAnPosition(H, _1, TURM, WEISS);
+    public static SpielbrettExt createInitialesSpielbrett() {
+        return new SpielbrettExt() {{
+            setSchachfigurAnPosition(A, I, TURM, WEISS);
+            setSchachfigurAnPosition(B, I, SPRINGER, WEISS);
+            setSchachfigurAnPosition(C, I, LAEUFER, WEISS);
+            setSchachfigurAnPosition(D, I, DAME, WEISS);
+            setSchachfigurAnPosition(E, I, KOENIG, WEISS);
+            setSchachfigurAnPosition(F, I, LAEUFER, WEISS);
+            setSchachfigurAnPosition(G, I, SPRINGER, WEISS);
+            setSchachfigurAnPosition(H, I, TURM, WEISS);
             for (Spalte h : Spalte.values()) {
-                setSchachfigurAnPosition(h, _2, BAUER, WEISS);
-                setSchachfigurAnPosition(h, _7, BAUER, SCHWARZ);
+                setSchachfigurAnPosition(h, II, BAUER, WEISS);
+                setSchachfigurAnPosition(h, VII, BAUER, SCHWARZ);
             }
-            setSchachfigurAnPosition(A, _8, TURM, SCHWARZ);
-            setSchachfigurAnPosition(B, _8, SPRINGER, SCHWARZ);
-            setSchachfigurAnPosition(C, _8, LAEUFER, SCHWARZ);
-            setSchachfigurAnPosition(D, _8, DAME, SCHWARZ);
-            setSchachfigurAnPosition(E, _8, KOENIG, SCHWARZ);
-            setSchachfigurAnPosition(F, _8, LAEUFER, SCHWARZ);
-            setSchachfigurAnPosition(G, _8, SPRINGER, SCHWARZ);
-            setSchachfigurAnPosition(H, _8, TURM, SCHWARZ);
+            setSchachfigurAnPosition(A, VIII, TURM, SCHWARZ);
+            setSchachfigurAnPosition(B, VIII, SPRINGER, SCHWARZ);
+            setSchachfigurAnPosition(C, VIII, LAEUFER, SCHWARZ);
+            setSchachfigurAnPosition(D, VIII, DAME, SCHWARZ);
+            setSchachfigurAnPosition(E, VIII, KOENIG, SCHWARZ);
+            setSchachfigurAnPosition(F, VIII, LAEUFER, SCHWARZ);
+            setSchachfigurAnPosition(G, VIII, SPRINGER, SCHWARZ);
+            setSchachfigurAnPosition(H, VIII, TURM, SCHWARZ);
         }};
     }
 
     
-    public static Spielbrett decode(String schachbrettCompressed) {
-        final Spielbrett spielbrett = new Spielbrett();
+    public static SpielbrettExt decode(String schachbrettCompressed) {
+        final SpielbrettExt spielbrett = new SpielbrettExt();
         int idx = 0;
         final char[] chars = schachbrettCompressed.toCharArray();
         for (Zeile z : Zeile.values()) {
