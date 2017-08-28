@@ -1,5 +1,7 @@
 package com.iks.dddschach.domain.validation;
 
+import com.iks.dddschach.domain.Halbzug;
+import com.iks.dddschach.domain.Spielbrett;
 import com.iks.dddschach.olddomain.SpielNotationParser;
 import com.iks.dddschach.domain.validation.HalbzugValidation.ValidationResult;
 import org.junit.Assert;

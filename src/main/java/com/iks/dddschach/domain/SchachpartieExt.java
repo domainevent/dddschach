@@ -9,6 +9,9 @@ import static com.iks.dddschach.domain.validation.Zugregel.DIE_PARTIE_ENDET_PATT
 
 public class SchachpartieExt extends Schachpartie {
 
+    final static HalbzugValidation VALIDATOR = new GesamtValidator();
+    final static PattMattCheck PATT_MATT_CHECK = new PattMattCheck();
+
     public SchachpartieExt() {
     }
 

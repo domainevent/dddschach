@@ -1,6 +1,9 @@
 package com.iks.dddschach.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.iks.dddschach.domain.Halbzug;
+import com.iks.dddschach.domain.HalbzugExt;
+import com.iks.dddschach.domain.SpielId;
 import com.iks.dddschach.service.api.SchachpartieApi.UngueltigeSpielIdException;
 import com.iks.dddschach.service.api.SchachpartieApi.UngueltigerHalbzugException;
 import com.iks.dddschach.olddomain.SpielNotationParser;
@@ -124,7 +127,7 @@ public class RestServiceClient implements RestServiceInterface {
     }
 
     @Override
-    public Response fuehreHalbzugAus(String spielId, Halbzug halbzug) throws UngueltigerHalbzugException, UngueltigeSpielIdException {
+    public Response fuehreHalbzugAus(String spielId, HalbzugExt halbzug) throws UngueltigerHalbzugException, UngueltigeSpielIdException {
         return fuehreHalbzugAus(spielId, halbzug.toString());
     }
 

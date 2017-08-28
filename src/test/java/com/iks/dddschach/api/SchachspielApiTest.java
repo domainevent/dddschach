@@ -9,10 +9,8 @@ import org.junit.Test;
 
 import java.util.Optional;
 
-import static com.iks.dddschach.olddomain.Position.Spalte.D;
-import static com.iks.dddschach.olddomain.Position.Spalte.E;
-import static com.iks.dddschach.olddomain.Position.Zeile._2;
-import static com.iks.dddschach.olddomain.Position.Zeile._4;
+import static com.iks.dddschach.domain.Spalte.*;
+import static com.iks.dddschach.domain.Zeile.*;
 
 
 /**
@@ -54,11 +52,11 @@ public class SchachspielApiTest {
 
     @Test
     public void fuehreZuegeInVerschPartienAusUndKontrolliereStellungen() throws Exception {
-        Position posFrom1 = new Position(E,_2);
-        Position posTo1 = new Position(E,_4);
+        Position posFrom1 = new Position(E, II);
+        Position posTo1 = new Position(E, IV);
 
-        Position posFrom2 = new Position(D,_2);
-        Position posTo2 = new Position(D,_4);
+        Position posFrom2 = new Position(D, II);
+        Position posTo2 = new Position(D, IV);
 
         final Spielbrett expected1 =
                 new Spielbrett(SpielbrettFactory.createInitialesSpielbrett()) {{

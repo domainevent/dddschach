@@ -1,5 +1,6 @@
 package com.iks.dddschach.rest;
 
+import com.iks.dddschach.domain.*;
 import com.iks.dddschach.olddomain.*;
 import com.iks.dddschach.service.api.SchachpartieApi;
 import com.iks.dddschach.service.api.SchachpartieApi.UngueltigerHalbzugException;
@@ -10,10 +11,8 @@ import org.junit.Test;
 import javax.ws.rs.core.EntityTag;
 import javax.ws.rs.core.Response;
 
-import static com.iks.dddschach.olddomain.Position.Spalte.E;
-import static com.iks.dddschach.olddomain.Position.Zeile._2;
-import static com.iks.dddschach.olddomain.Position.Zeile._4;
-import static com.iks.dddschach.olddomain.SpielbrettFactory.createInitialesSpielbrett;
+import static com.iks.dddschach.domain.Spalte.*;
+import static com.iks.dddschach.domain.Zeile.*;
 
 
 /**
@@ -37,7 +36,7 @@ public class DDDSchachIT {
 
         final RestServiceClient client = new RestServiceClient();
         final SpielId spielId = client.neuesSpiel(gueltigerVermerk);
-        Assert.assertNotNull(spielId.id);
+        Assert.assertNotNull(spielId.getId());
     }
 
     @Test
@@ -73,7 +72,7 @@ public class DDDSchachIT {
         System.out.println("Test: spielBrettGueltigeSpielId");
         final RestServiceClient client = new RestServiceClient();
         final SpielId spielId = client.neuesSpiel("Vermerk");
-        final Response resp = client.spielbrett(spielId.id, "Test", null);
+        final Response resp = client.spielbrett(spielId.getId(), "Test", null);
         Assert.assertEquals(200, resp.getStatus());
         final Spielbrett spielbrett = resp.readEntity(Spielbrett.class);
         Assert.assertEquals(createInitialesSpielbrett(), spielbrett);
@@ -85,9 +84,9 @@ public class DDDSchachIT {
         System.out.println("Test: spielBrettWiederholteAbfrageMitGleichemSpieler");
         final RestServiceClient client = new RestServiceClient();
         final SpielId spielId = client.neuesSpiel("Vermerk");
-        final Response resp1 =  client.spielbrett(spielId.id, "Test", null);
+        final Response resp1 =  client.spielbrett(spielId.getId(), "Test", null);
         final EntityTag etag = resp1.getEntityTag();
-        final Response resp2 = client.spielbrettEtag(spielId.id, "Test", etag.getValue());
+        final Response resp2 = client.spielbrettEtag(spielId.getId(), "Test", etag.getValue());
         Assert.assertEquals(304, resp2.getStatus());
     }
 
@@ -97,9 +96,9 @@ public class DDDSchachIT {
         System.out.println("Test: spielBrettWiederholteAbfrageMitAnderemSpieler");
         final RestServiceClient client = new RestServiceClient();
         final SpielId spielId = client.neuesSpiel("Vermerk");
-        final Response resp1 =  client.spielbrett(spielId.id, "Test1", null);
+        final Response resp1 =  client.spielbrett(spielId.getId(), "Test1", null);
         final EntityTag etag = resp1.getEntityTag();
-        final Response resp2 = client.spielbrettEtag(spielId.id, "Test2", etag.getValue());
+        final Response resp2 = client.spielbrettEtag(spielId.getId(), "Test2", etag.getValue());
         Assert.assertEquals(200, resp2.getStatus());
     }
 
@@ -109,10 +108,10 @@ public class DDDSchachIT {
         System.out.println("Test: spielBrettWiederholteAbfrageMitGleichemSpieler");
         final RestServiceClient client = new RestServiceClient();
         final SpielId spielId = client.neuesSpiel("Vermerk");
-        final Response resp1 =  client.spielbrett(spielId.id, "Test", null);
+        final Response resp1 =  client.spielbrett(spielId.getId(), "Test", null);
         final EntityTag etag = resp1.getEntityTag();
-        client.fuehreHalbzugAus(spielId.id, "e2-e4");
-        final Response resp2 = client.spielbrettEtag(spielId.id, "Test", etag.getValue());
+        client.fuehreHalbzugAus(spielId.getId(), "e2-e4");
+        final Response resp2 = client.spielbrettEtag(spielId.getId(), "Test", etag.getValue());
         Assert.assertEquals(200, resp2.getStatus());
     }
 
@@ -125,12 +124,12 @@ public class DDDSchachIT {
         final SpielId spielId = client.neuesSpiel("Vermerk");
         // Halbzug ausführen:
         //
-        final Halbzug halbzug = new Halbzug(new Position(E, _2), new Position(E, _4));
-        final Response resp1 = client.fuehreHalbzugAus(spielId.id, halbzug);
+        final Halbzug halbzug = new Halbzug(new Position(E, II), new Position(E, IV));
+        final Response resp1 = client.fuehreHalbzugAus(spielId.getId(), halbzug);
         Assert.assertEquals(201, resp1.getStatus());
         // Spielbrett überprüfen:
         //
-        final Response resp2 = client.spielbrett(spielId.id, "Tester", null);
+        final Response resp2 = client.spielbrett(spielId.getId(), "Tester", null);
         final Spielbrett actual = resp2.readEntity(Spielbrett.class);
         final Spielbrett expected = createInitialesSpielbrett().wendeHalbzugAn(halbzug);
         Assert.assertEquals(expected, actual);
@@ -177,13 +176,13 @@ public class DDDSchachIT {
         //
         for (String halbzugStr : UNSTERBLICHE_PARTIE) {
             final Halbzug halbzug = SpielNotationParser.parse(halbzugStr);
-            client.fuehreHalbzugAus(spielId.id, halbzug.toString());
+            client.fuehreHalbzugAus(spielId.getId(), halbzug.toString());
         }
         // Versuch, Zug auszuführen, nachdem Schwarz schon matt ist:
         //
         final Halbzug halbzug = SpielNotationParser.parse("d8-c7");
         try {
-            client.fuehreHalbzugAus(spielId.id, halbzug.toString());
+            client.fuehreHalbzugAus(spielId.getId(), halbzug.toString());
             Assert.fail("Expected UngueltigerHalbzugException not occured");
         }
         catch (UngueltigerHalbzugException e) {
@@ -191,7 +190,7 @@ public class DDDSchachIT {
         }
         // Spielbrett überprüfen:
         //
-        final Response resp = client.spielbrett(spielId.id, "Tester", null);
+        final Response resp = client.spielbrett(spielId.getId(), "Tester", null);
         final Spielbrett actual = resp.readEntity(Spielbrett.class);
         Assert.assertEquals(FINALES_SPIELBRETT, actual.toString());
     }
