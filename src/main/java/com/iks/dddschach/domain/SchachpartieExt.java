@@ -1,101 +1,81 @@
 package com.iks.dddschach.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.iks.dddschach.domain.validation.*;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.iks.dddschach.domain.validation.Zugregel.DIE_PARTIE_ENDET_MATT;
+import static com.iks.dddschach.domain.validation.Zugregel.DIE_PARTIE_ENDET_PATT;
+
 
 public class SchachpartieExt extends Schachpartie {
 
     /**
-     * Wendet auf dem Spielbrett einen Halbzug an und gibt das Ergebnis zurück
-     * @param halbzug der auf dem Brett anzuwendende Halbzug
-     * @return eine neue Instanz des modifizierten Spielbretts
-     * @see {@link Halbzug}
+     * Führt den Halbzug auf dem Brett unter Berücksichtigung alle Schachregeln aus. Hält der
+     * Halbzug einer Überprüfung nicht stand, wird er nicht ausgeführt und anstatt dessen eine
+     * Exception ausgelöst
+     * @param halbzug auszuführender {@link Halbzug}
+     * @return Anzahl der bislang ausgeführten Züge
+     * @throws UngueltigerHalbzugException, falls der Halbzug nicht regelkonform ist
      */
-    public SpielbrettExt wendeHalbzugAn(Halbzug halbzug) {
-        return new SpielbrettExt(this) {{
-            final Spielfigur spielfigurFrom = getSchachfigurAnPosition(halbzug.getVon());
-            setSchachfigurAnPosition(halbzug.getVon(), null);
-            setSchachfigurAnPosition(halbzug.getNach(), spielfigurFrom);
-        }};
-    }
-
-
-    /**
-     * Setzt eine Figur <code>figur</code> auf die Spielbrett-Position <code>position</code>
-     * @param position Position auf dem Spielfeld (z.B. b4)
-     * @param figur die zu setzende Figur (z.B. Lw = weißer Läufer)
-     */
-    protected void setSchachfigurAnPosition(Position position, Spielfigur figur) {
-        board[position.horCoord.ordinal()][position.vertCoord.ordinal()] = figur;
-    }
-
-
-    /**
-     * Setzt eine Figur, gegeben durch Typ und Farbe auf eine Spielbrett-Position gegeben durch Zeile und Spalte
-     * @param h Zeile der Position auf dem Spielfeld (z.B. b)
-     * @param v Spalte der Position auf dem Spielfeld (z.B. 5)
-     * @param figurenTyp Typ der zu setzenden Figur (z.B. Läufer)
-     * @param color Farbe der zu setzenden Figur (z.B. schwarz)
-     */
-    protected void setSchachfigurAnPosition(Spalte h, Zeile v, FigurenTyp figurenTyp, Farbe color) {
-        setSchachfigurAnPosition(new Position(h,v), new Spielfigur(figurenTyp, color));
-    }
-
-
-    /**
-     * Ermittelt die Spielfigur auf Position <code>position</code>
-     * @param position Position auf dem Spielfeld (z.B. c3)
-     * @return {@link Spielfigur} falls sich eine Figur auf Position <code>position</code> befindet, null sonst.
-     */
-    public Spielfigur getSchachfigurAnPosition(Position position) {
-        return board[position.horCoord.ordinal()][position.vertCoord.ordinal()];
-    }
-
-
-    /**
-     * Ermittelt alle Positionen des Spielfeldes, auf dem eine Spielfigur mit der Farbe
-     * <code>farbe</code> steht.
-     * @param farbe Farbe, dessen Positionen gesucht werden
-     * @return Menge der Positionen, auf dem eine Figur mit Farbe <code>farbe</code> steht
-     */
-    public Set<Position> getPositionenMitFarbe(Farbe farbe) {
-        return getAllePositionen().stream()
-                .filter(position -> {
-                    Spielfigur spielfigur = getSchachfigurAnPosition(position);
-                    return spielfigur != null && spielfigur.color == farbe;
-                })
-                .collect(Collectors.toSet());
-    }
-
-
-    /**
-     * Ermittelt alle Positionen des Spielfeldes
-     * @return Alle Positionen des Spielfeldes
-     */
-    @JsonIgnore
-    public Set<Position> getAllePositionen() {
-        Set<Position> positionen = new HashSet<>();
-        for (Spalte spalte : Spalte.values()) {
-            for (Zeile zeile : Zeile.values()) {
-                positionen.add(new Position(spalte, zeile));
+    public int fuehreHalbzugAus(Halbzug halbzug) throws UngueltigerHalbzugException {
+        final HalbzugValidation.ValidationResult validationResult =
+                VALIDATOR.validiere(halbzug, halbzugHistorie.halbzuege, spielbrett);
+        if (!validationResult.gueltig) {
+            final PattMattCheck.PattMatt pattMatt = PATT_MATT_CHECK.analysiere(halbzugHistorie.halbzuege, spielbrett);
+            switch (pattMatt) {
+                case MATT: throw new UngueltigerHalbzugException(halbzug, DIE_PARTIE_ENDET_MATT);
+                case PATT: throw new UngueltigerHalbzugException(halbzug, DIE_PARTIE_ENDET_PATT);
             }
+            throw new UngueltigerHalbzugException(halbzug, validationResult.verletzteZugregel);
         }
-        return positionen;
+        spielbrett = spielbrett.wendeHalbzugAn(halbzug);
+
+        // Bei einer Rochade muss der Turm zusätzlich noch gezogen werden:
+        if (validationResult instanceof RochadenCheck.RochadenCheckResult) {
+            final RochadenCheck.RochadenCheckResult rochadenCheckResult = (RochadenCheck.RochadenCheckResult) validationResult;
+            spielbrett = spielbrett.wendeHalbzugAn(rochadenCheckResult.turmHalbZug);
+        }
+
+        // bei einem En-Passant-Zug muss der geschlagene Bauer noch entfernt werden:
+        if (validationResult instanceof EnPassantCheck.EnPassantCheckResult) {
+            final EnPassantCheck.EnPassantCheckResult enPassantCheckResult = (EnPassantCheck.EnPassantCheckResult) validationResult;
+            spielbrett = new Spielbrett(spielbrett) {{
+                setSchachfigurAnPosition(enPassantCheckResult.positionGeschlBauer, null);
+            }};
+        }
+
+        // Bei einer Bauernumwandlung muss der Bauer anschließend noch gegen die Zielfigur eingetauscht werden:
+        if (validationResult instanceof BauernumwCheck.BauernumwCheckResult) {
+            final BauernumwCheck.BauernumwCheckResult bauernumwCheckResult = (BauernumwCheck.BauernumwCheckResult) validationResult;
+            spielbrett = new Spielbrett(spielbrett) {{
+                setSchachfigurAnPosition(halbzug.to, bauernumwCheckResult.zielFigur);
+            }};
+        }
+
+        halbzugHistorie.addHalbzug(halbzug);
+        return halbzugHistorie.size();
     }
 
-    public Position sucheKoenigsPosition(Farbe farbeDesKoenigs) {
-        for (Position lfdPos : getPositionenMitFarbe(farbeDesKoenigs)) {
-            final Spielfigur spielfigur = getSchachfigurAnPosition(lfdPos);
-            if (spielfigur != null && spielfigur.figure == KOENIG) {
-                return lfdPos;
-            }
-        }
-        throw new IllegalArgumentException("There is no " + farbeDesKoenigs + " king on the board");
+
+    /**
+     * Liefert das aktuelle Spielbrett
+     * @return aktuelles {@link Spielbrett}
+     */
+    public Spielbrett aktuellesSpielbrett() {
+        return spielbrett;
     }
 
+
+    /**
+     * Liefert die Historie alle bislang ausgeführten Halbzüge
+     * @return {@link HalbzugHistorie}
+     */
+    public HalbzugHistorie halbzugHistorie() {
+        return halbzugHistorie;
+    }
 
 }
