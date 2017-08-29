@@ -1,7 +1,6 @@
 package com.iks.dddschach.rest;
 
 import com.iks.dddschach.domain.*;
-import com.iks.dddschach.olddomain.*;
 import com.iks.dddschach.service.api.SchachpartieApi;
 import com.iks.dddschach.service.api.SchachpartieApi.UngueltigerHalbzugException;
 import com.iks.dddschach.domain.validation.Zugregel;

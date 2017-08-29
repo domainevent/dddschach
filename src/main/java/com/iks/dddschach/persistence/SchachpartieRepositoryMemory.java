@@ -1,9 +1,8 @@
 package com.iks.dddschach.persistence;
 
-import com.iks.dddschach.domain.Schachpartie;
 import com.iks.dddschach.domain.SchachpartieExt;
 import com.iks.dddschach.domain.SpielId;
-import com.iks.dddschach.olddomain.SchachpartieRepository;
+import com.iks.dddschach.domain.SchachpartieRepository;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +21,7 @@ public class SchachpartieRepositoryMemory implements SchachpartieRepository {
     }
 
     public void save(SchachpartieExt schachpartie) {
-        repository.put(schachpartie.getSpielId(), schachpartie);
+        repository.put(schachpartie.getId(), schachpartie);
     }
 
 }

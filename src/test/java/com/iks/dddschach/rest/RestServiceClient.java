@@ -7,7 +7,7 @@ import com.iks.dddschach.domain.SpielId;
 import com.iks.dddschach.domain.SpielIdExt;
 import com.iks.dddschach.service.api.SchachpartieApi.UngueltigeSpielIdException;
 import com.iks.dddschach.service.api.SchachpartieApi.UngueltigerHalbzugException;
-import com.iks.dddschach.olddomain.SpielNotationParser;
+import com.iks.dddschach.domain.SpielNotationParser;
 import com.iks.dddschach.domain.validation.Zugregel;
 
 import javax.ws.rs.InternalServerErrorException;

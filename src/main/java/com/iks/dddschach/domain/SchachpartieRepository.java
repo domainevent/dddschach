@@ -1,4 +1,4 @@
-package com.iks.dddschach.olddomain;
+package com.iks.dddschach.domain;
 
 import com.iks.dddschach.domain.SchachpartieExt;
 import com.iks.dddschach.domain.SpielId;

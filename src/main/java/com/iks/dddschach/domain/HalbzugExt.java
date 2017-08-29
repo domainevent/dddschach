@@ -1,11 +1,10 @@
 package com.iks.dddschach.domain;
 
-import com.iks.dddschach.olddomain.SpielNotationParser;
-
+import com.iks.dddschach.domain.base.ValueObject;
 import java.text.ParseException;
 
 
-public class HalbzugExt extends Halbzug {
+public class HalbzugExt extends Halbzug implements ValueObject {
 
     public HalbzugExt() {
         super();

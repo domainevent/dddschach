@@ -1,7 +1,6 @@
 package com.iks.dddschach.service.impl;
 
 import com.iks.dddschach.domain.*;
-import com.iks.dddschach.olddomain.*;
 import com.iks.dddschach.service.api.SchachpartieApi;
 
 import java.io.IOException;
@@ -26,7 +25,7 @@ public class SchachpartieApiImpl implements SchachpartieApi {
     public NeuesSpielResponse neuesSpiel(NeuesSpielRequest request) throws Exception {
         final SchachpartieExt schachpartie = SCHACHPARTIE_FACTORY.createSchachpartie();
         SCHACHPARTIE_REPOSITORY.save(schachpartie);
-        final SpielIdExt spielId = new SpielIdExt(schachpartie.getSpielId().getId());
+        final SpielIdExt spielId = new SpielIdExt(schachpartie.getId().getId());
         return new NeuesSpielResponse(spielId);
     }
 

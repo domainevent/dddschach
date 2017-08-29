@@ -1,5 +1,6 @@
 package com.iks.dddschach.domain;
 
+import com.iks.dddschach.domain.base.EntityIdObject;
 import com.iks.dddschach.domain.validation.*;
 import com.iks.dddschach.service.api.SchachpartieApi.UngueltigerHalbzugException;
 
@@ -9,7 +10,7 @@ import static com.iks.dddschach.domain.validation.Zugregel.DIE_PARTIE_ENDET_MATT
 import static com.iks.dddschach.domain.validation.Zugregel.DIE_PARTIE_ENDET_PATT;
 
 
-public class SchachpartieExt extends Schachpartie {
+public class SchachpartieExt extends Schachpartie implements EntityIdObject<SpielId> {
 
     final static HalbzugValidation VALIDATOR = new GesamtValidator();
     final static PattMattCheck PATT_MATT_CHECK = new PattMattCheck();
@@ -20,6 +21,19 @@ public class SchachpartieExt extends Schachpartie {
 
     public SchachpartieExt(SpielIdExt spielId) {
         super(spielId, new HalbzugHistorie(new ArrayList<>()), SpielbrettFactory.createInitialesSpielbrett());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EntityIdObject<?> that = (EntityIdObject<?>) o;
+        return getId().equals(that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getId().hashCode();
     }
 
 

@@ -23,7 +23,7 @@ class SchachpartieDB {
     public SchachpartieDB(SchachpartieExt schachpartie) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         StringWriter sw1 = new StringWriter();
-        id = schachpartie.getSpielId().getId();
+        id = schachpartie.getId().getId();
         mapper.writeValue(sw1, schachpartie.aktuellesSpielbrett());
         spielbrett = sw1.toString();
         StringWriter sw2 = new StringWriter();
