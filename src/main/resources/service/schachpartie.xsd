@@ -152,6 +152,10 @@
 
 
     <xs:complexType name="HalbzugHistorie">
+        <xs:annotation>
+            <xs:documentation>HalbzugHistorie</xs:documentation>
+            <xs:appinfo><jaxb:class implClass="HalbzugHistorie$" /></xs:appinfo>
+        </xs:annotation>
         <xs:sequence>
             <xs:element name="halbzuege" type="tns:Halbzug" minOccurs="0" maxOccurs="unbounded">
                 <xs:annotation><xs:documentation>Spielfeld</xs:documentation></xs:annotation>

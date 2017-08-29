@@ -20,7 +20,7 @@ public class Schachpartie$ extends Schachpartie implements EntityIdObject<SpielI
     }
 
     public Schachpartie$(SpielId$ spielId) {
-        super(spielId, new HalbzugHistorie(new ArrayList<>()), SpielbrettFactory.createInitialesSpielbrett());
+        super(spielId, new HalbzugHistorie$(new ArrayList<>()), SpielbrettFactory.createInitialesSpielbrett());
     }
 
     @Override
