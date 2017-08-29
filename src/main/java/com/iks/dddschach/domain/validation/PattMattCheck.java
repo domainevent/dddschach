@@ -30,8 +30,8 @@ public class PattMattCheck {
 
         // Gehe all meine Figure durch und schauen, ob ich bei jedem gültigen Zug im Schach
         // steht
-        for (Position meinePosition : spielbrett.getPositionenMitFarbe(spielerFarbe)) {
-            for (Position moeglichesZiel : spielbrett.getAllePositionen()) {
+        for (Position$ meinePosition : spielbrett.getPositionenMitFarbe(spielerFarbe)) {
+            for (Position$ moeglichesZiel : spielbrett.getAllePositionen()) {
                 final Halbzug$ halbzug = new Halbzug$(meinePosition, moeglichesZiel);
                 final HalbzugValidation.ValidationResult validationResult =
                         GESAMT_VALIDATOR.validiere(halbzug, halbzugHistorie, spielbrett);
@@ -43,7 +43,7 @@ public class PattMattCheck {
                 }
             }
         }
-        final Position koenigsPosition = spielbrett.sucheKoenigsPosition(spielerFarbe);
+        final Position$ koenigsPosition = spielbrett.sucheKoenigsPosition(spielerFarbe);
         final Halbzug$ dummyHalbzug = new Halbzug$(koenigsPosition, koenigsPosition);
         return SCHACH_CHECK.validiere(dummyHalbzug, halbzugHistorie, spielbrett).gueltig?
                 PATT : MATT;

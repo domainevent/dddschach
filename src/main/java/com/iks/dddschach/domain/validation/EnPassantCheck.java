@@ -47,8 +47,8 @@ public class EnPassantCheck implements HalbzugValidation {
             Validate.isTrue(halbzugHistorie.size() > 0,"No halbzugHistorie present" );
 
             final Halbzug$ erwarteterVorgaengerHalbzug = new Halbzug$(
-                    new Position(halbzug.getNach().getSpalte(), zugFigur.getFarbe() == WEISS ? Zeile.VII : Zeile.II),
-                    new Position(halbzug.getNach().getSpalte(), zugFigur.getFarbe() == WEISS ? Zeile.V : Zeile.IV));
+                    new Position$(halbzug.getNach().getSpalte(), zugFigur.getFarbe() == WEISS ? Zeile.VII : Zeile.II),
+                    new Position$(halbzug.getNach().getSpalte(), zugFigur.getFarbe() == WEISS ? Zeile.V : Zeile.IV));
 
             final Halbzug$ tatsaelicherVorgaengerHalbzug = (Halbzug$)halbzugHistorie.get(halbzugHistorie.size()-1);
 

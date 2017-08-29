@@ -26,6 +26,10 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
         super(spielfelder);
     }
 
+    public List<Spielfeld$> getSpielfelder$() {
+        return spielfelder.stream().map(s -> (Spielfeld$)s).collect(Collectors.toList());
+    }
+
 
     /**
      * Ein zweidimensionales Array (real 8x8) von Spielfiguren
@@ -38,10 +42,10 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
         final int ANZAHL_ZEILEN = Zeile.values().length;
         final Spielfigur[][] copy = new Spielfigur[ANZAHL_SPALTEN][ANZAHL_ZEILEN];
 
-        for (Spielfeld spielfigur : spielfelder) {
-            final int z = spielfigur.getPosition().getZeile().ordinal();
-            final int s = spielfigur.getPosition().getSpalte().ordinal();
-            copy[s][z] = spielfigur.getSpielfigur();
+        for (Spielfeld spielfeld : spielfelder) {
+            final int z = spielfeld.getPosition().getZeile().ordinal();
+            final int s = spielfeld.getPosition().getSpalte().ordinal();
+            copy[s][z] = spielfeld.getSpielfigur();
         }
         return copy;
     }
@@ -177,8 +181,8 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
         return positionen;
     }
 
-    public Position sucheKoenigsPosition(Farbe farbeDesKoenigs) {
-        for (Position lfdPos : getPositionenMitFarbe(farbeDesKoenigs)) {
+    public Position$ sucheKoenigsPosition(Farbe farbeDesKoenigs) {
+        for (Position$ lfdPos : getPositionenMitFarbe(farbeDesKoenigs)) {
             final Spielfigur spielfigur = getSchachfigurAnPosition(lfdPos);
             if (spielfigur != null && spielfigur.getFigur() == KOENIG) {
                 return lfdPos;

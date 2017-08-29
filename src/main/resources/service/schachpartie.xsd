@@ -133,19 +133,24 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="spielfelder" type="tns:Spielfeld" minOccurs="1" maxOccurs="64">
-                <xs:annotation><xs:documentation>Spielfeld</xs:documentation></xs:annotation>
+                <xs:annotation>
+                    <xs:documentation>Spielfeld</xs:documentation>
+                </xs:annotation>
             </xs:element>
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="Spielfeld">
-        <xs:annotation><xs:documentation>Spielfeld</xs:documentation></xs:annotation>
+        <xs:annotation>
+            <xs:documentation>Spielfeld</xs:documentation>
+            <xs:appinfo><jaxb:class implClass="Spielfeld$" /></xs:appinfo>
+        </xs:annotation>
         <xs:sequence>
             <xs:element name="position" type="tns:Position">
-                <xs:annotation><xs:documentation>Spielfeld</xs:documentation></xs:annotation>
+                <xs:annotation><xs:documentation>Position</xs:documentation></xs:annotation>
             </xs:element>
             <xs:element name="spielfigur" type="tns:Spielfigur">
-                <xs:annotation><xs:documentation>Spielfeld</xs:documentation></xs:annotation>
+                <xs:annotation><xs:documentation>Spielfigur</xs:documentation></xs:annotation>
             </xs:element>
         </xs:sequence>
     </xs:complexType>

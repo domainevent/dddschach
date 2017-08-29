@@ -10,7 +10,7 @@ public class Halbzug$ extends Halbzug implements ValueObject {
         super();
     }
 
-    public Halbzug$(Position von, Position nach) {
+    public Halbzug$(Position$ von, Position$ nach) {
         super((Position$) von, (Position$)nach);
     }
 

@@ -106,7 +106,7 @@ public class RochadenCheck implements HalbzugValidation {
 
         // Ist ein Feld zwischen Start und Zielposition des Königs bedroht?
         //
-        final Position midPos = ValidationUtils.middle(halbzug.getVon(), halbzug.getNach());
+        final Position$ midPos = ValidationUtils.middle(halbzug.getVon(), halbzug.getNach());
 
         boolean sindAllePositionenDesKoenigHalbzugsUnbedroht =
                 SCHACH_CHECK.validiere(new Halbzug$(halbzug.getVon(), halbzug.getVon()), halbzugHistorie, spielbrett).gueltig &&
