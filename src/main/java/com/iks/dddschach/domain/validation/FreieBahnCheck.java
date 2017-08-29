@@ -7,8 +7,7 @@ import java.util.Objects;
 
 import com.iks.dddschach.domain.Halbzug;
 import com.iks.dddschach.domain.Position;
-import com.iks.dddschach.domain.Spielbrett;
-import com.iks.dddschach.domain.SpielbrettExt;
+import com.iks.dddschach.domain.Spielbrett$;
 import com.iks.dddschach.util.IntegerTupel;
 
 
@@ -19,7 +18,7 @@ import com.iks.dddschach.util.IntegerTupel;
 public class FreieBahnCheck implements HalbzugValidation {
 
 	@Override
-	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> halbzugHistorie, SpielbrettExt spielbrett) {
+	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> halbzugHistorie, Spielbrett$ spielbrett) {
 		Objects.requireNonNull(halbzug, "Argument halbzug is null");
 		Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
 
@@ -31,7 +30,7 @@ public class FreieBahnCheck implements HalbzugValidation {
      * Überprüft, ob sich auf den Spielbrettpositionen innerhalb des Halbzuges (d.h. ohne
      * Berücksichtigung von Start und End-Position) Spielfiguren befinden.
      */
-	boolean success(Halbzug halbzug, SpielbrettExt spielbrett) {
+	boolean success(Halbzug halbzug, Spielbrett$ spielbrett) {
         final IntegerTupel from = toIntegerTupel(halbzug.getVon());
         final IntegerTupel to = toIntegerTupel(halbzug.getNach());
 

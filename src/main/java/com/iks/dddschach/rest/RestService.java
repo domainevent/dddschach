@@ -69,7 +69,7 @@ public class RestService implements RestServiceInterface {
         try {
             final NeuesSpielResponse response = schachpartieApi.neuesSpiel(new NeuesSpielRequest(vermerk));
             LOG.info("Neue Partie mit Spiel-ID='" + response.getSpielId() + ", Vermerk='" + vermerk + "'");
-            return new SpielIdExt(response.getSpielId().getId());
+            return new SpielId$(response.getSpielId().getId());
         }
         catch (Exception e) {
             LOG.error("Interner Server-Error", e);
@@ -98,9 +98,9 @@ public class RestService implements RestServiceInterface {
     {
         LOG.debug("Abfrage des Spielfeldes");
         try {
-            final AktuellesSpielbrettRequest spielbrettRequest = new AktuellesSpielbrettRequest(new SpielIdExt(spielId));
+            final AktuellesSpielbrettRequest spielbrettRequest = new AktuellesSpielbrettRequest(new SpielId$(spielId));
             final AktuellesSpielbrettResponse aktuellesSpielbrettResponse = schachpartieApi.aktuellesSpielbrett(spielbrettRequest);
-            final SpielbrettExt spielbrett = (SpielbrettExt)aktuellesSpielbrettResponse.getSpielbrett();
+            final Spielbrett$ spielbrett = (Spielbrett$)aktuellesSpielbrettResponse.getSpielbrett();
             CacheControl cc = new CacheControl();
             cc.setMaxAge(60);
             EntityTag etag = new EntityTag(clientId + spielbrett.encode());
@@ -190,7 +190,7 @@ public class RestService implements RestServiceInterface {
     })
     public Response fuehreHalbzugAus(
             final @PathParam("gameId") String spielId,
-            final @NotNull(message = "A body of type Halbzug is required.") @Valid HalbzugExt halbzug)
+            final @NotNull(message = "A body of type Halbzug is required.") @Valid Halbzug$ halbzug)
             throws UngueltigerHalbzugException, UngueltigeSpielIdException
     {
         LOG.info("Ausfuehren des Halbzuges " + halbzug);
@@ -199,7 +199,7 @@ public class RestService implements RestServiceInterface {
         try {
 
             final FuehreHalbzugAusRequest request =
-                    new FuehreHalbzugAusRequest(new SpielIdExt(spielId), halbzug);
+                    new FuehreHalbzugAusRequest(new SpielId$(spielId), halbzug);
 
             zugIndex = schachpartieApi.fuehreHalbzugAus(request).getHalbzugZaehler();
         }

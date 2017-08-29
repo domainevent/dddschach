@@ -123,7 +123,7 @@ public class DDDSchachIT {
         final SpielId spielId = client.neuesSpiel("Vermerk");
         // Halbzug ausführen:
         //
-        final HalbzugExt halbzug = new HalbzugExt(new Position(E, II), new Position(E, IV));
+        final Halbzug$ halbzug = new Halbzug$(new Position(E, II), new Position(E, IV));
         final Response resp1 = client.fuehreHalbzugAus(spielId.getId(), halbzug);
         Assert.assertEquals(201, resp1.getStatus());
         // Spielbrett überprüfen:

@@ -31,7 +31,7 @@ public class ValidationUtils {
     /**
      * Ermittelt die Farbe des Spielers, der den Halbzug <code>halbzug</code> ausführen will
      */
-    public static Farbe spielerFarbe(Halbzug halbzug, SpielbrettExt spielbrett) {
+    public static Farbe spielerFarbe(Halbzug halbzug, Spielbrett$ spielbrett) {
         final Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
         Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.getVon());
         return zugFigur.getFarbe();

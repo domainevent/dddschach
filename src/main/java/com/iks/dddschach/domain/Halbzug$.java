@@ -4,22 +4,22 @@ import com.iks.dddschach.domain.base.ValueObject;
 import java.text.ParseException;
 
 
-public class HalbzugExt extends Halbzug implements ValueObject {
+public class Halbzug$ extends Halbzug implements ValueObject {
 
-    public HalbzugExt() {
+    public Halbzug$() {
         super();
     }
 
-    public HalbzugExt(Position von, Position nach) {
+    public Halbzug$(Position von, Position nach) {
         super(von, nach);
     }
 
-    public HalbzugExt(Halbzug halbzug) {
+    public Halbzug$(Halbzug halbzug) {
         this(halbzug.von, halbzug.nach);
     }
 
 
-    public HalbzugExt(String vonNach) throws ParseException {
+    public Halbzug$(String vonNach) throws ParseException {
         this(SpielNotationParser.parse(vonNach));
     }
 

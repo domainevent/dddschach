@@ -7,7 +7,7 @@ import com.iks.dddschach.domain.base.EnumObject;
 /**
  * Eine Schachfigur repräsentiert durch den Typ (Bauer, Turm, etc.) und deren Farbe (schwarz, weiß)
  */
-public class SpielfigurExt extends Spielfigur {
+public class Spielfigur$ extends Spielfigur {
 
     /**
      * Typ einer Schachfigur (Läufer, Springer, Dame, etc.)

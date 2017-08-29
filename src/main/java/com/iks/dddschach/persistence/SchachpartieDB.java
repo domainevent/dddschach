@@ -20,7 +20,7 @@ class SchachpartieDB {
     String spielbrett;
     String halbzugHistorie;
 
-    public SchachpartieDB(SchachpartieExt schachpartie) throws IOException {
+    public SchachpartieDB(Schachpartie$ schachpartie) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         StringWriter sw1 = new StringWriter();
         id = schachpartie.getId().getId();
@@ -31,12 +31,12 @@ class SchachpartieDB {
         halbzugHistorie = sw2.toString();
     }
 
-    public SchachpartieExt toSchachpartie() throws IOException {
+    public Schachpartie$ toSchachpartie() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         final Spielbrett sb = mapper.readValue(this.spielbrett, Spielbrett.class);
         final HalbzugHistorie hh = mapper.readValue(this.halbzugHistorie, HalbzugHistorie.class);
 
-        return new SchachpartieExt(new SpielIdExt(id)) {{
+        return new Schachpartie$(new SpielId$(id)) {{
             this.setSpielbrett(sb);
             this.setHalbzugHistorie(hh);
         }};

@@ -2,10 +2,8 @@ package com.iks.dddschach.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.webcohesion.enunciate.metadata.DocumentationExample;
-import javafx.scene.paint.Color;
 
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import static com.iks.dddschach.domain.Farbe.WEISS;
@@ -14,16 +12,16 @@ import static java.lang.Character.toLowerCase;
 import static java.lang.Character.toUpperCase;
 
 
-public class SpielbrettExt extends Spielbrett {
+public class Spielbrett$ extends Spielbrett {
 
-    public SpielbrettExt() {
+    public Spielbrett$() {
         super(new ArrayList<>());
     }
 
     /**
      * Fully-initialising value constructor
      */
-    public SpielbrettExt(final List<Spielfeld> spielfelder) {
+    public Spielbrett$(final List<Spielfeld> spielfelder) {
         super(spielfelder);
     }
 
@@ -113,7 +111,7 @@ public class SpielbrettExt extends Spielbrett {
      * Kopier-Konstruktor
      * @param toCopy das zu kopierenden {@link Spielbrett}
      */
-    public SpielbrettExt(Spielbrett toCopy) {
+    public Spielbrett$(Spielbrett toCopy) {
         this.spielfelder = new ArrayList<>(toCopy.spielfelder);
     }
 
@@ -124,8 +122,8 @@ public class SpielbrettExt extends Spielbrett {
      * @return eine neue Instanz des modifizierten Spielbretts
      * @see {@link Halbzug}
      */
-    public SpielbrettExt wendeHalbzugAn(Halbzug halbzug) {
-        return new SpielbrettExt(this) {{
+    public Spielbrett$ wendeHalbzugAn(Halbzug halbzug) {
+        return new Spielbrett$(this) {{
             final Spielfigur spielfigurFrom = getSchachfigurAnPosition(halbzug.getVon());
             setSchachfigurAnPosition(halbzug.getVon(), null);
             setSchachfigurAnPosition(halbzug.getNach(), spielfigurFrom);

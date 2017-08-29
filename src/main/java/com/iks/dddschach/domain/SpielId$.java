@@ -3,13 +3,13 @@ package com.iks.dddschach.domain;
 import java.util.UUID;
 
 
-public class SpielIdExt extends SpielId {
+public class SpielId$ extends SpielId {
 
-    public SpielIdExt() {
+    public SpielId$() {
         this(UUID.randomUUID().toString());
     }
 
-    public SpielIdExt(String id) {
+    public SpielId$(String id) {
        super(id);
     }
 }

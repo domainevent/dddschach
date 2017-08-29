@@ -1,7 +1,5 @@
 package com.iks.dddschach.domain;
 
-import com.iks.dddschach.domain.*;
-
 import java.text.ParseException;
 
 
@@ -16,13 +14,13 @@ public class SpielNotationParser {
      * @return {@link Halbzug}
      * @throws ParseException falls <code>eingabe</code> nicht der Syntax entsprach
      */
-    public static HalbzugExt parse(String eingabe) throws ParseException {
+    public static Halbzug$ parse(String eingabe) throws ParseException {
         String[] fromToParts;
         try {
             fromToParts = eingabe.split("-");
             Position from = parsePosition(fromToParts[0]);
             Position to = parsePosition(fromToParts[1]);
-            return new HalbzugExt(from, to);
+            return new Halbzug$(from, to);
         }
         catch (Exception e) {
             throw new ParseException(eingabe, 0);

@@ -10,16 +10,16 @@ import static com.iks.dddschach.domain.validation.Zugregel.DIE_PARTIE_ENDET_MATT
 import static com.iks.dddschach.domain.validation.Zugregel.DIE_PARTIE_ENDET_PATT;
 
 
-public class SchachpartieExt extends Schachpartie implements EntityIdObject<SpielId> {
+public class Schachpartie$ extends Schachpartie implements EntityIdObject<SpielId> {
 
     final static HalbzugValidation VALIDATOR = new GesamtValidator();
     final static PattMattCheck PATT_MATT_CHECK = new PattMattCheck();
 
-    public SchachpartieExt() {
+    public Schachpartie$() {
         super();
     }
 
-    public SchachpartieExt(SpielIdExt spielId) {
+    public Schachpartie$(SpielId$ spielId) {
         super(spielId, new HalbzugHistorie(new ArrayList<>()), SpielbrettFactory.createInitialesSpielbrett());
     }
 
@@ -67,7 +67,7 @@ public class SchachpartieExt extends Schachpartie implements EntityIdObject<Spie
         // bei einem En-Passant-Zug muss der geschlagene Bauer noch entfernt werden:
         if (validationResult instanceof EnPassantCheck.EnPassantCheckResult) {
             final EnPassantCheck.EnPassantCheckResult enPassantCheckResult = (EnPassantCheck.EnPassantCheckResult) validationResult;
-            spielbrett = new SpielbrettExt(spielbrett) {{
+            spielbrett = new Spielbrett$(spielbrett) {{
                 setSchachfigurAnPosition(enPassantCheckResult.positionGeschlBauer, null);
             }};
         }
@@ -75,7 +75,7 @@ public class SchachpartieExt extends Schachpartie implements EntityIdObject<Spie
         // Bei einer Bauernumwandlung muss der Bauer anschließend noch gegen die Zielfigur eingetauscht werden:
         if (validationResult instanceof BauernumwCheck.BauernumwCheckResult) {
             final BauernumwCheck.BauernumwCheckResult bauernumwCheckResult = (BauernumwCheck.BauernumwCheckResult) validationResult;
-            spielbrett = new SpielbrettExt(spielbrett) {{
+            spielbrett = new Spielbrett$(spielbrett) {{
                 setSchachfigurAnPosition(halbzug.getNach(), bauernumwCheckResult.zielFigur);
             }};
         }

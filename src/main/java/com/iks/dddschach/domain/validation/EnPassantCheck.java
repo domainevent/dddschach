@@ -29,7 +29,7 @@ public class EnPassantCheck implements HalbzugValidation {
 
 
 	@Override
-	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> halbzugHistorie, SpielbrettExt spielbrett) {
+	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> halbzugHistorie, Spielbrett$ spielbrett) {
         Objects.requireNonNull(halbzug, "Argument halbzug is null");
         Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
         Objects.requireNonNull(halbzugHistorie, "Argument zugHistorie is null");
@@ -65,11 +65,11 @@ public class EnPassantCheck implements HalbzugValidation {
     }
 
 
-    private boolean istMeinZielfeldFrei(Halbzug halbzug, SpielbrettExt spielbrett) {
+    private boolean istMeinZielfeldFrei(Halbzug halbzug, Spielbrett$ spielbrett) {
         return spielbrett.getSchachfigurAnPosition(halbzug.getNach()) == null;
     }
 
-    private boolean stehtNebenMirEinGegnerischerBauer(Halbzug halbzug, SpielbrettExt spielbrett, Farbe zugFigurFarbe) {
+    private boolean stehtNebenMirEinGegnerischerBauer(Halbzug halbzug, Spielbrett$ spielbrett, Farbe zugFigurFarbe) {
         final Position feldNebenMir = new Position(halbzug.getNach().getSpalte(), halbzug.getVon().getZeile());
         final Spielfigur generischerBauer = new Spielfigur(FigurenTyp.BAUER, (zugFigurFarbe == WEISS)? SCHWARZ : WEISS);
         return generischerBauer.equals(spielbrett.getSchachfigurAnPosition(feldNebenMir));

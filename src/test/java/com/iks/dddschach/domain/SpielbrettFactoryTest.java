@@ -12,7 +12,7 @@ public class SpielbrettFactoryTest {
     @Test
     public void decode() throws Exception {
         final String spielbrett = "RNBQKBNRPPPPPPPP________________________________pppppppprnbqkbnr";
-        final SpielbrettExt decoded = SpielbrettFactory.decode(spielbrett);
+        final Spielbrett$ decoded = SpielbrettFactory.decode(spielbrett);
         Assert.assertEquals(spielbrett, decoded.encode());
     }
 

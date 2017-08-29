@@ -2,7 +2,7 @@ package com.iks.dddschach.domain.validation;
 
 import com.iks.dddschach.domain.FigurenTyp;
 import com.iks.dddschach.domain.Halbzug;
-import com.iks.dddschach.domain.SpielbrettExt;
+import com.iks.dddschach.domain.Spielbrett$;
 import com.iks.dddschach.domain.Spielfigur;
 
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.Objects;
 public class SchlagRegel implements HalbzugValidation {
 
 	@Override
-	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> halbzugHistorie, SpielbrettExt spielbrett) {
+	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> halbzugHistorie, Spielbrett$ spielbrett) {
         Objects.requireNonNull(halbzug, "Argument halbzug is null");
         Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
 

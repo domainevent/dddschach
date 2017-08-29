@@ -1,13 +1,10 @@
 package com.iks.dddschach.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.iks.dddschach.domain.Halbzug;
-import com.iks.dddschach.domain.HalbzugExt;
-import com.iks.dddschach.domain.SpielId;
-import com.iks.dddschach.domain.SpielIdExt;
+import com.iks.dddschach.domain.*;
+import com.iks.dddschach.domain.Halbzug$;
 import com.iks.dddschach.service.api.SchachpartieApi.UngueltigeSpielIdException;
 import com.iks.dddschach.service.api.SchachpartieApi.UngueltigerHalbzugException;
-import com.iks.dddschach.domain.SpielNotationParser;
 import com.iks.dddschach.domain.validation.Zugregel;
 
 import javax.ws.rs.InternalServerErrorException;
@@ -77,7 +74,7 @@ public class RestServiceClient implements RestServiceInterface {
         switch (status) {
             case 200:
             case 304: return response;
-            case 404: throw new UngueltigeSpielIdException(new SpielIdExt(spielId));
+            case 404: throw new UngueltigeSpielIdException(new SpielId$(spielId));
             case 500: throw new InternalServerErrorException();
             default: throw new RestCallFailedException(status, response.readEntity(String.class));
         }
@@ -101,7 +98,7 @@ public class RestServiceClient implements RestServiceInterface {
         switch (status) {
             case 200:
             case 304: return response;
-            case 404: throw new UngueltigeSpielIdException(new SpielIdExt(spielId));
+            case 404: throw new UngueltigeSpielIdException(new SpielId$(spielId));
             case 500: throw new InternalServerErrorException();
             default: throw new RestCallFailedException(status, response.readEntity(String.class));
         }
@@ -121,14 +118,14 @@ public class RestServiceClient implements RestServiceInterface {
                 final Map<String, Object> json = response.readEntity(new GenericType<Map<String, Object>>() {});
                 final String verletzteZugregel = (String)json.get(json.get(json.get("error code")));
                 throw new UngueltigerHalbzugException(parseHalbzug(halbzug), Zugregel.valueOf(verletzteZugregel));
-            case 404: throw new UngueltigeSpielIdException(new SpielIdExt(spielId));
+            case 404: throw new UngueltigeSpielIdException(new SpielId$(spielId));
             case 500: throw new InternalServerErrorException();
             default: throw new RestCallFailedException(status, response.readEntity(String.class));
         }
     }
 
     @Override
-    public Response fuehreHalbzugAus(String spielId, HalbzugExt halbzug) throws UngueltigerHalbzugException, UngueltigeSpielIdException {
+    public Response fuehreHalbzugAus(String spielId, Halbzug$ halbzug) throws UngueltigerHalbzugException, UngueltigeSpielIdException {
         return fuehreHalbzugAus(spielId, halbzug.toString());
     }
 

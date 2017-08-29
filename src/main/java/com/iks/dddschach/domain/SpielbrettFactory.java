@@ -16,8 +16,8 @@ public class SpielbrettFactory  {
     /**
      * Erzeugt ein initiales Schachbrett
      */
-    public static SpielbrettExt createInitialesSpielbrett() {
-        return new SpielbrettExt() {{
+    public static Spielbrett$ createInitialesSpielbrett() {
+        return new Spielbrett$() {{
             setSchachfigurAnPosition(A, I, TURM, WEISS);
             setSchachfigurAnPosition(B, I, SPRINGER, WEISS);
             setSchachfigurAnPosition(C, I, LAEUFER, WEISS);
@@ -42,8 +42,8 @@ public class SpielbrettFactory  {
     }
 
     
-    public static SpielbrettExt decode(String schachbrettCompressed) {
-        final SpielbrettExt spielbrett = new SpielbrettExt();
+    public static Spielbrett$ decode(String schachbrettCompressed) {
+        final Spielbrett$ spielbrett = new Spielbrett$();
         int idx = 0;
         final char[] chars = schachbrettCompressed.toCharArray();
         for (Zeile z : Zeile.values()) {
