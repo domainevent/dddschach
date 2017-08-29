@@ -52,11 +52,11 @@ public class SchachspielApiTest {
 
     @Test
     public void fuehreZuegeInVerschPartienAusUndKontrolliereStellungen() throws Exception {
-        Position posFrom1 = new Position(E, II);
-        Position posTo1 = new Position(E, IV);
+        Position$ posFrom1 = new Position$(E, II);
+        Position$ posTo1 = new Position$(E, IV);
 
-        Position posFrom2 = new Position(D, II);
-        Position posTo2 = new Position(D, IV);
+        Position$ posFrom2 = new Position$(D, II);
+        Position$ posTo2 = new Position$(D, IV);
 
         final Spielbrett$ expected1 =
                 new Spielbrett$(SpielbrettFactory.createInitialesSpielbrett()) {{

@@ -2,12 +2,13 @@ package com.iks.dddschach.domain;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.iks.dddschach.domain.base.EnumObject;
+import com.iks.dddschach.domain.base.ValueObject;
 
 
 /**
  * Eine Schachfigur repräsentiert durch den Typ (Bauer, Turm, etc.) und deren Farbe (schwarz, weiß)
  */
-public class Spielfigur$ extends Spielfigur {
+public class Spielfigur$ extends Spielfigur implements ValueObject {
 
     /**
      * Typ einer Schachfigur (Läufer, Springer, Dame, etc.)

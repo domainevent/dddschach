@@ -23,8 +23,8 @@ public class SchachCheck implements HalbzugValidation {
      * im Schach stünde. Dann dürfte er diesen Halbzug nicht ausführen.
 	 */
     @Override
-    public ValidationResult validiere(final Halbzug halbzug,
-                                      final List<Halbzug> halbzugHistorie,
+    public ValidationResult validiere(final Halbzug$ halbzug,
+                                      final List<? extends Halbzug> halbzugHistorie,
                                       final Spielbrett$ spielbrett) {
 
         Objects.requireNonNull(halbzug, "Argument halbzug is null");
@@ -36,8 +36,8 @@ public class SchachCheck implements HalbzugValidation {
         final Position koenigsPosition = brettMitHalbzug.sucheKoenigsPosition(spielerFarbe);
 
         // Gehe alle Figuren des Gegners durch und prüfe, ob diese meinen König schlagen könnten:
-        for (Position lfdPos : brettMitHalbzug.getPositionenMitFarbe(gegnerFarbe)) {
-            final Halbzug lfdHalbzug = new Halbzug(lfdPos, koenigsPosition);
+        for (Position$ lfdPos : brettMitHalbzug.getPositionenMitFarbe(gegnerFarbe)) {
+            final Halbzug$ lfdHalbzug = new Halbzug$(lfdPos, koenigsPosition);
             if (istZielDesHalbzugsBedroht(lfdHalbzug, halbzugHistorie, brettMitHalbzug)) {
                 return new ValidationResult(Zugregel.KOENIG_STEHT_IM_SCHACH);
             }
@@ -45,8 +45,8 @@ public class SchachCheck implements HalbzugValidation {
         return new ValidationResult();
     }
 
-    private boolean istZielDesHalbzugsBedroht(final Halbzug halbzug,
-                                              final List<Halbzug> halbzugHistorie,
+    private boolean istZielDesHalbzugsBedroht(final Halbzug$ halbzug,
+                                              final List<? extends Halbzug> halbzugHistorie,
                                               final Spielbrett$ spielbrett) {
         return ERREICHE_ZIEL_CHECK.validiere(halbzug, halbzugHistorie, spielbrett).gueltig;
     }

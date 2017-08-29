@@ -177,7 +177,10 @@
 
 
     <xs:complexType name="Position">
-        <xs:annotation><xs:documentation>Position</xs:documentation></xs:annotation>
+        <xs:annotation>
+            <xs:documentation>Position</xs:documentation>
+            <xs:appinfo><jaxb:class implClass="Position$" /></xs:appinfo>
+        </xs:annotation>
         <xs:sequence>
             <xs:element name="spalte" type="tns:Spalte">
                 <xs:annotation><xs:documentation>Spielfeld</xs:documentation></xs:annotation>

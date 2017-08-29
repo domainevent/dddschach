@@ -42,7 +42,7 @@ public class SchachpartieApiImpl implements SchachpartieApi {
             throws UngueltigerHalbzugException, UngueltigeSpielIdException, IOException {
 
         final SpielId spielId = request.getSpielId();
-        final Halbzug halbzug = request.getHalbzug();
+        final Halbzug$ halbzug = (Halbzug$)request.getHalbzug();
 
         final Optional<Schachpartie$> schachpartie =
                 SCHACHPARTIE_REPOSITORY.findById(spielId);

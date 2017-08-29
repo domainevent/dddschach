@@ -45,7 +45,7 @@ public class Schachpartie$ extends Schachpartie implements EntityIdObject<SpielI
      * @return Anzahl der bislang ausgeführten Züge
      * @throws UngueltigerHalbzugException, falls der Halbzug nicht regelkonform ist
      */
-    public int fuehreHalbzugAus(Halbzug halbzug) throws UngueltigerHalbzugException {
+    public int fuehreHalbzugAus(Halbzug$ halbzug) throws UngueltigerHalbzugException {
         final HalbzugValidation.ValidationResult validationResult =
                 VALIDATOR.validiere(halbzug, halbzugHistorie.halbzuege, spielbrett);
         if (!validationResult.gueltig) {

@@ -1,9 +1,6 @@
 package com.iks.dddschach.domain.validation;
 
-import com.iks.dddschach.domain.Halbzug;
-import com.iks.dddschach.domain.Spielbrett$;
-import com.iks.dddschach.domain.SpielbrettFactory;
-import com.iks.dddschach.domain.SpielNotationParser;
+import com.iks.dddschach.domain.*;
 import com.iks.dddschach.domain.validation.HalbzugValidation.ValidationResult;
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,7 +25,7 @@ public class BauernRegelTest {
                 "a7-a5", "b7-b5", "c7-c5", "d7-d5", "e7-e5", "f7-f5", "g7-g5", "h7-h5",
         };
         for (String str : valideStartzuege) {
-            final Halbzug halbzug = SpielNotationParser.parse(str);
+            final Halbzug$ halbzug = SpielNotationParser.parse(str);
             final ValidationResult result = BAUERN_REGEL.validiere(halbzug, null, SPIELBRETT);
             Assert.assertTrue(result.gueltig);
         }
@@ -40,7 +37,7 @@ public class BauernRegelTest {
                 "a2-a1", "b2-b2", "c2-c5", "d2-d6", "e2-e7", "f2-f8", "g2-g2"
         };
         for (String str : valideStartzuege) {
-            final Halbzug halbzug = SpielNotationParser.parse(str);
+            final Halbzug$ halbzug = SpielNotationParser.parse(str);
             final ValidationResult result = BAUERN_REGEL.validiere(halbzug, null, SPIELBRETT);
             Assert.assertFalse(result.gueltig);
             Assert.assertEquals(BAUER_ZIEHT_EIN_FELD_VORWAERTS_AUSSER_AM_ANFANG_ZWEI, result.verletzteZugregel);
@@ -49,7 +46,7 @@ public class BauernRegelTest {
 
     @Test(expected = NullPointerException.class)
     public void checkFigurFehlt() throws Exception {
-        final Halbzug halbzug = SpielNotationParser.parse("a3-a4");
+        final Halbzug$ halbzug = SpielNotationParser.parse("a3-a4");
         final ValidationResult result = BAUERN_REGEL.validiere(halbzug, null, SPIELBRETT);
     }
 

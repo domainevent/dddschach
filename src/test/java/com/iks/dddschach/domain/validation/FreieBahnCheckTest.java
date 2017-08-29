@@ -19,63 +19,63 @@ public class FreieBahnCheckTest {
 
     @Test
     public void checkGueltigenZug1() throws Exception {
-        final Halbzug halbzug = new Halbzug(new Position(B, II), new Position(B, III));
+        final Halbzug$ halbzug = new Halbzug$(new Position$(B, II), new Position$(B, III));
         Assert.assertTrue(FREIE_BAHN_CHECK.success(halbzug, SPIELBRETT));
     }
 
 
     @Test
     public void checkGueltigenZug2() throws Exception {
-        final Halbzug halbzug = new Halbzug(new Position(B, II), new Position(B, IV));
+        final Halbzug$ halbzug = new Halbzug$(new Position$(B, II), new Position$(B, IV));
         Assert.assertTrue(FREIE_BAHN_CHECK.success(halbzug, SPIELBRETT));
     }
 
 
     @Test
     public void checkGueltigenZug3() throws Exception {
-        final Halbzug halbzug = new Halbzug(new Position(B, II), new Position(B, VII));
+        final Halbzug$ halbzug = new Halbzug$(new Position$(B, II), new Position$(B, VII));
         Assert.assertTrue(FREIE_BAHN_CHECK.success(halbzug, SPIELBRETT));
     }
 
 
     @Test
     public void checkGueltigenZug4() throws Exception {
-        final Halbzug halbzug = new Halbzug(new Position(E, II), new Position(F, I));
+        final Halbzug$ halbzug = new Halbzug$(new Position$(E, II), new Position$(F, I));
         Assert.assertTrue(FREIE_BAHN_CHECK.success(halbzug, SPIELBRETT));
     }
 
 
     @Test
     public void checkGueltigenZug5() throws Exception {
-        final Halbzug halbzug = new Halbzug(new Position(G, II), new Position(B, VII));
+        final Halbzug$ halbzug = new Halbzug$(new Position$(G, II), new Position$(B, VII));
         Assert.assertTrue(FREIE_BAHN_CHECK.success(halbzug, SPIELBRETT));
     }
 
 
     @Test
     public void checkUngueltigenZug1() throws Exception {
-        final Halbzug halbzug = new Halbzug(new Position(C, I), new Position(E, III));
+        final Halbzug$ halbzug = new Halbzug$(new Position$(C, I), new Position$(E, III));
         Assert.assertFalse(FREIE_BAHN_CHECK.success(halbzug, SPIELBRETT));
     }
 
 
     @Test
     public void checkUngueltigenZug2() throws Exception {
-        final Halbzug halbzug = new Halbzug(new Position(H, VIII), new Position(H, VI));
+        final Halbzug$ halbzug = new Halbzug$(new Position$(H, VIII), new Position$(H, VI));
         Assert.assertFalse(FREIE_BAHN_CHECK.success(halbzug, SPIELBRETT));
     }
 
 
     @Test
     public void checkUngueltigenZug3() throws Exception {
-        final Halbzug halbzug = new Halbzug(new Position(G, VIII), new Position(F, VI));
+        final Halbzug$ halbzug = new Halbzug$(new Position$(G, VIII), new Position$(F, VI));
         Assert.assertFalse(FREIE_BAHN_CHECK.success(halbzug, SPIELBRETT));
     }
 
 
     @Test
     public void checkUngueltigenZug4() throws Exception {
-        final Halbzug halbzug = new Halbzug(new Position(A, I), new Position(H, VIII));
+        final Halbzug$ halbzug = new Halbzug$(new Position$(A, I), new Position$(H, VIII));
         Assert.assertFalse(FREIE_BAHN_CHECK.success(halbzug, SPIELBRETT));
     }
 

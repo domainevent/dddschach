@@ -1,6 +1,7 @@
 package com.iks.dddschach.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.iks.dddschach.domain.base.ValueObject;
 import com.webcohesion.enunciate.metadata.DocumentationExample;
 
 import java.util.*;
@@ -12,7 +13,7 @@ import static java.lang.Character.toLowerCase;
 import static java.lang.Character.toUpperCase;
 
 
-public class Spielbrett$ extends Spielbrett {
+public class Spielbrett$ extends Spielbrett implements ValueObject {
 
     public Spielbrett$() {
         super(new ArrayList<>());
@@ -26,32 +27,13 @@ public class Spielbrett$ extends Spielbrett {
     }
 
 
-//    public SpielbrettExt(final com.iks.dddschach.olddomain.Spielfigur[][] spielfiguren) {
-//        final int ANZAHL_SPALTEN = Spalte.values().length;
-//        final int ANZAHL_ZEILEN = Zeile.values().length;
-//        spielfelder = new ArrayList<>();
-//        for (int s = 0; s < ANZAHL_SPALTEN; s++) {
-//            for (int z = 0; z < ANZAHL_ZEILEN; z++) {
-//                com.iks.dddschach.olddomain.Spielfigur spielfigur = spielfiguren[s][z];
-//                if (spielfigur == null) continue;
-//                final FigurenTyp figurenTyp = FigurenTyp.valueOf(spielfigur.figure.name());
-//                final Farbe color = Farbe.valueOf(spielfigur.color.name());
-//                final Spielfigur spielfigur1 = new Spielfigur(figurenTyp, color);
-//                final Spielfeld spielfeld = new Spielfeld(
-//                        new Position(Zeile.values()[z], Spalte.values()[s]), spielfigur1);
-//                spielfelder.add(spielfeld);
-//            }
-//        }
-//    }
-
-
     /**
      * Ein zweidimensionales Array (real 8x8) von Spielfiguren
      * @return eine neue Instanz des Spielfiguren-Arrays (immutable)
      * @see {@link Spielfigur}
      */
     @DocumentationExample(exclude = true)
-    public Spielfigur[][] getBoard() {
+    public Spielfigur[][] asArray() {
         final int ANZAHL_SPALTEN = Spalte.values().length;
         final int ANZAHL_ZEILEN = Zeile.values().length;
         final Spielfigur[][] copy = new Spielfigur[ANZAHL_SPALTEN][ANZAHL_ZEILEN];
@@ -71,7 +53,7 @@ public class Spielbrett$ extends Spielbrett {
         String result = "";
         for (Zeile zeile : Zeile.values()) {
             for (Spalte spalte : Spalte.values()) {
-                Spielfigur figure = getBoard()[spalte.ordinal()][zeile.ordinal()];
+                Spielfigur figure = asArray()[spalte.ordinal()][zeile.ordinal()];
                 if (figure == null) {
                     result += "_";
                 }
@@ -122,7 +104,7 @@ public class Spielbrett$ extends Spielbrett {
      * @return eine neue Instanz des modifizierten Spielbretts
      * @see {@link Halbzug}
      */
-    public Spielbrett$ wendeHalbzugAn(Halbzug halbzug) {
+    public Spielbrett$ wendeHalbzugAn(Halbzug$ halbzug) {
         return new Spielbrett$(this) {{
             final Spielfigur spielfigurFrom = getSchachfigurAnPosition(halbzug.getVon());
             setSchachfigurAnPosition(halbzug.getVon(), null);
@@ -136,7 +118,7 @@ public class Spielbrett$ extends Spielbrett {
      * @param position Position auf dem Spielfeld (z.B. b4)
      * @param figur die zu setzende Figur (z.B. Lw = weißer Läufer)
      */
-    protected void setSchachfigurAnPosition(Position position, Spielfigur figur) {
+    protected void setSchachfigurAnPosition(Position$ position, Spielfigur figur) {
         Objects.requireNonNull(position, "Argument position is null");
         final List<Spielfeld> spielfelderAnPosition = spielfelder.stream()
                 .filter(spielfeld -> spielfeld.position.equals(position))
@@ -157,7 +139,7 @@ public class Spielbrett$ extends Spielbrett {
      * @param color Farbe der zu setzenden Figur (z.B. schwarz)
      */
     protected void setSchachfigurAnPosition(Spalte h, Zeile v, FigurenTyp figurenTyp, Farbe color) {
-        setSchachfigurAnPosition(new Position(h,v), new Spielfigur(figurenTyp, color));
+        setSchachfigurAnPosition(new Position$(h,v), new Spielfigur(figurenTyp, color));
     }
 
 
@@ -170,7 +152,7 @@ public class Spielbrett$ extends Spielbrett {
      * @param farbe Farbe, dessen Positionen gesucht werden
      * @return Menge der Positionen, auf dem eine Figur mit Farbe <code>farbe</code> steht
      */
-    public Set<Position> getPositionenMitFarbe(Farbe farbe) {
+    public Set<Position$> getPositionenMitFarbe(Farbe farbe) {
         return getAllePositionen().stream()
                 .filter(position -> {
                     Spielfigur spielfigur = getSchachfigurAnPosition(position);
@@ -185,11 +167,11 @@ public class Spielbrett$ extends Spielbrett {
      * @return Alle Positionen des Spielfeldes
      */
     @JsonIgnore
-    public Set<Position> getAllePositionen() {
-        Set<Position> positionen = new HashSet<>();
+    public Set<Position$> getAllePositionen() {
+        Set<Position$> positionen = new HashSet<>();
         for (Spalte spalte : Spalte.values()) {
             for (Zeile zeile : Zeile.values()) {
-                positionen.add(new Position(spalte, zeile));
+                positionen.add(new Position$(spalte, zeile));
             }
         }
         return positionen;

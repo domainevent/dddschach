@@ -18,8 +18,8 @@ public class SpielNotationParser {
         String[] fromToParts;
         try {
             fromToParts = eingabe.split("-");
-            Position from = parsePosition(fromToParts[0]);
-            Position to = parsePosition(fromToParts[1]);
+            Position$ from = parsePosition(fromToParts[0]);
+            Position$ to = parsePosition(fromToParts[1]);
             return new Halbzug$(from, to);
         }
         catch (Exception e) {
@@ -33,11 +33,11 @@ public class SpielNotationParser {
      * @return {@link Position}
      * @throws ParseException falls <code>eingabe</code> nicht der Syntax entsprach
      */
-    public static Position parsePosition(String eingabe) throws ParseException {
+    public static Position$ parsePosition(String eingabe) throws ParseException {
         try {
             Spalte spalte = Spalte.valueOf(eingabe.substring(0, 1).toUpperCase());
             Zeile zeile = parseZeile(eingabe.substring(1, 2));
-            return new Position(spalte, zeile);
+            return new Position$(spalte, zeile);
         }
         catch (Exception e) {
             throw new ParseException(eingabe, 0);

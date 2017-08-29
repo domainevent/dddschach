@@ -1,6 +1,7 @@
 package com.iks.dddschach.domain.validation;
 
 import com.iks.dddschach.domain.Halbzug;
+import com.iks.dddschach.domain.Halbzug$;
 import com.iks.dddschach.domain.Spielbrett$;
 import com.iks.dddschach.domain.Spielfigur;
 import com.iks.dddschach.domain.base.DomainService;
@@ -25,8 +26,8 @@ public class GesamtValidator implements HalbzugValidation, DomainService {
     final static SchachCheck SCHACH_CHECK = new SchachCheck();
 
     public ValidationResult validiere(
-            Halbzug halbzug,
-            List<Halbzug> halbzugHistorie,
+            Halbzug$ halbzug,
+            List<? extends Halbzug> halbzugHistorie,
             Spielbrett$ spielbrett) {
 
         Validate.isTrue(halbzug != null, "Argument halbzug is null.");
@@ -94,7 +95,7 @@ public class GesamtValidator implements HalbzugValidation, DomainService {
     }
 
 
-    private boolean istRichtigerSpielerAmZug(Spielfigur schachfigurAnFrom, List<Halbzug> zugHistorie) {
+    private boolean istRichtigerSpielerAmZug(Spielfigur schachfigurAnFrom, List<? extends Halbzug> zugHistorie) {
         Objects.requireNonNull(schachfigurAnFrom);
         return (schachfigurAnFrom.getFarbe().ordinal() == zugHistorie.size() % 2);
         // return true;

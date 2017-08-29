@@ -11,7 +11,7 @@ public class Halbzug$ extends Halbzug implements ValueObject {
     }
 
     public Halbzug$(Position von, Position nach) {
-        super(von, nach);
+        super((Position$) von, (Position$)nach);
     }
 
     public Halbzug$(Halbzug halbzug) {
@@ -21,6 +21,14 @@ public class Halbzug$ extends Halbzug implements ValueObject {
 
     public Halbzug$(String vonNach) throws ParseException {
         this(SpielNotationParser.parse(vonNach));
+    }
+
+    public Position$ getVon() {
+        return (Position$)super.getVon();
+    }
+
+    public Position$ getNach() {
+        return (Position$)super.getNach();
     }
 
 }
