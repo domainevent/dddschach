@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 public class Spielfeld$ extends Spielfeld {
 
     public Spielfeld$() {
-        System.out.println("Konstruktor Spielfeld$");
     }
 
     public Spielfeld$(Position$ position, Spielfigur$ spielfigur) {
@@ -21,22 +20,16 @@ public class Spielfeld$ extends Spielfeld {
 
     @Override
     public Spielfigur$ getSpielfigur() {
-        return spielfigur;
+        return (Spielfigur$)spielfigur;
     }
 
-    public void setPosition(Position$ value) {
-        this.position = new Position$(value.getSpalte(), value.getZeile());
-    }
+//    public void setPosition(Position$ value) {
+//        this.position = new Position$(value.getSpalte(), value.getZeile());
+//    }
 
     @Override
     public Position$ getPosition() {
-        return position;
+        return (Position$)position;
     }
-
-
-//    public void setPosition(Position value) {
-//        this.position = ((Position$) value);
-//    }
-
 
 }

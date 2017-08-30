@@ -21,7 +21,7 @@ public class Halbzug$ extends Halbzug implements ValueObject {
     }
 
     public Halbzug$(Halbzug$ halbzug) {
-        this(halbzug.von, halbzug.nach);
+        this((Position$)halbzug.von, (Position$)halbzug.nach);
     }
 
     public Halbzug$(String vonNach) throws ParseException {

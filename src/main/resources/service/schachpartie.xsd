@@ -188,7 +188,7 @@
     <xs:complexType name="Position">
         <xs:annotation>
             <xs:documentation>Position</xs:documentation>
-            <xs:appinfo><jaxb:class implClass="Position$" /></xs:appinfo>
+            <!--<xs:appinfo><jaxb:class implClass="Position$" /></xs:appinfo>-->
         </xs:annotation>
         <xs:sequence>
             <xs:element name="spalte" type="tns:Spalte">
