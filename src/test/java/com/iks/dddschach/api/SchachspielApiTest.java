@@ -60,14 +60,14 @@ public class SchachspielApiTest {
 
         final Spielbrett$ expected1 =
                 new Spielbrett$(SpielbrettFactory.createInitialesSpielbrett()) {{
-                    final Spielfigur figure = getSchachfigurAnPosition(posFrom1);
+                    final Spielfigur$ figure = getSchachfigurAnPosition(posFrom1);
                     setSchachfigurAnPosition(posFrom1, null);
                     setSchachfigurAnPosition(posTo1, figure);
                 }};
 
         final Spielbrett$ expected2 =
                 new Spielbrett$(SpielbrettFactory.createInitialesSpielbrett()) {{
-                    final Spielfigur figure = getSchachfigurAnPosition(posFrom2);
+                    final Spielfigur$ figure = getSchachfigurAnPosition(posFrom2);
                     setSchachfigurAnPosition(posFrom2, null);
                     setSchachfigurAnPosition(posTo2, figure);
                 }};

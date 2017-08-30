@@ -34,7 +34,7 @@ public class EnPassantCheck implements HalbzugValidation {
         Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
         Objects.requireNonNull(halbzugHistorie, "Argument zugHistorie is null");
 
-        Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
+        Spielfigur$ zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
         Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.getNach());
 
         if (zugFigur.getFigur() != FigurenTyp.BAUER) {
@@ -70,8 +70,8 @@ public class EnPassantCheck implements HalbzugValidation {
     }
 
     private boolean stehtNebenMirEinGegnerischerBauer(Halbzug halbzug, Spielbrett$ spielbrett, Farbe zugFigurFarbe) {
-        final Position feldNebenMir = new Position(halbzug.getNach().getSpalte(), halbzug.getVon().getZeile());
-        final Spielfigur generischerBauer = new Spielfigur(FigurenTyp.BAUER, (zugFigurFarbe == WEISS)? SCHWARZ : WEISS);
+        final Position$ feldNebenMir = new Position$(halbzug.getNach().getSpalte(), halbzug.getVon().getZeile());
+        final Spielfigur$ generischerBauer = new Spielfigur$(FigurenTyp.BAUER, (zugFigurFarbe == WEISS)? SCHWARZ : WEISS);
         return generischerBauer.equals(spielbrett.getSchachfigurAnPosition(feldNebenMir));
     }
 

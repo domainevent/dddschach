@@ -37,12 +37,12 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
      * @see {@link Spielfigur}
      */
     @DocumentationExample(exclude = true)
-    public Spielfigur[][] asArray() {
+    public Spielfigur$[][] asArray() {
         final int ANZAHL_SPALTEN = Spalte.values().length;
         final int ANZAHL_ZEILEN = Zeile.values().length;
-        final Spielfigur[][] copy = new Spielfigur[ANZAHL_SPALTEN][ANZAHL_ZEILEN];
+        final Spielfigur$[][] copy = new Spielfigur$[ANZAHL_SPALTEN][ANZAHL_ZEILEN];
 
-        for (Spielfeld spielfeld : spielfelder) {
+        for (Spielfeld$ spielfeld : getSpielfelder$()) {
             final int z = spielfeld.getPosition().getZeile().ordinal();
             final int s = spielfeld.getPosition().getSpalte().ordinal();
             copy[s][z] = spielfeld.getSpielfigur();
@@ -57,7 +57,7 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
         String result = "";
         for (Zeile zeile : Zeile.values()) {
             for (Spalte spalte : Spalte.values()) {
-                Spielfigur figure = asArray()[spalte.ordinal()][zeile.ordinal()];
+                Spielfigur$ figure = asArray()[spalte.ordinal()][zeile.ordinal()];
                 if (figure == null) {
                     result += "_";
                 }
@@ -84,12 +84,12 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
     }
 
 
-    public Spielfigur getSchachfigurAnPosition(Position position) {
+    public Spielfigur$ getSchachfigurAnPosition(Position position) {
         final Optional<Spielfeld> first = spielfelder
                 .stream()
                 .filter(spielfeld -> spielfeld.position.equals(position))
                 .findFirst();
-        return (first.isPresent())? first.get().spielfigur : null;
+        return (first.isPresent())? (Spielfigur$)first.get().spielfigur : null;
     }
 
 
@@ -110,7 +110,7 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
      */
     public Spielbrett$ wendeHalbzugAn(Halbzug$ halbzug) {
         return new Spielbrett$(this) {{
-            final Spielfigur spielfigurFrom = getSchachfigurAnPosition(halbzug.getVon());
+            final Spielfigur$ spielfigurFrom = getSchachfigurAnPosition(halbzug.getVon());
             setSchachfigurAnPosition(halbzug.getVon(), null);
             setSchachfigurAnPosition(halbzug.getNach(), spielfigurFrom);
         }};
@@ -122,7 +122,7 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
      * @param position Position auf dem Spielfeld (z.B. b4)
      * @param figur die zu setzende Figur (z.B. Lw = weißer Läufer)
      */
-    protected void setSchachfigurAnPosition(Position$ position, Spielfigur figur) {
+    protected void setSchachfigurAnPosition(Position$ position, Spielfigur$ figur) {
         Objects.requireNonNull(position, "Argument position is null");
         final List<Spielfeld> spielfelderAnPosition = spielfelder.stream()
                 .filter(spielfeld -> spielfeld.position.equals(position))
@@ -130,7 +130,7 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
 
         spielfelder.removeAll(spielfelderAnPosition);
         if (figur != null) {
-            spielfelder.add(new Spielfeld(position, figur));
+            spielfelder.add(new Spielfeld$(position, figur));
         }
     }
 
@@ -143,7 +143,7 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
      * @param color Farbe der zu setzenden Figur (z.B. schwarz)
      */
     protected void setSchachfigurAnPosition(Spalte h, Zeile v, FigurenTyp figurenTyp, Farbe color) {
-        setSchachfigurAnPosition(new Position$(h,v), new Spielfigur(figurenTyp, color));
+        setSchachfigurAnPosition(new Position$(h,v), new Spielfigur$(figurenTyp, color));
     }
 
 
@@ -159,7 +159,7 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
     public Set<Position$> getPositionenMitFarbe(Farbe farbe) {
         return getAllePositionen().stream()
                 .filter(position -> {
-                    Spielfigur spielfigur = getSchachfigurAnPosition(position);
+                    Spielfigur$ spielfigur = getSchachfigurAnPosition(position);
                     return spielfigur != null && spielfigur.getFarbe() == farbe;
                 })
                 .collect(Collectors.toSet());
@@ -183,7 +183,7 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
 
     public Position$ sucheKoenigsPosition(Farbe farbeDesKoenigs) {
         for (Position$ lfdPos : getPositionenMitFarbe(farbeDesKoenigs)) {
-            final Spielfigur spielfigur = getSchachfigurAnPosition(lfdPos);
+            final Spielfigur$ spielfigur = getSchachfigurAnPosition(lfdPos);
             if (spielfigur != null && spielfigur.getFigur() == KOENIG) {
                 return lfdPos;
             }

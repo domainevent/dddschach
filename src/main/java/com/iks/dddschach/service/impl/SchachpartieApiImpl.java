@@ -41,7 +41,7 @@ public class SchachpartieApiImpl implements SchachpartieApi {
     public FuehreHalbzugAusResponse fuehreHalbzugAus(FuehreHalbzugAusRequest request)
             throws UngueltigerHalbzugException, UngueltigeSpielIdException, IOException {
 
-        final SpielId spielId = request.getSpielId();
+        final SpielId$ spielId = (SpielId$)request.getSpielId();
         final Halbzug$ halbzug = (Halbzug$)request.getHalbzug();
 
         final Optional<Schachpartie$> schachpartie =
@@ -57,7 +57,7 @@ public class SchachpartieApiImpl implements SchachpartieApi {
 
     @Override
     public AktuellesSpielbrettResponse aktuellesSpielbrett(AktuellesSpielbrettRequest request) throws UngueltigeSpielIdException, IOException {
-        final SpielId spielId = request.getSpielId();
+        final SpielId$ spielId = (SpielId$)request.getSpielId();
         final Optional<Schachpartie$> schachpartie = SCHACHPARTIE_REPOSITORY.findById(spielId);
         if (!schachpartie.isPresent()) {
             throw new UngueltigeSpielIdException(spielId);

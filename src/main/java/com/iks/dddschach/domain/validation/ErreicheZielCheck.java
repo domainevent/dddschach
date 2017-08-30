@@ -1,9 +1,6 @@
 package com.iks.dddschach.domain.validation;
 
-import com.iks.dddschach.domain.Halbzug;
-import com.iks.dddschach.domain.Halbzug$;
-import com.iks.dddschach.domain.Spielbrett$;
-import com.iks.dddschach.domain.Spielfigur;
+import com.iks.dddschach.domain.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -20,7 +17,7 @@ public class ErreicheZielCheck implements HalbzugValidation {
         Objects.requireNonNull(halbzug, "Argument halbzug is null");
         Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
 
-        Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
+        Spielfigur$ zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
         Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.getNach());
 
         switch (zugFigur.getFigur()) {

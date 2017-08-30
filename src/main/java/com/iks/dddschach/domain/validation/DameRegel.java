@@ -3,7 +3,7 @@ package com.iks.dddschach.domain.validation;
 import com.iks.dddschach.domain.Halbzug;
 import com.iks.dddschach.domain.Halbzug$;
 import com.iks.dddschach.domain.Spielbrett$;
-import com.iks.dddschach.domain.Spielfigur;
+import com.iks.dddschach.domain.Spielfigur$;
 import com.iks.dddschach.util.IntegerTupel;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class DameRegel implements HalbzugValidation {
 		Objects.requireNonNull(halbzug, "Argument halbzug is null");
 		Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
 
-		Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
+		Spielfigur$ zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
         Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.getVon());
 
 		if (zugFigur.getFigur() != DAME) {

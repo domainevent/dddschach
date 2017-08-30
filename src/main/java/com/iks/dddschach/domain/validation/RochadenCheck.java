@@ -69,7 +69,7 @@ public class RochadenCheck implements HalbzugValidation {
         Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
         Objects.requireNonNull(halbzugHistorie, "Argument zugHistorie is null");
 
-        Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
+        Spielfigur$ zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
         Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.getVon());
 
         final Halbzug$ zugehoerigerTurmHalbzug = ZUGEHOERIGE_TURM_HALBZEUGE.get(halbzug);

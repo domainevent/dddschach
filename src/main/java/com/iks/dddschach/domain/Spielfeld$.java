@@ -9,4 +9,9 @@ public class Spielfeld$ extends Spielfeld {
     public Spielfeld$(Position$ position, Spielfigur$ spielfigur) {
         super(position, spielfigur);
     }
+
+    @Override
+    public Spielfigur$ getSpielfigur() {
+        return (Spielfigur$)super.getSpielfigur();
+    }
 }

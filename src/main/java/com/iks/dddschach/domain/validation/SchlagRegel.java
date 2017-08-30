@@ -16,10 +16,10 @@ public class SchlagRegel implements HalbzugValidation {
         Objects.requireNonNull(halbzug, "Argument halbzug is null");
         Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
 
-        Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
+        Spielfigur$ zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
         Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.getVon());
 
-	    Spielfigur figurAmZiel = spielbrett.getSchachfigurAnPosition(halbzug.getNach());
+	    Spielfigur$ figurAmZiel = spielbrett.getSchachfigurAnPosition(halbzug.getNach());
 
 	    if (figurAmZiel == null) {
             return new ValidationResult();

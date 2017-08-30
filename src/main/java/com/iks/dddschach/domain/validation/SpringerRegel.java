@@ -17,7 +17,7 @@ public class SpringerRegel implements HalbzugValidation {
 		Objects.requireNonNull(halbzug, "Argument halbzug is null");
 		Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
 
-		Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
+		Spielfigur$ zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
 		Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.getVon());
 
 		if (zugFigur.getFigur() != FigurenTyp.SPRINGER) {
