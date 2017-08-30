@@ -1,6 +1,8 @@
 package com.iks.dddschach.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.iks.dddschach.domain.base.ValueObject;
 import com.webcohesion.enunciate.metadata.DocumentationExample;
 
@@ -12,7 +14,11 @@ import static com.iks.dddschach.domain.FigurenTyp.KOENIG;
 import static java.lang.Character.toLowerCase;
 import static java.lang.Character.toUpperCase;
 
-
+//@JsonTypeInfo(
+//        use = JsonTypeInfo.Id.NAME,
+//        include = JsonTypeInfo.As.PROPERTY,
+//        property = "@class")
+//@JsonSubTypes({ @JsonSubTypes.Type(value = Spielbrett$.class) })
 public class Spielbrett$ extends Spielbrett implements ValueObject {
 
     public Spielbrett$() {
@@ -29,6 +35,7 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
     public List<Spielfeld$> getSpielfelder$() {
         return spielfelder.stream().map(s -> (Spielfeld$)s).collect(Collectors.toList());
     }
+
 
 
     /**
