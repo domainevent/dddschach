@@ -97,7 +97,6 @@
     <xs:complexType name="Schachpartie">
         <xs:annotation>
             <xs:documentation>Aggregat Schachpartie</xs:documentation>
-            <xs:appinfo><jaxb:class implClass="Schachpartie$" /></xs:appinfo>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="id" type="tns:SpielId">
@@ -116,7 +115,6 @@
     <xs:complexType name="SpielId">
         <xs:annotation>
             <xs:documentation>SpielId</xs:documentation>
-            <xs:appinfo><jaxb:class implClass="SpielId$" /></xs:appinfo>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="id" type="xs:string">
@@ -129,7 +127,6 @@
     <xs:complexType name="Spielbrett">
         <xs:annotation>
             <xs:documentation>Spielbrett</xs:documentation>
-            <xs:appinfo><jaxb:class implClass="Spielbrett$" /></xs:appinfo>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="spielfelder" type="tns:Spielfeld" minOccurs="1" maxOccurs="64">
@@ -143,7 +140,6 @@
     <xs:complexType name="Spielfeld">
         <xs:annotation>
             <xs:documentation>Spielfeld</xs:documentation>
-            <xs:appinfo><jaxb:class implClass="Spielfeld$" /></xs:appinfo>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="position" type="tns:Position">
@@ -159,7 +155,6 @@
     <xs:complexType name="HalbzugHistorie">
         <xs:annotation>
             <xs:documentation>HalbzugHistorie</xs:documentation>
-            <xs:appinfo><jaxb:class implClass="HalbzugHistorie$" /></xs:appinfo>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="halbzuege" type="tns:Halbzug" minOccurs="0" maxOccurs="unbounded">
@@ -172,7 +167,6 @@
     <xs:complexType name="Halbzug">
         <xs:annotation>
             <xs:documentation>Halbzug</xs:documentation>
-            <xs:appinfo><jaxb:class implClass="Halbzug$" /></xs:appinfo>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="von" type="tns:Position">
@@ -188,7 +182,6 @@
     <xs:complexType name="Position">
         <xs:annotation>
             <xs:documentation>Position</xs:documentation>
-            <!--<xs:appinfo><jaxb:class implClass="Position$" /></xs:appinfo>-->
         </xs:annotation>
         <xs:sequence>
             <xs:element name="spalte" type="tns:Spalte">

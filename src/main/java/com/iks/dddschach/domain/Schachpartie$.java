@@ -52,22 +52,23 @@ public class Schachpartie$ extends Schachpartie implements EntityIdObject<SpielI
      * @throws UngueltigerHalbzugException, falls der Halbzug nicht regelkonform ist
      */
     public int fuehreHalbzugAus(Halbzug$ halbzug) throws UngueltigerHalbzugException {
+        Spielbrett$ spielbrett$ = (Spielbrett$)spielbrett;
         final HalbzugValidation.ValidationResult validationResult =
-                VALIDATOR.validiere(halbzug, halbzugHistorie.halbzuege, spielbrett);
+                VALIDATOR.validiere(halbzug, halbzugHistorie.halbzuege, spielbrett$);
         if (!validationResult.gueltig) {
-            final PattMattCheck.PattMatt pattMatt = PATT_MATT_CHECK.analysiere(halbzugHistorie.halbzuege, spielbrett);
+            final PattMattCheck.PattMatt pattMatt = PATT_MATT_CHECK.analysiere(halbzugHistorie.halbzuege, spielbrett$);
             switch (pattMatt) {
                 case MATT: throw new UngueltigerHalbzugException(halbzug, DIE_PARTIE_ENDET_MATT);
                 case PATT: throw new UngueltigerHalbzugException(halbzug, DIE_PARTIE_ENDET_PATT);
             }
             throw new UngueltigerHalbzugException(halbzug, validationResult.verletzteZugregel);
         }
-        spielbrett = spielbrett.wendeHalbzugAn(halbzug);
+        spielbrett = spielbrett$.wendeHalbzugAn(halbzug);
 
         // Bei einer Rochade muss der Turm zusätzlich noch gezogen werden:
         if (validationResult instanceof RochadenCheck.RochadenCheckResult) {
             final RochadenCheck.RochadenCheckResult rochadenCheckResult = (RochadenCheck.RochadenCheckResult) validationResult;
-            spielbrett = spielbrett.wendeHalbzugAn(rochadenCheckResult.turmHalbZug);
+            spielbrett = spielbrett$.wendeHalbzugAn(rochadenCheckResult.turmHalbZug);
         }
 
         // bei einem En-Passant-Zug muss der geschlagene Bauer noch entfernt werden:
@@ -96,7 +97,7 @@ public class Schachpartie$ extends Schachpartie implements EntityIdObject<SpielI
      * @return aktuelles {@link Spielbrett}
      */
     public Spielbrett$ aktuellesSpielbrett() {
-        return spielbrett;
+        return (Spielbrett$)spielbrett;
     }
 
 
@@ -105,7 +106,7 @@ public class Schachpartie$ extends Schachpartie implements EntityIdObject<SpielI
      * @return {@link HalbzugHistorie}
      */
     public HalbzugHistorie$ halbzugHistorie() {
-        return halbzugHistorie;
+        return (HalbzugHistorie$)halbzugHistorie;
     }
 
 }
