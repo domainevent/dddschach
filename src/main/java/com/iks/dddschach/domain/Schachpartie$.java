@@ -89,7 +89,7 @@ public class Schachpartie$ extends Schachpartie implements EntityIdObject<SpielI
      * Liefert das aktuelle Spielbrett
      * @return aktuelles {@link Spielbrett}
      */
-    public Spielbrett aktuellesSpielbrett() {
+    public Spielbrett$ aktuellesSpielbrett() {
         return spielbrett;
     }
 
@@ -98,7 +98,7 @@ public class Schachpartie$ extends Schachpartie implements EntityIdObject<SpielI
      * Liefert die Historie alle bislang ausgeführten Halbzüge
      * @return {@link HalbzugHistorie}
      */
-    public HalbzugHistorie halbzugHistorie() {
+    public HalbzugHistorie$ halbzugHistorie() {
         return halbzugHistorie;
     }
 
