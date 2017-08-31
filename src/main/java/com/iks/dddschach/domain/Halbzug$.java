@@ -28,10 +28,12 @@ public class Halbzug$ extends Halbzug implements ValueObject {
         this(SpielNotationParser.parse(vonNach));
     }
 
+    @Override
     public Position$ getVon() {
         return (Position$)super.getVon();
     }
 
+    @Override
     public Position$ getNach() {
         return (Position$)super.getNach();
     }

@@ -24,7 +24,7 @@ public class PattMattCheck {
 
 	/**
 	 */
-    public PattMatt analysiere(final List<Halbzug> halbzugHistorie, final Spielbrett$ spielbrett) {
+    public PattMatt analysiere(final List<Halbzug$> halbzugHistorie, final Spielbrett$ spielbrett) {
         Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
         final Farbe spielerFarbe = ValidationUtils.spielerFarbe(halbzugHistorie.size());
 

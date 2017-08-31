@@ -37,7 +37,7 @@ class SchachpartieDB {
         mapper.writeValue(sw1, schachpartie.aktuellesSpielbrett());
         spielbrett = sw1.toString();
         StringWriter sw2 = new StringWriter();
-        mapper.writeValue(sw2, schachpartie.halbzugHistorie());
+        mapper.writeValue(sw2, schachpartie.getHalbzugHistorie());
         halbzugHistorie = sw2.toString();
     }
 

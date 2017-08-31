@@ -54,9 +54,9 @@ public class Schachpartie$ extends Schachpartie implements EntityIdObject<SpielI
     public int fuehreHalbzugAus(Halbzug$ halbzug) throws UngueltigerHalbzugException {
         Spielbrett$ spielbrett$ = (Spielbrett$)spielbrett;
         final HalbzugValidation.ValidationResult validationResult =
-                VALIDATOR.validiere(halbzug, halbzugHistorie.halbzuege, spielbrett$);
+                VALIDATOR.validiere(halbzug, getHalbzugHistorie().getHalbzuege$(), spielbrett$);
         if (!validationResult.gueltig) {
-            final PattMattCheck.PattMatt pattMatt = PATT_MATT_CHECK.analysiere(halbzugHistorie.halbzuege, spielbrett$);
+            final PattMattCheck.PattMatt pattMatt = PATT_MATT_CHECK.analysiere(getHalbzugHistorie().getHalbzuege$(), spielbrett$);
             switch (pattMatt) {
                 case MATT: throw new UngueltigerHalbzugException(halbzug, DIE_PARTIE_ENDET_MATT);
                 case PATT: throw new UngueltigerHalbzugException(halbzug, DIE_PARTIE_ENDET_PATT);
@@ -105,7 +105,8 @@ public class Schachpartie$ extends Schachpartie implements EntityIdObject<SpielI
      * Liefert die Historie alle bislang ausgeführten Halbzüge
      * @return {@link HalbzugHistorie}
      */
-    public HalbzugHistorie$ halbzugHistorie() {
+    @Override
+    public HalbzugHistorie$ getHalbzugHistorie() {
         return (HalbzugHistorie$)halbzugHistorie;
     }
 

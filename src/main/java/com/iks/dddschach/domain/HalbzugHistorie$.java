@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.iks.dddschach.domain.base.ValueObject;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
@@ -19,5 +21,10 @@ public class HalbzugHistorie$ extends HalbzugHistorie implements ValueObject {
 
     public HalbzugHistorie$(List<Halbzug> halbzuege) {
         super(halbzuege);
+    }
+
+
+    public List<Halbzug$> getHalbzuege$() {
+        return super.getHalbzuege().stream().map(h -> (Halbzug$)h).collect(Collectors.toList());
     }
 }

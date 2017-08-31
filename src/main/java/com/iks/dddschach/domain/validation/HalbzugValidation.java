@@ -43,6 +43,6 @@ public interface HalbzugValidation {
      *                      welche Figuren sich auf welchen Positionen befinden.
      * @return Das Validationsergebnis
      */
-    ValidationResult validiere(Halbzug$ zuPruefen, List<? extends Halbzug> halbzugHistorie, Spielbrett$ aktSpielbrett);
+    ValidationResult validiere(Halbzug$ zuPruefen, List<Halbzug$> halbzugHistorie, Spielbrett$ aktSpielbrett);
 
 }

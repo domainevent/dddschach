@@ -29,7 +29,7 @@ public class EnPassantCheck implements HalbzugValidation {
 
 
 	@Override
-	public ValidationResult validiere(Halbzug$ halbzug, List<? extends Halbzug> halbzugHistorie, Spielbrett$ spielbrett) {
+	public ValidationResult validiere(Halbzug$ halbzug, List<Halbzug$> halbzugHistorie, Spielbrett$ spielbrett) {
         Objects.requireNonNull(halbzug, "Argument halbzug is null");
         Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
         Objects.requireNonNull(halbzugHistorie, "Argument zugHistorie is null");
@@ -44,7 +44,7 @@ public class EnPassantCheck implements HalbzugValidation {
             stehtNebenMirEinGegnerischerBauer(halbzug, spielbrett, zugFigur.getFarbe()) &&
             istMeinZielfeldFrei(halbzug, spielbrett)) {
 
-            Validate.isTrue(halbzugHistorie.size() > 0,"No halbzugHistorie present" );
+            Validate.isTrue(halbzugHistorie.size() > 0,"No getHalbzugHistorie present" );
 
             final Halbzug$ erwarteterVorgaengerHalbzug = new Halbzug$(
                     new Position$(halbzug.getNach().getSpalte(), zugFigur.getFarbe() == WEISS ? Zeile.VII : Zeile.II),

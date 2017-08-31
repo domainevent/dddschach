@@ -24,7 +24,7 @@ public class SchachCheck implements HalbzugValidation {
 	 */
     @Override
     public ValidationResult validiere(final Halbzug$ halbzug,
-                                      final List<? extends Halbzug> halbzugHistorie,
+                                      final List<Halbzug$> halbzugHistorie,
                                       final Spielbrett$ spielbrett) {
 
         Objects.requireNonNull(halbzug, "Argument halbzug is null");
@@ -46,7 +46,7 @@ public class SchachCheck implements HalbzugValidation {
     }
 
     private boolean istZielDesHalbzugsBedroht(final Halbzug$ halbzug,
-                                              final List<? extends Halbzug> halbzugHistorie,
+                                              final List<Halbzug$> halbzugHistorie,
                                               final Spielbrett$ spielbrett) {
         return ERREICHE_ZIEL_CHECK.validiere(halbzug, halbzugHistorie, spielbrett).gueltig;
     }

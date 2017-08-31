@@ -24,11 +24,11 @@ public class GesamtValidator implements HalbzugValidation, DomainService {
 
     public ValidationResult validiere(
             Halbzug$ halbzug,
-            List<? extends Halbzug> halbzugHistorie,
+            List<Halbzug$> halbzugHistorie,
             Spielbrett$ spielbrett) {
 
         Validate.isTrue(halbzug != null, "Argument halbzug is null.");
-        Validate.isTrue(halbzugHistorie != null, "Argument halbzugHistorie is null.");
+        Validate.isTrue(halbzugHistorie != null, "Argument getHalbzugHistorie is null.");
         Validate.isTrue(spielbrett != null, "Argument spielbrett is null.");
 
         final Spielfigur$ zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
@@ -92,7 +92,7 @@ public class GesamtValidator implements HalbzugValidation, DomainService {
     }
 
 
-    private boolean istRichtigerSpielerAmZug(Spielfigur schachfigurAnFrom, List<? extends Halbzug> zugHistorie) {
+    private boolean istRichtigerSpielerAmZug(Spielfigur schachfigurAnFrom, List<Halbzug$> zugHistorie) {
         Objects.requireNonNull(schachfigurAnFrom);
         return (schachfigurAnFrom.getFarbe().ordinal() == zugHistorie.size() % 2);
         // return true;
