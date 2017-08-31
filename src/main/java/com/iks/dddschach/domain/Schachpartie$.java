@@ -29,20 +29,6 @@ public class Schachpartie$ extends Schachpartie implements EntityIdObject<SpielI
         super(spielId, new HalbzugHistorie$(new ArrayList<>()), SpielbrettFactory.createInitialesSpielbrett());
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        EntityIdObject<?> that = (EntityIdObject<?>) o;
-        return getId().equals(that.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return getId().hashCode();
-    }
-
-
     /**
      * Führt den Halbzug auf dem Brett unter Berücksichtigung alle Schachregeln aus. Hält der
      * Halbzug einer Überprüfung nicht stand, wird er nicht ausgeführt und anstatt dessen eine
@@ -96,7 +82,8 @@ public class Schachpartie$ extends Schachpartie implements EntityIdObject<SpielI
      * Liefert das aktuelle Spielbrett
      * @return aktuelles {@link Spielbrett}
      */
-    public Spielbrett$ aktuellesSpielbrett() {
+    @Override
+    public Spielbrett$ getSpielbrett() {
         return (Spielbrett$)spielbrett;
     }
 
@@ -108,6 +95,20 @@ public class Schachpartie$ extends Schachpartie implements EntityIdObject<SpielI
     @Override
     public HalbzugHistorie$ getHalbzugHistorie() {
         return (HalbzugHistorie$)halbzugHistorie;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EntityIdObject<?> that = (EntityIdObject<?>) o;
+        return getId().equals(that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getId().hashCode();
     }
 
 }
