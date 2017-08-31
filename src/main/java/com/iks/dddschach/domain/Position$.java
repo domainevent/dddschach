@@ -14,6 +14,10 @@ public class Position$ extends Position implements ValueObject {
     public Position$() {
     }
 
+    public Position$(Position position) {
+        this(position.spalte, position.zeile);
+    }
+
     public Position$(Spalte spalte, Zeile zeile) {
         super(spalte, zeile);
     }

@@ -73,7 +73,8 @@ public class Schachpartie$ extends Schachpartie implements EntityIdObject<SpielI
             }};
         }
 
-        halbzugHistorie.withHalbzuege(halbzug);
+//        halbzugHistorie.withHalbzuege(halbzug);
+        halbzugHistorie.halbzuege.add(halbzug);
         return halbzugHistorie.halbzuege.size();
     }
 

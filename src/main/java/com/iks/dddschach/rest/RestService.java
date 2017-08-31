@@ -24,7 +24,7 @@ import java.util.HashMap;
  * zu spielen.
  */
 @Path("/")
-public class RestService implements RestServiceInterface {
+public class RestService  {
 
     @Context
     SchachpartieApi schachpartieApi;
@@ -40,7 +40,6 @@ public class RestService implements RestServiceInterface {
      *
      * @return Eine Bestätigungsmeldung mit aktuellem Datum und Uhrzeit
      */
-    @Override
     @GET
     @Path("isalive")
     @Produces(MediaType.TEXT_PLAIN)
@@ -56,7 +55,7 @@ public class RestService implements RestServiceInterface {
      * @param vermerk Vermerk zu diesem Spiel
      * @return Eine (weltweit) eindeutige Id dieses Spiels
      */
-    @Override
+//    @Override
     @POST
     @Path("games")
     @Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
@@ -83,7 +82,7 @@ public class RestService implements RestServiceInterface {
      *
      * @return das Schachbrett einschließlich seiner Figuren
      */
-    @Override
+//    @Override
     @GET
     @Path("games/{gameId}/board")
     @Produces(MediaType.APPLICATION_JSON)
@@ -138,7 +137,7 @@ public class RestService implements RestServiceInterface {
      *     }
      * </pre>
      */
-    @Override
+//    @Override
     @POST
     @Path("games/{gameId}/moves")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -176,7 +175,7 @@ public class RestService implements RestServiceInterface {
      *     }
      * </pre>
      */
-    @Override
+//    @Override
     @POST
     @Path("games/{gameId}/moves")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -190,7 +189,7 @@ public class RestService implements RestServiceInterface {
     })
     public Response fuehreHalbzugAus(
             final @PathParam("gameId") String spielId,
-            final @NotNull(message = "A body of type Halbzug is required.") @Valid Halbzug$ halbzug)
+            final @NotNull(message = "A body of type Halbzug is required.") @Valid Halbzug halbzug)
             throws UngueltigerHalbzugException, UngueltigeSpielIdException
     {
         LOG.info("Ausfuehren des Halbzuges " + halbzug);

@@ -6,7 +6,7 @@ import com.iks.dddschach.domain.base.ValueObject;
 import java.text.ParseException;
 
 @JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
+        use = JsonTypeInfo.Id.CLASS,
         include = JsonTypeInfo.As.PROPERTY,
         property = "@class")
 @JsonSubTypes({ @JsonSubTypes.Type(value = Halbzug$.class) })
@@ -20,8 +20,8 @@ public class Halbzug$ extends Halbzug implements ValueObject {
         super(von, nach);
     }
 
-    public Halbzug$(Halbzug$ halbzug) {
-        this((Position$)halbzug.von, (Position$)halbzug.nach);
+    public Halbzug$(Halbzug halbzug) {
+        this(new Position$(halbzug.von), new Position$(halbzug.nach));
     }
 
     public Halbzug$(String vonNach) throws ParseException {

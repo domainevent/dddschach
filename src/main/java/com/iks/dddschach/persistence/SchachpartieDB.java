@@ -34,7 +34,7 @@ class SchachpartieDB {
 
         StringWriter sw1 = new StringWriter();
         id = schachpartie.getId().getId();
-        mapper.writeValue(sw1, schachpartie.aktuellesSpielbrett());
+        mapper.writeValue(sw1, schachpartie.getSpielbrett());
         spielbrett = sw1.toString();
         StringWriter sw2 = new StringWriter();
         mapper.writeValue(sw2, schachpartie.getHalbzugHistorie());
