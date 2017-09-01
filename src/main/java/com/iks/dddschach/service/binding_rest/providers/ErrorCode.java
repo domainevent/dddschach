@@ -1,4 +1,4 @@
-package com.iks.dddschach.rest.providers;
+package com.iks.dddschach.service.binding_rest.providers;
 
 /**
  * Fehler-Codes, die mittels Json an den Client übertragen werden. Beispiel:

@@ -18,7 +18,7 @@ import java.util.Date;
  * zu spielen.
  */
 @Path("/ssd")
-public class SchachpartieRESTBinding implements SchachpartieApi {
+public class SchachpartieRestBinding implements SchachpartieApi {
 
     @Context
     SchachpartieApi schachpartieApi;
@@ -26,7 +26,7 @@ public class SchachpartieRESTBinding implements SchachpartieApi {
     @Context
     UriInfo uriInfo;
 
-    final static Logger LOG = Logger.getLogger(SchachpartieRESTBinding.class);
+    final static Logger LOG = Logger.getLogger(SchachpartieRestBinding.class);
 
 
     /**

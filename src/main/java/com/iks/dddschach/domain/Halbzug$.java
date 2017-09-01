@@ -1,8 +1,7 @@
 package com.iks.dddschach.domain;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.iks.dddschach.domain.base.ValueObject;
+
 import java.text.ParseException;
 
 //@JsonTypeInfo(
@@ -36,6 +35,11 @@ public class Halbzug$ extends Halbzug implements ValueObject {
     @Override
     public Position$ getNach() {
         return (Position$)super.getNach();
+    }
+
+
+    public String asString() {
+        return getVon().asString() + "-" + getNach().asString();
     }
 
 }

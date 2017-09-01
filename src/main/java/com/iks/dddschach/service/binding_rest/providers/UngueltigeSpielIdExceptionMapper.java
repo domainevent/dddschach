@@ -1,4 +1,4 @@
-package com.iks.dddschach.rest.providers;
+package com.iks.dddschach.service.binding_rest.providers;
 
 import com.iks.dddschach.service.api.SchachpartieApi.UngueltigeSpielIdException;
 

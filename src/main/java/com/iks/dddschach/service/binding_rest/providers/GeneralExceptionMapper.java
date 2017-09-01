@@ -1,4 +1,4 @@
-package com.iks.dddschach.rest.providers;
+package com.iks.dddschach.service.binding_rest.providers;
 
 import org.apache.log4j.Logger;
 

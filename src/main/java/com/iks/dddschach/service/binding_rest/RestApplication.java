@@ -1,4 +1,4 @@
-package com.iks.dddschach.rest;
+package com.iks.dddschach.service.binding_rest;
 
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
