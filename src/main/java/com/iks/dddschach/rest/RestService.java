@@ -197,9 +197,8 @@ public class RestService  implements RestServiceInterface {
 
         final int zugIndex;
         try {
-
             final FuehreHalbzugAusRequest request =
-                    new FuehreHalbzugAusRequest(new SpielId$(spielId), halbzug);
+                    new FuehreHalbzugAusRequest(new SpielId$(spielId), new Halbzug$(halbzug));
 
             zugIndex = schachpartieApi.fuehreHalbzugAus(request).getHalbzugZaehler();
         }

@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.PROPERTY,
-        property = "@class")
-@JsonSubTypes({ @JsonSubTypes.Type(value = HalbzugHistorie$.class) })
+//@JsonTypeInfo(
+//        use = JsonTypeInfo.Id.NAME,
+//        include = JsonTypeInfo.As.PROPERTY,
+//        property = "@class")
+//@JsonSubTypes({ @JsonSubTypes.Type(value = HalbzugHistorie$.class) })
 public class HalbzugHistorie$ extends HalbzugHistorie implements ValueObject {
 
     public HalbzugHistorie$() {

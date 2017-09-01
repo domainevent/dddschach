@@ -94,6 +94,7 @@ public class RestServiceSSD implements SchachpartieApi {
             @ResponseCode(code = 500, condition = "An exception occured")})
     public AktuellesSpielbrettResponse aktuellesSpielbrett(AktuellesSpielbrettRequest request)
             throws UngueltigeSpielIdException, IOException {
-        return schachpartieApi.aktuellesSpielbrett(request);
+        return new AktuellesSpielbrettResponse(SpielbrettFactory.createInitialesSpielbrett());
+//        return schachpartieApi.aktuellesSpielbrett(request);
     }
 }

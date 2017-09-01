@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import static com.iks.dddschach.domain.validation.Zugregel.DIE_PARTIE_ENDET_MATT;
 import static com.iks.dddschach.domain.validation.Zugregel.DIE_PARTIE_ENDET_PATT;
 
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.PROPERTY,
-        property = "@class")
-@JsonSubTypes({ @JsonSubTypes.Type(value = Schachpartie$.class) })
+//@JsonTypeInfo(
+//        use = JsonTypeInfo.Id.NAME,
+//        include = JsonTypeInfo.As.PROPERTY,
+//        property = "@class")
+//@JsonSubTypes({ @JsonSubTypes.Type(value = Schachpartie$.class) })
 public class Schachpartie$ extends Schachpartie implements EntityIdObject<SpielId> {
 
     final static HalbzugValidation VALIDATOR = new GesamtValidator();
