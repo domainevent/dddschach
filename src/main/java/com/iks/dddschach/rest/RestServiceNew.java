@@ -24,7 +24,7 @@ import java.util.HashMap;
  * Dieser REST-Service stellt die Möglichkeit bereit, eine Schach-Partie "remote" über das Netzwerk
  * zu spielen.
  */
-@Path("/new")
+@Path("/ssd")
 public class RestServiceNew implements SchachpartieApi {
 
     @Context
@@ -44,7 +44,8 @@ public class RestServiceNew implements SchachpartieApi {
     @GET
     @Path("isalive")
     @Produces(MediaType.TEXT_PLAIN)
-    public String isAlive() {
+    public String isAlive()
+    {
         LOG.info("DDD-Schach lebt");
         return "DDD-Schach is alive: " + new Date();
     }
@@ -52,12 +53,13 @@ public class RestServiceNew implements SchachpartieApi {
 
     @Override
     @POST
-    @Path("games")
+    @Path("neuesSpiel")
     @StatusCodes({
             @ResponseCode(code = 200, condition = "ok"),
             @ResponseCode(code = 500, condition = "An exception occured")
     })
-    public NeuesSpielResponse neuesSpiel(NeuesSpielRequest request) throws Exception {
+    public NeuesSpielResponse neuesSpiel(NeuesSpielRequest request) throws Exception
+    {
         try {
             final NeuesSpielResponse response = schachpartieApi.neuesSpiel(request);
             LOG.info("Neue Partie mit Spiel-ID='" + response.getSpielId() + ", Vermerk='" + request.getVermerk() + "'");
@@ -71,19 +73,31 @@ public class RestServiceNew implements SchachpartieApi {
 
 
     @Override
-    public Halbzug$ parse(String eingabe) throws ParseException {
+    public Halbzug$ parse(String eingabe) throws ParseException
+    {
         return null;
     }
 
 
     @Override
-    public FuehreHalbzugAusResponse fuehreHalbzugAus(FuehreHalbzugAusRequest request) throws UngueltigerHalbzugException, UngueltigeSpielIdException, IOException {
-        return null;
+    @POST
+    @Path("fuehreHalbzugAus")
+    public FuehreHalbzugAusResponse fuehreHalbzugAus(FuehreHalbzugAusRequest request)
+            throws UngueltigerHalbzugException, UngueltigeSpielIdException, IOException
+    {
+        LOG.info("Ausfuehren des Halbzuges " + request);
+
+        final int zugIndex;
+        zugIndex = schachpartieApi.fuehreHalbzugAus(request).getHalbzugZaehler();
+        LOG.debug("Der " + zugIndex + ". Halbzug " + request.getHalbzug() + " war erfolgreich.");
+        return new FuehreHalbzugAusResponse(zugIndex);
     }
 
 
     @Override
-    public AktuellesSpielbrettResponse aktuellesSpielbrett(AktuellesSpielbrettRequest request) throws UngueltigeSpielIdException, IOException {
+    public AktuellesSpielbrettResponse aktuellesSpielbrett(AktuellesSpielbrettRequest request)
+            throws UngueltigeSpielIdException, IOException
+    {
         return null;
     }
 }

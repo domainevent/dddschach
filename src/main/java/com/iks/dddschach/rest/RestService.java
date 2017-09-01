@@ -4,6 +4,7 @@ import com.iks.dddschach.domain.*;
 import com.iks.dddschach.service.api.SchachpartieApi;
 import com.iks.dddschach.service.api.SchachpartieApi.UngueltigeSpielIdException;
 import com.iks.dddschach.service.api.SchachpartieApi.UngueltigerHalbzugException;
+import com.sun.org.apache.regexp.internal.RE;
 import com.webcohesion.enunciate.metadata.rs.ResponseCode;
 import com.webcohesion.enunciate.metadata.rs.StatusCodes;
 import org.apache.log4j.Logger;
@@ -24,7 +25,7 @@ import java.util.HashMap;
  * zu spielen.
  */
 @Path("/")
-public class RestService  {
+public class RestService  implements RestServiceInterface {
 
     @Context
     SchachpartieApi schachpartieApi;
@@ -175,7 +176,7 @@ public class RestService  {
      *     }
      * </pre>
      */
-//    @Override
+    @Override
     @POST
     @Path("games/{gameId}/moves")
     @Consumes(MediaType.APPLICATION_JSON)

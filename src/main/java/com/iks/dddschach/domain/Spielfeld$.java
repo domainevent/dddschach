@@ -23,10 +23,6 @@ public class Spielfeld$ extends Spielfeld {
         return (Spielfigur$)spielfigur;
     }
 
-//    public void setPosition(Position$ value) {
-//        this.position = new Position$(value.getSpalte(), value.getZeile());
-//    }
-
     @Override
     public Position$ getPosition() {
         return (Position$)position;

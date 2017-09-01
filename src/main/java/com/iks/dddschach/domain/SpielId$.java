@@ -20,4 +20,8 @@ public class SpielId$ extends SpielId implements ValueObject {
     public SpielId$(String id) {
        super(id);
     }
+
+    public SpielId$(SpielId spielId) {
+        this(spielId.id);
+    }
 }

@@ -1,5 +1,6 @@
 package com.iks.dddschach.rest;
 
+import com.iks.dddschach.domain.Halbzug;
 import com.iks.dddschach.domain.Halbzug$;
 import com.iks.dddschach.domain.SpielId;
 import com.iks.dddschach.service.api.SchachpartieApi.UngueltigeSpielIdException;
@@ -36,6 +37,6 @@ public interface RestServiceInterface {
 
     Response fuehreHalbzugAus(
              String spielId,
-             @NotNull(message = "A body of type Halbzug is required.") @Valid Halbzug$ halbzug)
+             @NotNull(message = "A body of type Halbzug is required.") @Valid Halbzug halbzug)
             throws UngueltigerHalbzugException, UngueltigeSpielIdException;
 }
