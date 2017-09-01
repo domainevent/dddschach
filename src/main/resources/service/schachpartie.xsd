@@ -46,7 +46,9 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="spielId" type="tns:SpielId" minOccurs="0">
-                    <xs:annotation><xs:documentation>Vermerk zur Spielpartie</xs:documentation></xs:annotation>
+                    <xs:annotation>
+                        <xs:documentation>Vermerk zur Spielpartie</xs:documentation>
+                    </xs:annotation>
                 </xs:element>
                 <xs:element name="halbzug" type="tns:Halbzug" minOccurs="0">
                     <xs:annotation><xs:documentation>Vermerk zur Spielpartie</xs:documentation></xs:annotation>
@@ -115,6 +117,7 @@
     <xs:complexType name="SpielId">
         <xs:annotation>
             <xs:documentation>SpielId</xs:documentation>
+            <xs:appinfo><jaxb:class implClass="SpielId$" /></xs:appinfo>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="id" type="xs:string">

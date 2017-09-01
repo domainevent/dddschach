@@ -2,22 +2,15 @@ package com.iks.dddschach.rest;
 
 import com.iks.dddschach.domain.*;
 import com.iks.dddschach.service.api.SchachpartieApi;
-import com.iks.dddschach.service.api.SchachpartieApi.UngueltigeSpielIdException;
-import com.iks.dddschach.service.api.SchachpartieApi.UngueltigerHalbzugException;
 import com.webcohesion.enunciate.metadata.rs.ResponseCode;
 import com.webcohesion.enunciate.metadata.rs.StatusCodes;
 import org.apache.log4j.Logger;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.io.IOException;
-import java.net.URI;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.HashMap;
 
 
 /**
@@ -25,7 +18,7 @@ import java.util.HashMap;
  * zu spielen.
  */
 @Path("/ssd")
-public class RestServiceNew implements SchachpartieApi {
+public class RestServiceSSD implements SchachpartieApi {
 
     @Context
     SchachpartieApi schachpartieApi;
@@ -33,7 +26,7 @@ public class RestServiceNew implements SchachpartieApi {
     @Context
     UriInfo uriInfo;
 
-    final static Logger LOG = Logger.getLogger(RestServiceNew.class);
+    final static Logger LOG = Logger.getLogger(RestServiceSSD.class);
 
 
     /**
@@ -82,22 +75,25 @@ public class RestServiceNew implements SchachpartieApi {
     @Override
     @POST
     @Path("fuehreHalbzugAus")
+    @StatusCodes({
+            @ResponseCode(code = 200, condition = "ok"),
+            @ResponseCode(code = 400, condition = "Input validation error"),
+            @ResponseCode(code = 500, condition = "An exception occured")})
     public FuehreHalbzugAusResponse fuehreHalbzugAus(FuehreHalbzugAusRequest request)
-            throws UngueltigerHalbzugException, UngueltigeSpielIdException, IOException
-    {
-        LOG.info("Ausfuehren des Halbzuges " + request);
-
-        final int zugIndex;
-        zugIndex = schachpartieApi.fuehreHalbzugAus(request).getHalbzugZaehler();
-        LOG.debug("Der " + zugIndex + ". Halbzug " + request.getHalbzug() + " war erfolgreich.");
-        return new FuehreHalbzugAusResponse(zugIndex);
+            throws UngueltigerHalbzugException, UngueltigeSpielIdException, IOException {
+        return schachpartieApi.fuehreHalbzugAus(request);
     }
 
 
     @Override
+    @POST
+    @Path("aktuellesSpielbrett")
+    @StatusCodes({
+            @ResponseCode(code = 200, condition = "ok"),
+            @ResponseCode(code = 400, condition = "Input validation error"),
+            @ResponseCode(code = 500, condition = "An exception occured")})
     public AktuellesSpielbrettResponse aktuellesSpielbrett(AktuellesSpielbrettRequest request)
-            throws UngueltigeSpielIdException, IOException
-    {
-        return null;
+            throws UngueltigeSpielIdException, IOException {
+        return schachpartieApi.aktuellesSpielbrett(request);
     }
 }

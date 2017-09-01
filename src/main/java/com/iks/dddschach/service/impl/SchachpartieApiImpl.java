@@ -1,11 +1,9 @@
 package com.iks.dddschach.service.impl;
 
 import com.iks.dddschach.domain.*;
-import com.iks.dddschach.rest.RestServiceNew;
 import com.iks.dddschach.service.api.SchachpartieApi;
 import org.apache.log4j.Logger;
 
-import javax.ws.rs.InternalServerErrorException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Optional;
@@ -38,48 +36,65 @@ public class SchachpartieApiImpl implements SchachpartieApi {
         return SpielNotationParser.parse(eingabe);
     }
 
-
-
-
     @Override
     public FuehreHalbzugAusResponse fuehreHalbzugAus(FuehreHalbzugAusRequest request)
             throws UngueltigerHalbzugException, UngueltigeSpielIdException, IOException {
 
+        LOG.trace("Ausfuehren des Halbzuges: " + request);
+
         final SpielId$ spielId = new SpielId$(request.getSpielId());
         final Halbzug$ halbzug = new Halbzug$(request.getHalbzug());
 
-        final Optional<Schachpartie$> schachpartie =
-                SCHACHPARTIE_REPOSITORY.findById(spielId);
-
-        if (!schachpartie.isPresent()) {
-            LOG.warn("Die Spiel-ID '" + spielId + "' ist ungueltig.");
-            throw new UngueltigeSpielIdException(spielId);
-        }
         try {
-            final int no = schachpartie.get().fuehreHalbzugAus(halbzug);
+            final Optional<Schachpartie$> schachpartie = SCHACHPARTIE_REPOSITORY.findById(spielId);
+            if (!schachpartie.isPresent()) {
+                throw new UngueltigeSpielIdException(spielId);
+            }
+            final int zugIndex = schachpartie.get().fuehreHalbzugAus(halbzug);
             SCHACHPARTIE_REPOSITORY.save(schachpartie.get());
-            return new FuehreHalbzugAusResponse(no);
+            final FuehreHalbzugAusResponse response = new FuehreHalbzugAusResponse(zugIndex);
+            LOG.trace("Ausfuehren des Halbzuges: " + response);
+            return response;
+        }
+        catch (UngueltigeSpielIdException e) {
+            LOG.warn("Die Spiel-ID '" + spielId + "' ist ungueltig.");
+            throw e;
         }
         catch (UngueltigerHalbzugException e) {
             LOG.debug("Der Halbzug " + request.getHalbzug() + " ist ungueltig.");
             throw e;
         }
         catch (IOException e) {
-            LOG.debug("Der Halbzug " + request.getHalbzug() + " konnte nicht persistiert werden.");
+            LOG.error(e);
             throw e;
         }
     }
 
 
     @Override
-    public AktuellesSpielbrettResponse aktuellesSpielbrett(AktuellesSpielbrettRequest request) throws UngueltigeSpielIdException, IOException {
-        final SpielId$ spielId = (SpielId$)request.getSpielId();
-        final Optional<Schachpartie$> schachpartie = SCHACHPARTIE_REPOSITORY.findById(spielId);
-        if (!schachpartie.isPresent()) {
-            throw new UngueltigeSpielIdException(spielId);
+    public AktuellesSpielbrettResponse aktuellesSpielbrett(AktuellesSpielbrettRequest request)
+            throws UngueltigeSpielIdException, IOException
+    {
+        LOG.trace("Abfrage des Spielfeldes: " + request);
+        final SpielId$ spielId = new SpielId$(request.getSpielId());
+        try {
+            final Optional<Schachpartie$> schachpartie = SCHACHPARTIE_REPOSITORY.findById(spielId);
+            if (!schachpartie.isPresent()) {
+                throw new UngueltigeSpielIdException(spielId);
+            }
+            final Spielbrett$ spielbrettExt = new Spielbrett$(schachpartie.get().getSpielbrett());
+            final AktuellesSpielbrettResponse response = new AktuellesSpielbrettResponse(spielbrettExt);
+            LOG.trace("Abfrage des Spielfeldes: " + response);
+            return response;
         }
-        final Spielbrett$ spielbrettExt = new Spielbrett$(schachpartie.get().getSpielbrett());
-        return new AktuellesSpielbrettResponse(spielbrettExt);
+        catch (UngueltigeSpielIdException e) {
+            LOG.warn("Die Spiel-ID '" + spielId + "' ist ungueltig.");
+            throw e;
+        }
+        catch (IOException e) {
+            LOG.error("Das Spielbrett mit Id " + request.getSpielId() + " konnte nicht geladen werden.");
+            throw e;
+        }
     }
 
 
