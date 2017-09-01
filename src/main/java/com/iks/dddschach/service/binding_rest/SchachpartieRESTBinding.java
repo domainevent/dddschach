@@ -1,4 +1,4 @@
-package com.iks.dddschach.rest;
+package com.iks.dddschach.service.binding_rest;
 
 import com.iks.dddschach.domain.*;
 import com.iks.dddschach.service.api.SchachpartieApi;
@@ -18,7 +18,7 @@ import java.util.Date;
  * zu spielen.
  */
 @Path("/ssd")
-public class RestServiceSSD implements SchachpartieApi {
+public class SchachpartieRESTBinding implements SchachpartieApi {
 
     @Context
     SchachpartieApi schachpartieApi;
@@ -26,7 +26,7 @@ public class RestServiceSSD implements SchachpartieApi {
     @Context
     UriInfo uriInfo;
 
-    final static Logger LOG = Logger.getLogger(RestServiceSSD.class);
+    final static Logger LOG = Logger.getLogger(SchachpartieRESTBinding.class);
 
 
     /**
@@ -94,7 +94,7 @@ public class RestServiceSSD implements SchachpartieApi {
             @ResponseCode(code = 500, condition = "An exception occured")})
     public AktuellesSpielbrettResponse aktuellesSpielbrett(AktuellesSpielbrettRequest request)
             throws UngueltigeSpielIdException, IOException {
-        return new AktuellesSpielbrettResponse(SpielbrettFactory.createInitialesSpielbrett());
-//        return schachpartieApi.aktuellesSpielbrett(request);
+//        return new AktuellesSpielbrettResponse(SpielbrettFactory.createInitialesSpielbrett());
+        return schachpartieApi.aktuellesSpielbrett(request);
     }
 }
