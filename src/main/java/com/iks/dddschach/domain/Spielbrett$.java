@@ -1,42 +1,35 @@
 package com.iks.dddschach.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.iks.dddschach.domain.base.ValueObject;
 import com.webcohesion.enunciate.metadata.DocumentationExample;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.iks.dddschach.domain.Farbe.WEISS;
 import static com.iks.dddschach.domain.FigurenTyp.KOENIG;
-import static java.lang.Character.toLowerCase;
-import static java.lang.Character.toUpperCase;
 
-//@JsonTypeInfo(
-//        use = JsonTypeInfo.Id.NAME,
-//        include = JsonTypeInfo.As.PROPERTY,
-//        property = "@class")
-//@JsonSubTypes({ @JsonSubTypes.Type(value = Spielbrett$.class) })
 public class Spielbrett$ extends Spielbrett implements ValueObject {
 
     public Spielbrett$() {
         super(new ArrayList<>());
     }
 
-    /**
-     * Fully-initialising value constructor
-     */
-    public Spielbrett$(final List<Spielfeld> spielfelder) {
-        super(spielfelder);
-    }
-
     public List<Spielfeld$> getSpielfelder$() {
         return spielfelder.stream().map(s -> (Spielfeld$)s).collect(Collectors.toList());
     }
 
+    /**
+     * Kopier-Konstruktor
+     * @param toCopy das zu kopierenden {@link Spielbrett}
+     */
+    public Spielbrett$(Spielbrett toCopy) {
+        this.spielfelder = new ArrayList<>(toCopy.spielfelder);
+    }
 
+    /*-----------------------------------------------------------------------*\
+     * Blutige Ergänzungen                                                   *
+    \*-----------------------------------------------------------------------*/
 
     /**
      * Ein zweidimensionales Array (real 8x8) von Spielfiguren
@@ -58,36 +51,17 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
     }
 
     /**
-     * Gibt die Spielposition in möglichst komprimierter Form aus (String der Länge 64)
+     * Gibt das Spielbrett in möglichst komprimierter Form aus (String der Länge 64)
      */
     public String encode() {
         String result = "";
         for (Zeile zeile : Zeile.values()) {
             for (Spalte spalte : Spalte.values()) {
-                Spielfigur$ figure = asArray()[spalte.ordinal()][zeile.ordinal()];
-                if (figure == null) {
-                    result += "_";
-                }
-                else {
-                    char ch = encodeFigure(figure.getFigur());
-                    result += (figure.getFarbe() == WEISS)? toUpperCase(ch) : toLowerCase(ch);
-                }
+                Spielfigur$ spielfigur = asArray()[spalte.ordinal()][zeile.ordinal()];
+                result += (spielfigur == null)? "_" : spielfigur.encode();
             }
         }
         return result;
-    }
-
-
-    public Character encodeFigure(FigurenTyp figur) {
-        switch (figur) {
-            case KOENIG:  return 'K';
-            case DAME:    return 'Q';
-            case TURM:    return 'R';
-            case LAEUFER: return 'B';
-            case SPRINGER: return 'N';
-            case BAUER:   return 'P';
-        }
-        throw new IllegalArgumentException("Unexpected enum " + this);
     }
 
 
@@ -98,31 +72,6 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
                 .findFirst();
         return (first.isPresent())? (Spielfigur$)first.get().spielfigur : null;
     }
-
-
-    /**
-     * Kopier-Konstruktor
-     * @param toCopy das zu kopierenden {@link Spielbrett}
-     */
-    public Spielbrett$(Spielbrett toCopy) {
-        this.spielfelder = new ArrayList<>(toCopy.spielfelder);
-    }
-
-
-    /**
-     * Wendet auf dem Spielbrett einen Halbzug an und gibt das Ergebnis zurück
-     * @param halbzug der auf dem Brett anzuwendende Halbzug
-     * @return eine neue Instanz des modifizierten Spielbretts
-     * @see {@link Halbzug}
-     */
-    public Spielbrett$ wendeHalbzugAn(Halbzug$ halbzug) {
-        return new Spielbrett$(this) {{
-            final Spielfigur$ spielfigurFrom = getSchachfigurAnPosition(halbzug.getVon());
-            setSchachfigurAnPosition(halbzug.getVon(), null);
-            setSchachfigurAnPosition(halbzug.getNach(), spielfigurFrom);
-        }};
-    }
-
 
     /**
      * Setzt eine Figur <code>figur</code> auf die Spielbrett-Position <code>position</code>
@@ -141,7 +90,6 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
         }
     }
 
-
     /**
      * Setzt eine Figur, gegeben durch Typ und Farbe auf eine Spielbrett-Position gegeben durch Zeile und Spalte
      * @param h Zeile der Position auf dem Spielfeld (z.B. b)
@@ -154,17 +102,15 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
     }
 
 
-
-
-
     /**
      * Ermittelt alle Positionen des Spielfeldes, auf dem eine Spielfigur mit der Farbe
      * <code>farbe</code> steht.
      * @param farbe Farbe, dessen Positionen gesucht werden
      * @return Menge der Positionen, auf dem eine Figur mit Farbe <code>farbe</code> steht
      */
-    public Set<Position$> getPositionenMitFarbe(Farbe farbe) {
-        return getAllePositionen().stream()
+    @JsonIgnore
+    public Set<Position$> allePositionenMitFarbe(Farbe farbe) {
+        return allePositionen().stream()
                 .filter(position -> {
                     Spielfigur$ spielfigur = getSchachfigurAnPosition(position);
                     return spielfigur != null && spielfigur.getFarbe() == farbe;
@@ -174,11 +120,11 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
 
 
     /**
-     * Ermittelt alle Positionen des Spielfeldes
-     * @return Alle Positionen des Spielfeldes
+     * Ermittelt alle Positionen des Spielbretts
+     * @return Alle Positionen des Spielbretts
      */
     @JsonIgnore
-    public Set<Position$> getAllePositionen() {
+    public Set<Position$> allePositionen() {
         Set<Position$> positionen = new HashSet<>();
         for (Spalte spalte : Spalte.values()) {
             for (Zeile zeile : Zeile.values()) {
@@ -188,8 +134,9 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
         return positionen;
     }
 
+
     public Position$ sucheKoenigsPosition(Farbe farbeDesKoenigs) {
-        for (Position$ lfdPos : getPositionenMitFarbe(farbeDesKoenigs)) {
+        for (Position$ lfdPos : allePositionenMitFarbe(farbeDesKoenigs)) {
             final Spielfigur$ spielfigur = getSchachfigurAnPosition(lfdPos);
             if (spielfigur != null && spielfigur.getFigur() == KOENIG) {
                 return lfdPos;
@@ -198,5 +145,18 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
         throw new IllegalArgumentException("There is no " + farbeDesKoenigs + " king on the board");
     }
 
+    /**
+     * Wendet auf dem Spielbrett einen Halbzug an und gibt das Ergebnis zurück
+     * @param halbzug der auf dem Brett anzuwendende Halbzug
+     * @return eine neue Instanz des modifizierten Spielbretts
+     * @see {@link Halbzug}
+     */
+    public Spielbrett$ wendeHalbzugAn(Halbzug$ halbzug) {
+        return new Spielbrett$(this) {{
+            final Spielfigur$ spielfigurFrom = getSchachfigurAnPosition(halbzug.getVon());
+            setSchachfigurAnPosition(halbzug.getVon(), null);
+            setSchachfigurAnPosition(halbzug.getNach(), spielfigurFrom);
+        }};
+    }
 
 }

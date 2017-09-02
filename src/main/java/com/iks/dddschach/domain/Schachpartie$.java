@@ -1,7 +1,5 @@
 package com.iks.dddschach.domain;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.iks.dddschach.domain.base.EntityIdObject;
 import com.iks.dddschach.domain.validation.*;
 import com.iks.dddschach.service.api.SchachpartieApi.UngueltigerHalbzugException;
@@ -11,15 +9,7 @@ import java.util.ArrayList;
 import static com.iks.dddschach.domain.validation.Zugregel.DIE_PARTIE_ENDET_MATT;
 import static com.iks.dddschach.domain.validation.Zugregel.DIE_PARTIE_ENDET_PATT;
 
-//@JsonTypeInfo(
-//        use = JsonTypeInfo.Id.NAME,
-//        include = JsonTypeInfo.As.PROPERTY,
-//        property = "@class")
-//@JsonSubTypes({ @JsonSubTypes.Type(value = Schachpartie$.class) })
 public class Schachpartie$ extends Schachpartie implements EntityIdObject<SpielId> {
-
-    final static HalbzugValidation VALIDATOR = new GesamtValidator();
-    final static PattMattCheck PATT_MATT_CHECK = new PattMattCheck();
 
     public Schachpartie$() {
         super();
@@ -28,6 +18,46 @@ public class Schachpartie$ extends Schachpartie implements EntityIdObject<SpielI
     public Schachpartie$(SpielId$ spielId) {
         super(spielId, new HalbzugHistorie$(new ArrayList<>()), SpielbrettFactory.createInitialesSpielbrett());
     }
+
+    /**
+     * Liefert die Historie alle bislang ausgeführten Halbzüge
+     * @return {@link HalbzugHistorie}
+     */
+    @Override
+    public HalbzugHistorie$ getHalbzugHistorie() {
+        return (HalbzugHistorie$)halbzugHistorie;
+    }
+
+    /**
+     * Liefert das aktuelle Spielbrett
+     * @return aktuelles {@link Spielbrett}
+     */
+    @Override
+    public Spielbrett$ getSpielbrett() {
+        return (Spielbrett$)spielbrett;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EntityIdObject<?> that = (EntityIdObject<?>) o;
+        return getId().equals(that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getId().hashCode();
+    }
+
+
+    /*-----------------------------------------------------------------------*\
+     * Blutige Ergänzungen                                                   *
+    \*-----------------------------------------------------------------------*/
+
+    final static HalbzugValidation VALIDATOR = new GesamtValidator();
+    final static PattMattCheck PATT_MATT_CHECK = new PattMattCheck();
 
     /**
      * Führt den Halbzug auf dem Brett unter Berücksichtigung alle Schachregeln aus. Hält der
@@ -73,43 +103,8 @@ public class Schachpartie$ extends Schachpartie implements EntityIdObject<SpielI
             }};
         }
 
-//        halbzugHistorie.withHalbzuege(halbzug);
         halbzugHistorie.halbzuege.add(halbzug);
         return halbzugHistorie.halbzuege.size();
-    }
-
-
-    /**
-     * Liefert das aktuelle Spielbrett
-     * @return aktuelles {@link Spielbrett}
-     */
-    @Override
-    public Spielbrett$ getSpielbrett() {
-        return (Spielbrett$)spielbrett;
-    }
-
-
-    /**
-     * Liefert die Historie alle bislang ausgeführten Halbzüge
-     * @return {@link HalbzugHistorie}
-     */
-    @Override
-    public HalbzugHistorie$ getHalbzugHistorie() {
-        return (HalbzugHistorie$)halbzugHistorie;
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        EntityIdObject<?> that = (EntityIdObject<?>) o;
-        return getId().equals(that.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return getId().hashCode();
     }
 
 }

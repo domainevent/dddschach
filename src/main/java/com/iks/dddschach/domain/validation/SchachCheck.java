@@ -36,7 +36,7 @@ public class SchachCheck implements HalbzugValidation {
         final Position$ koenigsPosition = brettMitHalbzug.sucheKoenigsPosition(spielerFarbe);
 
         // Gehe alle Figuren des Gegners durch und prüfe, ob diese meinen König schlagen könnten:
-        for (Position$ lfdPos : brettMitHalbzug.getPositionenMitFarbe(gegnerFarbe)) {
+        for (Position$ lfdPos : brettMitHalbzug.allePositionenMitFarbe(gegnerFarbe)) {
             final Halbzug$ lfdHalbzug = new Halbzug$(lfdPos, koenigsPosition);
             if (istZielDesHalbzugsBedroht(lfdHalbzug, halbzugHistorie, brettMitHalbzug)) {
                 return new ValidationResult(Zugregel.KOENIG_STEHT_IM_SCHACH);

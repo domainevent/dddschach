@@ -4,11 +4,6 @@ import com.iks.dddschach.domain.base.ValueObject;
 
 import java.text.ParseException;
 
-//@JsonTypeInfo(
-//        use = JsonTypeInfo.Id.NAME,
-//        include = JsonTypeInfo.As.PROPERTY,
-//        property = "@class")
-//@JsonSubTypes({ @JsonSubTypes.Type(value = Halbzug$.class) })
 public class Halbzug$ extends Halbzug implements ValueObject {
 
     public Halbzug$() {
