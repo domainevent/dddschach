@@ -34,7 +34,7 @@ public class Halbzug$ extends Halbzug implements ValueObject {
 
 
     public String encode() {
-        return getVon().encodeZeile() + "-" + getNach().encodeZeile();
+        return getVon().encode() + "-" + getNach().encode();
     }
 
 }

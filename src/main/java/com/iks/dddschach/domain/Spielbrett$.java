@@ -78,7 +78,7 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
      * @param position Position auf dem Spielfeld (z.B. b4)
      * @param figur die zu setzende Figur (z.B. Lw = weißer Läufer)
      */
-    protected void setSchachfigurAnPosition(Position$ position, Spielfigur$ figur) {
+    protected void setSchachfigurAnPosition(Position position, Spielfigur figur) {
         Objects.requireNonNull(position, "Argument position is null");
         final List<Spielfeld> spielfelderAnPosition = spielfelder.stream()
                 .filter(spielfeld -> spielfeld.position.equals(position))
@@ -145,13 +145,14 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
         throw new IllegalArgumentException("There is no " + farbeDesKoenigs + " king on the board");
     }
 
+
     /**
      * Wendet auf dem Spielbrett einen Halbzug an und gibt das Ergebnis zurück
      * @param halbzug der auf dem Brett anzuwendende Halbzug
      * @return eine neue Instanz des modifizierten Spielbretts
      * @see {@link Halbzug}
      */
-    public Spielbrett$ wendeHalbzugAn(Halbzug$ halbzug) {
+    public Spielbrett$ wendeHalbzugAn(Halbzug halbzug) {
         return new Spielbrett$(this) {{
             final Spielfigur$ spielfigurFrom = getSchachfigurAnPosition(halbzug.getVon());
             setSchachfigurAnPosition(halbzug.getVon(), null);

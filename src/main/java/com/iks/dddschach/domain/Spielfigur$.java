@@ -19,6 +19,12 @@ public class Spielfigur$ extends Spielfigur implements ValueObject {
         super(figur, farbe);
     }
 
+
+    public Spielfigur$(Spielfigur spielfigur) {
+        this(spielfigur.figur, spielfigur.farbe);
+    }
+
+
     public Character encodeFigure(FigurenTyp figur) {
         switch (figur) {
             case KOENIG:  return 'K';

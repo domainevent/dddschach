@@ -9,6 +9,10 @@ public class Spielfeld$ extends Spielfeld {
         super(position, spielfigur);
     }
 
+    public Spielfeld$(Position position, Spielfigur spielfigur) {
+        this(new Position$(position), new Spielfigur$(spielfigur));
+    }
+
     @Override
     public Spielfigur$ getSpielfigur() {
         return (Spielfigur$)spielfigur;

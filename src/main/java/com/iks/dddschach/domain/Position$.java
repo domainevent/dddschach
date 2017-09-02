@@ -15,7 +15,7 @@ public class Position$ extends Position implements ValueObject {
         super(spalte, zeile);
     }
 
-    public String encodeZeile() {
+    public String encode() {
         return getSpalte().value().toLowerCase() + encodeZeile(getZeile());
     }
 
