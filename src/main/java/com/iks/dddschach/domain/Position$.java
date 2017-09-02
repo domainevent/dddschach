@@ -15,11 +15,11 @@ public class Position$ extends Position implements ValueObject {
         super(spalte, zeile);
     }
 
-    public String asString() {
-        return getSpalte().value().toLowerCase() + asString(getZeile());
+    public String encodeZeile() {
+        return getSpalte().value().toLowerCase() + encodeZeile(getZeile());
     }
 
-    public static String asString(Zeile z) {
+    public static String encodeZeile(Zeile z) {
         switch (z) {
             case I: return "1";
             case II: return "2";

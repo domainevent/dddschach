@@ -33,8 +33,8 @@ public class Halbzug$ extends Halbzug implements ValueObject {
     }
 
 
-    public String asString() {
-        return getVon().asString() + "-" + getNach().asString();
+    public String encode() {
+        return getVon().encodeZeile() + "-" + getNach().encodeZeile();
     }
 
 }

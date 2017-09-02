@@ -127,7 +127,7 @@ public class RestServiceClient implements RestServiceInterface {
     @Override
     public Response fuehreHalbzugAus(String spielId, Halbzug halbzug) throws UngueltigerHalbzugException, UngueltigeSpielIdException {
         Halbzug$ halbzug$ = (Halbzug$)halbzug;
-        return fuehreHalbzugAus(spielId, ((Halbzug$) halbzug).asString());
+        return fuehreHalbzugAus(spielId, ((Halbzug$) halbzug).encode());
     }
 
 
