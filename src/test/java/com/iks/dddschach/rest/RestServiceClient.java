@@ -29,6 +29,10 @@ public class RestServiceClient implements RestServiceInterface {
         public RestCallFailedException(int statusCode, String content) {this.statusCode = statusCode;
             this.content = content;
         }
+        @Override
+        public String getMessage() {
+            return "Status code: " + statusCode + ", hint: " + content;
+        }
     }
 
     private final static Client CLIENT = ClientBuilder.newClient();
@@ -113,6 +117,7 @@ public class RestServiceClient implements RestServiceInterface {
         final int status = response.getStatus();
         switch (status) {
             case 201: return response;
+            case 400: throw new RestCallFailedException(status, response.readEntity(String.class));
             case 422:
                 final Map<String, Object> json = response.readEntity(new GenericType<Map<String, Object>>() {});
                 final String verletzteZugregel = (String)json.get(json.get(json.get("error code")));
