@@ -194,7 +194,7 @@ public class DDDSchachIT {
         //
         final Response resp = client.spielbrett(spielId.getId(), "Tester", null);
         final Spielbrett$ actual = resp.readEntity(Spielbrett$.class);
-        Assert.assertEquals(FINALES_SPIELBRETT, actual.encode());
+        Assert.assertEquals(FINALES_SPIELBRETT, actual.toString());
     }
 
 

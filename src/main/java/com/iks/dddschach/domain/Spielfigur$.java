@@ -25,7 +25,7 @@ public class Spielfigur$ extends Spielfigur implements ValueObject {
     }
 
 
-    public Character encodeFigure(FigurenTyp figur) {
+    public Character encodeFigurTyp(FigurenTyp figur) {
         switch (figur) {
             case KOENIG:  return 'K';
             case DAME:    return 'Q';
@@ -37,9 +37,21 @@ public class Spielfigur$ extends Spielfigur implements ValueObject {
         throw new IllegalArgumentException("Unexpected enum " + this);
     }
 
+    public Character encodeFarbe(Farbe farbe) {
+        switch (farbe) {
+            case WEISS:  return 'w';
+            case SCHWARZ:    return 'b';
+        }
+        throw new IllegalArgumentException("Unexpected enum " + this);
+    }
+
     public String encode() {
-        final Character ch = encodeFigure(figur);
+        final Character ch = encodeFigurTyp(figur);
         return String.valueOf((farbe == WEISS)? toUpperCase(ch) : toLowerCase(ch));
+    }
+
+    public String toString() {
+        return "" + encodeFigurTyp(figur) + encodeFarbe(farbe);
     }
 
 }

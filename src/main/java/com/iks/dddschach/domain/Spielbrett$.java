@@ -2,15 +2,19 @@ package com.iks.dddschach.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.iks.dddschach.domain.base.ValueObject;
+import com.iks.dddschach.util.Misc;
 import com.webcohesion.enunciate.metadata.DocumentationExample;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.iks.dddschach.domain.FigurenTyp.KOENIG;
+import static com.iks.dddschach.domain.Zeile.I;
+
 
 public class Spielbrett$ extends Spielbrett implements ValueObject {
 
+    public final static String CR = System.lineSeparator();
     public Spielbrett$() {
         super(new ArrayList<>());
     }
@@ -30,6 +34,30 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
     /*-----------------------------------------------------------------------*\
      * Blutige Ergänzungen                                                   *
     \*-----------------------------------------------------------------------*/
+
+    /**
+     * Gibt das Schachbrett in einer graphischen Art und Weise aus.
+     */
+    @Override
+    public String toString() {
+        final String horLine = "-------------------------";
+        String boardAsStr = horLine + CR;
+        final Spielfigur$[][] boardAsArray = asArray();
+        for(Zeile zeile : Misc.invertArray(Zeile.values())) {
+            boardAsStr += "|";
+            for(Spalte spalte : Spalte.values()) {
+                final Spielfigur$ figure = boardAsArray[spalte.ordinal()][zeile.ordinal()];
+                boardAsStr += (figure == null)? "  " : figure;
+                boardAsStr += "|";
+            }
+            boardAsStr += CR + horLine;
+            if (zeile != I) {
+                boardAsStr += CR;
+            }
+        }
+        return boardAsStr;
+    }
+
 
     /**
      * Ein zweidimensionales Array (real 8x8) von Spielfiguren
