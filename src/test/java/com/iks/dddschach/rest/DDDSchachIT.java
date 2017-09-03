@@ -1,17 +1,20 @@
 package com.iks.dddschach.rest;
 
+//import com.iks.dddschach.domain.*;
+
 import com.iks.dddschach.domain.*;
+import com.iks.dddschach.domain.validation.Zugregel;
 import com.iks.dddschach.service.api.SchachpartieApi;
 import com.iks.dddschach.service.api.SchachpartieApi.UngueltigerHalbzugException;
-import com.iks.dddschach.domain.validation.Zugregel;
 import org.junit.Assert;
 import org.junit.Test;
 
 import javax.ws.rs.core.EntityTag;
 import javax.ws.rs.core.Response;
 
-import static com.iks.dddschach.domain.Spalte.*;
-import static com.iks.dddschach.domain.Zeile.*;
+import static com.iks.dddschach.domain.Spalte.E;
+import static com.iks.dddschach.domain.Zeile.II;
+import static com.iks.dddschach.domain.Zeile.IV;
 
 
 /**
@@ -73,7 +76,7 @@ public class DDDSchachIT {
         final SpielId spielId = client.neuesSpiel("Vermerk");
         final Response resp = client.spielbrett(spielId.getId(), "Test", null);
         Assert.assertEquals(200, resp.getStatus());
-        final Spielbrett spielbrett = resp.readEntity(Spielbrett.class);
+        final Spielbrett$ spielbrett = resp.readEntity(Spielbrett$.class);
         Assert.assertEquals(SpielbrettFactory.createInitialesSpielbrett(), spielbrett);
     }
 
@@ -129,8 +132,8 @@ public class DDDSchachIT {
         // Spielbrett überprüfen:
         //
         final Response resp2 = client.spielbrett(spielId.getId(), "Tester", null);
-        final Spielbrett actual = resp2.readEntity(Spielbrett.class);
-        final Spielbrett expected = SpielbrettFactory.createInitialesSpielbrett().wendeHalbzugAn(halbzug);
+        final Spielbrett$ actual = resp2.readEntity(Spielbrett$.class);
+        final Spielbrett$ expected = SpielbrettFactory.createInitialesSpielbrett().wendeHalbzugAn(halbzug);
         Assert.assertEquals(expected, actual);
     }
 
@@ -174,14 +177,14 @@ public class DDDSchachIT {
         // alle Züge sukzessiv ausführen:
         //
         for (String halbzugStr : UNSTERBLICHE_PARTIE) {
-            final Halbzug halbzug = SpielNotationParser.parse(halbzugStr);
-            client.fuehreHalbzugAus(spielId.getId(), halbzug.toString());
+            final Halbzug$ halbzug = SpielNotationParser.parse(halbzugStr);
+            client.fuehreHalbzugAus(spielId.getId(), halbzug.encode());
         }
         // Versuch, Zug auszuführen, nachdem Schwarz schon matt ist:
         //
-        final Halbzug halbzug = SpielNotationParser.parse("d8-c7");
+        final Halbzug$ halbzug = SpielNotationParser.parse("d8-c7");
         try {
-            client.fuehreHalbzugAus(spielId.getId(), halbzug.toString());
+            client.fuehreHalbzugAus(spielId.getId(), halbzug.encode());
             Assert.fail("Expected UngueltigerHalbzugException not occured");
         }
         catch (UngueltigerHalbzugException e) {
@@ -190,8 +193,8 @@ public class DDDSchachIT {
         // Spielbrett überprüfen:
         //
         final Response resp = client.spielbrett(spielId.getId(), "Tester", null);
-        final Spielbrett actual = resp.readEntity(Spielbrett.class);
-        Assert.assertEquals(FINALES_SPIELBRETT, actual.toString());
+        final Spielbrett$ actual = resp.readEntity(Spielbrett$.class);
+        Assert.assertEquals(FINALES_SPIELBRETT, actual.encode());
     }
 
 
