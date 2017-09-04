@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="contract.xsl"?>
 <xs:schema
-        xmlns:xs="http://www.w3.org/2001/XMLSchema"
-        xmlns:xml="http://www.w3.org/XML/1998/namespace"
-        xmlns:service="http://www.informatikbuero.com/services"
-        xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
         jaxb:version="2.0"
-        xmlns:tns="http://www.informatikbuero.com/services/calculator/api/model"
-        targetNamespace="http://www.informatikbuero.com/services/calculator/api/model"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+        xmlns:tns="http://www.informatikbuero.com/services/dddschach/api/model"
+        targetNamespace="http://www.informatikbuero.com/services/dddschach/api/model"
         elementFormDefault="qualified" attributeFormDefault="qualified"
         version="1.0">
 
@@ -77,6 +75,9 @@
         <xs:annotation><xs:documentation>Fordert das aktuelle Spielbrett an</xs:documentation></xs:annotation>
         <xs:complexType>
             <xs:sequence>
+                <xs:element name="clientId" type="xs:string" minOccurs="0">
+                    <xs:annotation><xs:documentation>ClientId</xs:documentation></xs:annotation>
+                </xs:element>
                 <xs:element name="spielId" type="tns:SpielId">
                     <xs:annotation><xs:documentation>SpielId</xs:documentation></xs:annotation>
                 </xs:element>
@@ -118,7 +119,7 @@
     <xs:complexType name="SpielId">
         <xs:annotation>
             <xs:documentation>SpielId</xs:documentation>
-            <xs:appinfo><jaxb:class implClass="SpielId$" /></xs:appinfo>
+            <!--<xs:appinfo><jaxb:class implClass="SpielId$" /></xs:appinfo>-->
         </xs:annotation>
         <xs:sequence>
             <xs:element name="id" type="xs:string">
