@@ -68,7 +68,7 @@ public class SchachpartieApiImpl implements SchachpartieApi {
 
     @Override
     public AktuellesSpielbrettResponse aktuellesSpielbrett(AktuellesSpielbrettRequest request)
-            throws UngueltigeSpielIdException, IOException
+            throws UngueltigeSpielIdException
     {
         LOG.trace("Abfrage des Spielfeldes: " + request);
         final SpielId$ spielId = new SpielId$(request.getSpielId());
@@ -88,7 +88,7 @@ public class SchachpartieApiImpl implements SchachpartieApi {
         }
         catch (IOException e) {
             LOG.error("Das Spielbrett mit Id " + request.getSpielId() + " konnte nicht geladen werden.");
-            throw e;
+            throw new RuntimeException(e);
         }
     }
 

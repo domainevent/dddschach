@@ -6,6 +6,7 @@ import com.webcohesion.enunciate.metadata.rs.ResponseCode;
 import com.webcohesion.enunciate.metadata.rs.StatusCodes;
 import org.apache.log4j.Logger;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -53,7 +54,7 @@ public class SchachpartieRestBinding implements SchachpartieApi {
             @ResponseCode(code = 200, condition = "ok"),
             @ResponseCode(code = 500, condition = "An exception occured")
     })
-    public NeuesSpielResponse neuesSpiel(@NotNull NeuesSpielRequest request) throws Exception
+    public NeuesSpielResponse neuesSpiel(@Valid @NotNull NeuesSpielRequest request) throws Exception
     {
         try {
             final NeuesSpielResponse response = schachpartieApi.neuesSpiel(request);
@@ -75,7 +76,7 @@ public class SchachpartieRestBinding implements SchachpartieApi {
             @ResponseCode(code = 200, condition = "ok"),
             @ResponseCode(code = 400, condition = "Input validation error"),
             @ResponseCode(code = 500, condition = "An exception occured")})
-    public FuehreHalbzugAusResponse fuehreHalbzugAus(@NotNull FuehreHalbzugAusRequest request)
+    public FuehreHalbzugAusResponse fuehreHalbzugAus(@Valid @NotNull FuehreHalbzugAusRequest request)
             throws UngueltigerHalbzugException, UngueltigeSpielIdException, IOException {
         return schachpartieApi.fuehreHalbzugAus(request);
     }
@@ -88,8 +89,8 @@ public class SchachpartieRestBinding implements SchachpartieApi {
             @ResponseCode(code = 200, condition = "ok"),
             @ResponseCode(code = 400, condition = "Input validation error"),
             @ResponseCode(code = 500, condition = "An exception occured")})
-    public AktuellesSpielbrettResponse aktuellesSpielbrett(@NotNull AktuellesSpielbrettRequest request)
-            throws UngueltigeSpielIdException, IOException {
+    public AktuellesSpielbrettResponse aktuellesSpielbrett(@Valid @NotNull AktuellesSpielbrettRequest request)
+            throws UngueltigeSpielIdException {
         return schachpartieApi.aktuellesSpielbrett(request);
     }
 

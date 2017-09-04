@@ -3,6 +3,7 @@ package com.iks.dddschach.service.api;
 import com.iks.dddschach.domain.*;
 import com.iks.dddschach.domain.validation.Zugregel;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 
@@ -20,7 +21,7 @@ public interface SchachpartieApi {
      * @return eine weltweit eindeutige Id
      * @throws Exception falls kein neues Spiel erzeugt werden konnte (technische Probleme)
      */
-    NeuesSpielResponse neuesSpiel(@NotNull NeuesSpielRequest request) throws Exception;
+    NeuesSpielResponse neuesSpiel(@Valid @NotNull NeuesSpielRequest request) throws Exception;
 
 
     /**
@@ -66,7 +67,7 @@ public interface SchachpartieApi {
      * @throws UngueltigeSpielIdException falls es keine Partie zu <code>spielId</code> gibt
      * @throws IOException bei sonstigen (technischen) Problemen
      */
-    FuehreHalbzugAusResponse fuehreHalbzugAus(@NotNull FuehreHalbzugAusRequest request)
+    FuehreHalbzugAusResponse fuehreHalbzugAus(@Valid @NotNull FuehreHalbzugAusRequest request)
             throws UngueltigerHalbzugException, UngueltigeSpielIdException, IOException;
 
 
@@ -78,6 +79,6 @@ public interface SchachpartieApi {
      * @throws UngueltigeSpielIdException falls es keine Partie zu <code>spielId</code> gibt
      * @throws IOException bei sonstigen (technischen) Problemen
      */
-    AktuellesSpielbrettResponse aktuellesSpielbrett(@NotNull AktuellesSpielbrettRequest request) throws UngueltigeSpielIdException, IOException;
+    AktuellesSpielbrettResponse aktuellesSpielbrett(@Valid @NotNull AktuellesSpielbrettRequest request) throws UngueltigeSpielIdException;
 
 }

@@ -1,11 +1,17 @@
 <jxb:bindings
         version="1.0"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
         xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
         xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
         jxb:extensionBindingPrefixes="xjc">
-    <jxb:bindings>
+    <jxb:bindings schemaLocation="./schachpartie.xsd">
         <jxb:globalBindings>
             <xjc:serializable/>
         </jxb:globalBindings>
+
+        <!--<jxb:bindings node="//xs:complexType[@name='SpielId']">-->
+            <!--<jxb:class implClass="SpielId$"/>-->
+        <!--</jxb:bindings>-->
+
     </jxb:bindings>
 </jxb:bindings>
