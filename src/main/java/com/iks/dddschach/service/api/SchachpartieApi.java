@@ -3,8 +3,8 @@ package com.iks.dddschach.service.api;
 import com.iks.dddschach.domain.*;
 import com.iks.dddschach.domain.validation.Zugregel;
 
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
-import java.text.ParseException;
 
 
 /**
@@ -20,17 +20,7 @@ public interface SchachpartieApi {
      * @return eine weltweit eindeutige Id
      * @throws Exception falls kein neues Spiel erzeugt werden konnte (technische Probleme)
      */
-    NeuesSpielResponse neuesSpiel(NeuesSpielRequest request) throws Exception;
-
-
-
-    /**
-     * Analysiert die Eingabe und erzeugt im Erfolgsfall einen Halbzug.
-     * @param eingabe Die textuelle Halbzugeingabe, Beispiel: b1-c3
-     * @return einen {@link Halbzug}
-     * @throws ParseException
-     */
-    Halbzug$ parse(String eingabe) throws ParseException;
+    NeuesSpielResponse neuesSpiel(@NotNull NeuesSpielRequest request) throws Exception;
 
 
     /**
@@ -76,7 +66,7 @@ public interface SchachpartieApi {
      * @throws UngueltigeSpielIdException falls es keine Partie zu <code>spielId</code> gibt
      * @throws IOException bei sonstigen (technischen) Problemen
      */
-    FuehreHalbzugAusResponse fuehreHalbzugAus(FuehreHalbzugAusRequest request)
+    FuehreHalbzugAusResponse fuehreHalbzugAus(@NotNull FuehreHalbzugAusRequest request)
             throws UngueltigerHalbzugException, UngueltigeSpielIdException, IOException;
 
 
@@ -88,6 +78,6 @@ public interface SchachpartieApi {
      * @throws UngueltigeSpielIdException falls es keine Partie zu <code>spielId</code> gibt
      * @throws IOException bei sonstigen (technischen) Problemen
      */
-    AktuellesSpielbrettResponse aktuellesSpielbrett(AktuellesSpielbrettRequest request) throws UngueltigeSpielIdException, IOException;
+    AktuellesSpielbrettResponse aktuellesSpielbrett(@NotNull AktuellesSpielbrettRequest request) throws UngueltigeSpielIdException, IOException;
 
 }

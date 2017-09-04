@@ -41,7 +41,7 @@ public class SchachspielApiTest {
     public void istAmStartInitialesSchachBrettVorhanden() throws Exception {
         final NeuesSpielResponse response1 = api.neuesSpiel(new NeuesSpielRequest("Vermerk"));
 
-        final AktuellesSpielbrettRequest request = new AktuellesSpielbrettRequest((SpielId$) response1.getSpielId());
+        final AktuellesSpielbrettRequest request = new AktuellesSpielbrettRequest(null, (SpielId$) response1.getSpielId());
         final AktuellesSpielbrettResponse response2 = api.aktuellesSpielbrett(request);
 
         final Spielbrett$ expected = SpielbrettFactory.createInitialesSpielbrett();
@@ -78,7 +78,7 @@ public class SchachspielApiTest {
 
         api.fuehreHalbzugAus(fuehreHalbzugAusRequest1);
 
-        final AktuellesSpielbrettRequest aktuellesSpielbrettRequest1 = new AktuellesSpielbrettRequest((SpielId$)neuesSpielResponse1.getSpielId());
+        final AktuellesSpielbrettRequest aktuellesSpielbrettRequest1 = new AktuellesSpielbrettRequest(null, (SpielId$)neuesSpielResponse1.getSpielId());
         final AktuellesSpielbrettResponse aktuellesSpielbrettResponse1 = api.aktuellesSpielbrett(aktuellesSpielbrettRequest1);
 
         final NeuesSpielResponse neuesSpielResponse2 = api.neuesSpiel(new NeuesSpielRequest("Vermerk"));
@@ -88,7 +88,7 @@ public class SchachspielApiTest {
         api.fuehreHalbzugAus(fuehreHalbzugAusRequest2);
 
         final AktuellesSpielbrettRequest aktuellesSpielbrettRequest2
-                = new AktuellesSpielbrettRequest((SpielId$)neuesSpielResponse2.getSpielId());
+                = new AktuellesSpielbrettRequest(null, (SpielId$)neuesSpielResponse2.getSpielId());
 
         final AktuellesSpielbrettResponse aktuellesSpielbrettResponse2 = api.aktuellesSpielbrett(aktuellesSpielbrettRequest2);
 

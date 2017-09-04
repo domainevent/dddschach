@@ -5,7 +5,6 @@ import com.iks.dddschach.service.api.SchachpartieApi;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.Optional;
 
 
@@ -31,10 +30,6 @@ public class SchachpartieApiImpl implements SchachpartieApi {
         return new NeuesSpielResponse(spielId);
     }
 
-    @Override
-    public Halbzug$ parse(String eingabe) throws ParseException {
-        return SpielNotationParser.parse(eingabe);
-    }
 
     @Override
     public FuehreHalbzugAusResponse fuehreHalbzugAus(FuehreHalbzugAusRequest request)

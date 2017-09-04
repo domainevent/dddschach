@@ -98,7 +98,7 @@ public class RestService  implements RestServiceInterface {
     {
         LOG.debug("Abfrage des Spielfeldes");
         try {
-            final AktuellesSpielbrettRequest spielbrettRequest = new AktuellesSpielbrettRequest(new SpielId$(spielId));
+            final AktuellesSpielbrettRequest spielbrettRequest = new AktuellesSpielbrettRequest(clientId, new SpielId$(spielId));
             final AktuellesSpielbrettResponse aktuellesSpielbrettResponse = schachpartieApi.aktuellesSpielbrett(spielbrettRequest);
             final Spielbrett$ spielbrett = (Spielbrett$)aktuellesSpielbrettResponse.getSpielbrett();
             CacheControl cc = new CacheControl();
@@ -153,14 +153,15 @@ public class RestService  implements RestServiceInterface {
     public Response fuehreHalbzugAus(
             final @PathParam("gameId") String spielId,
             final @NotNull(message = "The form parameter move is mandatory.")
-            @FormParam("move") String halbzug)
+            @FormParam("move") String halbzugStr)
             throws UngueltigerHalbzugException, UngueltigeSpielIdException
     {
         try {
-            return fuehreHalbzugAus(spielId, schachpartieApi.parse(halbzug));
+            final Halbzug$ halbzug = SpielNotationParser.parse(halbzugStr);
+            return fuehreHalbzugAus(spielId, halbzug);
         }
-        catch (ParseException e) {
-            throw new BadRequestException("Eingabe-Formatfehler: " + halbzug);
+        catch (IllegalArgumentException e) {
+            throw new BadRequestException("Eingabe-Formatfehler: " + halbzugStr);
         }
     }
 

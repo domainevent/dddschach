@@ -14,7 +14,7 @@ public class SpielNotationParser {
      * @return {@link Halbzug}
      * @throws ParseException falls <code>eingabe</code> nicht der Syntax entsprach
      */
-    public static Halbzug$ parse(String eingabe) throws ParseException {
+    public static Halbzug$ parse(String eingabe) {
         String[] fromToParts;
         try {
             fromToParts = eingabe.split("-");
@@ -23,7 +23,7 @@ public class SpielNotationParser {
             return new Halbzug$(from, to);
         }
         catch (Exception e) {
-            throw new ParseException(eingabe, 0);
+            throw new IllegalArgumentException("Format error in: '" + eingabe + "'");
         }
     }
 

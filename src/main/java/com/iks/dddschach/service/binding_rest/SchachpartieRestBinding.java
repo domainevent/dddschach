@@ -6,10 +6,12 @@ import com.webcohesion.enunciate.metadata.rs.ResponseCode;
 import com.webcohesion.enunciate.metadata.rs.StatusCodes;
 import org.apache.log4j.Logger;
 
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
-import javax.ws.rs.core.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriInfo;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.Date;
 
 
@@ -51,7 +53,7 @@ public class SchachpartieRestBinding implements SchachpartieApi {
             @ResponseCode(code = 200, condition = "ok"),
             @ResponseCode(code = 500, condition = "An exception occured")
     })
-    public NeuesSpielResponse neuesSpiel(NeuesSpielRequest request) throws Exception
+    public NeuesSpielResponse neuesSpiel(@NotNull NeuesSpielRequest request) throws Exception
     {
         try {
             final NeuesSpielResponse response = schachpartieApi.neuesSpiel(request);
@@ -65,12 +67,6 @@ public class SchachpartieRestBinding implements SchachpartieApi {
     }
 
 
-    @Override
-    public Halbzug$ parse(String eingabe) throws ParseException
-    {
-        return null;
-    }
-
 
     @Override
     @POST
@@ -79,7 +75,7 @@ public class SchachpartieRestBinding implements SchachpartieApi {
             @ResponseCode(code = 200, condition = "ok"),
             @ResponseCode(code = 400, condition = "Input validation error"),
             @ResponseCode(code = 500, condition = "An exception occured")})
-    public FuehreHalbzugAusResponse fuehreHalbzugAus(FuehreHalbzugAusRequest request)
+    public FuehreHalbzugAusResponse fuehreHalbzugAus(@NotNull FuehreHalbzugAusRequest request)
             throws UngueltigerHalbzugException, UngueltigeSpielIdException, IOException {
         return schachpartieApi.fuehreHalbzugAus(request);
     }
@@ -92,9 +88,9 @@ public class SchachpartieRestBinding implements SchachpartieApi {
             @ResponseCode(code = 200, condition = "ok"),
             @ResponseCode(code = 400, condition = "Input validation error"),
             @ResponseCode(code = 500, condition = "An exception occured")})
-    public AktuellesSpielbrettResponse aktuellesSpielbrett(AktuellesSpielbrettRequest request)
+    public AktuellesSpielbrettResponse aktuellesSpielbrett(@NotNull AktuellesSpielbrettRequest request)
             throws UngueltigeSpielIdException, IOException {
-//        return new AktuellesSpielbrettResponse(SpielbrettFactory.createInitialesSpielbrett());
         return schachpartieApi.aktuellesSpielbrett(request);
     }
+
 }
