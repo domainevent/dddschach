@@ -1,6 +1,6 @@
 package com.iks.dddschach.service.binding_rest.providers;
 
-import com.iks.dddschach.service.api.SchachpartieApi.UngueltigeSpielIdException;
+import com.iks.dddschach.service.api.UngueltigeSpielIdException;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;

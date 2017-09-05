@@ -2,7 +2,7 @@ package com.iks.dddschach.domain;
 
 import com.iks.dddschach.domain.base.EntityIdObject;
 import com.iks.dddschach.domain.validation.*;
-import com.iks.dddschach.service.api.SchachpartieApi.UngueltigerHalbzugException;
+import com.iks.dddschach.service.api.UngueltigerHalbzugException;
 
 import java.util.ArrayList;
 

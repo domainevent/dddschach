@@ -2,6 +2,7 @@ package com.iks.dddschach.service.impl;
 
 import com.iks.dddschach.domain.*;
 import com.iks.dddschach.service.api.SchachpartieApi;
+import com.iks.dddschach.service.api.*;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -23,17 +24,23 @@ public class SchachpartieApiImpl implements SchachpartieApi {
 
 
     @Override
-    public NeuesSpielResponse neuesSpiel(NeuesSpielRequest request) throws Exception {
-        final Schachpartie$ schachpartie = SCHACHPARTIE_FACTORY.createSchachpartie();
-        SCHACHPARTIE_REPOSITORY.save(schachpartie);
-        final SpielId$ spielId = new SpielId$(schachpartie.getId().getId());
-        return new NeuesSpielResponse(spielId);
+    public NeuesSpielResponse neuesSpiel(NeuesSpielRequest request)  {
+        try {
+            final Schachpartie$ schachpartie = SCHACHPARTIE_FACTORY.createSchachpartie();
+            SCHACHPARTIE_REPOSITORY.save(schachpartie);
+            final SpielId$ spielId = new SpielId$(schachpartie.getId().getId());
+            return new NeuesSpielResponse(spielId);
+        }
+        catch (IOException e) {
+            LOG.error(e);
+            throw new RuntimeException(e);
+        }
     }
 
 
     @Override
     public FuehreHalbzugAusResponse fuehreHalbzugAus(FuehreHalbzugAusRequest request)
-            throws UngueltigerHalbzugException, UngueltigeSpielIdException, IOException {
+            throws UngueltigerHalbzugException, UngueltigeSpielIdException {
 
         LOG.trace("Ausfuehren des Halbzuges: " + request);
 
@@ -61,7 +68,7 @@ public class SchachpartieApiImpl implements SchachpartieApi {
         }
         catch (IOException e) {
             LOG.error(e);
-            throw e;
+            throw new RuntimeException(e);
         }
     }
 

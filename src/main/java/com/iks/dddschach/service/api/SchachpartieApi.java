@@ -1,7 +1,6 @@
 package com.iks.dddschach.service.api;
 
 import com.iks.dddschach.domain.*;
-import com.iks.dddschach.domain.validation.Zugregel;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -21,35 +20,8 @@ public interface SchachpartieApi {
      * @return eine weltweit eindeutige Id
      * @throws Exception falls kein neues Spiel erzeugt werden konnte (technische Probleme)
      */
-    NeuesSpielResponse neuesSpiel(@Valid @NotNull NeuesSpielRequest request) throws Exception;
+    NeuesSpielResponse neuesSpiel(@Valid @NotNull NeuesSpielRequest request);
 
-
-    /**
-     * Soll erzeugt werden, falls die Spiel-Id nicht existiert.
-     */
-    @SuppressWarnings("serial")
-	class UngueltigeSpielIdException extends Exception {
-        public final SpielId spielId;
-
-        public UngueltigeSpielIdException(SpielId spielId) {
-            this.spielId = spielId;
-        }
-    }
-
-    /**
-     * Soll erzeugt werden, falls ein ungueltiger Zug ausgefuehrt worden ist.
-     */
-    @SuppressWarnings("serial")
-	class UngueltigerHalbzugException extends Exception {
-        public final Halbzug halbzug;
-        public final Zugregel verletzteZugregel;
-
-
-        public UngueltigerHalbzugException(Halbzug halbzug, Zugregel verletzteZugregel) {
-            this.halbzug = halbzug;
-            this.verletzteZugregel = verletzteZugregel;
-        }
-    }
 
     /**
      * Fuehrt einen Halbzug in der Schachpartie mit der Id <code>spielId</code> aus. Der Halbzug
@@ -68,7 +40,7 @@ public interface SchachpartieApi {
      * @throws IOException bei sonstigen (technischen) Problemen
      */
     FuehreHalbzugAusResponse fuehreHalbzugAus(@Valid @NotNull FuehreHalbzugAusRequest request)
-            throws UngueltigerHalbzugException, UngueltigeSpielIdException, IOException;
+            throws UngueltigerHalbzugException, UngueltigeSpielIdException;
 
 
     /**

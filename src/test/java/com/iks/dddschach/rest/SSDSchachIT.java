@@ -2,7 +2,8 @@ package com.iks.dddschach.rest;
 
 import com.iks.dddschach.domain.*;
 import com.iks.dddschach.domain.validation.Zugregel;
-import com.iks.dddschach.service.api.SchachpartieApi;
+import com.iks.dddschach.service.api.UngueltigeSpielIdException;
+import com.iks.dddschach.service.api.UngueltigerHalbzugException;
 import com.iks.dddschach.service.binding_rest_client.SchachpartieRestClient;
 import org.junit.Assert;
 import org.junit.Before;
@@ -72,7 +73,7 @@ public class SSDSchachIT {
                     new AktuellesSpielbrettRequest(null, new SpielId$()));
             Assert.fail("Expected UngueltigeSpielIdException not occured");
         }
-        catch (SchachpartieApi.UngueltigeSpielIdException e) {
+        catch (UngueltigeSpielIdException e) {
             // expected case
         }
     }
@@ -175,7 +176,7 @@ public class SSDSchachIT {
             client.fuehreHalbzugAus(new FuehreHalbzugAusRequest(spielId, halbzug));
             Assert.fail("Expected UngueltigerHalbzugException not occured");
         }
-        catch (SchachpartieApi.UngueltigerHalbzugException e) {
+        catch (UngueltigerHalbzugException e) {
             Assert.assertEquals(Zugregel.DIE_PARTIE_ENDET_MATT, e.verletzteZugregel);
         }
         // Spielbrett überprüfen:

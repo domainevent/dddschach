@@ -4,14 +4,17 @@ import com.google.gson.Gson;
 import com.iks.dddschach.domain.*;
 import com.iks.dddschach.domain.validation.Zugregel;
 import com.iks.dddschach.service.api.SchachpartieApi;
+import com.iks.dddschach.service.api.UngueltigeSpielIdException;
+import com.iks.dddschach.service.api.UngueltigerHalbzugException;
 
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.*;
-import java.io.IOException;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.Map;
 
 
@@ -45,7 +48,7 @@ public class SchachpartieRestClient implements SchachpartieApi {
     @Override
     public NeuesSpielResponse neuesSpiel(NeuesSpielRequest request) {
         final Response response = webTarget
-                .path("ssd").path("neuesSpiel")
+                .path("neuesSpiel")
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(request, MediaType.APPLICATION_JSON_TYPE));
         return handleResponse(response, NeuesSpielResponse.class);
@@ -54,11 +57,13 @@ public class SchachpartieRestClient implements SchachpartieApi {
 
 
     @Override
-    public FuehreHalbzugAusResponse fuehreHalbzugAus(FuehreHalbzugAusRequest request) throws UngueltigerHalbzugException, UngueltigeSpielIdException, IOException {
+    public FuehreHalbzugAusResponse fuehreHalbzugAus(FuehreHalbzugAusRequest request)
+            throws UngueltigerHalbzugException, UngueltigeSpielIdException
+    {
         final Halbzug halbzug = request.getHalbzug();
         final SpielId spielId = request.getSpielId();
         final Response response = webTarget
-                .path("ssd").path("fuehreHalbzugAus")
+                .path("fuehreHalbzugAus")
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(request, MediaType.APPLICATION_JSON_TYPE));
 
@@ -80,10 +85,11 @@ public class SchachpartieRestClient implements SchachpartieApi {
 
 
     @Override
-    public AktuellesSpielbrettResponse aktuellesSpielbrett(AktuellesSpielbrettRequest request) throws UngueltigeSpielIdException {
+    public AktuellesSpielbrettResponse aktuellesSpielbrett(AktuellesSpielbrettRequest request) throws UngueltigeSpielIdException
+    {
         final SpielId spielId = request.getSpielId();
         final Response response = webTarget
-                .path("ssd").path("aktuellesSpielbrett")
+                .path("aktuellesSpielbrett")
                 .request(MediaType.APPLICATION_JSON)
                 .header("clientId", request.getClientId())
                 .post(Entity.entity(request, MediaType.APPLICATION_JSON_TYPE));

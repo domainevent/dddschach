@@ -2,6 +2,8 @@ package com.iks.dddschach.service.binding_rest;
 
 import com.iks.dddschach.domain.*;
 import com.iks.dddschach.service.api.SchachpartieApi;
+import com.iks.dddschach.service.api.UngueltigeSpielIdException;
+import com.iks.dddschach.service.api.UngueltigerHalbzugException;
 import com.webcohesion.enunciate.metadata.rs.ResponseCode;
 import com.webcohesion.enunciate.metadata.rs.StatusCodes;
 import org.apache.log4j.Logger;
@@ -12,7 +14,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
-import java.io.IOException;
 import java.util.Date;
 
 
@@ -20,7 +21,7 @@ import java.util.Date;
  * Dieser REST-Service stellt die Möglichkeit bereit, eine Schach-Partie "remote" über das Netzwerk
  * zu spielen.
  */
-@Path("/ssd")
+@Path("/")
 public class SchachpartieRestBinding implements SchachpartieApi {
 
     @Context
@@ -54,19 +55,11 @@ public class SchachpartieRestBinding implements SchachpartieApi {
             @ResponseCode(code = 200, condition = "ok"),
             @ResponseCode(code = 500, condition = "An exception occured")
     })
-    public NeuesSpielResponse neuesSpiel(@Valid @NotNull NeuesSpielRequest request) throws Exception
-    {
-        try {
-            final NeuesSpielResponse response = schachpartieApi.neuesSpiel(request);
-            LOG.info("Neue Partie mit Spiel-ID='" + response.getSpielId() + ", Vermerk='" + request.getVermerk() + "'");
-            return response;
-        }
-        catch (Exception e) {
-            LOG.error("Interner Server-Error", e);
-            throw new InternalServerErrorException(e);
-        }
+    public NeuesSpielResponse neuesSpiel(@Valid @NotNull NeuesSpielRequest request) {
+        final NeuesSpielResponse response = schachpartieApi.neuesSpiel(request);
+        LOG.info("Neue Partie mit Spiel-ID='" + response.getSpielId() + ", Vermerk='" + request.getVermerk() + "'");
+        return response;
     }
-
 
 
     @Override
@@ -77,8 +70,8 @@ public class SchachpartieRestBinding implements SchachpartieApi {
             @ResponseCode(code = 400, condition = "Input validation error"),
             @ResponseCode(code = 500, condition = "An exception occured")})
     public FuehreHalbzugAusResponse fuehreHalbzugAus(@Valid @NotNull FuehreHalbzugAusRequest request)
-            throws UngueltigerHalbzugException, UngueltigeSpielIdException, IOException {
-        return schachpartieApi.fuehreHalbzugAus(request);
+            throws UngueltigerHalbzugException, UngueltigeSpielIdException {
+            return schachpartieApi.fuehreHalbzugAus(request);
     }
 
 
