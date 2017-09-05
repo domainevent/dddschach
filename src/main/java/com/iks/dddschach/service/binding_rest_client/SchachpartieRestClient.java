@@ -99,13 +99,6 @@ public class SchachpartieRestClient implements SchachpartieApi {
     }
 
 
-
-
-
-
-
-
-
     public static class RestCallFailedException extends RuntimeException {
         public final int statusCode;
         public final String content;
@@ -118,37 +111,6 @@ public class SchachpartieRestClient implements SchachpartieApi {
             return "Status code: " + statusCode + ", hint: " + content;
         }
     }
-
-
-
-
-
-
-
-
-    /**
-     * Eine zusätzliche Methode, mit der es möglich ist, eine etag-Wert zu setzen, der
-     * in den Header geschrieben wird.
-     */
-    public Response spielbrettEtag(String spielId, String clientId, String etagValue)
-            throws UngueltigeSpielIdException
-    {
-        final Response response = webTarget.path("games").path(spielId).path("board")
-                .request(MediaType.APPLICATION_JSON)
-                .header("clientId", clientId)
-                .header("If-None-Match", '"'+etagValue+'"')
-                .get();
-
-        final int status = response.getStatus();
-        switch (status) {
-            case 200:
-            case 304: return response;
-            case 404: throw new UngueltigeSpielIdException(new SpielId$(spielId));
-            case 500: throw new InternalServerErrorException();
-            default: throw new RestCallFailedException(status, response.readEntity(String.class));
-        }
-    }
-
 
 
     /*======================================================*\
