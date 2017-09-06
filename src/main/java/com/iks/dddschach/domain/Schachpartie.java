@@ -75,7 +75,7 @@ public class Schachpartie extends EntityIdObject<SpielId> {
         if (validationResult instanceof BauernumwCheckResult) {
             final BauernumwCheckResult bauernumwCheckResult = (BauernumwCheckResult) validationResult;
             spielbrett = new Spielbrett(spielbrett) {{
-                setSchachfigurAnPosition(halbzug.to, bauernumwCheckResult.zielFigur);
+                setSchachfigurAnPosition(halbzug.nach, bauernumwCheckResult.zielFigur);
             }};
         }
 
