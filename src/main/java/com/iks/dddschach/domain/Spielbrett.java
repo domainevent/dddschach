@@ -1,15 +1,22 @@
 package com.iks.dddschach.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.iks.dddschach.domain.Spielfigur.FigurenTyp;
 import com.iks.dddschach.domain.base.ValueObject;
 import com.webcohesion.enunciate.metadata.DocumentationExample;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.iks.dddschach.domain.Position.Zeile._1;
 import static com.iks.dddschach.domain.Position.Zeile;
 import static com.iks.dddschach.domain.Position.Spalte;
+import static com.iks.dddschach.domain.Spielfigur.FigurenTyp.KOENIG;
+import static java.lang.Character.toLowerCase;
+import static java.lang.Character.toUpperCase;
 
 
 /**
@@ -20,6 +27,9 @@ import static com.iks.dddschach.domain.Position.Spalte;
  */
 public class Spielbrett extends ValueObject {
 
+    final static int ANZAHL_SPALTEN = Spalte.values().length;
+    final static int ANZAHL_ZEILEN  = Zeile.values().length;
+
     /**
      * Zweidimensionales Array, das das Spielbrett repräsentiert.
      */
@@ -29,7 +39,7 @@ public class Spielbrett extends ValueObject {
      * Default-Konstruktor
      */
     public Spielbrett() {
-        board = new Spielfigur[Spalte.values().length][Zeile.values().length];
+        board = new Spielfigur[ANZAHL_SPALTEN][ANZAHL_ZEILEN];
     }
 
     /**
@@ -48,10 +58,9 @@ public class Spielbrett extends ValueObject {
      */
     @DocumentationExample(exclude = true)
     public Spielfigur[][] getBoard() {
-        final Spielfigur[][] copy = new Spielfigur[Spalte.values().length][Zeile.values().length];
-
-        for (int i = 0; i < Spalte.values().length; i++) {
-            for (int j = 0; j < Zeile.values().length; j++) {
+        final Spielfigur[][] copy = new Spielfigur[ANZAHL_SPALTEN][ANZAHL_ZEILEN];
+        for (int i = 0; i < ANZAHL_SPALTEN; i++) {
+            for (int j = 0; j < ANZAHL_ZEILEN; j++) {
                 copy[i][j] = board[i][j];
             }
         }
@@ -83,14 +92,6 @@ public class Spielbrett extends ValueObject {
         board[position.horCoord.ordinal()][position.vertCoord.ordinal()] = figur;
     }
 
-    /**
-     * Ermittelt die Spielfigur auf Position <code>position</code>
-     * @param position Position auf dem Spielfeld (z.B. c3)
-     * @return {@link Spielfigur} falls sich eine Figur auf Position <code>position</code> befindet, null sonst.
-     */
-    public Spielfigur getSchachfigurAnPosition(Position position) {
-        return board[position.horCoord.ordinal()][position.vertCoord.ordinal()];
-    }
 
     /**
      * Setzt eine Figur, gegeben durch Typ und Farbe auf eine Spielbrett-Position gegeben durch Zeile und Spalte
@@ -102,6 +103,60 @@ public class Spielbrett extends ValueObject {
     protected void setSchachfigurAnPosition(Spalte h, Zeile v, FigurenTyp figurenTyp, Farbe color) {
         setSchachfigurAnPosition(new Position(h,v), new Spielfigur(figurenTyp, color));
     }
+
+
+    /**
+     * Ermittelt die Spielfigur auf Position <code>position</code>
+     * @param position Position auf dem Spielfeld (z.B. c3)
+     * @return {@link Spielfigur} falls sich eine Figur auf Position <code>position</code> befindet, null sonst.
+     */
+    public Spielfigur getSchachfigurAnPosition(Position position) {
+        return board[position.horCoord.ordinal()][position.vertCoord.ordinal()];
+    }
+
+
+    /**
+     * Ermittelt alle Positionen des Spielfeldes, auf dem eine Spielfigur mit der Farbe
+     * <code>farbe</code> steht.
+     * @param farbe Farbe, dessen Positionen gesucht werden
+     * @return Menge der Positionen, auf dem eine Figur mit Farbe <code>farbe</code> steht
+     */
+    public Set<Position> getPositionenMitFarbe(Farbe farbe) {
+        return getAllePositionen().stream()
+                .filter(position -> {
+                    Spielfigur spielfigur = getSchachfigurAnPosition(position);
+                    return spielfigur != null && spielfigur.color == farbe;
+                })
+                .collect(Collectors.toSet());
+    }
+
+
+    /**
+     * Ermittelt alle Positionen des Spielfeldes
+     * @return Alle Positionen des Spielfeldes
+     */
+    @JsonIgnore
+    public Set<Position> getAllePositionen() {
+        Set<Position> positionen = new HashSet<>();
+        for (Spalte spalte : Spalte.values()) {
+            for (Zeile zeile : Zeile.values()) {
+                positionen.add(new Position(spalte, zeile));
+            }
+        }
+        return positionen;
+    }
+
+    public Position sucheKoenigsPosition(Farbe farbeDesKoenigs) {
+        for (Position lfdPos : getPositionenMitFarbe(farbeDesKoenigs)) {
+            final Spielfigur spielfigur = getSchachfigurAnPosition(lfdPos);
+            if (spielfigur != null && spielfigur.figure == KOENIG) {
+                return lfdPos;
+            }
+        }
+        throw new IllegalArgumentException("There is no " + farbeDesKoenigs + " king on the board");
+    }
+
+
 
 
     @Override
@@ -143,6 +198,27 @@ public class Spielbrett extends ValueObject {
             }
         }
         return boardAsStr;
+    }
+
+
+    /**
+     * Gibt die Spielposition in möglichst komprimierter Form aus (String der Länge 64)
+     */
+    public String encode() {
+        String result = "";
+        for (Zeile zeile : Zeile.values()) {
+            for (Spalte spalte : Spalte.values()) {
+                Spielfigur figure = board[spalte.ordinal()][zeile.ordinal()];
+                if (figure == null) {
+                    result += "_";
+                }
+                else {
+                    char ch = figure.figure.marshal();
+                    result += (figure.color == Farbe.WEISS)? toUpperCase(ch) : toLowerCase(ch);
+                }
+            }
+        }
+        return result;
     }
 
 }
