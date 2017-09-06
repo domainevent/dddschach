@@ -63,14 +63,14 @@ public class Position extends ValueObject {
 
 
     /**
-     * Die (horizontale) Spalten-Koordinate des Schachbretts (a-h)
+     * Die Spalten-Koordinate des Schachbretts (a-h)
      */
-    public final Spalte horCoord;
+    public final Spalte spalte;
 
     /**
-     * Die (vertikale) Zeilen-Koordinate des Schachbretts (1-8)
+     * Die Zeilen-Koordinate des Schachbretts (1-8)
      */
-    public final Zeile vertCoord;
+    public final Zeile zeile;
 
 
     /**
@@ -79,8 +79,8 @@ public class Position extends ValueObject {
      * @param zeile (vertikale) Zeilen-Koordinate des Schachbretts (1-8)
      */
     public Position(Spalte spalte, Zeile zeile) {
-        this.horCoord = spalte;
-        this.vertCoord = zeile;
+        this.spalte = spalte;
+        this.zeile = zeile;
     }
 
 
@@ -95,7 +95,7 @@ public class Position extends ValueObject {
 
     @Override
     public String toString() {
-        return horCoord.toString() + vertCoord.toString();
+        return spalte.toString() + zeile.toString();
     }
 
 }

@@ -33,7 +33,7 @@ public class GesamtValidator implements HalbzugValidation, DomainService {
         Validate.isTrue(halbzugHistorie != null, "Argument halbzugHistorie is null.");
         Validate.isTrue(spielbrett != null, "Argument spielbrett is null.");
 
-        final Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.from);
+        final Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.von);
         if (zugFigur == null) {
             return new ValidationResult(Zugregel.STARTFELD_MUSS_SPIELFIGUR_ENTHALTEN);
         }
@@ -96,7 +96,7 @@ public class GesamtValidator implements HalbzugValidation, DomainService {
 
     private boolean istRichtigerSpielerAmZug(Spielfigur schachfigurAnFrom, List<Halbzug> zugHistorie) {
         Objects.requireNonNull(schachfigurAnFrom);
-        return (schachfigurAnFrom.color.ordinal() == zugHistorie.size() % 2);
+        return (schachfigurAnFrom.farbe.ordinal() == zugHistorie.size() % 2);
         // return true;
     }
 

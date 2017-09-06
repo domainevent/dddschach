@@ -22,15 +22,15 @@ public class TurmRegel implements HalbzugValidation {
 		Objects.requireNonNull(halbzug, "Argument halbzug is null");
 		Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
 
-		Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.from);
-		Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.from);
+		Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.von);
+		Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.von);
 
-		if (zugFigur.figure != FigurenTyp.TURM) {
+		if (zugFigur.figurTyp != FigurenTyp.TURM) {
 			throw new IllegalArgumentException("Figure must be a rook");
 		}
 
-        final IntegerTupel from = ValidationUtils.toIntegerTupel(halbzug.from);
-        final IntegerTupel to   = ValidationUtils.toIntegerTupel(halbzug.to);
+        final IntegerTupel from = ValidationUtils.toIntegerTupel(halbzug.von);
+        final IntegerTupel to   = ValidationUtils.toIntegerTupel(halbzug.nach);
         final IntegerTupel absd = from.minus(to).abs();
 
         // Turm darf nur geradlinig ziehen

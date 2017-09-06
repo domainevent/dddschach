@@ -76,9 +76,9 @@ public class Spielbrett extends ValueObject {
      */
     public Spielbrett wendeHalbzugAn(Halbzug halbzug) {
         return new Spielbrett(this) {{
-            final Spielfigur spielfigurFrom = getSchachfigurAnPosition(halbzug.from);
-            setSchachfigurAnPosition(halbzug.from, null);
-            setSchachfigurAnPosition(halbzug.to, spielfigurFrom);
+            final Spielfigur spielfigurFrom = getSchachfigurAnPosition(halbzug.von);
+            setSchachfigurAnPosition(halbzug.von, null);
+            setSchachfigurAnPosition(halbzug.nach, spielfigurFrom);
         }};
     }
 
@@ -89,7 +89,7 @@ public class Spielbrett extends ValueObject {
      * @param figur die zu setzende Figur (z.B. Lw = weißer Läufer)
      */
     protected void setSchachfigurAnPosition(Position position, Spielfigur figur) {
-        board[position.horCoord.ordinal()][position.vertCoord.ordinal()] = figur;
+        board[position.spalte.ordinal()][position.zeile.ordinal()] = figur;
     }
 
 
@@ -111,7 +111,7 @@ public class Spielbrett extends ValueObject {
      * @return {@link Spielfigur} falls sich eine Figur auf Position <code>position</code> befindet, null sonst.
      */
     public Spielfigur getSchachfigurAnPosition(Position position) {
-        return board[position.horCoord.ordinal()][position.vertCoord.ordinal()];
+        return board[position.spalte.ordinal()][position.zeile.ordinal()];
     }
 
 
@@ -125,7 +125,7 @@ public class Spielbrett extends ValueObject {
         return getAllePositionen().stream()
                 .filter(position -> {
                     Spielfigur spielfigur = getSchachfigurAnPosition(position);
-                    return spielfigur != null && spielfigur.color == farbe;
+                    return spielfigur != null && spielfigur.farbe == farbe;
                 })
                 .collect(Collectors.toSet());
     }
@@ -149,7 +149,7 @@ public class Spielbrett extends ValueObject {
     public Position sucheKoenigsPosition(Farbe farbeDesKoenigs) {
         for (Position lfdPos : getPositionenMitFarbe(farbeDesKoenigs)) {
             final Spielfigur spielfigur = getSchachfigurAnPosition(lfdPos);
-            if (spielfigur != null && spielfigur.figure == KOENIG) {
+            if (spielfigur != null && spielfigur.figurTyp == KOENIG) {
                 return lfdPos;
             }
         }
@@ -213,8 +213,8 @@ public class Spielbrett extends ValueObject {
                     result += "_";
                 }
                 else {
-                    char ch = figure.figure.marshal();
-                    result += (figure.color == Farbe.WEISS)? toUpperCase(ch) : toLowerCase(ch);
+                    char ch = figure.figurTyp.marshal();
+                    result += (figure.farbe == Farbe.WEISS)? toUpperCase(ch) : toLowerCase(ch);
                 }
             }
         }
