@@ -1,0 +1,7 @@
+2017-09-06 06:56:11 [, ] INFO  RestService:70 - SpielId=5574ddb1-b7d2-40b5-b699-9585b29d51f6: (neu erzeugt) mit Vermerk 'A new chess game started by ChessGUI''
+2017-09-06 06:56:16 [, ] INFO  RestService:177 - SpielId=5574ddb1-b7d2-40b5-b699-9585b29d51f6: Ausfuehren des Halbzuges e2-e4
+2017-09-06 06:56:16 [, ] DEBUG RestService:196 - SpielId=5574ddb1-b7d2-40b5-b699-9585b29d51f6: Der -1. Halbzug e2-e4 war erfolgreich.
+2017-09-06 06:56:16 [, ] INFO  RestService:94 - SpielId=5574ddb1-b7d2-40b5-b699-9585b29d51f6: Abfrage des Spielfeldes
+2017-09-06 06:56:20 [, ] INFO  RestService:177 - SpielId=5574ddb1-b7d2-40b5-b699-9585b29d51f6: Ausfuehren des Halbzuges c2-c4
+2017-09-06 06:56:20 [, ] DEBUG RestService:196 - SpielId=5574ddb1-b7d2-40b5-b699-9585b29d51f6: Der -1. Halbzug c2-c4 war erfolgreich.
+2017-09-06 06:56:21 [, ] INFO  RestService:94 - SpielId=5574ddb1-b7d2-40b5-b699-9585b29d51f6: Abfrage des Spielfeldes
