@@ -1,9 +1,9 @@
 package com.iks.dddschach.domain;
 
+
 import com.iks.dddschach.domain.base.EnumObject;
 import com.iks.dddschach.domain.base.ValueObject;
 
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlEnum;
 
 
@@ -63,26 +63,24 @@ public class Position extends ValueObject {
 
 
     /**
-     * Die (horizontale) Zeilen-Koordinate des Schachbretts (a-h)
+     * Die Spalten-Koordinate des Schachbretts (a-h)
      */
-    @NotNull
-    public final Spalte horCoord;
+    public final Spalte spalte;
 
     /**
-     * Die (vertikale) Spalten-Koordinate des Schachbretts (1-8)
+     * Die Zeilen-Koordinate des Schachbretts (1-8)
      */
-    @NotNull
-    public final Zeile vertCoord;
+    public final Zeile zeile;
 
 
     /**
      * Konstruktor
-     * @param spalte (vertikale) Spalten-Koordinate des Schachbretts (1-8)
-     * @param zeile (horizontale) Zeilen-Koordinate des Schachbretts (a-h)
+     * @param spalte (horizontale) Spalten-Koordinate des Schachbretts (a-h)
+     * @param zeile (vertikale) Zeilen-Koordinate des Schachbretts (1-8)
      */
     public Position(Spalte spalte, Zeile zeile) {
-        this.horCoord = spalte;
-        this.vertCoord = zeile;
+        this.spalte = spalte;
+        this.zeile = zeile;
     }
 
 
@@ -97,9 +95,7 @@ public class Position extends ValueObject {
 
     @Override
     public String toString() {
-        return "" +
-                (horCoord  == null? "<null>" : horCoord) +
-                (vertCoord  == null? "<null>" : vertCoord);
+        return spalte.toString() + zeile.toString();
     }
 
 }

@@ -73,12 +73,12 @@ public class RochadenCheck implements HalbzugValidation {
         Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
         Objects.requireNonNull(halbzugHistorie, "Argument zugHistorie is null");
 
-        Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.from);
-        Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.from);
+        Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.von);
+        Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.von);
 
         final Halbzug zugehoerigerTurmHalbzug = ZUGEHOERIGE_TURM_HALBZEUGE.get(halbzug);
 
-        if (zugFigur.figure != FigurenTyp.KOENIG) {
+        if (zugFigur.figurTyp != FigurenTyp.KOENIG) {
             return new RochadenCheckResult(Zugregel.HALBZUG_IST_KEINE_ROCHADE);
         }
         if (!GUELTIGE_ROCHADEN_HALBZEUGE.contains(halbzug)) {
@@ -87,7 +87,7 @@ public class RochadenCheck implements HalbzugValidation {
 
         // Freie Bahn vom König zum Turm checken:
         //
-        final Halbzug halbzugVonKoenigZuTurm = new Halbzug(halbzug.from, zugehoerigerTurmHalbzug.from);
+        final Halbzug halbzugVonKoenigZuTurm = new Halbzug(halbzug.von, zugehoerigerTurmHalbzug.von);
         final ValidationResult freieBahnCheckResult =
                 FREIE_BAHN_CHECK.validiere(halbzugVonKoenigZuTurm, halbzugHistorie, spielbrett);
 
@@ -98,23 +98,23 @@ public class RochadenCheck implements HalbzugValidation {
         // Wurden König oder Turm schon einmal bewegt? Dazu die Startpositionen aller historischen
         // Halbzüge ermitteln.
         //
-        final Set<Position> startPositionen = halbzugHistorie.stream().map(hz -> hz.from).collect(Collectors.toSet());
+        final Set<Position> startPositionen = halbzugHistorie.stream().map(hz -> hz.von).collect(Collectors.toSet());
 
-        // Hinweis: Dass auf Halbzug.from der König steht, wurde oben gecheckt:
-        if (startPositionen.contains(halbzug.from)) {
+        // Hinweis: Dass auf Halbzug.von der König steht, wurde oben gecheckt:
+        if (startPositionen.contains(halbzug.von)) {
             return new RochadenCheckResult(Zugregel.ROCHADE_KOENIG_WURDE_BEREITS_BEWEGT);
         }
-        if (startPositionen.contains(zugehoerigerTurmHalbzug.from)) {
+        if (startPositionen.contains(zugehoerigerTurmHalbzug.von)) {
             return new RochadenCheckResult(Zugregel.ROCHADE_TURM_WURDE_BEREITS_BEWEGT);
         }
 
         // Ist ein Feld zwischen Start und Zielposition des Königs bedroht?
         //
-        final Position midPos = ValidationUtils.middle(halbzug.from, halbzug.to);
+        final Position midPos = ValidationUtils.middle(halbzug.von, halbzug.nach);
 
         boolean sindAllePositionenDesKoenigHalbzugsUnbedroht =
-                SCHACH_CHECK.validiere(new Halbzug(halbzug.from, halbzug.from), halbzugHistorie, spielbrett).gueltig &&
-                SCHACH_CHECK.validiere(new Halbzug(halbzug.from, midPos), halbzugHistorie, spielbrett).gueltig &&
+                SCHACH_CHECK.validiere(new Halbzug(halbzug.von, halbzug.von), halbzugHistorie, spielbrett).gueltig &&
+                SCHACH_CHECK.validiere(new Halbzug(halbzug.von, midPos), halbzugHistorie, spielbrett).gueltig &&
                 SCHACH_CHECK.validiere(halbzug, halbzugHistorie, spielbrett).gueltig;
 
         return sindAllePositionenDesKoenigHalbzugsUnbedroht?

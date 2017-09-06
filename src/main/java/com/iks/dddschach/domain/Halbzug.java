@@ -16,36 +16,36 @@ public class Halbzug extends ValueObject {
      * Startposition des Halbzuges
      */
     @Valid @NotNull
-    public final Position from;
+    public final Position von;
 
     /**
      * Zielposition des Halbzuges
      */
     @Valid @NotNull
-    public final Position to;
+    public final Position nach;
 
 
     /**
      * Konstruktor
-     * @param from Startposition
-     * @param to Zielposition
+     * @param von Startposition
+     * @param nach Zielposition
      */
-    public Halbzug(Position from, Position to) {
-        this.from = from;
-        this.to = to;
+    public Halbzug(Position von, Position nach) {
+        this.von = von;
+        this.nach = nach;
     }
+
 
     /**
      * Wird lediglich zum Unmarshallen der XML- bzw. Json-Objekte benoetigt
      */
     @SuppressWarnings("unused")
-	private Halbzug() {
+    private Halbzug() {
         this(null, null);
     }
 
     @Override
     public String toString() {
-        return (from == null? "<null>" : from) + "-" + (to == null? "<null>" : to);
+        return (von == null? "<null>" : von) + "-" + (nach == null? "<null>" : nach);
     }
-
 }

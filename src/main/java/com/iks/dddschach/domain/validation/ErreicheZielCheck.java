@@ -19,10 +19,10 @@ public class ErreicheZielCheck implements HalbzugValidation {
         Objects.requireNonNull(halbzug, "Argument halbzug is null");
         Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
 
-        Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.from);
-        Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.from);
+        Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.von);
+        Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.von);
 
-        switch (zugFigur.figure) {
+        switch (zugFigur.figurTyp) {
             case BAUER:
                 return new BauernRegel().validiere(halbzug, halbzugHistorie, spielbrett);
             case TURM:
@@ -36,7 +36,7 @@ public class ErreicheZielCheck implements HalbzugValidation {
             case KOENIG:
                 return new KoenigRegel().validiere(halbzug, halbzugHistorie, spielbrett);
             default:
-                throw new IllegalStateException("Unexpected enum: " + zugFigur.figure);
+                throw new IllegalStateException("Unexpected enum: " + zugFigur.figurTyp);
         }
     }
 

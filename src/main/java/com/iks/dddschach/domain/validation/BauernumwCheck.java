@@ -30,10 +30,10 @@ public class BauernumwCheck implements HalbzugValidation {
         Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
         Objects.requireNonNull(halbzugHistorie, "Argument zugHistorie is null");
 
-        Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.from);
-        Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.from);
+        Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.von);
+        Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.von);
 
-        if (zugFigur.figure != FigurenTyp.BAUER) {
+        if (zugFigur.figurTyp != FigurenTyp.BAUER) {
             return new BauernumwCheckResult(false, null);
         }
         final ValidationResult bauernregelResult = BAUERNREGEL.validiere(halbzug, halbzugHistorie, spielbrett);
@@ -41,9 +41,9 @@ public class BauernumwCheck implements HalbzugValidation {
             return bauernregelResult;
         }
 
-        if ((zugFigur.color == WEISS && halbzug.from.vertCoord == _7) ||
-            (zugFigur.color == SCHWARZ && halbzug.from.vertCoord == _2)) {
-            return new BauernumwCheckResult(true, new Spielfigur(DAME, zugFigur.color));
+        if ((zugFigur.farbe == WEISS && halbzug.von.zeile == _7) ||
+            (zugFigur.farbe == SCHWARZ && halbzug.von.zeile == _2)) {
+            return new BauernumwCheckResult(true, new Spielfigur(DAME, zugFigur.farbe));
         }
         return new BauernumwCheckResult(false, null);
     }

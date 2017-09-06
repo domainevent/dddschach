@@ -19,15 +19,15 @@ public class LaeuferRegel implements HalbzugValidation {
 		Objects.requireNonNull(halbzug, "Argument halbzug is null");
 		Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
 
-		Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.from);
-		Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.from);
+		Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.von);
+		Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.von);
 		
-		if (zugFigur.figure != FigurenTyp.LAEUFER) {
+		if (zugFigur.figurTyp != FigurenTyp.LAEUFER) {
 			throw new IllegalArgumentException("Figure must be a bishop");
 		}
 
-        final IntegerTupel from = ValidationUtils.toIntegerTupel(halbzug.from);
-        final IntegerTupel to = ValidationUtils.toIntegerTupel(halbzug.to);
+        final IntegerTupel from = ValidationUtils.toIntegerTupel(halbzug.von);
+        final IntegerTupel to = ValidationUtils.toIntegerTupel(halbzug.nach);
         final IntegerTupel absd = from.minus(to).abs();
 
         // Diagonalpruefung

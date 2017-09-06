@@ -20,15 +20,15 @@ public class SpringerRegel implements HalbzugValidation {
 		Objects.requireNonNull(halbzug, "Argument halbzug is null");
 		Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
 
-		Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.from);
-		Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.from);
+		Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.von);
+		Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.von);
 
-		if (zugFigur.figure != FigurenTyp.SPRINGER) {
+		if (zugFigur.figurTyp != FigurenTyp.SPRINGER) {
 			throw new IllegalArgumentException("Figure must be a knight");
 		}
 
-        final IntegerTupel from = ValidationUtils.toIntegerTupel(halbzug.from);
-        final IntegerTupel to = ValidationUtils.toIntegerTupel(halbzug.to);
+        final IntegerTupel from = ValidationUtils.toIntegerTupel(halbzug.von);
+        final IntegerTupel to = ValidationUtils.toIntegerTupel(halbzug.nach);
         final IntegerTupel absd = from.minus(to).abs();
 
         if ( (absd.x() == 2 && absd.y() == 1) || (absd.x() == 1 && absd.y() == 2) ) {

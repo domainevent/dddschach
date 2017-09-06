@@ -59,22 +59,22 @@ public class Spielfigur extends ValueObject {
     /**
      * Typ der Spielfigur (Dame, König, etc.)
      */
-    public final FigurenTyp figure;
+    public final FigurenTyp figurTyp;
 
     /**
      * Farbe der Spielfigur (schwarz, weiß)
      */
-    public final Farbe color;
+    public final Farbe farbe;
 
 
     /**
      * Konstruktor
-     * @param figure Spielfigur-Typ
-     * @param color Spielfigur-Farbe
+     * @param figurTyp Spielfigur-Typ
+     * @param farbe Spielfigur-Farbe
      */
-    public Spielfigur(FigurenTyp figure, Farbe color) {
-        this.figure = figure;
-        this.color = color;
+    public Spielfigur(FigurenTyp figurTyp, Farbe farbe) {
+        this.figurTyp = figurTyp;
+        this.farbe = farbe;
     }
 
     @SuppressWarnings("unused")
@@ -84,7 +84,7 @@ public class Spielfigur extends ValueObject {
 
     @Override
     public String toString() {
-        return "" + figure.marshal() + color.marshal();
+        return "" + figurTyp.marshal() + farbe.marshal();
     }
 
 }

@@ -5,8 +5,6 @@ import com.iks.dddschach.util.IntegerTupel;
 
 import java.util.Objects;
 
-import static com.iks.dddschach.domain.validation.ValidationUtils.toIntegerTupel;
-
 
 /**
  * @author javacook
@@ -14,7 +12,7 @@ import static com.iks.dddschach.domain.validation.ValidationUtils.toIntegerTupel
 public class ValidationUtils {
 
     public static IntegerTupel toIntegerTupel(Position pos) {
-        return new IntegerTupel(pos.horCoord.ordinal(), pos.vertCoord.ordinal());
+        return new IntegerTupel(pos.spalte.ordinal(), pos.zeile.ordinal());
     }
 
     public static Position toPosition(IntegerTupel tupel) {
@@ -34,9 +32,9 @@ public class ValidationUtils {
      * Ermittelt die Farbe des Spielers, der den Halbzug <code>halbzug</code> ausführen will
      */
     public static Farbe spielerFarbe(Halbzug halbzug, Spielbrett spielbrett) {
-        final Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.from);
-        Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.from);
-        return zugFigur.color;
+        final Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.von);
+        Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.von);
+        return zugFigur.farbe;
     }
 
 }
