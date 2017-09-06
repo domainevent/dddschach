@@ -1,10 +1,13 @@
 package com.iks.dddschach.domain.validation;
 
+import com.iks.dddschach.domain.Halbzug;
+import com.iks.dddschach.domain.Spielbrett;
+import com.iks.dddschach.domain.Spielfigur;
+import com.iks.dddschach.domain.Spielfigur.FigurenTyp;
+import com.iks.dddschach.util.IntegerTupel;
+
 import java.util.List;
 import java.util.Objects;
-
-import com.iks.dddschach.domain.*;
-import com.iks.dddschach.domain.Spielfigur.FigurenTyp;
 
 import static com.iks.dddschach.domain.Farbe.SCHWARZ;
 import static com.iks.dddschach.domain.Farbe.WEISS;
