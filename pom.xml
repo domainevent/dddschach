@@ -245,7 +245,7 @@
                 </executions>
                 <configuration>
                     <extension>true</extension>
-                    <generatePackage>com.iks.com.javacook.dddschach.domain</generatePackage>
+                    <generatePackage>com.javacook.dddschach.domain</generatePackage>
                     <args>
                         <arg>-Xinheritance</arg>
                         <arg>-XtoString</arg>
