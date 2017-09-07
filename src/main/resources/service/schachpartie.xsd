@@ -66,7 +66,6 @@
         </xs:sequence>
     </xs:complexType>
 
-
     <xs:complexType name="AktuellesSpielbrettRequest">
         <xs:annotation>
             <xs:documentation>Fordert das aktuelle Spielbrett an</xs:documentation>
@@ -85,7 +84,6 @@
         </xs:sequence>
     </xs:complexType>
 
-
     <xs:complexType name="AktuellesSpielbrettResponse">
         <xs:annotation>
             <xs:documentation>Das aktuelle Spielbrett</xs:documentation>
@@ -98,7 +96,6 @@
             </xs:element>
         </xs:sequence>
     </xs:complexType>
-
 
     <xs:complexType name="Schachpartie">
         <xs:annotation>
@@ -135,6 +132,7 @@
             </xs:element>
         </xs:sequence>
     </xs:complexType>
+
     <xs:complexType name="Spielbrett">
         <xs:annotation>
             <xs:documentation>Spielbrett</xs:documentation>
@@ -147,6 +145,7 @@
             </xs:element>
         </xs:sequence>
     </xs:complexType>
+
     <xs:complexType name="Spielfeld">
         <xs:annotation>
             <xs:documentation>Spielfeld</xs:documentation>
@@ -164,9 +163,10 @@
             </xs:element>
         </xs:sequence>
     </xs:complexType>
+
     <xs:complexType name="HalbzugHistorie">
         <xs:annotation>
-            <xs:documentation>HalbzugHistorie</xs:documentation>
+            <xs:documentation>Die Halbzug-Historie beinhaltet alle bislang ausgeführten Halbzüge</xs:documentation>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="halbzuege" type="tns:Halbzug" minOccurs="0" maxOccurs="unbounded">
@@ -176,6 +176,7 @@
             </xs:element>
         </xs:sequence>
     </xs:complexType>
+
     <xs:complexType name="Halbzug">
         <xs:annotation>
             <xs:documentation>Halbzug</xs:documentation>
@@ -193,6 +194,7 @@
             </xs:element>
         </xs:sequence>
     </xs:complexType>
+
     <xs:complexType name="Position">
         <xs:annotation>
             <xs:documentation>Position</xs:documentation>
@@ -210,6 +212,7 @@
             </xs:element>
         </xs:sequence>
     </xs:complexType>
+
     <xs:simpleType name="Zeile">
         <xs:restriction base="xs:string">
             <xs:enumeration value="I"></xs:enumeration>
@@ -222,6 +225,7 @@
             <xs:enumeration value="VIII"></xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
+
     <xs:simpleType name="Spalte">
         <xs:restriction base="xs:string">
             <xs:enumeration value="A"></xs:enumeration>
@@ -234,6 +238,7 @@
             <xs:enumeration value="H"></xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
+
     <xs:complexType name="Spielfigur">
         <xs:annotation>
             <xs:documentation>Spielfigur</xs:documentation>
@@ -251,6 +256,7 @@
             </xs:element>
         </xs:sequence>
     </xs:complexType>
+
     <xs:simpleType name="FigurenTyp">
         <xs:restriction base="xs:string">
             <xs:enumeration value="KOENIG"></xs:enumeration>
@@ -261,12 +267,14 @@
             <xs:enumeration value="BAUER"></xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
+
     <xs:simpleType name="Farbe">
         <xs:restriction base="xs:string">
             <xs:enumeration value="WEISS"></xs:enumeration>
             <xs:enumeration value="SCHWARZ"></xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
+
     <xs:simpleType name="Vermerk">
         <xs:annotation>
             <xs:documentation>Kommentierung zu einer Schachpartie</xs:documentation>
