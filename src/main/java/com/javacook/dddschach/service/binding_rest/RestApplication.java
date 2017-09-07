@@ -21,7 +21,7 @@ public class RestApplication extends ResourceConfig {
             }
         });
         register(new JacksonJsonProvider().configure(SerializationFeature.INDENT_OUTPUT, true));
-        packages("com.iks.com.javacook.dddschach.rest,com.iks.com.javacook.dddschach.service.binding_rest");
+        packages("com.javacook.dddschach.rest,com.javacook.dddschach.service.binding_rest");
     }
 
 }

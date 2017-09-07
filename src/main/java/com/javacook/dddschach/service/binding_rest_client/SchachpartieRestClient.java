@@ -34,7 +34,7 @@ public class SchachpartieRestClient implements SchachpartieApi {
         final String dockerHost = (host == null)? "localhost" : host;
         final String dockerPort = (port == null)? "8080" : port;
         // System.out.println("Docker-Host: " + dockerHost + ":" + dockerPort);
-        webTarget = CLIENT.target("http://localhost:" + dockerPort + "/com.javacook.dddschach/api");
+        webTarget = CLIENT.target("http://localhost:" + dockerPort + "/dddschach/api");
     }
 
 
