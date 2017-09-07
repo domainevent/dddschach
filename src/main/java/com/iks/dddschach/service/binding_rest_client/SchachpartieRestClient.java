@@ -76,7 +76,7 @@ public class SchachpartieRestClient implements SchachpartieApi {
                 final Map<String, Object> json = response.readEntity(new GenericType<Map<String, Object>>() {});
                 final String verletzteZugregel = (String)json.get(json.get(json.get("error code")));
                 throw new UngueltigerHalbzugException(halbzug, Zugregel.valueOf(verletzteZugregel));
-            case 404: throw new UngueltigeSpielIdException(new SpielId$(spielId));
+            case 404: throw new UngueltigeSpielIdException(spielId);
             case 500: throw new InternalServerErrorException();
             default: throw new RestCallFailedException(status, response.readEntity(String.class));
         }
@@ -98,7 +98,7 @@ public class SchachpartieRestClient implements SchachpartieApi {
         switch (status) {
             case 200:
             case 304: return response.readEntity(AktuellesSpielbrettResponse.class);
-            case 404: throw new UngueltigeSpielIdException(new SpielId$(spielId));
+            case 404: throw new UngueltigeSpielIdException(spielId);
             case 500: throw new InternalServerErrorException();
             default: throw new RestCallFailedException(status, response.readEntity(String.class));
         }
@@ -160,7 +160,6 @@ public class SchachpartieRestClient implements SchachpartieApi {
         final AktuellesSpielbrettRequest aktuellesSpielbrettRequest2 = new AktuellesSpielbrettRequest(null, spielId);
         final AktuellesSpielbrettResponse aktuellesSpielbrettResponse2 = client.aktuellesSpielbrett(aktuellesSpielbrettRequest2);
         System.out.println(aktuellesSpielbrettResponse2.getSpielbrett());
-
     }
 
 }
