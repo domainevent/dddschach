@@ -5,7 +5,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.javacook</groupId>
-    <artifactId>dddschach</artifactId>
+    <artifactId>com.javacook.dddschach</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
@@ -86,8 +86,8 @@
                             <images>
                                 <!-- A single's image configuration -->
                                 <image>
-                                    <alias>dddschach</alias>
-                                    <name>javacook/dddschach:${project.version}</name>
+                                    <alias>com.javacook.dddschach</alias>
+                                    <name>javacook/com.javacook.dddschach:${project.version}</name>
                                     <build>
                                         <dockerFileDir>${project.basedir}</dockerFileDir>
                                     </build>
@@ -97,7 +97,7 @@
                                         </ports>
                                         <wait>
                                             <http>
-                                                <url>http://localhost:${tomcat.port}/dddschach/api/isalive</url>
+                                                <url>http://localhost:${tomcat.port}/com.javacook.dddschach/api/isalive</url>
                                             </http>
                                             <time>10000</time>
                                         </wait>
@@ -133,7 +133,7 @@
                         <configuration>
                             <systemPropertyVariables>
                                 <!-- Docker-Plugin ersetzt diesen Wert -->
-                                <docker.container.ip>${docker.container.dddschach.ip}</docker.container.ip>
+                                <docker.container.ip>${docker.container.com.javacook.dddschach.ip}</docker.container.ip>
                                 <docker.container.port>${tomcat.port}</docker.container.port>
                             </systemPropertyVariables>
                         </configuration>
@@ -245,7 +245,7 @@
                 </executions>
                 <configuration>
                     <extension>true</extension>
-                    <generatePackage>com.iks.dddschach.domain</generatePackage>
+                    <generatePackage>com.iks.com.javacook.dddschach.domain</generatePackage>
                     <args>
                         <arg>-Xinheritance</arg>
                         <arg>-XtoString</arg>
@@ -277,49 +277,6 @@
             </plugin>
         </plugins>
     </build>
-
-
-
-    <!--<dependencyManagement>-->
-        <!--<dependencies>-->
-            <!--<dependency>-->
-                <!--<groupId>commons-logging</groupId>-->
-                <!--<artifactId>commons-logging</artifactId>-->
-                <!--<version>1.1.1</version>-->
-            <!--</dependency>-->
-        <!--</dependencies>-->
-    <!--</dependencyManagement>-->
-
-    <!--<dependencyManagement>-->
-        <!--<dependencies>-->
-            <!--<dependency>-->
-                <!--<groupId>javax.validation</groupId>-->
-                <!--<artifactId>validation-api</artifactId>-->
-                <!--<version>1.1.0.Final</version>-->
-            <!--</dependency>-->
-
-            <!--<dependency>-->
-                <!--<groupId>com.fasterxml.jackson.core</groupId>-->
-                <!--<artifactId>jackson-annotations</artifactId>-->
-                <!--<version>2.8.0</version>-->
-            <!--</dependency>-->
-
-            <!--<dependency>-->
-                <!--<groupId>javax.xml.bind</groupId>-->
-                <!--<artifactId>jaxb-api</artifactId>-->
-                <!--<version>2.2.12-b140109.1041</version>-->
-            <!--</dependency>-->
-
-            <!--<dependency>-->
-                <!--<groupId>commons-logging</groupId>-->
-                <!--<artifactId>commons-logging</artifactId>-->
-                <!--<version>1.1.1</version>-->
-            <!--</dependency>-->
-
-        <!--</dependencies>-->
-    <!--</dependencyManagement>-->
-
-
     <dependencies>
 
         <dependency>

@@ -13,7 +13,7 @@
         <param name="maxFileSize" value="110KB" />
         <param name="maxBackupIndex" value="10" />
         <!-- For Tomcat -->
-        <param name="file" value="${catalina.home}/logs/dddschach.log" />
+        <param name="file" value="${catalina.home}/logs/com.javacook.dddschach.log" />
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern"
                    value="%d{yyyy-MM-dd HH:mm:ss} [%X{clientId}, %X{gameId}] %-5p %c{1}:%L - %m%n" />
