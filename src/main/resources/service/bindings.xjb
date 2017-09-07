@@ -9,37 +9,37 @@
             <xjc:serializable/>
         </jxb:globalBindings>
 
-        <jxb:bindings node="//xs:complexType[@name='Schachpartie']">
-            <jxb:class implClass="Schachpartie$"/>
-        </jxb:bindings>
+        <!--<jxb:bindings node="//xs:complexType[@name='Schachpartie']">-->
+            <!--<jxb:class implClass="Schachpartie$"/>-->
+        <!--</jxb:bindings>-->
 
-        <jxb:bindings node="//xs:complexType[@name='Spielbrett']">
-            <jxb:class implClass="Spielbrett$"/>
-        </jxb:bindings>
+        <!--<jxb:bindings node="//xs:complexType[@name='Spielbrett']">-->
+            <!--<jxb:class implClass="Spielbrett$"/>-->
+        <!--</jxb:bindings>-->
 
-        <jxb:bindings node="//xs:complexType[@name='Spielfeld']">
-            <jxb:class implClass="Spielfeld$"/>
-        </jxb:bindings>
+        <!--<jxb:bindings node="//xs:complexType[@name='Spielfeld']">-->
+            <!--<jxb:class implClass="Spielfeld$"/>-->
+        <!--</jxb:bindings>-->
 
-        <jxb:bindings node="//xs:complexType[@name='HalbzugHistorie']">
-            <jxb:class implClass="HalbzugHistorie$"/>
-        </jxb:bindings>
+        <!--<jxb:bindings node="//xs:complexType[@name='HalbzugHistorie']">-->
+            <!--<jxb:class implClass="HalbzugHistorie$"/>-->
+        <!--</jxb:bindings>-->
 
-        <jxb:bindings node="//xs:complexType[@name='Halbzug']">
-            <jxb:class implClass="Halbzug$"/>
-        </jxb:bindings>
+        <!--<jxb:bindings node="//xs:complexType[@name='Halbzug']">-->
+            <!--<jxb:class implClass="Halbzug$"/>-->
+        <!--</jxb:bindings>-->
 
-        <jxb:bindings node="//xs:complexType[@name='Position']">
-            <jxb:class implClass="Position$"/>
-        </jxb:bindings>
+        <!--<jxb:bindings node="//xs:complexType[@name='Position']">-->
+            <!--<jxb:class implClass="Position$"/>-->
+        <!--</jxb:bindings>-->
 
-        <jxb:bindings node="//xs:complexType[@name='Spielfigur']">
-            <jxb:class implClass="Spielfigur$"/>
-        </jxb:bindings>
+        <!--<jxb:bindings node="//xs:complexType[@name='Spielfigur']">-->
+            <!--<jxb:class implClass="Spielfigur$"/>-->
+        <!--</jxb:bindings>-->
 
-        <jxb:bindings node="//xs:complexType[@name='SpielId']">
-            <jxb:class implClass="SpielId$"/>
-        </jxb:bindings>
+        <!--<jxb:bindings node="//xs:complexType[@name='SpielId']">-->
+            <!--<jxb:class implClass="SpielId$"/>-->
+        <!--</jxb:bindings>-->
 
     </jxb:bindings>
 </jxb:bindings>
