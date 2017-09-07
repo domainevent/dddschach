@@ -69,21 +69,22 @@ public class Schachpartie$ extends Schachpartie implements EntityIdObject<SpielI
      */
     public int fuehreHalbzugAus(Halbzug$ halbzug) throws UngueltigerHalbzugException {
         final HalbzugValidation.ValidationResult validationResult =
-                VALIDATOR.validiere(halbzug, getHalbzugHistorie().getHalbzuege$(), spielbrett);
+                VALIDATOR.validiere(halbzug, getHalbzugHistorie().getHalbzuege$(), getSpielbrett());
         if (!validationResult.gueltig) {
-            final PattMattCheck.PattMatt pattMatt = PATT_MATT_CHECK.analysiere(getHalbzugHistorie().getHalbzuege$(), spielbrett);
+            final PattMattCheck.PattMatt pattMatt =
+                    PATT_MATT_CHECK.analysiere(getHalbzugHistorie().getHalbzuege$(), getSpielbrett());
             switch (pattMatt) {
                 case MATT: throw new UngueltigerHalbzugException(halbzug, DIE_PARTIE_ENDET_MATT);
                 case PATT: throw new UngueltigerHalbzugException(halbzug, DIE_PARTIE_ENDET_PATT);
             }
             throw new UngueltigerHalbzugException(halbzug, validationResult.verletzteZugregel);
         }
-        spielbrett = spielbrett.wendeHalbzugAn(halbzug);
+        setSpielbrett(getSpielbrett().wendeHalbzugAn(halbzug));
 
         // Bei einer Rochade muss der Turm zusätzlich noch gezogen werden:
         if (validationResult instanceof RochadenCheck.RochadenCheckResult) {
             final RochadenCheck.RochadenCheckResult rochadenCheckResult = (RochadenCheck.RochadenCheckResult) validationResult;
-            spielbrett = spielbrett.wendeHalbzugAn(rochadenCheckResult.turmHalbZug);
+            setSpielbrett(getSpielbrett().wendeHalbzugAn(rochadenCheckResult.turmHalbZug));
         }
 
         // bei einem En-Passant-Zug muss der geschlagene Bauer noch entfernt werden:
