@@ -1,6 +1,5 @@
 package com.iks.dddschach.domain.validation;
 
-import com.iks.dddschach.domain.Halbzug;
 import com.iks.dddschach.domain.Halbzug$;
 import com.iks.dddschach.domain.Spielbrett$;
 
