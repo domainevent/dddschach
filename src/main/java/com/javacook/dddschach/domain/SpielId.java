@@ -4,17 +4,17 @@ import com.javacook.dddschach.domain.base.ValueObject;
 
 import java.util.UUID;
 
-public class SpielId$ extends SpielId implements ValueObject {
+public class SpielId extends SpielId0 implements ValueObject {
 
-    public SpielId$() {
+    public SpielId() {
         this(UUID.randomUUID().toString());
     }
 
-    public SpielId$(String id) {
+    public SpielId(String id) {
        super(id);
     }
 
-    public SpielId$(SpielId spielId) {
+    public SpielId(SpielId0 spielId) {
         this(spielId.id);
     }
 

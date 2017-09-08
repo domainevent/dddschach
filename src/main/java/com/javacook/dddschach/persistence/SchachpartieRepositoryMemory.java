@@ -1,6 +1,6 @@
 package com.javacook.dddschach.persistence;
 
-import com.javacook.dddschach.domain.Schachpartie$;
+import com.javacook.dddschach.domain.Schachpartie;
 import com.javacook.dddschach.domain.SpielId;
 import com.javacook.dddschach.domain.SchachpartieRepository;
 
@@ -14,13 +14,13 @@ import java.util.Optional;
  */
 public class SchachpartieRepositoryMemory implements SchachpartieRepository {
 
-    private final Map<SpielId, Schachpartie$> repository = new HashMap<>();
+    private final Map<SpielId, Schachpartie> repository = new HashMap<>();
 
-    public Optional<Schachpartie$> findById(SpielId spielId) {
+    public Optional<Schachpartie> findById(SpielId spielId) {
         return Optional.ofNullable(repository.get(spielId));
     }
 
-    public void save(Schachpartie$ schachpartie) {
+    public void save(Schachpartie schachpartie) {
         repository.put(schachpartie.getId(), schachpartie);
     }
 

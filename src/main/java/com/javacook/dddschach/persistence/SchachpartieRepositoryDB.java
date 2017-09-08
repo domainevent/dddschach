@@ -1,6 +1,6 @@
 package com.javacook.dddschach.persistence;
 
-import com.javacook.dddschach.domain.Schachpartie$;
+import com.javacook.dddschach.domain.Schachpartie;
 import com.javacook.dddschach.domain.SpielId;
 import com.javacook.dddschach.domain.SchachpartieRepository;
 
@@ -17,14 +17,14 @@ public class SchachpartieRepositoryDB implements SchachpartieRepository {
 
     public final String DATABASE_NAME = "$objectdb/db/com.javacook.dddschach.odb";
 
-    public Optional<Schachpartie$> findById(SpielId spielId) throws IOException {
+    public Optional<Schachpartie> findById(SpielId spielId) throws IOException {
         EntityManager em = Persistence.createEntityManagerFactory(DATABASE_NAME).createEntityManager();
         final SchachpartieDB schachpartieDB = em.find(SchachpartieDB.class, spielId.getId());
         em.close();
         return (schachpartieDB == null)? Optional.empty() : Optional.of(schachpartieDB.toSchachpartie());
     }
 
-    public void save(Schachpartie$ schachpartie) throws IOException {
+    public void save(Schachpartie schachpartie) throws IOException {
         EntityManager em = Persistence.createEntityManagerFactory(DATABASE_NAME).createEntityManager();
         em.getTransaction().begin();
         em.merge(new SchachpartieDB(schachpartie));

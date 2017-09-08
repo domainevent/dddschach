@@ -8,10 +8,10 @@ public class SchachpartieFactory {
 
     /**
      * Erzeugt eine Schachpartie mit einer (weltweit) eindeutigen ID
-     * @return {@link Schachpartie$}
+     * @return {@link Schachpartie}
      */
-    public Schachpartie$ createSchachpartie() {
-        return new Schachpartie$(new SpielId$());
+    public Schachpartie createSchachpartie() {
+        return new Schachpartie(new SpielId());
     }
 
 }

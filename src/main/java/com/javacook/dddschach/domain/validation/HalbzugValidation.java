@@ -1,7 +1,7 @@
 package com.javacook.dddschach.domain.validation;
 
-import com.javacook.dddschach.domain.Halbzug$;
-import com.javacook.dddschach.domain.Spielbrett$;
+import com.javacook.dddschach.domain.Halbzug;
+import com.javacook.dddschach.domain.Spielbrett;
 
 import java.util.List;
 
@@ -42,6 +42,6 @@ public interface HalbzugValidation {
      *                      welche Figuren sich auf welchen Positionen befinden.
      * @return Das Validationsergebnis
      */
-    ValidationResult validiere(Halbzug$ zuPruefen, List<Halbzug$> halbzugHistorie, Spielbrett$ aktSpielbrett);
+    ValidationResult validiere(Halbzug zuPruefen, List<Halbzug> halbzugHistorie, Spielbrett aktSpielbrett);
 
 }

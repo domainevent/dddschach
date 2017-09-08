@@ -10,17 +10,17 @@ import static java.lang.Character.toUpperCase;
 /**
  * Eine Schachfigur repräsentiert durch den Typ (Bauer, Turm, etc.) und deren Farbe (schwarz, weiß)
  */
-public class Spielfigur$ extends Spielfigur implements ValueObject {
+public class Spielfigur extends Spielfigur0 implements ValueObject {
 
-    public Spielfigur$() {
+    public Spielfigur() {
     }
 
-    public Spielfigur$(FigurenTyp figur, Farbe farbe) {
+    public Spielfigur(FigurenTyp figur, Farbe farbe) {
         super(figur, farbe);
     }
 
 
-    public Spielfigur$(Spielfigur spielfigur) {
+    public Spielfigur(Spielfigur0 spielfigur) {
         this(spielfigur.figur, spielfigur.farbe);
     }
 

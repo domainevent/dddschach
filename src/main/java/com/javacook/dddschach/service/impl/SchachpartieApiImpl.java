@@ -1,9 +1,7 @@
 package com.javacook.dddschach.service.impl;
 
 import com.javacook.dddschach.domain.*;
-import com.javacook.dddschach.service.api.SchachpartieApi;
-import com.javacook.dddschach.service.api.UngueltigeSpielIdException;
-import com.javacook.dddschach.service.api.UngueltigerHalbzugException;
+import com.javacook.dddschach.service.api.*;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -27,9 +25,9 @@ public class SchachpartieApiImpl implements SchachpartieApi {
     @Override
     public NeuesSpielResponse neuesSpiel(NeuesSpielRequest request)  {
         try {
-            final Schachpartie$ schachpartie = SCHACHPARTIE_FACTORY.createSchachpartie();
+            final Schachpartie schachpartie = SCHACHPARTIE_FACTORY.createSchachpartie();
             SCHACHPARTIE_REPOSITORY.save(schachpartie);
-            final SpielId$ spielId = (SpielId$)schachpartie.getId();
+            final SpielId spielId = (SpielId)schachpartie.getId();
             return new NeuesSpielResponse(spielId);
         }
         catch (IOException e) {
@@ -45,11 +43,11 @@ public class SchachpartieApiImpl implements SchachpartieApi {
 
         LOG.trace("Ausfuehren des Halbzuges: " + request);
 
-        final SpielId$ spielId = new SpielId$(request.getSpielId());
-        final Halbzug$ halbzug = new Halbzug$(request.getHalbzug());
+        final SpielId spielId = new SpielId(request.getSpielId());
+        final Halbzug halbzug = new Halbzug(request.getHalbzug());
 
         try {
-            final Optional<Schachpartie$> schachpartie = SCHACHPARTIE_REPOSITORY.findById(spielId);
+            final Optional<Schachpartie> schachpartie = SCHACHPARTIE_REPOSITORY.findById(spielId);
             if (!schachpartie.isPresent()) {
                 throw new UngueltigeSpielIdException(spielId);
             }
@@ -79,13 +77,13 @@ public class SchachpartieApiImpl implements SchachpartieApi {
             throws UngueltigeSpielIdException
     {
         LOG.trace("Abfrage des Spielfeldes: " + request);
-        final SpielId$ spielId = new SpielId$(request.getSpielId());
+        final SpielId spielId = new SpielId(request.getSpielId());
         try {
-            final Optional<Schachpartie$> schachpartie = SCHACHPARTIE_REPOSITORY.findById(spielId);
+            final Optional<Schachpartie> schachpartie = SCHACHPARTIE_REPOSITORY.findById(spielId);
             if (!schachpartie.isPresent()) {
                 throw new UngueltigeSpielIdException(spielId);
             }
-            final Spielbrett$ spielbrettExt = new Spielbrett$(schachpartie.get().getSpielbrett());
+            final Spielbrett spielbrettExt = new Spielbrett(schachpartie.get().getSpielbrett());
             final AktuellesSpielbrettResponse response = new AktuellesSpielbrettResponse(spielbrettExt);
             LOG.trace("Abfrage des Spielfeldes: " + response);
             return response;

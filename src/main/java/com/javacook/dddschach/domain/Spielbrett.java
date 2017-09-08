@@ -12,22 +12,22 @@ import static com.javacook.dddschach.domain.FigurenTyp.KOENIG;
 import static com.javacook.dddschach.domain.Zeile.I;
 
 
-public class Spielbrett$ extends Spielbrett implements ValueObject {
+public class Spielbrett extends Spielbrett0 implements ValueObject {
 
     public final static String CR = System.lineSeparator();
-    public Spielbrett$() {
+    public Spielbrett() {
         super(new ArrayList<>());
     }
 
-    public List<Spielfeld$> getSpielfelder$() {
-        return spielfelder.stream().map(s -> (Spielfeld$)s).collect(Collectors.toList());
+    public List<Spielfeld> getSpielfelder$() {
+        return spielfelder.stream().map(s -> (Spielfeld)s).collect(Collectors.toList());
     }
 
     /**
      * Kopier-Konstruktor
      * @param toCopy das zu kopierenden {@link Spielbrett}
      */
-    public Spielbrett$(Spielbrett toCopy) {
+    public Spielbrett(Spielbrett0 toCopy) {
         this.spielfelder = new ArrayList<>(toCopy.spielfelder);
     }
 
@@ -42,11 +42,11 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
     public String toString() {
         final String horLine = "-------------------------";
         String boardAsStr = horLine + CR;
-        final Spielfigur$[][] boardAsArray = asArray();
+        final Spielfigur[][] boardAsArray = asArray();
         for(Zeile zeile : Misc.invertArray(Zeile.values())) {
             boardAsStr += "|";
             for(Spalte spalte : Spalte.values()) {
-                final Spielfigur$ figure = boardAsArray[spalte.ordinal()][zeile.ordinal()];
+                final Spielfigur figure = boardAsArray[spalte.ordinal()][zeile.ordinal()];
                 boardAsStr += (figure == null)? "  " : figure;
                 boardAsStr += "|";
             }
@@ -65,12 +65,12 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
      * @see {@link Spielfigur}
      */
     @DocumentationExample(exclude = true)
-    public Spielfigur$[][] asArray() {
+    public Spielfigur[][] asArray() {
         final int ANZAHL_SPALTEN = Spalte.values().length;
         final int ANZAHL_ZEILEN = Zeile.values().length;
-        final Spielfigur$[][] copy = new Spielfigur$[ANZAHL_SPALTEN][ANZAHL_ZEILEN];
+        final Spielfigur[][] copy = new Spielfigur[ANZAHL_SPALTEN][ANZAHL_ZEILEN];
 
-        for (Spielfeld$ spielfeld : getSpielfelder$()) {
+        for (Spielfeld spielfeld : getSpielfelder$()) {
             final int z = spielfeld.getPosition().getZeile().ordinal();
             final int s = spielfeld.getPosition().getSpalte().ordinal();
             copy[s][z] = spielfeld.getSpielfigur();
@@ -85,7 +85,7 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
         String result = "";
         for (Zeile zeile : Zeile.values()) {
             for (Spalte spalte : Spalte.values()) {
-                Spielfigur$ spielfigur = asArray()[spalte.ordinal()][zeile.ordinal()];
+                Spielfigur spielfigur = asArray()[spalte.ordinal()][zeile.ordinal()];
                 result += (spielfigur == null)? "_" : spielfigur.encode();
             }
         }
@@ -93,12 +93,12 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
     }
 
 
-    public Spielfigur$ getSchachfigurAnPosition(Position position) {
-        final Optional<Spielfeld> first = spielfelder
+    public Spielfigur getSchachfigurAnPosition(Position position) {
+        final Optional<Spielfeld0> first = spielfelder
                 .stream()
                 .filter(spielfeld -> spielfeld.position.equals(position))
                 .findFirst();
-        return (first.isPresent())? (Spielfigur$)first.get().spielfigur : null;
+        return (first.isPresent())? (Spielfigur)first.get().spielfigur : null;
     }
 
     /**
@@ -108,13 +108,14 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
      */
     protected void setSchachfigurAnPosition(Position position, Spielfigur figur) {
         Objects.requireNonNull(position, "Argument position is null");
-        final List<Spielfeld> spielfelderAnPosition = spielfelder.stream()
+        // FIXME:
+        final List<Spielfeld0> spielfelderAnPosition = spielfelder.stream()
                 .filter(spielfeld -> spielfeld.position.equals(position))
                 .collect(Collectors.toList());
 
         spielfelder.removeAll(spielfelderAnPosition);
         if (figur != null) {
-            spielfelder.add(new Spielfeld$(position, figur));
+            spielfelder.add(new Spielfeld(position, figur));
         }
     }
 
@@ -126,7 +127,7 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
      * @param color Farbe der zu setzenden Figur (z.B. schwarz)
      */
     protected void setSchachfigurAnPosition(Spalte h, Zeile v, FigurenTyp figurenTyp, Farbe color) {
-        setSchachfigurAnPosition(new Position$(h,v), new Spielfigur$(figurenTyp, color));
+        setSchachfigurAnPosition(new Position(h,v), new Spielfigur(figurenTyp, color));
     }
 
 
@@ -137,10 +138,10 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
      * @return Menge der Positionen, auf dem eine Figur mit Farbe <code>farbe</code> steht
      */
     @JsonIgnore
-    public Set<Position$> allePositionenMitFarbe(Farbe farbe) {
+    public Set<Position> allePositionenMitFarbe(Farbe farbe) {
         return allePositionen().stream()
                 .filter(position -> {
-                    Spielfigur$ spielfigur = getSchachfigurAnPosition(position);
+                    Spielfigur spielfigur = getSchachfigurAnPosition(position);
                     return spielfigur != null && spielfigur.getFarbe() == farbe;
                 })
                 .collect(Collectors.toSet());
@@ -152,20 +153,20 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
      * @return Alle Positionen des Spielbretts
      */
     @JsonIgnore
-    public Set<Position$> allePositionen() {
-        Set<Position$> positionen = new HashSet<>();
+    public Set<Position> allePositionen() {
+        Set<Position> positionen = new HashSet<>();
         for (Spalte spalte : Spalte.values()) {
             for (Zeile zeile : Zeile.values()) {
-                positionen.add(new Position$(spalte, zeile));
+                positionen.add(new Position(spalte, zeile));
             }
         }
         return positionen;
     }
 
 
-    public Position$ sucheKoenigsPosition(Farbe farbeDesKoenigs) {
-        for (Position$ lfdPos : allePositionenMitFarbe(farbeDesKoenigs)) {
-            final Spielfigur$ spielfigur = getSchachfigurAnPosition(lfdPos);
+    public Position sucheKoenigsPosition(Farbe farbeDesKoenigs) {
+        for (Position lfdPos : allePositionenMitFarbe(farbeDesKoenigs)) {
+            final Spielfigur spielfigur = getSchachfigurAnPosition(lfdPos);
             if (spielfigur != null && spielfigur.getFigur() == KOENIG) {
                 return lfdPos;
             }
@@ -180,9 +181,9 @@ public class Spielbrett$ extends Spielbrett implements ValueObject {
      * @return eine neue Instanz des modifizierten Spielbretts
      * @see {@link Halbzug}
      */
-    public Spielbrett$ wendeHalbzugAn(Halbzug halbzug) {
-        return new Spielbrett$(this) {{
-            final Spielfigur$ spielfigurFrom = getSchachfigurAnPosition(halbzug.getVon());
+    public Spielbrett wendeHalbzugAn(Halbzug halbzug) {
+        return new Spielbrett(this) {{
+            final Spielfigur spielfigurFrom = getSchachfigurAnPosition(halbzug.getVon());
             setSchachfigurAnPosition(halbzug.getVon(), null);
             setSchachfigurAnPosition(halbzug.getNach(), spielfigurFrom);
         }};

@@ -70,7 +70,7 @@ public class SSDSchachIT {
             // Spielbrett überprüfen:
             //
             client.aktuellesSpielbrett(
-                    new AktuellesSpielbrettRequest(null, new SpielId$()));
+                    new AktuellesSpielbrettRequest(null, new SpielId()));
             Assert.fail("Expected UngueltigeSpielIdException not occured");
         }
         catch (UngueltigeSpielIdException e) {
@@ -85,7 +85,7 @@ public class SSDSchachIT {
 
         // Spiel erstellen:
         //
-        final SpielId$ spielId = new SpielId$(client.neuesSpiel(
+        final SpielId spielId = new SpielId(client.neuesSpiel(
                 new NeuesSpielRequest("Vermerk"))
                 .getSpielId());
 
@@ -112,7 +112,7 @@ public class SSDSchachIT {
 
         // Halbzug ausführen:
         //
-        final Halbzug$ halbzug = new Halbzug$(new Position$(E, II), new Position$(E, IV));
+        final Halbzug halbzug = new Halbzug(new Position(E, II), new Position(E, IV));
         final int halbzugZaehler = client.fuehreHalbzugAus(
                 new FuehreHalbzugAusRequest(spielId, halbzug)).getHalbzugZaehler();
         Assert.assertEquals(1, halbzugZaehler);
@@ -121,7 +121,7 @@ public class SSDSchachIT {
         //
         final Spielbrett actual = client.aktuellesSpielbrett(
                 new AktuellesSpielbrettRequest("Tester", spielId)).getSpielbrett();
-        final Spielbrett$ expected = SpielbrettFactory.createInitialesSpielbrett().wendeHalbzugAn(halbzug);
+        final Spielbrett expected = SpielbrettFactory.createInitialesSpielbrett().wendeHalbzugAn(halbzug);
         Assert.assertEquals(expected, actual);
     }
 
@@ -166,12 +166,12 @@ public class SSDSchachIT {
         // alle Züge sukzessiv ausführen:
         //
         for (String halbzugStr : UNSTERBLICHE_PARTIE) {
-            final Halbzug$ halbzug = SpielNotationParser.parse(halbzugStr);
+            final Halbzug halbzug = SpielNotationParser.parse(halbzugStr);
             client.fuehreHalbzugAus(new FuehreHalbzugAusRequest(spielId, halbzug));
         }
         // Versuch, Zug auszuführen, nachdem Schwarz schon matt ist:
         //
-        final Halbzug$ halbzug = SpielNotationParser.parse("d8-c7");
+        final Halbzug halbzug = SpielNotationParser.parse("d8-c7");
         try {
             client.fuehreHalbzugAus(new FuehreHalbzugAusRequest(spielId, halbzug));
             Assert.fail("Expected UngueltigerHalbzugException not occured");

@@ -1,6 +1,6 @@
 package com.javacook.dddschach.persistence;
 
-import com.javacook.dddschach.domain.Position$;
+import com.javacook.dddschach.domain.Position;
 import com.javacook.dddschach.domain.Spalte;
 import com.javacook.dddschach.domain.Zeile;
 import org.apache.commons.lang3.SerializationUtils;
@@ -30,10 +30,10 @@ public class ObjectSerializer {
 
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        final Position$ position = new Position$(Spalte.E, Zeile.II);
+        final Position position = new Position(Spalte.E, Zeile.II);
         final String s = objectToString(position);
         System.out.println(s);
-        final Serializable reconstr = stringToObject(s, Position$.class);
+        final Serializable reconstr = stringToObject(s, Position.class);
         System.out.println(reconstr);
     }
 }

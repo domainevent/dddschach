@@ -1,9 +1,8 @@
 package com.javacook.dddschach.domain.validation;
 
-import com.javacook.dddschach.domain.Halbzug$;
-import com.javacook.dddschach.domain.Spielbrett$;
+import com.javacook.dddschach.domain.Halbzug;
+import com.javacook.dddschach.domain.Spielbrett;
 import com.javacook.dddschach.domain.Spielfigur;
-import com.javacook.dddschach.domain.Spielfigur$;
 import com.javacook.dddschach.domain.base.DomainService;
 import org.apache.commons.lang3.Validate;
 
@@ -24,15 +23,15 @@ public class GesamtValidator implements HalbzugValidation, DomainService {
     final static SchachCheck SCHACH_CHECK = new SchachCheck();
 
     public ValidationResult validiere(
-            Halbzug$ halbzug,
-            List<Halbzug$> halbzugHistorie,
-            Spielbrett$ spielbrett) {
+            Halbzug halbzug,
+            List<Halbzug> halbzugHistorie,
+            Spielbrett spielbrett) {
 
         Validate.isTrue(halbzug != null, "Argument halbzug is null.");
         Validate.isTrue(halbzugHistorie != null, "Argument getHalbzugHistorie is null.");
         Validate.isTrue(spielbrett != null, "Argument spielbrett is null.");
 
-        final Spielfigur$ zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
+        final Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
         if (zugFigur == null) {
             return new ValidationResult(Zugregel.STARTFELD_MUSS_SPIELFIGUR_ENTHALTEN);
         }
@@ -93,7 +92,7 @@ public class GesamtValidator implements HalbzugValidation, DomainService {
     }
 
 
-    private boolean istRichtigerSpielerAmZug(Spielfigur schachfigurAnFrom, List<Halbzug$> zugHistorie) {
+    private boolean istRichtigerSpielerAmZug(Spielfigur schachfigurAnFrom, List<Halbzug> zugHistorie) {
         Objects.requireNonNull(schachfigurAnFrom);
         return (schachfigurAnFrom.getFarbe().ordinal() == zugHistorie.size() % 2);
         // return true;

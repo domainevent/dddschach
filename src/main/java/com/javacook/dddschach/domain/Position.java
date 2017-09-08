@@ -2,16 +2,16 @@ package com.javacook.dddschach.domain;
 
 import com.javacook.dddschach.domain.base.ValueObject;
 
-public class Position$ extends Position implements ValueObject {
+public class Position extends Position0 implements ValueObject {
 
-    public Position$() {
+    public Position() {
     }
 
-    public Position$(Position position) {
+    public Position(Position0 position) {
         this(position.spalte, position.zeile);
     }
 
-    public Position$(Spalte spalte, Zeile zeile) {
+    public Position(Spalte spalte, Zeile zeile) {
         super(spalte, zeile);
     }
 

@@ -15,11 +15,11 @@ public class BauernRegel implements HalbzugValidation {
 	private final static FreieBahnCheck FREIE_BAHN_CHECK = new FreieBahnCheck();
 
 	@Override
-	public ValidationResult validiere(Halbzug$ halbzug, List<Halbzug$> halbzugHistorie, Spielbrett$ spielbrett) {
+	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> halbzugHistorie, Spielbrett spielbrett) {
         Objects.requireNonNull(halbzug, "Argument halbzug is null");
         Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
 
-		Spielfigur$ zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
+		Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
         Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.getNach());
 
 		if (zugFigur.getFigur() != FigurenTyp.BAUER) {
@@ -30,7 +30,7 @@ public class BauernRegel implements HalbzugValidation {
         final IntegerTupel to   = ValidationUtils.toIntegerTupel(halbzug.getNach());
 		final IntegerTupel diff = to.minus(from);
 		final IntegerTupel absd = diff.abs();
-        final Spielfigur$ figurFrom = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
+        final Spielfigur figurFrom = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
 
 		if (diff.x() == 0) {
 			if (isZweiFeldBedingungAmStartErfuellt(halbzug, figurFrom, diff) ||
@@ -75,7 +75,7 @@ public class BauernRegel implements HalbzugValidation {
     }
 
 
-    private boolean isZielpositionFrei(Halbzug halbzug, Spielbrett$ spielbrett) {
+    private boolean isZielpositionFrei(Halbzug halbzug, Spielbrett spielbrett) {
         return spielbrett.getSchachfigurAnPosition(halbzug.getNach()) == null;
     }
 

@@ -1,9 +1,9 @@
 package com.javacook.dddschach.domain.validation;
 
 import com.javacook.dddschach.domain.FigurenTyp;
-import com.javacook.dddschach.domain.Halbzug$;
-import com.javacook.dddschach.domain.Spielbrett$;
-import com.javacook.dddschach.domain.Spielfigur$;
+import com.javacook.dddschach.domain.Halbzug;
+import com.javacook.dddschach.domain.Spielbrett;
+import com.javacook.dddschach.domain.Spielfigur;
 
 import java.util.List;
 import java.util.Objects;
@@ -15,14 +15,14 @@ import java.util.Objects;
 public class SchlagRegel implements HalbzugValidation {
 
 	@Override
-	public ValidationResult validiere(Halbzug$ halbzug, List<Halbzug$> halbzugHistorie, Spielbrett$ spielbrett) {
+	public ValidationResult validiere(Halbzug halbzug, List<Halbzug> halbzugHistorie, Spielbrett spielbrett) {
         Objects.requireNonNull(halbzug, "Argument halbzug is null");
         Objects.requireNonNull(spielbrett, "Argument spielbrett is null");
 
-        Spielfigur$ zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
+        Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
         Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.getVon());
 
-	    Spielfigur$ figurAmZiel = spielbrett.getSchachfigurAnPosition(halbzug.getNach());
+	    Spielfigur figurAmZiel = spielbrett.getSchachfigurAnPosition(halbzug.getNach());
 
 	    if (figurAmZiel == null) {
             return new ValidationResult();

@@ -9,8 +9,8 @@ import java.util.Optional;
  */
 public interface SchachpartieRepository {
 
-    Optional<Schachpartie$> findById(SpielId spielId) throws IOException;
+    Optional<Schachpartie> findById(SpielId spielId) throws IOException;
 
-    void save(Schachpartie$ schachpartie) throws IOException;
+    void save(Schachpartie schachpartie) throws IOException;
 
 }

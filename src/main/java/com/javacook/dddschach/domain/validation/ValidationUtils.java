@@ -15,11 +15,11 @@ public class ValidationUtils {
         return new IntegerTupel(pos.getSpalte().ordinal(), pos.getZeile().ordinal());
     }
 
-    public static Position$ toPosition(IntegerTupel tupel) {
-        return new Position$(Spalte.values()[tupel.x()], Zeile.values()[tupel.y()]);
+    public static Position toPosition(IntegerTupel tupel) {
+        return new Position(Spalte.values()[tupel.x()], Zeile.values()[tupel.y()]);
     }
 
-    public static Position$ middle(Position from, Position to) {
+    public static Position middle(Position from, Position to) {
         final IntegerTupel middel = IntegerTupel.middel(toIntegerTupel(from), toIntegerTupel(to));
         return toPosition(middel);
     }
@@ -31,8 +31,8 @@ public class ValidationUtils {
     /**
      * Ermittelt die Farbe des Spielers, der den Halbzug <code>halbzug</code> ausführen will
      */
-    public static Farbe spielerFarbe(Halbzug halbzug, Spielbrett$ spielbrett) {
-        final Spielfigur$ zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
+    public static Farbe spielerFarbe(Halbzug halbzug, Spielbrett spielbrett) {
+        final Spielfigur zugFigur = spielbrett.getSchachfigurAnPosition(halbzug.getVon());
         Objects.requireNonNull(zugFigur, "There is no figure on " + halbzug.getVon());
         return zugFigur.getFarbe();
     }

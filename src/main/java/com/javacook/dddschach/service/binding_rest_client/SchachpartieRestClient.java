@@ -3,9 +3,7 @@ package com.javacook.dddschach.service.binding_rest_client;
 import com.google.gson.Gson;
 import com.javacook.dddschach.domain.*;
 import com.javacook.dddschach.domain.validation.Zugregel;
-import com.javacook.dddschach.service.api.SchachpartieApi;
-import com.javacook.dddschach.service.api.UngueltigeSpielIdException;
-import com.javacook.dddschach.service.api.UngueltigerHalbzugException;
+import com.javacook.dddschach.service.api.*;
 
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.client.Client;
@@ -87,7 +85,6 @@ public class SchachpartieRestClient implements SchachpartieApi {
     @Override
     public AktuellesSpielbrettResponse aktuellesSpielbrett(AktuellesSpielbrettRequest request) throws UngueltigeSpielIdException
     {
-        final SpielId spielId = request.getSpielId();
         final Response response = webTarget
                 .path("aktuellesSpielbrett")
                 .request(MediaType.APPLICATION_JSON)
@@ -98,7 +95,7 @@ public class SchachpartieRestClient implements SchachpartieApi {
         switch (status) {
             case 200:
             case 304: return response.readEntity(AktuellesSpielbrettResponse.class);
-            case 404: throw new UngueltigeSpielIdException(spielId);
+            case 404: throw new UngueltigeSpielIdException(request.getSpielId());
             case 500: throw new InternalServerErrorException();
             default: throw new RestCallFailedException(status, response.readEntity(String.class));
         }
@@ -139,27 +136,27 @@ public class SchachpartieRestClient implements SchachpartieApi {
     }
 
 
-    public static void main(String[] args) throws Exception {
-        final SchachpartieRestClient client = new SchachpartieRestClient();
-        final String alive = client.isAlive();
-        System.out.println(alive);
-
-        final NeuesSpielResponse neuesSpielResponse = client.neuesSpiel(new NeuesSpielRequest("Hallo Welt"));
-        System.out.println(neuesSpielResponse.getSpielId());
-        final SpielId$ spielId = (SpielId$)neuesSpielResponse.getSpielId();
-
-        final AktuellesSpielbrettRequest aktuellesSpielbrettRequest1 = new AktuellesSpielbrettRequest(null, spielId);
-        final AktuellesSpielbrettResponse aktuellesSpielbrettResponse1 = client.aktuellesSpielbrett(aktuellesSpielbrettRequest1);
-        System.out.println(aktuellesSpielbrettResponse1.getSpielbrett());
-
-        Halbzug$ halbzug = new Halbzug$("b2-b4");
-        final FuehreHalbzugAusRequest fuehreHalbzugAusRequest = new FuehreHalbzugAusRequest(spielId, halbzug);
-        final FuehreHalbzugAusResponse fuehreHalbzugAusResponse = client.fuehreHalbzugAus(fuehreHalbzugAusRequest);
-        System.out.println(fuehreHalbzugAusResponse.getHalbzugZaehler());
-
-        final AktuellesSpielbrettRequest aktuellesSpielbrettRequest2 = new AktuellesSpielbrettRequest(null, spielId);
-        final AktuellesSpielbrettResponse aktuellesSpielbrettResponse2 = client.aktuellesSpielbrett(aktuellesSpielbrettRequest2);
-        System.out.println(aktuellesSpielbrettResponse2.getSpielbrett());
-    }
+//    public static void main(String[] args) throws Exception {
+//        final SchachpartieRestClient client = new SchachpartieRestClient();
+//        final String alive = client.isAlive();
+//        System.out.println(alive);
+//
+//        final NeuesSpielResponse neuesSpielResponse = client.neuesSpiel(new NeuesSpielRequest("Hallo Welt"));
+//        System.out.println(neuesSpielResponse.getSpielId());
+//        final SpielId spielId = (SpielId)neuesSpielResponse.getSpielId();
+//
+//        final AktuellesSpielbrettRequest aktuellesSpielbrettRequest1 = new AktuellesSpielbrettRequest(null, spielId);
+//        final AktuellesSpielbrettResponse aktuellesSpielbrettResponse1 = client.aktuellesSpielbrett(aktuellesSpielbrettRequest1);
+//        System.out.println(aktuellesSpielbrettResponse1.getSpielbrett());
+//
+//        Halbzug halbzug = new Halbzug("b2-b4");
+//        final FuehreHalbzugAusRequest fuehreHalbzugAusRequest = new FuehreHalbzugAusRequest(spielId, halbzug);
+//        final FuehreHalbzugAusResponse fuehreHalbzugAusResponse = client.fuehreHalbzugAus(fuehreHalbzugAusRequest);
+//        System.out.println(fuehreHalbzugAusResponse.getHalbzugZaehler());
+//
+//        final AktuellesSpielbrettRequest aktuellesSpielbrettRequest2 = new AktuellesSpielbrettRequest(null, spielId);
+//        final AktuellesSpielbrettResponse aktuellesSpielbrettResponse2 = client.aktuellesSpielbrett(aktuellesSpielbrettRequest2);
+//        System.out.println(aktuellesSpielbrettResponse2.getSpielbrett());
+//    }
 
 }

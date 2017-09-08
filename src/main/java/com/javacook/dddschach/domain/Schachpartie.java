@@ -7,23 +7,28 @@ import com.javacook.dddschach.service.api.UngueltigerHalbzugException;
 import java.util.ArrayList;
 
 
-public class Schachpartie$ extends Schachpartie implements EntityIdObject<SpielId> {
+public class Schachpartie extends Schachpartie0 implements EntityIdObject<SpielId0> {
 
-    public Schachpartie$() {
+    public Schachpartie() {
         super();
     }
 
-    public Schachpartie$(SpielId$ spielId) {
-        super(spielId, new HalbzugHistorie$(new ArrayList<>()), SpielbrettFactory.createInitialesSpielbrett());
+    public Schachpartie(SpielId spielId) {
+        super(spielId, new HalbzugHistorie(new ArrayList<>()), SpielbrettFactory.createInitialesSpielbrett());
+    }
+
+    @Override
+    public SpielId getId() {
+        return id;
     }
 
     /**
      * Liefert die Historie alle bislang ausgeführten Halbzüge
-     * @return {@link HalbzugHistorie}
+     * @return {@link HalbzugHistorie0}
      */
     @Override
-    public HalbzugHistorie$ getHalbzugHistorie() {
-        return (HalbzugHistorie$)halbzugHistorie;
+    public HalbzugHistorie getHalbzugHistorie() {
+        return (HalbzugHistorie)halbzugHistorie;
     }
 
     /**
@@ -31,8 +36,8 @@ public class Schachpartie$ extends Schachpartie implements EntityIdObject<SpielI
      * @return aktuelles {@link Spielbrett}
      */
     @Override
-    public Spielbrett$ getSpielbrett() {
-        return (Spielbrett$)spielbrett;
+    public Spielbrett getSpielbrett() {
+        return (Spielbrett)spielbrett;
     }
 
 
@@ -65,7 +70,7 @@ public class Schachpartie$ extends Schachpartie implements EntityIdObject<SpielI
      * @return Anzahl der bislang ausgeführten Züge
      * @throws UngueltigerHalbzugException, falls der Halbzug nicht regelkonform ist
      */
-    public int fuehreHalbzugAus(Halbzug$ halbzug) throws UngueltigerHalbzugException {
+    public int fuehreHalbzugAus(Halbzug halbzug) throws UngueltigerHalbzugException {
         final HalbzugValidation.ValidationResult validationResult =
                 VALIDATOR.validiere(halbzug, getHalbzugHistorie().getHalbzuege$(), getSpielbrett());
         if (!validationResult.gueltig) {
@@ -88,7 +93,7 @@ public class Schachpartie$ extends Schachpartie implements EntityIdObject<SpielI
         // bei einem En-Passant-Zug muss der geschlagene Bauer noch entfernt werden:
         if (validationResult instanceof EnPassantCheck.EnPassantCheckResult) {
             final EnPassantCheck.EnPassantCheckResult enPassantCheckResult = (EnPassantCheck.EnPassantCheckResult) validationResult;
-            spielbrett = new Spielbrett$(spielbrett) {{
+            spielbrett = new Spielbrett(spielbrett) {{
                 setSchachfigurAnPosition(enPassantCheckResult.positionGeschlBauer, null);
             }};
         }
@@ -96,7 +101,7 @@ public class Schachpartie$ extends Schachpartie implements EntityIdObject<SpielI
         // Bei einer Bauernumwandlung muss der Bauer anschließend noch gegen die Zielfigur eingetauscht werden:
         if (validationResult instanceof BauernumwCheck.BauernumwCheckResult) {
             final BauernumwCheck.BauernumwCheckResult bauernumwCheckResult = (BauernumwCheck.BauernumwCheckResult) validationResult;
-            spielbrett = new Spielbrett$(spielbrett) {{
+            spielbrett = new Spielbrett(spielbrett) {{
                 setSchachfigurAnPosition(halbzug.getNach(), bauernumwCheckResult.zielFigur);
             }};
         }
