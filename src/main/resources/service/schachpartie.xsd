@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <?xml-stylesheet type="text/xsl" href="contract.xsl"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
-           xmlns:tns="http://www.javacook.com/services/com.javacook.dddschach/api/model" jaxb:version="2.0"
-           targetNamespace="http://www.javacook.com/services/com.javacook.dddschach/api/model" elementFormDefault="qualified" attributeFormDefault="qualified"
+           xmlns:tns="http://www.javacook.com/dddschach/api/model" jaxb:version="2.0"
+           targetNamespace="http://www.javacook.com/dddschach/api/model" elementFormDefault="qualified" attributeFormDefault="qualified"
            version="1.0">
 
     <xs:complexType name="NeuesSpielRequest">
