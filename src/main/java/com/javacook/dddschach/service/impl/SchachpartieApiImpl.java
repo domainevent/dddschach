@@ -29,7 +29,7 @@ public class SchachpartieApiImpl implements SchachpartieApi {
         try {
             final Schachpartie$ schachpartie = SCHACHPARTIE_FACTORY.createSchachpartie();
             SCHACHPARTIE_REPOSITORY.save(schachpartie);
-            final SpielId$ spielId = new SpielId$(schachpartie.getId().getId());
+            final SpielId$ spielId = (SpielId$)schachpartie.getId();
             return new NeuesSpielResponse(spielId);
         }
         catch (IOException e) {
