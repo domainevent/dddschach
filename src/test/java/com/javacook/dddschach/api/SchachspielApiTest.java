@@ -2,7 +2,7 @@ package com.javacook.dddschach.api;
 
 import com.javacook.dddschach.domain.*;
 import com.javacook.dddschach.persistence.SchachpartieRepositoryMemory;
-import com.javacook.dddschach.service.api.SchachpartieApi;
+import com.javacook.dddschach.service.api.*;
 import com.javacook.dddschach.service.impl.SchachpartieApiImpl;
 import org.junit.Assert;
 import org.junit.Test;

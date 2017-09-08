@@ -1,4 +1,8 @@
-package com.javacook.dddschach.domain;
+package com.javacook.dddschach.service.api;
+
+import com.javacook.dddschach.domain.AktuellesSpielbrettResponse0;
+import com.javacook.dddschach.domain.Spielbrett;
+
 
 public class AktuellesSpielbrettResponse extends AktuellesSpielbrettResponse0 {
 
@@ -12,6 +16,6 @@ public class AktuellesSpielbrettResponse extends AktuellesSpielbrettResponse0 {
 
     @Override
     public Spielbrett getSpielbrett() {
-        return spielbrett;
+        return new Spielbrett(spielbrett);
     }
 }

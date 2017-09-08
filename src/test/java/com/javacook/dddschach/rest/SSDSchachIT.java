@@ -2,8 +2,7 @@ package com.javacook.dddschach.rest;
 
 import com.javacook.dddschach.domain.*;
 import com.javacook.dddschach.domain.validation.Zugregel;
-import com.javacook.dddschach.service.api.UngueltigeSpielIdException;
-import com.javacook.dddschach.service.api.UngueltigerHalbzugException;
+import com.javacook.dddschach.service.api.*;
 import com.javacook.dddschach.service.binding_rest_client.SchachpartieRestClient;
 import org.junit.Assert;
 import org.junit.Before;

@@ -10,62 +10,62 @@
         </jxb:globalBindings>
 
         <jxb:bindings node="//xs:complexType[@name='NeuesSpielRequest']">
-            <jxb:class name="NeuesSpielRequest0" implClass="NeuesSpielRequest"/>
+            <jxb:class name="NeuesSpielRequest0"/>
         </jxb:bindings>
 
         <jxb:bindings node="//xs:complexType[@name='NeuesSpielResponse']">
-            <jxb:class name="NeuesSpielResponse0" implClass="NeuesSpielResponse"/>
+            <jxb:class name="NeuesSpielResponse0"/>
         </jxb:bindings>
 
 
         <jxb:bindings node="//xs:complexType[@name='FuehreHalbzugAusRequest']">
-            <jxb:class name="FuehreHalbzugAusRequest0" implClass="FuehreHalbzugAusRequest"/>
+            <jxb:class name="FuehreHalbzugAusRequest0" />
         </jxb:bindings>
 
         <jxb:bindings node="//xs:complexType[@name='FuehreHalbzugAusResponse']">
-            <jxb:class name="FuehreHalbzugAusResponse0" implClass="FuehreHalbzugAusResponse"/>
+            <jxb:class name="FuehreHalbzugAusResponse0" />
         </jxb:bindings>
 
 
         <jxb:bindings node="//xs:complexType[@name='AktuellesSpielbrettRequest']">
-            <jxb:class name="AktuellesSpielbrettRequest0" implClass="AktuellesSpielbrettRequest"/>
+            <jxb:class name="AktuellesSpielbrettRequest0" />
         </jxb:bindings>
 
         <jxb:bindings node="//xs:complexType[@name='AktuellesSpielbrettResponse']">
-            <jxb:class name="AktuellesSpielbrettResponse0" implClass="AktuellesSpielbrettResponse"/>
+            <jxb:class name="AktuellesSpielbrettResponse0" />
         </jxb:bindings>
 
 
         <jxb:bindings node="//xs:complexType[@name='Schachpartie']">
-            <jxb:class name="Schachpartie0" implClass="Schachpartie"/>
+            <jxb:class name="Schachpartie0" />
         </jxb:bindings>
 
         <jxb:bindings node="//xs:complexType[@name='Spielbrett']">
-            <jxb:class name="Spielbrett0" implClass="Spielbrett"/>
+            <jxb:class name="Spielbrett0" />
         </jxb:bindings>
 
         <jxb:bindings node="//xs:complexType[@name='Spielfeld']">
-            <jxb:class name="Spielfeld0" implClass="Spielfeld"/>
+            <jxb:class name="Spielfeld0" />
         </jxb:bindings>
 
         <jxb:bindings node="//xs:complexType[@name='HalbzugHistorie']">
-            <jxb:class name="HalbzugHistorie0" implClass="HalbzugHistorie"/>
+            <jxb:class name="HalbzugHistorie0"/>
         </jxb:bindings>
 
         <jxb:bindings node="//xs:complexType[@name='Halbzug']">
-            <jxb:class name="Halbzug0" implClass="Halbzug"/>
+            <jxb:class name="Halbzug0" />
         </jxb:bindings>
 
         <jxb:bindings node="//xs:complexType[@name='Position']">
-            <jxb:class name="Position0" implClass="Position"/>
+            <jxb:class name="Position0" />
         </jxb:bindings>
 
         <jxb:bindings node="//xs:complexType[@name='Spielfigur']">
-            <jxb:class name="Spielfigur0" implClass="Spielfigur"/>
+            <jxb:class name="Spielfigur0" />
         </jxb:bindings>
 
         <jxb:bindings node="//xs:complexType[@name='SpielId']">
-            <jxb:class name="SpielId0" implClass="SpielId"/>
+            <jxb:class name="SpielId0" />
         </jxb:bindings>
 
     </jxb:bindings>

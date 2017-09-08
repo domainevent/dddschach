@@ -19,8 +19,11 @@ public class Spielbrett extends Spielbrett0 implements ValueObject {
         super(new ArrayList<>());
     }
 
-    public List<Spielfeld> getSpielfelder$() {
-        return spielfelder.stream().map(s -> (Spielfeld)s).collect(Collectors.toList());
+    public List<Spielfeld> getSpielfeldList() {
+        return spielfelder
+                .stream()
+                .map(s -> new Spielfeld(s))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -70,7 +73,7 @@ public class Spielbrett extends Spielbrett0 implements ValueObject {
         final int ANZAHL_ZEILEN = Zeile.values().length;
         final Spielfigur[][] copy = new Spielfigur[ANZAHL_SPALTEN][ANZAHL_ZEILEN];
 
-        for (Spielfeld spielfeld : getSpielfelder$()) {
+        for (Spielfeld spielfeld : getSpielfeldList()) {
             final int z = spielfeld.getPosition().getZeile().ordinal();
             final int s = spielfeld.getPosition().getSpalte().ordinal();
             copy[s][z] = spielfeld.getSpielfigur();

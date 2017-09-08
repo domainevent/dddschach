@@ -1,6 +1,5 @@
 package com.javacook.dddschach.service.binding_rest;
 
-import com.javacook.dddschach.domain.*;
 import com.javacook.dddschach.service.api.*;
 import com.webcohesion.enunciate.metadata.rs.ResponseCode;
 import com.webcohesion.enunciate.metadata.rs.StatusCodes;

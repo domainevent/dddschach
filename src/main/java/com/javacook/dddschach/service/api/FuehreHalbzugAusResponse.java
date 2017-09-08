@@ -1,4 +1,7 @@
-package com.javacook.dddschach.domain;
+package com.javacook.dddschach.service.api;
+
+import com.javacook.dddschach.domain.FuehreHalbzugAusResponse0;
+
 
 public class FuehreHalbzugAusResponse extends FuehreHalbzugAusResponse0 {
 

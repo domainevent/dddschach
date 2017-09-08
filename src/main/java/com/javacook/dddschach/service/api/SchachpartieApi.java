@@ -1,7 +1,5 @@
 package com.javacook.dddschach.service.api;
 
-import com.javacook.dddschach.domain.*;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;

@@ -1,4 +1,9 @@
-package com.javacook.dddschach.domain;
+package com.javacook.dddschach.service.api;
+
+import com.javacook.dddschach.domain.FuehreHalbzugAusRequest0;
+import com.javacook.dddschach.domain.Halbzug;
+import com.javacook.dddschach.domain.SpielId;
+
 
 public class FuehreHalbzugAusRequest extends FuehreHalbzugAusRequest0 {
 
@@ -12,11 +17,11 @@ public class FuehreHalbzugAusRequest extends FuehreHalbzugAusRequest0 {
 
     @Override
     public Halbzug getHalbzug() {
-        return halbzug;
+        return new Halbzug(halbzug);
     }
 
     @Override
     public SpielId getSpielId() {
-        return spielId;
+        return new SpielId(spielId);
     }
 }

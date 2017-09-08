@@ -19,7 +19,7 @@ public class Schachpartie extends Schachpartie0 implements EntityIdObject<SpielI
 
     @Override
     public SpielId getId() {
-        return id;
+        return new SpielId(id);
     }
 
     /**
@@ -72,10 +72,10 @@ public class Schachpartie extends Schachpartie0 implements EntityIdObject<SpielI
      */
     public int fuehreHalbzugAus(Halbzug halbzug) throws UngueltigerHalbzugException {
         final HalbzugValidation.ValidationResult validationResult =
-                VALIDATOR.validiere(halbzug, getHalbzugHistorie().getHalbzuege$(), getSpielbrett());
+                VALIDATOR.validiere(halbzug, getHalbzugHistorie().getHalbzugList(), getSpielbrett());
         if (!validationResult.gueltig) {
             final PattMattCheck.PattMatt pattMatt =
-                    PATT_MATT_CHECK.analysiere(getHalbzugHistorie().getHalbzuege$(), getSpielbrett());
+                    PATT_MATT_CHECK.analysiere(getHalbzugHistorie().getHalbzugList(), getSpielbrett());
             switch (pattMatt) {
                 case MATT: throw new UngueltigerHalbzugException(halbzug, Zugregel.DIE_PARTIE_ENDET_MATT);
                 case PATT: throw new UngueltigerHalbzugException(halbzug, Zugregel.DIE_PARTIE_ENDET_PATT);

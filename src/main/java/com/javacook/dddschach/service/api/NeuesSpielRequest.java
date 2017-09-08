@@ -1,4 +1,7 @@
-package com.javacook.dddschach.domain;
+package com.javacook.dddschach.service.api;
+
+import com.javacook.dddschach.domain.NeuesSpielRequest0;
+
 
 public class NeuesSpielRequest extends NeuesSpielRequest0 {
 

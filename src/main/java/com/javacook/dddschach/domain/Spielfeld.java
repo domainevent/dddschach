@@ -5,6 +5,10 @@ public class Spielfeld extends Spielfeld0 {
     public Spielfeld() {
     }
 
+    public Spielfeld(Spielfeld0 spielfeld) {
+        super(spielfeld.position, spielfeld.spielfigur);
+    }
+
     public Spielfeld(Position position, Spielfigur spielfigur) {
         super(position, spielfigur);
     }
@@ -15,12 +19,12 @@ public class Spielfeld extends Spielfeld0 {
 
     @Override
     public Spielfigur getSpielfigur() {
-        return (Spielfigur)spielfigur;
+        return new Spielfigur(spielfigur);
     }
 
     @Override
     public Position getPosition() {
-        return (Position)position;
+        return new Position(position);
     }
 
 }

@@ -1,4 +1,8 @@
-package com.javacook.dddschach.domain;
+package com.javacook.dddschach.service.api;
+
+import com.javacook.dddschach.domain.AktuellesSpielbrettRequest0;
+import com.javacook.dddschach.domain.SpielId;
+
 
 public class AktuellesSpielbrettRequest extends AktuellesSpielbrettRequest0 {
 
@@ -13,7 +17,7 @@ public class AktuellesSpielbrettRequest extends AktuellesSpielbrettRequest0 {
 
     @Override
     public SpielId getSpielId() {
-        return spielId;
+        return new SpielId(spielId);
     }
 
 }
