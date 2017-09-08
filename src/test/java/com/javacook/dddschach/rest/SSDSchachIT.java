@@ -85,9 +85,9 @@ public class SSDSchachIT {
 
         // Spiel erstellen:
         //
-        final SpielId$ spielId = (SpielId$) client.neuesSpiel(
+        final SpielId$ spielId = new SpielId$(client.neuesSpiel(
                 new NeuesSpielRequest("Vermerk"))
-                .getSpielId();
+                .getSpielId());
 
         // Spielbrett überprüfen:
         //
@@ -106,7 +106,7 @@ public class SSDSchachIT {
 
         // Spiel erstellen:
         //
-        final SpielId$ spielId = (SpielId$) client.neuesSpiel(
+        final SpielId spielId = client.neuesSpiel(
                 new NeuesSpielRequest("Vermerk"))
                 .getSpielId();
 
@@ -159,7 +159,7 @@ public class SSDSchachIT {
 
         // Spiel erstellen:
         //
-        final SpielId$ spielId = (SpielId$) client.neuesSpiel(
+        final SpielId spielId = client.neuesSpiel(
                 new NeuesSpielRequest("Vermerk"))
                 .getSpielId();
 
