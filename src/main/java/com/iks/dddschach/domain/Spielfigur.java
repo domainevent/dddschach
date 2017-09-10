@@ -53,7 +53,7 @@ public class Spielfigur extends ValueObject {
             }
             throw new IllegalArgumentException("Unexpected marshalled character " + encoded);
         }
-    };
+    }
 
 
     /**
@@ -75,6 +75,11 @@ public class Spielfigur extends ValueObject {
     public Spielfigur(FigurenTyp figurTyp, Farbe farbe) {
         this.figurTyp = figurTyp;
         this.farbe = farbe;
+    }
+
+    @SuppressWarnings("unused")
+    private Spielfigur() {
+        this(null, null);
     }
 
     @Override

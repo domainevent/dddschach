@@ -47,5 +47,4 @@ public class Halbzug extends ValueObject {
     public String toString() {
         return (von == null? "<null>" : von) + "-" + (nach == null? "<null>" : nach);
     }
-
 }

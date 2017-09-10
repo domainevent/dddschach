@@ -5,14 +5,18 @@ import com.iks.dddschach.domain.SpielId;
 import com.iks.dddschach.domain.Halbzug;
 import com.iks.dddschach.domain.validation.Zugregel;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Optional;
 
 
+/**
+ * Schnittstelle zu dddschach.
+ */
 public interface SchachpartieApi {
 
     /**
-     * Erzeugt ein neues Spiel und gibt dessen neu erzeugte Id zurück
+     * Erzeugt ein neues Spiel
      *
      * @param vermerk eine beliebiger Vermerk zu dieser Partie, z.B. Spieler, Ort, etc.
      * @return eine weltweit eindeutige Id
@@ -23,7 +27,7 @@ public interface SchachpartieApi {
 
     /**
      * Analysiert die Eingabe und erzeugt im Erfolgsfall einen Halbzug.
-     * @param eingabe textuelle Halbzugeingabe, Beispiel: b1-c3
+     * @param eingabe Die textuelle Halbzugeingabe, Beispiel: b1-c3
      * @return einen {@link Halbzug}
      * @throws ParseException
      */
@@ -34,7 +38,7 @@ public interface SchachpartieApi {
      * Soll erzeugt werden, falls die Spiel-Id nicht existiert.
      */
     @SuppressWarnings("serial")
-	class UngueltigeSpielIdException extends Exception {
+    class UngueltigeSpielIdException extends Exception {
         public final SpielId spielId;
 
         public UngueltigeSpielIdException(SpielId spielId) {
@@ -46,7 +50,7 @@ public interface SchachpartieApi {
      * Soll erzeugt werden, falls ein ungueltiger Zug ausgefuehrt worden ist.
      */
     @SuppressWarnings("serial")
-	class UngueltigerHalbzugException extends Exception {
+    class UngueltigerHalbzugException extends Exception {
         public final Halbzug halbzug;
         public final Zugregel verletzteZugregel;
 
@@ -56,7 +60,6 @@ public interface SchachpartieApi {
             this.verletzteZugregel = verletzteZugregel;
         }
     }
-
 
     /**
      * Fuehrt einen Halbzug in der Schachpartie mit der Id <code>spielId</code> aus. Der Halbzug
@@ -69,14 +72,14 @@ public interface SchachpartieApi {
      * nicht implementiert werden.
      *
      * @param spielId (eindeutige) ID, die anfangs durch <code>neuesSpiel</code> erzeugt worden ist.
-     * @param halbzug
+     * @param halbzug Der auszuführende {@link Halbzug}
      * @return der Index des Zuges (beginnend mit 1)
      * @throws UngueltigerHalbzugException falls der Halbzug ungueltig ist
      * @throws UngueltigeSpielIdException falls es keine Partie zu <code>spielId</code> gibt
-     * @throws Exception bei sonstigen (technischen) Problemen
+     * @throws IOException bei sonstigen (technischen) Problemen
      */
     int fuehreHalbzugAus(SpielId spielId, Halbzug halbzug)
-            throws UngueltigerHalbzugException, UngueltigeSpielIdException;
+            throws UngueltigerHalbzugException, UngueltigeSpielIdException, IOException;
 
 
     /**
@@ -85,8 +88,8 @@ public interface SchachpartieApi {
      * @param spielId (eindeutige) ID, die anfangs durch <code>neuesSpiel</code> erzeugt worden ist.
      * @return das aktuelle Schachbrett
      * @throws UngueltigeSpielIdException falls es keine Partie zu <code>spielId</code> gibt
-     * @throws Exception bei sonstigen (technischen) Problemen
+     * @throws IOException bei sonstigen (technischen) Problemen
      */
-    Spielbrett aktuellesSpielbrett(SpielId spielId) throws UngueltigeSpielIdException;
+    Spielbrett aktuellesSpielbrett(SpielId spielId) throws UngueltigeSpielIdException, IOException;
 
 }

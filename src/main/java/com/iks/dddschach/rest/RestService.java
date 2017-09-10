@@ -10,7 +10,9 @@ import com.webcohesion.enunciate.metadata.rs.ResponseCode;
 import com.webcohesion.enunciate.metadata.rs.StatusCodes;
 import org.apache.log4j.Logger;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.net.URI;
@@ -33,7 +35,7 @@ public class RestService {
     @Context
     UriInfo uriInfo;
 
-    final Logger log = Logger.getLogger(RestService.class);
+    final static Logger LOG = Logger.getLogger(RestService.class);
 
 
     /**
@@ -45,7 +47,7 @@ public class RestService {
     @Path("isalive")
     @Produces(MediaType.TEXT_PLAIN)
     public String isAlive() {
-        log.info("DDD-Schach lebt");
+        LOG.info("DDD-Schach lebt");
         return "DDD-Schach is alive: " + new Date();
     }
 
@@ -63,14 +65,15 @@ public class RestService {
             @ResponseCode(code = 200, condition = "ok"),
             @ResponseCode(code = 500, condition = "An exception occured")
     })
-    public SpielId neuesSpiel(@FormParam("note") String vermerk) {
+    public SpielId neuesSpiel(@Size(max = 100) @FormParam("note") String vermerk)
+    {
         try {
             final SpielId spielId = schachpartieApi.neuesSpiel(Optional.ofNullable(vermerk));
-            log.info("SpielId=" + spielId + ": (neu erzeugt) mit Vermerk '" + vermerk + "'");
+            LOG.info("Neue Partie mit Spiel-ID='" + spielId + ", Vermerk='" + vermerk + "'");
             return spielId;
         }
         catch (Exception e) {
-            log.error("Interner Server-Error", e);
+            LOG.error("Interner Server-Error", e);
             throw new InternalServerErrorException(e);
         }
     }
@@ -90,17 +93,17 @@ public class RestService {
             @ResponseCode(code = 500, condition = "An exception occured")
     })
     public Spielbrett spielbrett(final @NotNull @PathParam("gameId") String spielId) throws UngueltigeSpielIdException {
-        log.info("SpielId=" + spielId + ": Abfrage des Spielfeldes");
+        LOG.debug("Abfrage des Spielfeldes");
 
         try {
             return schachpartieApi.aktuellesSpielbrett(new SpielId(spielId));
         }
         catch (UngueltigeSpielIdException e) {
-            log.warn("SpielId=" + spielId + ": Die Spiel-ID '" + e.spielId + "' ist ungültig.");
+            LOG.warn("Die Spiel-ID '" + e.spielId + "' ist ungueltig.");
             throw e;
         }
         catch (Exception e) {
-            log.error("Interner Server-Error", e);
+            LOG.error("Interner Server-Error", e);
             throw new InternalServerErrorException(e);
         }
     }// aktuellesSpielbrett
@@ -130,14 +133,11 @@ public class RestService {
             @ResponseCode(code = 500, condition = "An exception occured")
     })
     public Response fuehreHalbzugAus(
-            final @NotNull @PathParam("gameId") String spielId,
-            final @NotNull @FormParam("move") String halbzug)
-            throws UngueltigerHalbzugException, UngueltigeSpielIdException {
-
-        if (halbzug == null) {
-            log.warn("SpielId=" + spielId + ": Der Parameter move fehlt.");
-            throw new BadRequestException("Missing form parameter move");
-        }
+            final @PathParam("gameId") String spielId,
+            final @NotNull(message = "The form parameter move is mandatory.")
+            @FormParam("move") String halbzug)
+            throws UngueltigerHalbzugException, UngueltigeSpielIdException
+    {
         try {
             return fuehreHalbzugAus(spielId, schachpartieApi.parse(halbzug));
         }
@@ -170,29 +170,30 @@ public class RestService {
             @ResponseCode(code = 500, condition = "An exception occured")
     })
     public Response fuehreHalbzugAus(
-            final @NotNull @PathParam("gameId") String spielId,
-            final @NotNull Halbzug halbzug) throws UngueltigerHalbzugException, UngueltigeSpielIdException {
-
-        log.info("SpielId=" + spielId + ": Ausfuehren des Halbzuges " + halbzug);
+            final @PathParam("gameId") String spielId,
+            final @NotNull(message = "A body of type Halbzug is required.") @Valid Halbzug halbzug)
+            throws UngueltigerHalbzugException, UngueltigeSpielIdException
+    {
+        LOG.info("Ausfuehren des Halbzuges " + halbzug);
 
         final int zugIndex;
         try {
             zugIndex = schachpartieApi.fuehreHalbzugAus(new SpielId(spielId), halbzug);
         }
         catch (UngueltigeSpielIdException e) {
-            log.warn("SpielId=" + spielId + ": Die Spiel-ID '" + e.spielId + "' ist ungültig.");
+            LOG.warn("Die Spiel-ID '" + e.spielId + "' ist ungueltig.");
             throw e;
         }
         catch (UngueltigerHalbzugException e) {
-            log.debug("SpielId=" + spielId + ": Der Halbzug " + halbzug + " ist ungültig.");
+            LOG.debug("Der Halbzug " + halbzug + " ist ungueltig.");
             throw e;
         }
         catch (Exception e) {
-            log.error("Interner Server-Error", e);
+            LOG.error("Interner Server-Error", e);
             throw new InternalServerErrorException(e);
         }
 
-        log.debug("SpielId=" + spielId + ": Der " + zugIndex + ". Halbzug " + halbzug + " war erfolgreich.");
+        LOG.debug("Der " + zugIndex + ". Halbzug " + halbzug + " war erfolgreich.");
 
         // Erzeugen der JSON-Antwort und des Location-Headers:
 		@SuppressWarnings("serial")

@@ -7,7 +7,7 @@ import java.util.Optional;
 
 
 /**
- * Implementierung des Interface <code>SchachpartieApi</code>
+ * Implementierung der Schnittstelle <code>SchachpartieApi</code>
  */
 public class SchachpartieApiImpl implements SchachpartieApi {
 
