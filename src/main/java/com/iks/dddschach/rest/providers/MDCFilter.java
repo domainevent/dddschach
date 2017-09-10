@@ -1,4 +1,4 @@
-package com.iks.dddschach.rest;
+package com.iks.dddschach.rest.providers;
 
 import org.apache.log4j.MDC;
 
