@@ -22,7 +22,7 @@ import static java.lang.Character.toUpperCase;
 /**
  * Beinhaltet die Stellung der Figuren auf dem Schachbrett.
  *
- * Hinweis: Beachte die Methode <code>wendeHalbzugAn</code>,
+ * Hinweis: Beachte die Methode <code>spielbrettMitAngewendetemHalbzug</code>,
  * mit der auf dem Schachbrett ein Zug ausgeführt werden kann.
  */
 public class Spielbrett extends ValueObject {
@@ -74,7 +74,7 @@ public class Spielbrett extends ValueObject {
      * @return eine neue Instanz des modifizierten Spielbretts
      * @see {@link Halbzug}
      */
-    public Spielbrett wendeHalbzugAn(Halbzug halbzug) {
+    public Spielbrett spielbrettMitAngewendetemHalbzug(Halbzug halbzug) {
         return new Spielbrett(this) {{
             final Spielfigur spielfigurFrom = getSchachfigurAnPosition(halbzug.von);
             setSchachfigurAnPosition(halbzug.von, null);
