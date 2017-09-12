@@ -14,7 +14,7 @@ public class SchachpartieApiImpl implements SchachpartieApi {
     @Override
     public SpielId neuesSpiel(Optional<String> vermerk) throws Exception {
         // TODO: Zu implementieren
-        return new SpielId();
+        return null;
     }
 
 

@@ -87,8 +87,10 @@ public class SchachspielApiTest {
     @Test
     public void fuehreZuegeVonWeissDanachSchwarzInEinerPartieAus() throws Exception {
         final SpielId spielId = api.neuesSpiel(VERMERK);
-        api.fuehreHalbzugAus(spielId, parse("e2-e4"));
-        api.fuehreHalbzugAus(spielId, parse("d7-d5"));
+        int zugNummer = api.fuehreHalbzugAus(spielId, parse("e2-e4"));
+        Assert.assertEquals(1, zugNummer);
+        zugNummer = api.fuehreHalbzugAus(spielId, parse("d7-d5"));
+        Assert.assertEquals(2, zugNummer);
     }
 
 
